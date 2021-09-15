@@ -13,14 +13,14 @@ class CreateBusinessTable extends Migration
      */
     public function up()
     {
-        Schema::create('business', function (Blueprint $table) {
+        Schema::create('businesses', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('title');
             $table->text('description');
             $table->string('short_description');
-            $table->string('priceFrom');
-            $table->string('priceTo');
+            $table->integer('priceFrom');
+            $table->integer('priceTo');
             $table->string('unit');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
         });
@@ -33,6 +33,6 @@ class CreateBusinessTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('business');
+        Schema::dropIfExists('businesses');
     }
 }

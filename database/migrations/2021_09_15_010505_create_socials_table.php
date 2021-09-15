@@ -20,7 +20,7 @@ class CreateSocialsTable extends Migration
             $table->string('www');
             $table->string('youtube');
             $table->string('movie_youtube');
-            $table->foreignId('business_id')->constrained('business')->onDelete('cascade');
+            $table->foreignId('business_id')->constrained('businesses')->onDelete('cascade');
         });
     }
 
