@@ -21,4 +21,9 @@ class Photo extends Model
         'photoable_id',
         'path',
     ];
+
+    public function photoable()
+    {
+        return $this->morphTo();
+    }
 }

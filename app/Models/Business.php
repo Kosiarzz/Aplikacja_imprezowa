@@ -24,5 +24,16 @@ class Business extends Model
         'priceTo',
         'unit',
         'user_id',
+        'city_id',
     ];
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function photos()
+    {
+        return $this->morphMany(Photo::class, 'photoable');
+    }
 }

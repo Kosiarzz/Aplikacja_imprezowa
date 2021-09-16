@@ -18,7 +18,6 @@ class CreateAddressesTable extends Migration
             $table->string('name');
             $table->string('business_name');
             $table->string('phone');
-            $table->foreignId('city_id')->constrained('cities')->onDelete('cascade')->unsigned();
             $table->foreignId('business_id')->constrained('businesses')->onDelete('cascade')->unsigned();
         });
     }

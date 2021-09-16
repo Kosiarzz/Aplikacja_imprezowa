@@ -25,7 +25,6 @@ class AddressFactory extends Factory
             'name' => $this->faker->firstName.' '.$this->faker->lastName,
             'business_name' => $this->faker->word,
             'phone' => $this->faker->phoneNumber,
-            'city_id' => $this->faker->numberBetween(1,20),
             'business_id' => $this->faker->unique(true)->numberBetween(1,10),
         ];
     }
