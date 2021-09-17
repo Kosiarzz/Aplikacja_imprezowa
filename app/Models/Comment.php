@@ -23,4 +23,9 @@ class Comment extends Model
         'rating',
         'user_id',
     ];
+
+    public function commentable()
+    {
+        return $this->morphTo();
+    }
 }

@@ -23,8 +23,10 @@ class Business extends Model
         'priceFrom',
         'priceTo',
         'unit',
+        'range',
         'user_id',
         'city_id',
+        'social_id',
     ];
 
     public function city()
@@ -35,5 +37,35 @@ class Business extends Model
     public function photos()
     {
         return $this->morphMany(Photo::class, 'photoable');
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function users()
+    {
+        return $this->morphToMany(User::class, 'likeable');
+    }
+
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
+
+    public function social()
+    {
+        return $this->hasOne(Social::class);
+    }
+
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
+
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('priceFrom','asc');
     }
 }

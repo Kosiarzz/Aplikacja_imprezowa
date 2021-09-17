@@ -20,6 +20,8 @@ class Address extends Model
         'name',
         'business_name',
         'phone',
+        'post_code',
+        'street',
         'business_id',
     ];
 }

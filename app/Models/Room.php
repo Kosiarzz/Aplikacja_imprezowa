@@ -23,4 +23,10 @@ class Room extends Model
         'people_to',
         'business_id',
     ];
+
+    public function photos()
+    {
+        return $this->morphMany(Photo::class, 'photoable');
+    }
+
 }
