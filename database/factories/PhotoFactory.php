@@ -22,7 +22,7 @@ class PhotoFactory extends Factory
     public function definition()
     {
         return [
-            'photoable_type' => $this->faker->randomElement(['App\Models\Business','room']),
+            'photoable_type' => $this->faker->randomElement(['App\Models\Business','App\Models\User','App\Models\Room']),
             'photoable_id' => $this->faker->numberBetween(1,10),
             'path' => $this->faker->imageUrl(800,400,'city'),
         ];

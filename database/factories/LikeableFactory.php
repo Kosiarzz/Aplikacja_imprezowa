@@ -22,7 +22,7 @@ class LikeableFactory extends Factory
     public function definition()
     {
         return [
-            'likeable_type' => $this->faker->randomElement(['business','comment','user']),
+            'likeable_type' => $this->faker->randomElement(['App\Models\Business','App\Models\User','App\Models\Comment']),
             'likeable_id' => $this->faker->numberBetween(1,10),
             'user_id' => $this->faker->numberBetween(1,10),
         ];

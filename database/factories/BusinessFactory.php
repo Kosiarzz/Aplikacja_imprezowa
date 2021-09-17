@@ -28,8 +28,11 @@ class BusinessFactory extends Factory
             'priceFrom' => $this->faker->numberBetween(100,500),
             'priceTo' => $this->faker->numberBetween(500,1000),
             'unit' => 'jednostka',
+            'range' => $this->faker->state,
             'user_id' => $this->faker->unique(true)->numberBetween(1,10),
             'city_id' => $this->faker->unique()->numberBetween(1,20),
+            'address_id' => $this->faker->unique(true)->numberBetween(1,10),
+            'social_id' => $this->faker->unique(true)->numberBetween(1,10),
         ];
     }
 }

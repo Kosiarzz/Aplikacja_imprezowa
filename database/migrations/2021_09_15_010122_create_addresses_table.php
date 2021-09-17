@@ -18,6 +18,8 @@ class CreateAddressesTable extends Migration
             $table->string('name');
             $table->string('business_name');
             $table->string('phone');
+            $table->string('street');
+            $table->string('post_code');
             $table->foreignId('business_id')->constrained('businesses')->onDelete('cascade')->unsigned();
         });
     }

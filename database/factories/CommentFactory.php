@@ -23,7 +23,7 @@ class CommentFactory extends Factory
     {
         return [
             'content' => $this->faker->text(200),
-            'commentable_type' => $this->faker->randomElement(['business','user']),
+            'commentable_type' => 'App\Models\Business',
             'commentable_id' => $this->faker->numberBetween(1,30),
             'rating' => $this->faker->numberBetween(1,5),
             'user_id' => $this->faker->numberBetween(1,10),
