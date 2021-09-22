@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRolesTable extends Migration
+class CreateQuestionsAndAnswersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('questions_and_answers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('question');
+            $table->string('answer');
+            $table->foreignId('business_id')->constrained('businesses')->onDelete('cascade');
         });
     }
 
@@ -26,6 +28,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('questions_and_answers');
     }
 }

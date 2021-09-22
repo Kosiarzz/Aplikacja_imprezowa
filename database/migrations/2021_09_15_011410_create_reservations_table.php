@@ -15,7 +15,8 @@ class CreateReservationsTable extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
+            $table->date('date_from');
+            $table->date('date_to');
             $table->boolean('status');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->unsigned();
             $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade')->unsigned();

@@ -24,8 +24,7 @@ class CreateBusinessTable extends Migration
             $table->string('range');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->unsigned();
             $table->integer('city_id')->constrained('cities')->unsigned();
-            $table->integer('address_id')->constrained('addresses')->unsigned();
-            $table->integer('social_id')->constrained('socials')->unsigned();
+            $table->integer('social_id')->constrained('socials')->onDelete('cascade')->unsigned();
         });
     }
 

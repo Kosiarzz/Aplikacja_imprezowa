@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Enums\UserRole;
 
 class UserFactory extends Factory
 {
@@ -23,7 +24,9 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'role_id' => $this->faker->numberBetween(1,4),
+            'name' => $this->faker->firstName,
+            'surname' => $this->faker->lastName,
+            'role' => $this->faker->randomElement(UserRole::TYPES),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => bcrypt('test1234'),

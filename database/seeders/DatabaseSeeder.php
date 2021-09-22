@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
         \App\Models\Comment::factory(100)->create();      
         \App\Models\Notification::factory(10)->create();
         \App\Models\Social::factory(10)->create();
-        \App\Models\Likeable::factory(10)->create();
+        \App\Models\Likeable::factory(150)->create();
         \App\Models\Photo::factory(200)->create();
         \App\Models\Room::factory(100)->create();
-        \App\Models\Reservation::factory(100)->create();
-        \App\Models\Role::factory(4)->create();
+        \App\Models\Reservation::factory(300)->create();
+        \App\Models\QuestionAndAnswer::factory(150)->create();
     }
 }

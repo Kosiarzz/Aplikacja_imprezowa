@@ -31,7 +31,6 @@ class BusinessFactory extends Factory
             'range' => $this->faker->state,
             'user_id' => $this->faker->unique(true)->numberBetween(1,10),
             'city_id' => $this->faker->unique()->numberBetween(1,20),
-            'address_id' => $this->faker->unique(true)->numberBetween(1,10),
             'social_id' => $this->faker->unique(true)->numberBetween(1,10),
         ];
     }

@@ -22,10 +22,11 @@ class ReservationFactory extends Factory
     public function definition()
     {
         return [
-            'date' => $this->faker->dateTimeBetween('now','+10 days'),
+            'date_to' => $this->faker->dateTimeBetween('now','+10 days'),
+            'date_from' => $this->faker->dateTimeBetween('-10 days','now'),
             'status' => $this->faker->boolean(50),
             'user_id' => $this->faker->numberBetween(1,10),
-            'room_id' => $this->faker->numberBetween(1,10),
+            'room_id' => $this->faker->numberBetween(1,50),
             'city_id' => $this->faker->numberBetween(1,10),
         ];
     }

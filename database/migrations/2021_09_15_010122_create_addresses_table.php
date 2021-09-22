@@ -15,11 +15,11 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('business_name');
             $table->string('phone');
             $table->string('street');
             $table->string('post_code');
+            $table->string('details_address');
             $table->foreignId('business_id')->constrained('businesses')->onDelete('cascade')->unsigned();
         });
     }
