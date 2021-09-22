@@ -19,4 +19,14 @@ class City extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function rooms()
+    {
+        return $this->hasManyThrough(Room::class, Business::class);
+    }
+
+    public function businesses()
+    {
+        return $this->hasMany(Business::class);
+    }
 }

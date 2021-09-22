@@ -29,4 +29,14 @@ class Room extends Model
         return $this->morphMany(Photo::class, 'photoable');
     }
 
+    public function business()
+    {
+        return $this->belongsTo(Business::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
 }

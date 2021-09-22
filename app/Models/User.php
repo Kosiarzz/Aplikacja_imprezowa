@@ -18,7 +18,9 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'role_id',
+        'name',
+        'surname',
+        'role',
         'email',
         'password',
     ];
@@ -50,5 +52,10 @@ class User extends Authenticatable
     public function photos()
     {
         return $this->morphOne(Photo::class, 'photoable');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

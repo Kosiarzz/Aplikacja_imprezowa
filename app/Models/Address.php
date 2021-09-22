@@ -17,11 +17,11 @@ class Address extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name',
         'business_name',
         'phone',
         'post_code',
         'street',
+        'details_address',
         'business_id',
     ];
 }

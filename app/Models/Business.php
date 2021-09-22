@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Presenters\BusinessPresenter;
 
 class Business extends Model
 {
     use HasFactory;
+    use BusinessPresenter;
 
     public $timestamps = false;
 
@@ -26,7 +28,6 @@ class Business extends Model
         'range',
         'user_id',
         'city_id',
-        'social_id',
     ];
 
     public function city()
@@ -64,8 +65,18 @@ class Business extends Model
         return $this->hasMany(Room::class);
     }
 
+    public function questionsAndAnswers()
+    {
+        return $this->hasMany(QuestionAndAnswer::class);
+    }
+
     public function scopeOrdered($query)
     {
         return $query->orderBy('priceFrom','asc');
+    }
+
+    public function isLiked()
+    {
+        return $this->users()->where('user_id', Auth::user()->id)->exists();
     }
 }
