@@ -25,17 +25,20 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <form method="POST">
+                    <form method="POST" action="{{ route('addReservation', ['room_id' => $room->id, 'city_id' => $room->business->city->id]) }}">
                         <div class="form-group">
-                            <label for="checkin">Data od</label>
-                            <input required name="checkin" type="text" class="form-control datepicker" id="checkin" placeholder="">
+                            <label for="dateFrom">Data od</label>
+                            <input required name="dateFrom" type="text" class="form-control datepicker" id="dateFrom" placeholder="">
                         </div>
                         <div class="form-group">
-                            <label for="checkout">Data do</label>
-                            <input required name="checkout" type="text" class="form-control datepicker" id="checkout" placeholder="">
+                            <label for="dateTo">Data do</label>
+                            <input required name="dateTo" type="text" class="form-control datepicker" id="dateTo" placeholder="">
                         </div>
                         <button type="submit" class="btn btn-primary reservationBtn" data-id="{{$room->id}}">Rezerwacja</button> 
-                        <p class="text-danger">Jaikiś błąd</p>
+                        <p class="text-danger">
+                            {{ Session::get('reservationMsg') }}
+                        </p>
+                        {{ csrf_field() }}
                     </form>
                 </div><br>
                 <div class="col-md-6">
@@ -94,18 +97,18 @@ success: function(response){
         $("#avaiability_calendar").datepicker({
             onSelect: function (data) {
 
-    //            console.log($('#checkin').val());
+    //            console.log($('#dateFrom').val());
 
-                if ($('#checkin').val() == '')
+                if ($('#dateFrom').val() == '')
                 {
-                    $('#checkin').val(data);
-                } else if ($('#checkout').val() == '')
+                    $('#dateFrom').val(data);
+                } else if ($('#dateTo').val() == '')
                 {
-                    $('#checkout').val(data);
-                } else if ($('#checkout').val() != '')
+                    $('#dateTo').val(data);
+                } else if ($('#dateTo').val() != '')
                 {
-                    $('#checkin').val(data);
-                    $('#checkout').val('');
+                    $('#dateFrom').val(data);
+                    $('#dateTo').val('');
                 }
 
             },

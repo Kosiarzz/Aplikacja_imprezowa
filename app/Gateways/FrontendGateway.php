@@ -77,6 +77,40 @@ class FrontendGateway {
         }
         return false;
     }
+
+    public function checkAvailableReservations($room_id, $request)
+    {
+        $dateFrom = date('Y-m-d', strtotime($request->input('dateFrom')));
+        $dateTo = date('Y-m-d', strtotime($request->input('dateTo')));
+
+        $reservations = $this->fRepository->getReservationsByRoomId($room_id);
+
+        $available = true;
+        foreach($reservations as $reservation)
+        {
+            if($dateFrom >= $reservation->date_from
+                &&  $dateFrom <= $reservation->date_to
+            )
+            {
+                $available = false; break;
+            }
+            elseif($dateTo >= $reservation->date_from
+                &&  $dateTo <= $reservation->date_to
+            )
+            {
+                $available = false; break;
+            }
+            elseif($dateFrom <= $reservation->date_from
+                &&  $dateTo >= $reservation->date_to
+            )
+            {
+                $available = false; break;
+            }
+        }
+
+        return $available;
+    }
+
 }
 
 

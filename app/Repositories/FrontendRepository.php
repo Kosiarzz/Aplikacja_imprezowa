@@ -80,5 +80,18 @@ class FrontendRepository implements FrontendRepositoryInterface
         
         return $commentable->comments()->save($comment);
     }
+
+    
+    public function addReservation($room_id, $city_id, $request)
+    {
+        return Reservation::create([
+                'user_id'=>$request->user()->id,
+                'city_id'=>$city_id,
+                'room_id'=>$room_id,
+                'status'=>0,
+                'date_from'=>date('Y-m-d', strtotime($request->input('dateFrom'))),
+                'date_to'=>date('Y-m-d', strtotime($request->input('dateTo')))
+            ]);
+    }
  
 }

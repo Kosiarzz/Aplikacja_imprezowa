@@ -11,7 +11,7 @@ class FrontendController extends Controller
 
     public function __construct(FrontendRepositoryInterface $fRepository, FrontendGateway $fGateway)
     {
-        $this->middleware('auth')->only(['makeReservation','addComment','like','unlike']);
+        $this->middleware('auth')->only(['addReservation','addComment','like','unlike']);
 
         $this->fRepository = $fRepository;
         $this->fGateway = $fGateway;
@@ -61,10 +61,8 @@ class FrontendController extends Controller
         {
             return view('frontend.businessSearch', ['businesses' => $result]);
         }
-        else
-        {
-            return redirect('/')->with('nobusiness', 'Brak wyników wyszykiwania.');
-        }
+
+        return redirect('/')->with('nobusiness', 'Brak wyników wyszykiwania.');
     }
 
     public function user($id)
@@ -93,5 +91,21 @@ class FrontendController extends Controller
         $this->fRepository->addComment($commentable_id, $type, $request);
         
         return redirect()->back();
+    }
+
+    public function addReservation($room_id, $city_id, Request $request)
+    {
+        $available = $this->fGateway->checkAvailableReservations($room_id, $request);
+
+        if($available)
+        {
+            $reservation = $this->fRepository->addReservation($room_id, $city_id, $request);
+            return redirect()->route('roomDetails', ['id'=>$room_id,'#reservation']);
+        }
+        else
+        {
+            $request->session()->flash('reservationMsg', 'Błąd');
+            return redirect()->route('roomDetails', ['id'=>$room_id,'#reservation']);
+        }
     }
 }

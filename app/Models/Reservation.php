@@ -11,6 +11,8 @@ class Reservation extends Model
 
     public $timestamps = false;
     
+    protected $guarded = ['id'];
+    
     /**
      * The attributes that are mass assignable.
      *

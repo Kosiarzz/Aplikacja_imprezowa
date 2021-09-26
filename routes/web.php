@@ -42,6 +42,9 @@ Route::get('/like/{likeable_id}/{type}', [App\Http\Controllers\FrontendControlle
 Route::get('/unlike/{likeable_id}/{type}', [App\Http\Controllers\FrontendController::class, 'unlike'])->name('unlike');
 
 Route::post('/addComment/{commentable_id}/{type}', [App\Http\Controllers\FrontendController::class, 'addComment'])->name('addComment');
+
+Route::post('/addReservation/{room_id}/{city_id}', [App\Http\Controllers\FrontendController::class, 'addReservation'])->name('addReservation');
+
 //Strony wymagające zalogowania
 Route::middleware(['auth','verified'])->group(function()
 {
