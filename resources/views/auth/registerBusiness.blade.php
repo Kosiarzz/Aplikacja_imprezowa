@@ -48,7 +48,7 @@
                             </div>
                         </div>
 
-                        <input id="role" type="hidden" name="role" value="bussines">
+                        <input id="role" type="hidden" name="role" value="business">
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

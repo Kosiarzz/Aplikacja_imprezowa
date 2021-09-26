@@ -27,7 +27,7 @@ class FrontendGateway {
 
         return $results;
     } 
-    
+
     public function getSearchResults($request)
     {
         $request->flash();

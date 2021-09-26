@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Enums\UserRole;
 
 class User extends Authenticatable
 {
@@ -18,8 +19,6 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
-        'surname',
         'role',
         'email',
         'password',
@@ -57,5 +56,20 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function userData()
+    {
+        return $this->hasOne(UserData::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === UserRole::ADMIN;
+    }
+
+    public function isModerator()
+    {
+        return $this->role === UserRole::MODERATOR;
     }
 }

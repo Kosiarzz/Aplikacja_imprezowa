@@ -17,6 +17,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(\App\Interfaces\FrontendRepositoryInterface::class, function(){
             return new \App\Repositories\FrontendRepository;
         });
+
+        $this->app->bind(\App\Interfaces\UserRepositoryInterface::class, function(){
+            return new \App\Repositories\UserRepository;
+        });
     }
 
     /**
