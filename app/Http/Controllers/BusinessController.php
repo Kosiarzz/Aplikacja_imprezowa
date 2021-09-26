@@ -10,4 +10,9 @@ class BusinessController extends Controller
     {
         return view('business.index');
     }
+
+    public function index()
+    {
+        return view('business.index');
+    }
 }

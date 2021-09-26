@@ -26,7 +26,8 @@ class UserController extends Controller
 
     public function like()
     {
-        return view('user.like');
+        $data = $this->uRepository->getLikeableUser(Auth::user()->id);
+        return view('user.like', ['user' => $data]);
     }
 
     public function events()

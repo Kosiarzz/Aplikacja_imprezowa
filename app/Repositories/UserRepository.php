@@ -11,7 +11,12 @@ class UserRepository implements UserRepositoryInterface
 
     public function getProfileUser($id)
     {
-        return User::with(['userData'])->find($id);
+        return User::with(['userData', 'photos'])->find($id);
+    }
+
+    public function getLikeableUser($id)
+    {
+        return User::with(['businesses'])->find($id);
     }
 
 }

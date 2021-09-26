@@ -11,7 +11,7 @@ class FrontendController extends Controller
 
     public function __construct(FrontendRepositoryInterface $fRepository, FrontendGateway $fGateway)
     {
-        $this->middleware('auth')->only(['makeReservation','addComment','like','unlike']); /* Lecture 24 */
+        $this->middleware('auth')->only(['makeReservation','addComment','like','unlike']);
 
         $this->fRepository = $fRepository;
         $this->fGateway = $fGateway;
@@ -76,14 +76,14 @@ class FrontendController extends Controller
 
     public function like($likeable_id, $type, Request $request)
     {
-        $this->fR->like($likeable_id, $type, $request);
+        $this->fRepository->like($likeable_id, $type, $request);
 
         return redirect()->back();
     }
     
     public function unlike($likeable_id, $type, Request $request)
     {
-        $this->fR->unlike($likeable_id, $type, $request);
+        $this->fRepository->unlike($likeable_id, $type, $request);
         
         return redirect()->back();
     }

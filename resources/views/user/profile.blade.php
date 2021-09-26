@@ -3,11 +3,10 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        PROFIL
-        
+
         <form method="POST" action="{{ route('register') }}">
             @csrf
-            AVATAR
+            <img width=70 height=70 src="{{$user->photos->path}}" class="rounded-circle" alt="avatar">
             <br>Dane personalne
             <div class="form-group row">
                 <label for="name" class="col-md-4 col-form-label text-md-right">Imie</label>
@@ -98,7 +97,6 @@
             </div>
 
             <button class="btn-danger">Usuń konto</button><br>
-            Uwierzytelnienie dwuetapowe???<br>
 
             <div class="form-group row mb-0">
                 <div class="col-md-6 offset-md-4">

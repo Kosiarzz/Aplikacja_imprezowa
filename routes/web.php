@@ -36,23 +36,31 @@ Route::get('/ajaxGetRoomReservations/{id}', [App\Http\Controllers\FrontendContro
 Route::post('/businessSearch', [App\Http\Controllers\FrontendController::class, 'businessSearch'])->name('businessSearch');
 Route::get('/uzytkownikss/{id}', [App\Http\Controllers\FrontendController::class, 'user'])->name('user');
 Route::get('/firma/{id}', [App\Http\Controllers\FrontendController::class, 'businessDetails'])->name('businessDetails');
-    
-//Strony wymagające zalogowania
-Route::middleware(['auth','verified'])->group(function(){
+Route::get('/firma', [App\Http\Controllers\BusinessController::class, 'index']);
 
-    Route::middleware(['can:isAdmin'])->group(function(){
+Route::get('/like/{likeable_id}/{type}', [App\Http\Controllers\FrontendController::class, 'like'])->name('like');
+Route::get('/unlike/{likeable_id}/{type}', [App\Http\Controllers\FrontendController::class, 'unlike'])->name('unlike');
+
+//Strony wymagające zalogowania
+Route::middleware(['auth','verified'])->group(function()
+{
+    Route::middleware(['can:isAdmin'])->group(function()
+    {
         Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index']);
     });
 
-    Route::middleware(['can:isModerator'])->group(function(){
+    Route::middleware(['can:isModerator'])->group(function()
+    {
         Route::get('/moderator', [App\Http\Controllers\ModeratorController::class, 'index']);
     });
 
-    Route::middleware(['can:isBusiness'])->group(function(){
+    Route::middleware(['can:isBusiness'])->group(function()
+    {
         Route::get('/firma', [App\Http\Controllers\BusinessController::class, 'index']);
     });
 
-    Route::middleware(['can:isUser'])->group(function(){
+    Route::middleware(['can:isUser'])->group(function()
+    {
         Route::get('/uzytkownik', [App\Http\Controllers\UserController::class, 'index'])->name('user.index');
         Route::get('/uzytkownik/profil', [App\Http\Controllers\UserController::class, 'profile'])->name('user.profile');
         Route::get('/uzytkownik/polubione', [App\Http\Controllers\UserController::class, 'like'])->name('user.like');

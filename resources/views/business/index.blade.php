@@ -3,7 +3,11 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        strona firmy
+        @if()
+            panel firmy
+        @else
+            <button>Stworz profil</button>
+        @endif
     </div>
 </div>
 @endsection
