@@ -76,7 +76,7 @@
                     <img src="{{$comment->photos->first()->path ?? $defaultPhoto}}" width="250" height="121" class="mr-3" alt="SALA"><br>
                     {{$comment->user->name}} {{$comment->user->surname}}<br>
                     {{str_limit($comment->content,100)}}<br>
-                    rating: {{$comment->rating}}<br>
+                    rating: {{ $comment->rating }}<br>
                 </div>
             </a>
         @endforeach
@@ -89,6 +89,40 @@
             </div>
         @endforeach
 
+        @auth()
+            <form method="POST" action="{{ route('addComment',['commentable_id'=>$business->id, 'App\Models\Business']) }}" class="form-horizontal">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="textArea" class="col-lg-2 control-label">Komentarz</label>
+                        <div class="col-lg-10">
+                            <textarea required name="content" class="form-control" rows="3" id="textArea"></textarea>
+                            <span class="help-block">Dodaj komentarz</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select" class="col-lg-2 control-label">Ocena</label>
+                        <div class="col-lg-10">
+                            <select name="rating" class="form-control" id="select">
+                                <option value="5">5</option>
+                                <option value="4">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-2">
+                            <button type="submit" class="btn btn-primary">Wyślij</button>
+                        </div>
+                    </div>
+                </fieldset>
+                {{ csrf_field() }}
+            </form>
+        @else
+            <a href="{{ route('login') }}">Zaloguj się aby dodać komentarz</a>
+        @endauth
                 
     <!--
         #tytuł
@@ -97,7 +131,7 @@
         dodatkowe info do adresu
         telefon
         #opis
-    #dodanie do ulubionych
+        dodanie do ulubionych
         polubiane
         oceny(gwiazdki)
         #zakres cenowy

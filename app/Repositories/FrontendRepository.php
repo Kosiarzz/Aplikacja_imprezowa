@@ -7,8 +7,9 @@ use App\Models\City;
 use App\Models\Room;
 use App\Models\Reservation;
 use App\Models\User;
+use App\Models\Comment;
 use App\Interfaces\FrontendRepositoryInterface;
-
+//use App\Models\{Business,City};
 class FrontendRepository implements FrontendRepositoryInterface
 {
     //Komunikacja z bazą danych
@@ -65,6 +66,19 @@ class FrontendRepository implements FrontendRepositoryInterface
         $likeable = $type::find($likeable_id);
       
         return $likeable->users()->detach($request->user()->id);
+    }
+
+    public function addComment($commentable_id, $type, $request)
+    {
+        $commentable = $type::find($commentable_id);
+        
+        $comment = new Comment;
+        
+        $comment->content = $request->input('content');
+        $comment->rating = $request->input('rating');
+        $comment->user_id = $request->user()->id;
+        
+        return $commentable->comments()->save($comment);
     }
  
 }

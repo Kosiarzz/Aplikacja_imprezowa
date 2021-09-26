@@ -87,4 +87,11 @@ class FrontendController extends Controller
         
         return redirect()->back();
     }
+
+    public function addComment($commentable_id, $type, Request $request)
+    {
+        $this->fRepository->addComment($commentable_id, $type, $request);
+        
+        return redirect()->back();
+    }
 }

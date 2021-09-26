@@ -41,6 +41,7 @@ Route::get('/firma', [App\Http\Controllers\BusinessController::class, 'index']);
 Route::get('/like/{likeable_id}/{type}', [App\Http\Controllers\FrontendController::class, 'like'])->name('like');
 Route::get('/unlike/{likeable_id}/{type}', [App\Http\Controllers\FrontendController::class, 'unlike'])->name('unlike');
 
+Route::post('/addComment/{commentable_id}/{type}', [App\Http\Controllers\FrontendController::class, 'addComment'])->name('addComment');
 //Strony wymagające zalogowania
 Route::middleware(['auth','verified'])->group(function()
 {

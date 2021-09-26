@@ -77,7 +77,6 @@ class FrontendGateway {
         }
         return false;
     }
-
 }
 
 
