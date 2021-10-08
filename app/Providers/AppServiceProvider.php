@@ -21,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(\App\Interfaces\UserRepositoryInterface::class, function(){
             return new \App\Repositories\UserRepository;
         });
+
+        $this->app->bind(\App\Interfaces\BusinessRepositoryInterface::class, function(){
+            return new \App\Repositories\BusinessRepository;
+        });
     }
 
     /**
@@ -31,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('frontend.*', function($view){
+            $view->with('defaultPhoto', asset('images/defaultPhoto.png'));
+        });
+
+        View::composer('business.*', function($view){
             $view->with('defaultPhoto', asset('images/defaultPhoto.png'));
         });
     }

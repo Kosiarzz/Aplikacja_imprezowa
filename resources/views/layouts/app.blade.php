@@ -50,18 +50,23 @@
                                 </li>
                             @endif
                         @else
-                            <a href="{{ route('user.profile') }}" class="mr-3">Profil</a>
-                            <a href="{{ route('user.like') }}" class="mr-3">Polubione</a>
-                            <a href="{{ route('user.events') }}" class="mr-3">Wydarzenia</a>
+                            @can('isUser')
+                                <a href="{{ route('user.profile') }}" class="mr-3">Profil</a>
+                                <a href="{{ route('user.like') }}" class="mr-3">Polubione</a>
+                                <a href="{{ route('user.events') }}" class="mr-3">Wydarzenia</a>  
+                            @endcan
+                            @can('isBusiness')
+                                <a href="{{ route('business.index') }}" class="mr-3">Usługi</a>
+                            @endcan
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
-
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
+                            
                         @endguest
                     </ul>
                 </div>
@@ -77,9 +82,11 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        var base_url = '{{url("/")}}';
+        var base_url = '{{url("/admin")}}';
     </script>
+    <script src="{{ asset('js/reservations.js') }}"> window.reservations() </script>
     @stack('calendar')
+    
 </body>
 
 </html>

@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         cały profil
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="#">
             @csrf
             <div class="form-group row">
                 <label for="title" class="col-md-4 col-form-label text-md-right">Tytuł</label>

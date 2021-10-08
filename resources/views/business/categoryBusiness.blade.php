@@ -13,12 +13,12 @@
             </div>
         </a>
 
-        <a href="{{route('businessProfile.profile', 'fotograf')}}" class="text-decoration-none box w-100">
+        <a href="{{route('businessProfile.profile', 'atrakcje')}}" class="text-decoration-none box w-100">
             <div class="title">
-                Fotograf
+                Atrakcje
             </div>
             <div class="description">
-                Usługi takie jak fotograf, kamerzysta, fotobudka itp. 
+                Usługi takie jak atakcjowe itp. 
             </div>
         </a>
 

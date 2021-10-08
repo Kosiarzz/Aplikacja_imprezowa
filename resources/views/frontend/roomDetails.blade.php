@@ -3,7 +3,6 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-            <button style="width:140px; height:30px; font-size:12px; margin-right:15px;">Dodaj do ulubionych</button>
             <br>
            <a href="{{route('businessDetails',['id' => $room->business_id])}}">Powrót</a><br>
            <div style="width:100%;">

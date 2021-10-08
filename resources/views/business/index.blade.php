@@ -2,12 +2,14 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        @if()
-            panel firmy
-        @else
-            <button>Stworz profil</button>
-        @endif
-    </div>
+
+            <button>Dodaj usługę</button>
+            
+            @foreach($businesses as $business)
+            <div>
+                <a href="{{ route('business.id', ['id' => $business->id]) }}">{{$business->title}}</a>
+            </div><br>
+            @endforeach
+
 </div>
 @endsection

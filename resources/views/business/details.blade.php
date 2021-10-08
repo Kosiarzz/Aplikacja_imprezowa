@@ -3,21 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-
-        @can('isUser')
-            @if($business->isLiked())
-                <a href="{{ route('unlike', ['likeable_id' => $business->id, 'type' => 'App\Models\Business']) }}">Usuń z ulubionych</a>
-            @else
-                <a href="{{ route('like', ['likeable_id' => $business->id, 'type' => 'App\Models\Business']) }}">Dodaj do ulubionych</a> 
-            @endif
-            
-        @else
-            <a href="{{ route('login') }}">Zaloguj się aby dodać do ulubionych</a>
-        @endcan
-        
-        @can('isUser')
-            SKOMENTUJ
-        @endcan
+        Szczegóły widoku właściciela firmy
         {{$business->title}} ({{$business->city->name}})<br>
         {{$business->range}}<br>
         {{$business->description}}<br>

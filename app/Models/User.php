@@ -72,4 +72,15 @@ class User extends Authenticatable
     {
         return $this->role === UserRole::MODERATOR;
     }
+
+    public function isBusiness()
+    {
+        return $this->role === UserRole::BUSINESS;
+    }
+
+    public function isUser()
+    {
+        return $this->role === UserRole::USER;
+    }
+
 }
