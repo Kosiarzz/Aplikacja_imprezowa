@@ -84,16 +84,10 @@
                     @endif
                 @endforeach
                 <div class="form-check">
-                    <label class="form-check-label mr-4" for="Komunie">
-                        Komunie
+                    <label class="form-check-label mr-4" for="test">
+                        test
                     </label>
-                    <input class="form-check-input" type="checkbox" value="1" id="Komunie" name="party[]">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Urodziny">
-                    Urodziny
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="2" id="Urodziny" name="party[]">
+                    <input class="form-check-input" type="checkbox" value="1" id="test" name="party[]">
                 </div>
             </div>
 
@@ -110,10 +104,10 @@
                     @endif
                 @endforeach
                 <div class="form-check">
-                    <label class="form-check-label mr-4" for="Nocleg">
-                        Nocleg
+                    <label class="form-check-label mr-4" for="test">
+                        test
                     </label>
-                    <input class="form-check-input" type="checkbox" value="Nocleg" id="Nocleg">
+                    <input class="form-check-input" type="checkbox" value="test" id="test">
                 </div>
             </div>
 
@@ -258,9 +252,11 @@
                     @enderror
                 </div>
             </div>
+            <div id="room">
 
+            </div>
             <button>Dodaj cennik</button>
-            <button>Dodaj sale</button>
+            <a onClick="addRoom()">Dodaj sale</a>
             <hr>
             Dane kontaktowe
             <div class="form-group row">
@@ -489,9 +485,52 @@
             </div>
             <hr>
             Q&A
-            <button>Dodaj pytanie</button>
+            <div id="questions">
+
+            </div>
+            <a onClick="questions()">Dodaj pytanie</a>
 
         </form>
     </div>
 </div>
 @endsection
+
+@push('business')
+    <script>
+        function questions()
+        {
+            qa = document.getElementById("questions");
+
+            var question = document.createElement("input");
+            question.type = "text";
+            question.className = "question[]";
+
+            var answer = document.createElement("input");
+            answer.type = "text";
+            answer.className = "answer[]";
+
+            qa.appendChild(question);
+            qa.appendChild(answer);
+            
+        }
+
+        function addRoom()
+        {
+            room = document.getElementById("room");
+
+            var priceFrom = document.createElement("input");
+            priceFrom.type = "number";
+            priceFrom.className = "priceFrom";
+            priceFromText = document.createTextNode("Cena od"); 
+
+            var priceTo = document.createElement("input");
+            priceTo.type = "number";
+            priceTo.className = "answer[]";
+
+            room.appendChild(priceFromText);
+            room.appendChild(priceFrom);
+            room.appendChild(priceTo);
+            
+        }
+    </script>
+@endpush

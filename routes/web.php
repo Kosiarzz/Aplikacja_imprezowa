@@ -42,7 +42,7 @@ Route::get('/unlike/{likeable_id}/{type}', [App\Http\Controllers\FrontendControl
 Route::post('/addComment/{commentable_id}/{type}', [App\Http\Controllers\FrontendController::class, 'addComment'])->name('addComment');
 
 Route::post('/addReservation/{room_id}/{city_id}', [App\Http\Controllers\FrontendController::class, 'addReservation'])->name('addReservation');
-Route::get('/firmaa/{id}', [App\Http\Controllers\FrontendController::class, 'businessDetails'])->name('businessDetails');
+Route::get('/firmaaa/{id}', [App\Http\Controllers\FrontendController::class, 'businessDetails'])->name('businessDetails');
 
 //Strony wymagające zalogowania
 Route::middleware(['auth','verified'])->group(function()
@@ -66,7 +66,8 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/firma/kategorie', function () {  return view('business.categoryBusiness');  })->name('business.category');
 
         Route::post('/firma/dodawanie', [App\Http\Controllers\BusinessController::class, 'addBusiness'])->name('addBusiness');
-
+        Route::get('/firma/powiadomienia', [App\Http\Controllers\BusinessController::class, 'notifications'])->name('business.notifications');
+        
     });
 
     Route::middleware(['can:isUser'])->group(function()

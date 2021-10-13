@@ -23,7 +23,7 @@ class BusinessRepository implements BusinessRepositoryInterface
     //Pobranie danych wybranej firmy
     public function getBusinessDetails($id)
     {
-        return Business::with(['city','photos','comments.user','comments.photos','questionsAndAnswers','address','users.photos','rooms.photos'])->find($id);
+        return Business::with(['city','photos','comments.user','comments.photos','questionsAndAnswers','address','users.photos','rooms.photos','contact','categories.category'])->find($id);
     }
 
     public function getBusinessReservations($request)

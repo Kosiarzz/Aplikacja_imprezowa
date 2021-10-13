@@ -58,6 +58,10 @@
                             @can('isBusiness')
                                 <a href="{{ route('business.index') }}" class="mr-3">Usługi</a>
                                 <a href="{{ route('business.notifications') }}" class="mr-3">Powiadomienia</a>
+                                <a href="{{ route('business.notifications') }}" class="mr-3">Statystyki</a>
+                                <a href="{{ route('business.notifications') }}" class="mr-3">Profil</a>
+                                <a href="{{ route('business.notifications') }}" class="mr-3">Rezerwacje</a>
+                                <a href="{{ route('business.notifications') }}" class="mr-3">Ustawienia</a>
                             @endcan
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();

@@ -21,4 +21,9 @@ class BusinessCategory extends Model
         'business_id',
         'category_id',
     ];
+
+    public function category()
+    {
+        return $this->hasMany(Category::class, 'id');
+    }
 }

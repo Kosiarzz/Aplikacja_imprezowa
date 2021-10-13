@@ -51,4 +51,9 @@ class BusinessController extends Controller
         return redirect(route('business.index'))->with('brak', 'brak');
     }
 
+    public function notifications()
+    {
+        return view('business.notifications');
+    }
+
 }
