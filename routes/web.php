@@ -62,8 +62,10 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/firma', [App\Http\Controllers\BusinessController::class, 'index'])->name('business.index');
         Route::get('/firmaa/{id}', [App\Http\Controllers\BusinessController::class, 'businessDetails'])->name('business.id');
         Route::get('/firma/rezerwacje', [App\Http\Controllers\BusinessController::class, 'reservations'])->name('business.reservations');
-        Route::get('/firma/profil', function () {  return view('business.profile');  })->name('businessProfile.profile');
+        Route::get('/firma/profil', [App\Http\Controllers\BusinessController::class, 'category'])->name('businessProfile.profile');
         Route::get('/firma/kategorie', function () {  return view('business.categoryBusiness');  })->name('business.category');
+
+        Route::post('/firma/dodawanie', [App\Http\Controllers\BusinessController::class, 'addBusiness'])->name('addBusiness');
 
     });
 

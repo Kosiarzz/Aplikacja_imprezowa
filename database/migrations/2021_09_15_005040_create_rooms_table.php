@@ -19,6 +19,10 @@ class CreateRoomsTable extends Migration
             $table->text('description');
             $table->integer('people_from');
             $table->integer('people_to');
+            $table->integer('price_from');
+            $table->integer('price_to');
+            $table->string('unit');
+            $table->integer('size');
             $table->foreignId('business_id')->constrained('businesses')->onDelete('cascade')->unsigned();
         });
     }

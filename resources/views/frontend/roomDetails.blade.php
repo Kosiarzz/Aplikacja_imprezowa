@@ -4,8 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
             <br>
-           <a href="{{route('businessDetails',['id' => $room->business_id])}}">Powrót</a><br>
+           <a href="{{route('business.id',['id' => $room->business_id])}}">Powrót</a><br>
            <div style="width:100%;">
+           
             {{$room->title}}<br>
             {{$room->description}}<br>
             {{$room->people_from}}<br>

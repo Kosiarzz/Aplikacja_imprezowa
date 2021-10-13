@@ -21,15 +21,15 @@ class Business extends Model
      * @var string[]
      */
     protected $fillable = [
+        'name',
+        'nip',
         'title',
         'description',
-        'shortDescription',
-        'priceFrom',
-        'priceTo',
-        'unit',
+        'short_description',
         'range',
         'user_id',
         'city_id',
+        'social_id',
     ];
 
     public function city()
@@ -57,6 +57,11 @@ class Business extends Model
         return $this->hasOne(Address::class);
     }
 
+    public function contact()
+    {
+        return $this->hasOne(Contact::class);
+    }
+
     public function social()
     {
         return $this->hasOne(Social::class);
@@ -80,5 +85,10 @@ class Business extends Model
     public function isLiked()
     {
         return $this->users()->where('user_id', Auth::user()->id)->exists();
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(BusinessCategory::class);
     }
 }

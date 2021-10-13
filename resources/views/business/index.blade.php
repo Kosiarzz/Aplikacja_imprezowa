@@ -3,7 +3,9 @@
 @section('content')
 <div class="container">
 
-            <button>Dodaj usługę</button>
+            <div>
+                <a href="{{ route('business.category') }}">Dodaj usługę</a>
+            </div><br>
             
             @foreach($businesses as $business)
             <div>

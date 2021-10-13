@@ -22,16 +22,14 @@ class BusinessFactory extends Factory
     public function definition()
     {
         return[
+            'name' => $this->faker->text(20),
+            'nip' => $this->faker->text(12),
             'title' => $this->faker->unique()->word,
             'description' => $this->faker->text(500),
             'short_description' => $this->faker->text(100),
-            'priceFrom' => $this->faker->numberBetween(100,500),
-            'priceTo' => $this->faker->numberBetween(500,1000),
-            'unit' => 'jednostka',
             'range' => $this->faker->state,
             'user_id' => $this->faker->unique(true)->numberBetween(1,10),
             'city_id' => $this->faker->unique()->numberBetween(1,20),
-            'social_id' => $this->faker->unique(true)->numberBetween(1,10),
         ];
     }
 }

@@ -21,6 +21,10 @@ class Room extends Model
         'description',
         'people_from',
         'people_to',
+        'price_from',
+        'price_to',
+        'unit',
+        'size',
         'business_id',
     ];
 

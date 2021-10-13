@@ -3,6 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        
         Szczegóły widoku właściciela firmy
         {{$business->title}} ({{$business->city->name}})<br>
         {{$business->range}}<br>

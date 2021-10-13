@@ -35,4 +35,20 @@ class BusinessController extends Controller
         return view('business.reservations', ['business' => $reservations]);
     }
 
+    public function category()
+    {
+        $category = $this->bRepository->getCategory();
+        return view('business.profile',  ['category' => $category]);
+    }
+
+    public function addBusiness(Request $request)
+    {
+        
+        $this->bRepository->addBusiness($request);
+
+        $businesses = $this->bRepository->getAllBusiness();
+
+        return redirect(route('business.index'))->with('brak', 'brak');
+    }
+
 }

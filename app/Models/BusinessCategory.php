@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Address extends Model
+class BusinessCategory extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
-    
+    public $table = 'business_category';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
     protected $fillable = [
-        'post_code',
-        'street',
         'business_id',
+        'category_id',
     ];
 }

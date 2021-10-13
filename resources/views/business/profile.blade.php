@@ -3,11 +3,10 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        cały profil
-        <form method="POST" action="#">
+        <form method="POST" action="{{ route('addBusiness') }}">
             @csrf
             <div class="form-group row">
-                <label for="title" class="col-md-4 col-form-label text-md-right">Tytuł</label>
+                <label for="title" class="col-md-4 col-form-label text-md-right">Tytuł ogłoszenia</label>
 
                 <div class="col-md-6">
                     <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}">
@@ -48,118 +47,68 @@
                 </div>
             </div>
 
-            <div class="form-group row">
-                <div class="">Rodzaj budynku/miejsca</div><br>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Sala">
-                        Sala
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Sala" id="Sala">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Lokal">
-                        Lokal
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Lokal" id="Lokal">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Dom">
-                        Dom
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Dom" id="Dom">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Hotel">
-                        Hotel
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Hotel" id="Hotel">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Palac">
-                        Pałac
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Palac" id="Palac">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Dworek">
-                        Dworek
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Dworek" id="Dworek">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Zamek">
-                        Zamek
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Zamek" id="Zamek">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Gospoda">
-                        Gospoda
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Gospoda" id="Gospoda">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Namiot">
-                        Namiot
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Namiot" id="Namiot">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Ogrod">
-                        Ogród
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Ogrod" id="Ogrod">
+            <div class="form-group">
+                <label for="select" class="col-lg-2 control-label">Rodzaj sali</label>
+                <div class="col-lg-10">
+                    <select name="mainCategory" class="form-control" id="select">
+                        @foreach($category as $cate)
+                            @if($cate->type == 'lokal')
+                                <option value="{{$cate->id}}">{{$cate->name}}</option>
+                            @endif
+                        @endforeach
+                        <option value="---------">--------</option>
+                        <option value="sala">Sala</option>
+                        <option value="lokal">Lokal</option>
+                        <option value="hotel">Hotel</option>
+                        <option value="palac">Pałac</option>
+                        <option value="dworek">Dworek</option>
+                        <option value="zamek">Zamek</option>
+                        <option value="gospoda">Gospoda</option>
+                        <option value="namiot">Namiot</option>
+                        <option value="ogrod">Ogród</option>
+                        <option value="dom">Dom</option>
+                    </select>
                 </div>
             </div>
-
+            
             <div class="form-group row">
                 Obsługiwane imprezy<br>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Wesela">
-                        Wesela
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Wesela" id="Wesela">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Chrzciny">
-                        Chrzciny
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Chrzciny" id="Chrzciny">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Osiemnastki">
-                        Osiemnastki
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Osiemnastki" id="Osiemnastki">
-                </div>
+                @foreach($category as $cate)
+                    @if($cate->type == 'party')
+                        <div class="form-check">
+                            <label class="form-check-label mr-4" for="{{$cate->name}}">
+                            {{$cate->name}}
+                            </label>
+                            <input class="form-check-input" type="checkbox" value="{{$cate->id}}" id="{{$cate->name}}" name="party[]">
+                        </div>
+                    @endif
+                @endforeach
                 <div class="form-check">
                     <label class="form-check-label mr-4" for="Komunie">
                         Komunie
                     </label>
-                    <input class="form-check-input" type="checkbox" value="Komunie" id="Komunie">
+                    <input class="form-check-input" type="checkbox" value="1" id="Komunie" name="party[]">
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label mr-4" for="Urodziny">
+                    Urodziny
+                    </label>
+                    <input class="form-check-input" type="checkbox" value="2" id="Urodziny" name="party[]">
                 </div>
             </div>
 
             <div class="form-group row">
                 Dodatkowe informacje<br>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Klimatyzacja">
-                        Klimatyzacja
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Klimatyzacja" id="Klimatyzacja">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Parking">
-                        Parking
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Parking" id="Parking">
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="Taras">
-                        Ogród/taras
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="Taras" id="Taras">
-                </div>
+                @foreach($category as $cate)
+                    @if($cate->type == 'dodatkowe')
+                        <div class="form-check">
+                            <label class="form-check-label mr-4" for="{{$cate->name}}">
+                                {{$cate->name}}
+                            </label>
+                            <input class="form-check-input" type="checkbox" value="{{$cate->id}}" id="{{$cate->name}}" name="dodatkowe[]">
+                        </div>
+                    @endif
+                @endforeach
                 <div class="form-check">
                     <label class="form-check-label mr-4" for="Nocleg">
                         Nocleg
@@ -181,7 +130,8 @@
                     @enderror
                 </div>
             </div>
-
+            <hr> 
+            Sala
             <div class="form-group row">
                 <label for="priceFrom" class="col-md-4 col-form-label text-md-right">Cena od</label>
 
@@ -299,7 +249,7 @@
                 <label for="image" class="col-md-4 col-form-label text-md-right">Zdjęcia sali</label>
 
                 <div class="col-md-6">
-                    <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image">
+                    <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="imageRoom" multiple>
                     
                     @error('image')
                     <span class="invalid-feedback" role="alert">
@@ -311,9 +261,10 @@
 
             <button>Dodaj cennik</button>
             <button>Dodaj sale</button>
-
+            <hr>
+            Dane kontaktowe
             <div class="form-group row">
-                <label for="name" class="col-md-4 col-form-label text-md-right">Imie i nazwisko</label>
+                <label for="name" class="col-md-4 col-form-label text-md-right">Imie</label>
 
                 <div class="col-md-6">
                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}">
@@ -327,12 +278,12 @@
             </div>
 
             <div class="form-group row">
-                <label for="business" class="col-md-4 col-form-label text-md-right">Nazwa firmy</label>
+                <label for="surname" class="col-md-4 col-form-label text-md-right">Nazwisko</label>
 
                 <div class="col-md-6">
-                    <input id="business" type="text" class="form-control @error('business') is-invalid @enderror" name="business" value="{{ old('business') }}">
+                    <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}">
 
-                    @error('business')
+                    @error('surname')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -341,7 +292,21 @@
             </div>
 
             <div class="form-group row">
-                <label for="nip" class="col-md-4 col-form-label text-md-right">NIP??</label>
+                <label for="businessName" class="col-md-4 col-form-label text-md-right">Nazwa firmy</label>
+
+                <div class="col-md-6">
+                    <input id="businessName" type="text" class="form-control @error('businessName') is-invalid @enderror" name="businessName" value="{{ old('businessName') }}">
+
+                    @error('businessName')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="nip" class="col-md-4 col-form-label text-md-right">NIP</label>
 
                 <div class="col-md-6">
                     <input id="nip" type="text" class="form-control @error('nip') is-invalid @enderror" name="nip" value="{{ old('nip') }}">
@@ -367,7 +332,8 @@
                     @enderror
                 </div>
             </div>
-
+            <hr>
+            Media społecznośćiowe
             <div class="form-group row">
                 <label for="www" class="col-md-4 col-form-label text-md-right">Link do strony wwww</label>
 
@@ -423,14 +389,15 @@
                     @enderror
                 </div>
             </div>
-
+            <hr>
+            Adres
             <div class="form-group row">
-                <label for="business" class="col-md-4 col-form-label text-md-right">Miasto</label>
+                <label for="city" class="col-md-4 col-form-label text-md-right">Miasto</label>
 
                 <div class="col-md-6">
-                    <input id="business" type="text" class="form-control @error('business') is-invalid @enderror" name="business" value="{{ old('business') }}">
+                    <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}">
 
-                    @error('business')
+                    @error('city')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -438,6 +405,34 @@
                 </div>
             </div>
 
+            <div class="form-group row">
+                <label for="street" class="col-md-4 col-form-label text-md-right">Ulica i numer</label>
+
+                <div class="col-md-6">
+                    <input id="street" type="text" class="form-control @error('street') is-invalid @enderror" name="street" value="{{ old('street') }}">
+
+                    @error('street')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="postCode" class="col-md-4 col-form-label text-md-right">Kod pocztowy</label>
+
+                <div class="col-md-6">
+                    <input id="postCode" type="text" class="form-control @error('postCode') is-invalid @enderror" name="postCode" value="{{ old('postCode') }}">
+
+                    @error('postCode')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+            <hr>
             <div class="form-group row">
                 <label for="image" class="col-md-4 col-form-label text-md-right">Zdjęcia lokalu</label>
 
@@ -453,19 +448,32 @@
             </div>
 
             <div class="form-group row">
-                <label for="youtube" class="col-md-4 col-form-label text-md-right">Link do filmiku na youtube</label>
+                <label for="youtubeMovie" class="col-md-4 col-form-label text-md-right">Link do filmiku na youtube promujący</label>
 
                 <div class="col-md-6">
-                    <input id="youtube" type="text" class="form-control @error('youtube') is-invalid @enderror" name="youtube" value="{{ old('youtube') }}">
+                    <input id="youtubeMovie" type="text" class="form-control @error('youtubeMovie') is-invalid @enderror" name="youtubeMovie" value="{{ old('youtubeMovie') }}">
 
-                    @error('youtube')
+                    @error('youtubeMovie')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
                 </div>
             </div>
+            <div class="form-group row">
+                <label for="avatar" class="col-md-4 col-form-label text-md-right">Avatar</label>
 
+                <div class="col-md-6">
+                    <input id="avatar" type="file" class="form-control @error('avatar') is-invalid @enderror" name="avatar">
+                    
+                    @error('avatar')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+            </div>
+            <hr>
             <div class="form-group row">
                 <label for="timeOpen" class="col-md-4 col-form-label text-md-right">Godziny otwarcia</label>
 
@@ -479,6 +487,9 @@
                     @enderror
                 </div>
             </div>
+            <hr>
+            Q&A
+            <button>Dodaj pytanie</button>
 
         </form>
     </div>

@@ -82,9 +82,9 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        var base_url = '{{url("/admin")}}';
+        var base_url = '{{url("/")}}';
     </script>
-    <script src="{{ asset('js/reservations.js') }}"> window.reservations() </script>
+    
     @stack('calendar')
     
 </body>
