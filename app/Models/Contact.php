@@ -19,6 +19,12 @@ class Contact extends Model
         'name',
         'surname',
         'phone',
-        'business_id',
+        'contact_type',
+        'contact_id',
     ];
+
+    public function contact()
+    {
+        return $this->morphTo();
+    }
 }

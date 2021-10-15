@@ -18,7 +18,8 @@ class CreateNotificationsTable extends Migration
             $table->string('content');
             $table->boolean('status');
             $table->boolean('shown')->default(false);
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('notification_type');
+            $table->integer('notification_id')->onDelete('cascade');
         });
     }
 

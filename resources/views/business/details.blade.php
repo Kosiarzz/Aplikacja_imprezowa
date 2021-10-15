@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         owasp top 10 web security risk
         mitre attack
-        {{dd($business)}}
+      
         Szczegóły widoku właściciela firmy
         {{$business->title}} ({{$business->city->name}})<br>
         {{$business->range}}<br>

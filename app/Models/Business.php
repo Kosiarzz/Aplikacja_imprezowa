@@ -26,7 +26,6 @@ class Business extends Model
         'title',
         'description',
         'short_description',
-        'range',
         'user_id',
         'city_id',
         'social_id',
@@ -59,7 +58,12 @@ class Business extends Model
 
     public function contact()
     {
-        return $this->hasOne(Contact::class);
+        return $this->morphMany(Contact::class, 'contact');
+    }
+
+    public function notification()
+    {
+        return $this->morphMany(Notification::class, 'notification');
     }
 
     public function social()

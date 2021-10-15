@@ -20,6 +20,12 @@ class Notification extends Model
         'content',
         'status',
         'shown',
-        'user_id',
+        'notification_type',
+        'notification_id',
     ];
+
+    public function notification()
+    {
+        return $this->morphTo();
+    }
 }

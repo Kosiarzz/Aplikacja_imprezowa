@@ -10,6 +10,7 @@ use App\Models\Address;
 use App\Models\Contact;
 use App\Models\Room; 
 use App\Models\BusinessCategory;
+use App\Models\Notification;
 use App\Interfaces\BusinessRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,6 +24,7 @@ class BusinessRepository implements BusinessRepositoryInterface
     //Pobranie danych wybranej firmy
     public function getBusinessDetails($id)
     {
+        session(['business' => $id]);
         return Business::with(['city','photos','comments.user','comments.photos','questionsAndAnswers','address','users.photos','rooms.photos','contact','categories.category'])->find($id);
     }
 
@@ -34,11 +36,11 @@ class BusinessRepository implements BusinessRepositoryInterface
                         $q->has('reservations');
                     }, 
 
-                    'rooms.reservations.user'
+                    'rooms.reservations.user.contact',
 
                   ])
                     ->has('rooms.reservations') 
-                    ->where('user_id', $request->user()->id)
+                    ->where('id', session('business'))
                     ->get();
     }
 
@@ -89,8 +91,9 @@ class BusinessRepository implements BusinessRepositoryInterface
             $category = new BusinessCategory;
             $category->category_id = $categoryId;
             $business->categories()->save($category);
-            
+
         }
+
 
         $room = new Room;
         $room->title = $request->titleRoom;
@@ -110,38 +113,36 @@ class BusinessRepository implements BusinessRepositoryInterface
         $business->contact()->save($contact);
     }
 
-    /**
-     *"_token" => "aAfnQAlc2eaZJS9q8fx67yZClVZZ2EhLuoMMemvg"
-     * #"title" => null
-     * #"shortDescription" => null
-     * #"description" => null
-     * "mainCategory" => "---------"
-     * "party" => array:4 [▶]
-     * "beds" => null
-     * #"priceFrom" => null
-     * #"priceTo" => null
-     * #"unit" => null
-      *#"titleRoom" => null
-      *#"descriptionRoom" => null
-      *#"minPeople" => null
-     * #"maxPeople" => null
-      *#"sizeRoom" => null
-      *"imageRoom" => null
-      *#"name" => null
-      *#"surname" => null
-      *#"businessName" => null
-      *"nip" => null
-      *#"phone" => null
-      *#"www" => null
-      *#"facebook" => null
-      *#"instagram" => null
-      *#"youtube" => null
-      *"city" => null
-      *#"street" => null
-      *#"postCode" => null
-      *"image" => null
-      *#"youtubeMovie" => null
-      *"avatar" => null
-      *"timeOpen" => null
-     */
+    public function getReservation($id)
+    {
+        return Reservation::find($id);
+    }
+
+    public function deleteReservation(Reservation $reservation)
+    {
+        return $reservation->delete();
+    }
+
+    public function confirmReservation(Reservation $reservation)
+    {
+        return $reservation->update(['status' => true]);
+    }
+
+    public function getBusinessNotifications($id)
+    {
+        return Notification::with(['notification'])
+                ->where('notification_id', $id)
+                ->where('notification_type','App\Models\Business')->get();
+    }
+
+    public function addNotification($reservation, $text)
+    {   
+        $notification = new Notification;
+        $notification->content = $text;
+        $notification->notification_type = 'App\Models\User';
+        $notification->status = false;
+        $notification->notification_id = $reservation->user_id;
+
+        return $notification->save();
+    }
 }

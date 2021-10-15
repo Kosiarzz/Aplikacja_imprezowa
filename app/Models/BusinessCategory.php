@@ -10,7 +10,7 @@ class BusinessCategory extends Model
     use HasFactory;
 
     public $timestamps = false;
-    public $table = 'business_category';
+    public $table = 'businesses_categories';
 
     /**
      * The attributes that are mass assignable.

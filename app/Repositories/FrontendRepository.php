@@ -8,6 +8,7 @@ use App\Models\Room;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\Notification;
 use App\Interfaces\FrontendRepositoryInterface;
 //use App\Models\{Business,City};
 class FrontendRepository implements FrontendRepositoryInterface
@@ -81,7 +82,6 @@ class FrontendRepository implements FrontendRepositoryInterface
         return $commentable->comments()->save($comment);
     }
 
-    
     public function addReservation($room_id, $city_id, $request)
     {
         return Reservation::create([
@@ -93,5 +93,18 @@ class FrontendRepository implements FrontendRepositoryInterface
                 'date_to'=>date('Y-m-d', strtotime($request->input('dateTo')))
             ]);
     }
- 
+
+    public function addNotification($id)
+    {
+        $room = Room::with(['business'])->find($id);
+
+        $notification = new Notification;
+        $notification->content = 'Dokonano rezerwacji w '. $room->business->name;
+        $notification->notification_type = 'App\Models\Business';
+        $notification->status = false;
+        $notification->notification_id = $room->business->id;
+
+        return $notification->save();
+    }
+
 }

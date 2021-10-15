@@ -55,80 +55,75 @@
 @push('calendar')
 <script>
 
-function datesBetween(dateFrom, dateTo)
-{   
-    var between = [];
-    var startDate = new Date(dateFrom);
-    var endDate = new Date(dateTo);
+        function datesBetween(dateFrom, dateTo)
+        {   
+            var between = [];
+            var startDate = new Date(dateFrom);
+            var endDate = new Date(dateTo);
 
-    while(startDate <= endDate)
-    {
-        between.push($.datepicker.formatDate('yy-mm-dd', new Date(startDate)));
-        startDate.setDate(startDate.getDate()+1);
-    }
-
-    return between;
-}
-
-$.ajax({
-
-cache: false,
-url: base_url + '/ajaxGetRoomReservations/' + {{ $room->id }},
-type: "GET",
-success: function(response){
-
-
-
-    var eventDates = {};
-    var dates = [];
-    for (var i = 0; i <= response.reservations.length - 1; i++)
-    {
-        dates.push( datesBetween(new Date(response.reservations[i].date_from), new Date(response.reservations[i].date_to)));
-    }
-
-    dates = [].concat.apply([],dates); //spłaszczenie tablicy
-
-    for (var i = 0; i <= dates.length - 1; i++)
-    {
-        eventDates[dates[i]] = dates[i]; 
-    }
-
-    $(function () {
-        $("#avaiability_calendar").datepicker({
-            onSelect: function (data) {
-
-    //            console.log($('#dateFrom').val());
-
-                if ($('#dateFrom').val() == '')
-                {
-                    $('#dateFrom').val(data);
-                } else if ($('#dateTo').val() == '')
-                {
-                    $('#dateTo').val(data);
-                } else if ($('#dateTo').val() != '')
-                {
-                    $('#dateFrom').val(data);
-                    $('#dateTo').val('');
-                }
-
-            },
-            beforeShowDay: function (date)
+            while(startDate <= endDate)
             {
-                var tmp = eventDates[$.datepicker.formatDate('yy-mm-dd', date)];
-                if (tmp)
-                    return [false, 'unavaiable_date'];
-                else
-                    return [true, ''];
+                between.push($.datepicker.formatDate('yy-mm-dd', new Date(startDate)));
+                startDate.setDate(startDate.getDate()+1);
             }
+
+            return between;
+        }
+
+        $.ajax({
+
+        cache: false,
+        url: base_url + '/ajaxGetRoomReservations/' + {{ $room->id }},
+        type: "GET",
+        success: function(response){
+
+
+
+            var eventDates = {};
+            var dates = [];
+            for (var i = 0; i <= response.reservations.length - 1; i++)
+            {
+                dates.push( datesBetween(new Date(response.reservations[i].date_from), new Date(response.reservations[i].date_to)));
+            }
+
+            dates = [].concat.apply([],dates); //spłaszczenie tablicy
+
+            for (var i = 0; i <= dates.length - 1; i++)
+            {
+                eventDates[dates[i]] = dates[i]; 
+            }
+
+            $(function () {
+                $("#avaiability_calendar").datepicker({
+                    onSelect: function (data) {
+
+            //            console.log($('#dateFrom').val());
+
+                        if ($('#dateFrom').val() == '')
+                        {
+                            $('#dateFrom').val(data);
+                        } else if ($('#dateTo').val() == '')
+                        {
+                            $('#dateTo').val(data);
+                        } else if ($('#dateTo').val() != '')
+                        {
+                            $('#dateFrom').val(data);
+                            $('#dateTo').val('');
+                        }
+
+                    },
+                    beforeShowDay: function (date)
+                    {
+                        var tmp = eventDates[$.datepicker.formatDate('yy-mm-dd', date)];
+                        if (tmp)
+                            return [false, 'unavaiable_date'];
+                        else
+                            return [true, ''];
+                    }
+                });
+            });
+        }
+
         });
-    });
-}
-
-});
-
-
-
-
-
-    </script>
+ </script>
 @endpush

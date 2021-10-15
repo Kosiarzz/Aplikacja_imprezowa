@@ -51,9 +51,35 @@ class BusinessController extends Controller
         return redirect(route('business.index'))->with('brak', 'brak');
     }
 
-    public function notifications()
+    public function notifications(Request $request)
     {
-        return view('business.notifications');
+        $notifications = $this->bGateway->getNotifications($request, session('business'));
+
+        return view('business.notifications',  ['notifications' => $notifications]);
+    }
+
+    public function confirmReservation($id)
+    {
+        $reservation = $this->bRepository->getReservation($id);
+
+        $this->authorize('reservation', $reservation);
+
+        $this->bRepository->confirmReservation($reservation);
+        $this->bRepository->addNotification($reservation, 'Rezerwacja zaakceptowana');
+
+        return redirect()->back();
+    }
+    
+    public function deleteReservation($id)
+    {
+        $reservation = $this->bRepository->getReservation($id);
+
+        $this->authorize('reservation', $reservation);
+        
+        $this->bRepository->deleteReservation($reservation);
+        $this->bRepository->addNotification($reservation, 'Rezerwacja odrzucona');
+
+        return redirect()->back();
     }
 
 }

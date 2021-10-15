@@ -67,7 +67,9 @@ Route::middleware(['auth','verified'])->group(function()
 
         Route::post('/firma/dodawanie', [App\Http\Controllers\BusinessController::class, 'addBusiness'])->name('addBusiness');
         Route::get('/firma/powiadomienia', [App\Http\Controllers\BusinessController::class, 'notifications'])->name('business.notifications');
-        
+
+        Route::get('/confirmReservation/{id}', [App\Http\Controllers\BusinessController::class, 'confirmReservation'])->name('business.confirmReservation');
+        Route::get('/deleteReservation/{id}', [App\Http\Controllers\BusinessController::class, 'deleteReservation'])->name('business.deleteReservation');
     });
 
     Route::middleware(['can:isUser'])->group(function()
@@ -76,6 +78,11 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/uzytkownik/profil', [App\Http\Controllers\UserController::class, 'profile'])->name('user.profile');
         Route::get('/uzytkownik/polubione', [App\Http\Controllers\UserController::class, 'like'])->name('user.like');
         Route::get('/uzytkownik/wydarzenia', [App\Http\Controllers\UserController::class, 'events'])->name('user.events');
+        Route::get('/uzytkownik/rezerwacje', [App\Http\Controllers\UserController::class, 'reservation'])->name('user.reservation');
+        Route::get('/uzytkownik/powiadomienia', [App\Http\Controllers\UserController::class, 'notifications'])->name('user.notification');
+
+        Route::get('/deleteeReservation/{id}', [App\Http\Controllers\UserController::class, 'deleteReservation'])->name('user.deleteReservation');
+        Route::get('/setReadNotification/{id}', [App\Http\Controllers\UserController::class, 'setReadNotification']);
     });
     
 });

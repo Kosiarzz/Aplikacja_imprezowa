@@ -32,13 +32,14 @@ class FrontendController extends Controller
     public function roomDetails($id)
     {
         $data = $this->fRepository->getRoomDetails($id);
-
+        
         return view('frontend.roomDetails', ['room' => $data]);
     }
 
     public function ajaxGetRoomReservations($id)
     {
         $reservations = $this->fRepository->getReservationsByRoomId($id);
+        $this->fRepository->addNotification($id);
 
         return response()->json([
             'reservations' => $reservations

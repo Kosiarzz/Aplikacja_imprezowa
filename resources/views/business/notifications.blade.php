@@ -1,9 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.business')
 
 @section('content')
 <div class="container">
 
-            powiadomienia
-
+            @foreach($notifications as $notification)
+                {{$notification->content}}<br>
+                Status: {{$notification->status}}<br>
+                Shown: {{$notification->shown}}
+                <hr>
+            @endforeach
 </div>
 @endsection

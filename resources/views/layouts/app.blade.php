@@ -33,7 +33,7 @@
                     <ul class="navbar-nav mr-auto">
 
                     </ul>
-
+                    
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -54,6 +54,14 @@
                                 <a href="{{ route('user.profile') }}" class="mr-3">Profil</a>
                                 <a href="{{ route('user.like') }}" class="mr-3">Polubione</a>
                                 <a href="{{ route('user.events') }}" class="mr-3">Wydarzenia</a>  
+                                <a href="{{ route('user.notification') }}" class="mr-3">
+                                    @if(!empty($notifications))
+                                        Powiadomienia({{count($notifications)}})
+                                    @else
+                                        Powiadomienia
+                                    @endif
+                                </a>  
+                                <a href="{{ route('user.reservation') }}" class="mr-3">Rezerwacje</a>  
                             @endcan
                             @can('isBusiness')
                                 <a href="{{ route('business.index') }}" class="mr-3">Usługi</a>
@@ -88,7 +96,7 @@
     
     @stack('calendar')
     @stack('business')
-    
+    @stack('notify')
 </body>
 
 </html>

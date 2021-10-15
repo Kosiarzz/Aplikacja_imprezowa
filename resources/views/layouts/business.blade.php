@@ -60,7 +60,7 @@
                                 <a href="{{ route('business.notifications') }}" class="mr-3">Powiadomienia</a>
                                 <a href="{{ route('business.notifications') }}" class="mr-3">Statystyki</a>
                                 <a href="{{ route('business.notifications') }}" class="mr-3">Profil</a>
-                                <a href="{{ route('business.notifications') }}" class="mr-3">Rezerwacje</a>
+                                <a href="{{ route('business.reservations') }}" class="mr-3">Rezerwacje</a>
                                 <a href="{{ route('business.notifications') }}" class="mr-3">Ustawienia</a>
                             @endcan
                             <a class="dropdown-item" href="{{ route('logout') }}"

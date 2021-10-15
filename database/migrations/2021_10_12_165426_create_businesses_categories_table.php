@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContactsTable extends Migration
+class CreateBusinessesCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateContactsTable extends Migration
      */
     public function up()
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('businesses_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('surname');
-            $table->string('phone');
-            $table->foreignId('business_id')->constrained('businesses')->onDelete('cascade')->unsigned();
+            $table->integer('business_id')->constrained('business')->onDelete('cascade')->unsigned();
+            $table->integer('category_id')->constrained('category')->onDelete('cascade')->unsigned();
         });
     }
 
@@ -29,6 +27,6 @@ class CreateContactsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('businesses_categories');
     }
 }

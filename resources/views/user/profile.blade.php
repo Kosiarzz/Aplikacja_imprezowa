@@ -4,6 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
 
+        
         <form method="POST" action="{{ route('register') }}">
             @csrf
             <img width=70 height=70 src="{{$user->photos->path}}" class="rounded-circle" alt="avatar">
@@ -12,7 +13,7 @@
                 <label for="name" class="col-md-4 col-form-label text-md-right">Imie</label>
 
                 <div class="col-md-6">
-                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->userData->name }}">
+                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->contact[0]->name }}">
 
                     @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -26,7 +27,7 @@
                 <label for="surname" class="col-md-4 col-form-label text-md-right">Nazwisko</label>
 
                 <div class="col-md-6">
-                    <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ $user->userData->surname }}">
+                    <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ $user->contact[0]->surname }}">
 
                     @error('surname')
                         <span class="invalid-feedback" role="alert">
@@ -40,7 +41,7 @@
                 <label for="phone" class="col-md-4 col-form-label text-md-right">Numer telefonu</label>
 
                 <div class="col-md-6">
-                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ $user->userData->phone }}">
+                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ $user->contact[0]->phone }}">
 
                     @error('phone')
                         <span class="invalid-feedback" role="alert">
@@ -52,11 +53,11 @@
 
             <br><br>Preferencje<br>
 
-            Język: {{$user->userData->language}}
+            Język: 
 
             <br><br>Powiadomienia<br>
-            E-mail: {{$user->userData->notifications_email}}<br>
-            SMS: {{$user->userData->notifications_sms}}
+            E-mail: <br>
+            SMS: 
 
             <br><br>Konto<br>
 

@@ -53,14 +53,19 @@ class User extends Authenticatable
         return $this->morphOne(Photo::class, 'photoable');
     }
 
+    public function contact()
+    {
+        return $this->morphMany(Contact::class, 'contact');
+    }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
 
-    public function userData()
+    public function unotifications()
     {
-        return $this->hasOne(UserData::class);
+        return $this->morphMany(Notification::class, 'notification');
     }
 
     public function isAdmin()

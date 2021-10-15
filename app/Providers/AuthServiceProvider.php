@@ -15,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        'App\Models\Reservation' => 'App\Policies\ReservationPolicy',
     ];
 
     /**
@@ -35,8 +35,10 @@ class AuthServiceProvider extends ServiceProvider
 
     private function defineUserRoleGate(string $name, string $role)
     {
-        Gate::define($name, function(User $user) use ($role){
+        Gate::define($name, function(User $user) use ($role)
+        {
             return $user->role == $role;
         });
     }
+
 }
