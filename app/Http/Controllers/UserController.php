@@ -63,8 +63,15 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function setReadNotification($id)
+    public function setReadNotification(Request $request)
     {
-        $reservation = $this->uRepository->setReadNotification($id);
+        $reservation = $this->uRepository->setReadNotification($request);
     }
+
+    public function getNotShownNotify(Request $request)
+    {
+        $reservation = $this->uRepository->getNotShownNotify($request);
+    }
+
+    
 }

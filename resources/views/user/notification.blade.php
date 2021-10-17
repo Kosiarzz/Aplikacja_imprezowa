@@ -26,18 +26,22 @@
     <script>
         $(document).on("click", "#noti", function (event) {
     
-            event.preventDefault(); //bez przejścia w backendzie
+            //event.preventDefault(); //bez przejścia w backendzie
 
-            var idOfNotification = $(this).children().attr('href');
+            var idOfNotification = parseInt($(this).children().attr('href'));
+            $(this).children().removeAttr('href');
             
+            var data = {id: idOfNotification};
+            console.log(idOfNotification);
             $.ajax({
                 cache: false,
-                url: base_url + '/setReadNotification/' + idOfNotification,
+                url: base_url + '/setReadNotification',
                 type: "GET",
-
+                dataType: "json",
+                data: {id: idOfNotification},
                 success: function(response){
                     $(this).removeClass('bg-info');
-                    $(this).children().removeAttr('href');
+                    
                 }
             });
         });

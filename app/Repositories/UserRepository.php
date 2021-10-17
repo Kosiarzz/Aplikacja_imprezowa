@@ -57,9 +57,9 @@ class UserRepository implements UserRepositoryInterface
         return $notification->save();
     }
 
-    public function setReadNotification($id)
+    public function setReadNotification($request)
     {
-        return Notification::where('id', $id)->update(['staus' => 1]);
+        return Notification::where('id', $request->id)->update(['status' => 1]);
     }
 
 }

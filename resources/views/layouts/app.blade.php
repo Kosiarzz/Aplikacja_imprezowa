@@ -93,7 +93,7 @@
     <script>
         var base_url = '{{url("/")}}';
     </script>
-    
+    <script src="{{ asset('js/notifications.js') }}"></script>
     @stack('calendar')
     @stack('business')
     @stack('notify')

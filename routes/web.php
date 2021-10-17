@@ -82,7 +82,8 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/uzytkownik/powiadomienia', [App\Http\Controllers\UserController::class, 'notifications'])->name('user.notification');
 
         Route::get('/deleteeReservation/{id}', [App\Http\Controllers\UserController::class, 'deleteReservation'])->name('user.deleteReservation');
-        Route::get('/setReadNotification/{id}', [App\Http\Controllers\UserController::class, 'setReadNotification']);
+        Route::get('/setReadNotification', [App\Http\Controllers\UserController::class, 'setReadNotification']);
+        Route::get('/getNotShownNotify', [App\Http\Controllers\UserController::class, 'getNotShownNotify']);
     });
     
 });

@@ -19,7 +19,7 @@ class CreateContactsTable extends Migration
             $table->string('surname');
             $table->string('phone');
             $table->string('contact_type');
-            $table->integer('contact_id')->onDelete('cascade');
+            $table->integer('contact_id')->onDelete('cascade')->unsigned();
         });
     }
 
