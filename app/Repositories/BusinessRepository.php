@@ -25,7 +25,7 @@ class BusinessRepository implements BusinessRepositoryInterface
     public function getBusinessDetails($id)
     {
         session(['business' => $id]);
-        return Business::with(['city','photos','comments.user','comments.photos','questionsAndAnswers','address','users.photos','rooms.photos','contact','categories.category'])->find($id);
+        return Business::with(['city','photos','comments.user','comments.photos','questionsAndAnswers','address','users.photos','rooms.photos','contactable','categories.category'])->find($id);
     }
 
     public function getBusinessReservations($request)
@@ -36,7 +36,7 @@ class BusinessRepository implements BusinessRepositoryInterface
                         $q->has('reservations');
                     }, 
 
-                    'rooms.reservations.user.contact',
+                    'rooms.reservations.user.contactable',
 
                   ])
                     ->has('rooms.reservations') 
@@ -110,7 +110,7 @@ class BusinessRepository implements BusinessRepositoryInterface
         $contact->surname = $request->surname;
         $contact->phone = $request->phone;
 
-        $business->contact()->save($contact);
+        $business->contactable()->save($contact);
     }
 
     public function getReservation($id)

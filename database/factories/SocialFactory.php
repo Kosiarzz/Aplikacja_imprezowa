@@ -14,6 +14,7 @@ class SocialFactory extends Factory
      */
     protected $model = Social::class;
 
+    private static $businessId = 1;
     /**
      * Define the model's default state.
      *
@@ -27,7 +28,7 @@ class SocialFactory extends Factory
             'www' => 'www',
             'youtube' => 'youtube',
             'movie_youtube' => 'movie_youtube',
-            'business_id' => $this->faker->unique(true)->numberBetween(1,10),
+            'business_id' => self::$businessId++,
         ];
     }
 }

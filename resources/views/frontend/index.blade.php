@@ -37,9 +37,6 @@
                     {{$business->title}} ({{$business->city->name}})<br>
                     {{$business->range}}<br>
                     {{$business->short_description}}<br>
-                    od {{$business->priceFrom}}
-                    do {{$business->priceTo}} 
-                    {{$business->unit}} <br>
                     <button style="width:140px; height:30px; font-size:12px;">Dodaj do ulubionych</button>
                 </div>
             </a>

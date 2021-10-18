@@ -14,6 +14,7 @@ class BusinessFactory extends Factory
      */
     protected $model = Business::class;
 
+    private static $userId = 1;
     /**
      * Define the model's default state.
      *
@@ -22,13 +23,12 @@ class BusinessFactory extends Factory
     public function definition()
     {
         return[
-            'name' => $this->faker->text(20),
-            'nip' => $this->faker->text(12),
-            'title' => $this->faker->unique()->word,
+            'name' => $this->faker->company,
+            'title' => $this->faker->jobTitle,
             'description' => $this->faker->text(500),
             'short_description' => $this->faker->text(100),
-            'user_id' => $this->faker->unique(true)->numberBetween(1,10),
-            'city_id' => $this->faker->unique()->numberBetween(1,20),
+            'user_id' => self::$userId++,
+            'city_id' => $this->faker->unique()->numberBetween(1,50),
         ];
     }
 }

@@ -70,7 +70,7 @@ class UserController extends Controller
 
     public function getNotShownNotify(Request $request)
     {
-        $reservation = $this->uRepository->getNotShownNotify($request);
+        $reservation = $this->uRepository->checkNotificationStatus($request);
     }
 
     

@@ -19,6 +19,7 @@ class CreateCommentsTable extends Migration
             $table->string('commentable_type');
             $table->integer('commentable_id');
             $table->integer('rating');
+            $table->timestamps();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
         });
     }

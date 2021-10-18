@@ -22,7 +22,7 @@ class RoomFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->unique()->word,
+            'title' => $this->faker->jobTitle,
             'description' => $this->faker->text(200),
             'people_from' => $this->faker->numberBetween(1,10),
             'people_to' => $this->faker->numberBetween(10,100),

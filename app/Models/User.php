@@ -53,9 +53,9 @@ class User extends Authenticatable
         return $this->morphOne(Photo::class, 'photoable');
     }
 
-    public function contact()
+    public function contactable()
     {
-        return $this->morphMany(Contact::class, 'contact');
+        return $this->morphMany(Contact::class, 'contactable');
     }
 
     public function comments()

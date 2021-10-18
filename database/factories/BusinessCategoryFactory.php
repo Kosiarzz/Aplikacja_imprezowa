@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Photo;
+use App\Models\BusinessCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PhotoFactory extends Factory
+class BusinessCategoryFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Photo::class;
+    protected $model = BusinessCategory::class;
 
     /**
      * Define the model's default state.
@@ -22,9 +22,8 @@ class PhotoFactory extends Factory
     public function definition()
     {
         return [
-            'photoable_type' => $this->faker->randomElement(['App\Models\Business','App\Models\User','App\Models\Room']),
-            'photoable_id' => $this->faker->numberBetween(1,40),
-            'path' => $this->faker->imageUrl(800,400,'city'),
+            'business_id' => $this->faker->numberBetween(1,10),
+            'category_id' => $this->faker->numberBetween(1,5),
         ];
     }
 }

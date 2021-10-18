@@ -19,11 +19,11 @@ class Contact extends Model
         'name',
         'surname',
         'phone',
-        'contact_type',
-        'contact_id',
+        'contactable_type',
+        'contactable_id',
     ];
 
-    public function contact()
+    public function contactable()
     {
         return $this->morphTo();
     }

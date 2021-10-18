@@ -22,13 +22,11 @@ class Business extends Model
      */
     protected $fillable = [
         'name',
-        'nip',
         'title',
         'description',
         'short_description',
         'user_id',
         'city_id',
-        'social_id',
     ];
 
     public function city()
@@ -56,9 +54,9 @@ class Business extends Model
         return $this->hasOne(Address::class);
     }
 
-    public function contact()
+    public function contactable()
     {
-        return $this->morphMany(Contact::class, 'contact');
+        return $this->morphMany(Contact::class, 'contactable');
     }
 
     public function notification()
@@ -83,7 +81,7 @@ class Business extends Model
 
     public function scopeOrdered($query)
     {
-        return $query->orderBy('priceFrom','asc');
+        return $query->orderBy('name','asc');
     }
 
     public function isLiked()

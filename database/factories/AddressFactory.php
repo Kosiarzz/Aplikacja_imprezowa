@@ -14,6 +14,7 @@ class AddressFactory extends Factory
      */
     protected $model = Address::class;
 
+    private static $businessId = 1;
     /**
      * Define the model's default state.
      *
@@ -24,7 +25,7 @@ class AddressFactory extends Factory
         return [
             'post_code' => $this->faker->postcode,
             'street' => $this->faker->streetAddress,
-            'business_id' => $this->faker->unique(true)->numberBetween(1,10),
+            'business_id' => self::$businessId++,
         ];
     }
 }

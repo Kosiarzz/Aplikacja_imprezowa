@@ -17,8 +17,8 @@ class Address extends Model
      * @var string[]
      */
     protected $fillable = [
-        'post_code',
         'street',
+        'post_code',
         'business_id',
     ];
 }

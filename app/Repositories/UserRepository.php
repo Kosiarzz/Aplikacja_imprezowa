@@ -15,7 +15,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function getProfileUser($id)
     {
-        return User::with(['contact', 'photos'])->find($id);
+        return User::with(['contactable', 'photos'])->find($id);
     }
 
     public function getLikeableUser($id)
@@ -49,7 +49,7 @@ class UserRepository implements UserRepositoryInterface
     {   
 
         $notification = new Notification;
-        $notification->content = $text.': '.$reservation->user->contact[0]->name.' '.$reservation->user->contact[0]->surname;
+        $notification->content = $text.': '.$reservation->user->contactable[0]->name.' '.$reservation->user->contactable[0]->surname;
         $notification->notification_type = 'App\Models\Business';
         $notification->status = false;
         $notification->notification_id = $reservation->room->business->id;
