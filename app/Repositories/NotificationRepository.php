@@ -2,35 +2,17 @@
 
 namespace App\Repositories;
 
-use App\Models\User;
-use App\Models\UserData;
 use App\Models\Notification;
-use App\Models\Reservation;
-use App\Interfaces\UserRepositoryInterface;
 
-use Illuminate\Support\Facades\Auth;
-
-class UserRepository implements UserRepositoryInterface
+class NotificationRepository
 {
-
-    public function getProfileUser($id)
-    {
-        return User::with(['contactable', 'photos'])->find($id);
-    }
-
-    public function getLikeableUser($id)
-    {
-        return User::with(['businesses'])->find($id);
-    }
-
-    public function getUserNotifications($request)
+   
+    public function getNotifications($id, $type)
     {
         return Notification::with(['notification'])
-        ->where('notification_id', $request->user()->id)
-        ->where('notification_type','App\Models\User')->get();
+        ->where('notification_id', $id)
+        ->where('notification_type',$type)->get();
     }
-
-    
 
     public function addNotification($reservation, $text)
     {   

@@ -13,7 +13,7 @@
                 <label for="name" class="col-md-4 col-form-label text-md-right">Imie</label>
 
                 <div class="col-md-6">
-                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->contact[0]->name }}">
+                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->contactable[0]->name }}">
 
                     @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -27,7 +27,7 @@
                 <label for="surname" class="col-md-4 col-form-label text-md-right">Nazwisko</label>
 
                 <div class="col-md-6">
-                    <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ $user->contact[0]->surname }}">
+                    <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ $user->contactable[0]->surname }}">
 
                     @error('surname')
                         <span class="invalid-feedback" role="alert">
@@ -41,7 +41,7 @@
                 <label for="phone" class="col-md-4 col-form-label text-md-right">Numer telefonu</label>
 
                 <div class="col-md-6">
-                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ $user->contact[0]->phone }}">
+                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ $user->contactable[0]->phone }}">
 
                     @error('phone')
                         <span class="invalid-feedback" role="alert">

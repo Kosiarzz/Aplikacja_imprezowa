@@ -25,7 +25,7 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <form method="POST" action="{{ route('addReservation', ['room_id' => $room->id, 'city_id' => $room->business->city->id]) }}">
+                    <form method="POST" action="{{ route('reservation.addReservation', ['room_id' => $room->id, 'city_id' => $room->business->city->id]) }}">
                         <div class="form-group">
                             <label for="dateFrom">Data od</label>
                             <input required name="dateFrom" type="text" class="form-control datepicker" id="dateFrom" placeholder="">

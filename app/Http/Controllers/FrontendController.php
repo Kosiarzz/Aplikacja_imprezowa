@@ -17,11 +17,16 @@ class FrontendController extends Controller
         $this->fGateway = $fGateway;
     }
 
-    public function businessIndex()
+    public function index()
     {
-        $data = $this->fRepository->getDataMainPage();
-        return view('frontend.index', ['businesses' => $data]);
+        return view('frontend.index');
     }
+
+    // public function businessIndex()
+    // {
+    //     $data = $this->fRepository->getDataMainPage();
+    //     return view('frontend.index', ['businesses' => $data]);
+    // }
 
     public function businessDetails($id)
     {
@@ -36,15 +41,6 @@ class FrontendController extends Controller
         return view('frontend.roomDetails', ['room' => $data]);
     }
 
-    public function ajaxGetRoomReservations($id)
-    {
-        $reservations = $this->fRepository->getReservationsByRoomId($id);
-        $this->fRepository->addNotification($id);
-
-        return response()->json([
-            'reservations' => $reservations
-        ]);
-    }
 
     public function businessCompanyCategory()
     {
@@ -71,42 +67,5 @@ class FrontendController extends Controller
         $user = $this->fRepository->getUser($id);
 
         return view('frontend.user', ['user' => $user]);
-    }
-
-    public function like($likeable_id, $type, Request $request)
-    {
-        $this->fRepository->like($likeable_id, $type, $request);
-
-        return redirect()->back();
-    }
-    
-    public function unlike($likeable_id, $type, Request $request)
-    {
-        $this->fRepository->unlike($likeable_id, $type, $request);
-        
-        return redirect()->back();
-    }
-
-    public function addComment($commentable_id, $type, Request $request)
-    {
-        $this->fRepository->addComment($commentable_id, $type, $request);
-        
-        return redirect()->back();
-    }
-
-    public function addReservation($room_id, $city_id, Request $request)
-    {
-        $available = $this->fGateway->checkAvailableReservations($room_id, $request);
-
-        if($available)
-        {
-            $reservation = $this->fRepository->addReservation($room_id, $city_id, $request);
-            return redirect()->route('roomDetails', ['id'=>$room_id,'#reservation']);
-        }
-        else
-        {
-            $request->session()->flash('reservationMsg', 'Błąd');
-            return redirect()->route('roomDetails', ['id'=>$room_id,'#reservation']);
-        }
     }
 }

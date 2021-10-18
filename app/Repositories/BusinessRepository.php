@@ -113,20 +113,7 @@ class BusinessRepository implements BusinessRepositoryInterface
         $business->contactable()->save($contact);
     }
 
-    public function getReservation($id)
-    {
-        return Reservation::find($id);
-    }
 
-    public function deleteReservation(Reservation $reservation)
-    {
-        return $reservation->delete();
-    }
-
-    public function confirmReservation(Reservation $reservation)
-    {
-        return $reservation->update(['status' => true]);
-    }
 
     public function getBusinessNotifications($id)
     {

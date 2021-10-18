@@ -58,28 +58,6 @@ class BusinessController extends Controller
         return view('business.notifications',  ['notifications' => $notifications]);
     }
 
-    public function confirmReservation($id)
-    {
-        $reservation = $this->bRepository->getReservation($id);
-
-        $this->authorize('reservation', $reservation);
-
-        $this->bRepository->confirmReservation($reservation);
-        $this->bRepository->addNotification($reservation, 'Rezerwacja zaakceptowana');
-
-        return redirect()->back();
-    }
     
-    public function deleteReservation($id)
-    {
-        $reservation = $this->bRepository->getReservation($id);
-
-        $this->authorize('reservation', $reservation);
-        
-        $this->bRepository->deleteReservation($reservation);
-        $this->bRepository->addNotification($reservation, 'Rezerwacja odrzucona');
-
-        return redirect()->back();
-    }
 
 }

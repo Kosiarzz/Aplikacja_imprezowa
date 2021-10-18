@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use App\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use App\Gateways\BusinessGateway;
+use App\Repositories\ReservationRepository;
 
 class UserController extends Controller
 {
-    public function __construct(UserRepositoryInterface $uRepository, BusinessGateway $bGateway)
+    public function __construct(UserRepositoryInterface $uRepository, BusinessGateway $bGateway, ReservationRepository $reservationRepository)
     {
         $this->uRepository = $uRepository;
         $this->bGateway = $bGateway;
+        $this->reservationRepository = $reservationRepository;
     }
 
     public function index()
@@ -46,21 +48,9 @@ class UserController extends Controller
 
     public function reservation()
     {
-        $reservations = $this->uRepository->getReservations(Auth::user()->id);
+        $reservations = $this->reservationRepository->getReservations(Auth::user()->id);
 
         return view('user.reservation', ['reservations' => $reservations]);
-    }
-
-    public function deleteReservation($id)
-    {
-        $reservation = $this->uRepository->getReservation($id);
-
-        $this->authorize('reservation', $reservation);
-        
-        $this->uRepository->deleteReservation($reservation);
-        $this->uRepository->addNotification($reservation, 'Użytkownik odwołał rezerwacje');
-        
-        return redirect()->back();
     }
 
     public function setReadNotification(Request $request)

@@ -29,7 +29,7 @@
                             @endif
 
                         </td>
-                        <td class="reservationDelete"><a href="{{ route('user.deleteReservation', ['id' => $reservation->id]) }}" class="btn btn-danger btn-xs">Usuń</a></td>
+                        <td class="reservationDelete"><a href="{{ route('reservation.deleteReservation', ['id' => $reservation->id]) }}" class="btn btn-danger btn-xs">Usuń</a></td>
                     </tr>
                 </tbody>
                 @endforeach
