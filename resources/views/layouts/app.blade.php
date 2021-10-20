@@ -97,6 +97,7 @@
     @stack('calendar')
     @stack('business')
     @stack('notify')
+    @stack('script')
 </body>
 
 </html>

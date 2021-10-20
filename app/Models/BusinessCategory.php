@@ -11,6 +11,7 @@ class BusinessCategory extends Model
 
     public $timestamps = false;
     public $table = 'businesses_categories';
+    protected $primaryKey = 'category_id';
 
     /**
      * The attributes that are mass assignable.

@@ -2,38 +2,29 @@
 
 @section('content')
 <div class="container">
-
-   
-    <div class="row justify-content-center">
-    <div style="width:100%;">
-    <img src="{{$user->photos->path ?? $defaultPhoto}}" class="mr-3 mb-3" width="219" height="121">
-      
-    {{$user->name}} {{$user->surname}} | {{$user->email}}<br>
-    </div>
-    <b>komentarze({{$user->comments->count()}})</b><br>
-    @foreach($user->comments as $comment)
-    <div style="width:100%;">
-        Treść {{str_limit($comment->content,50)}}<br>
-        Ocena {{$comment->rating}}<br>
+    <div class="row md-12 justify-content-center">
         
-        <a href="{{route('businessDetails', ['id' => 0])}}">Link do koma</a>
-    </div>
-    @endforeach
+        <div style="width:100%;">
+            <img id="image" src="{{$user->photos->path ?? $defaultPhoto}}" class="rounded-circle" alt="avatar">
+            {{$user->contactable[0]->name}} {{$user->contactable[0]->surname}} | {{$user->email}} | {{$user->contactable[0]->phone}}
+        </div>
+        @if($user->role == 'user')
+            <div class="row col-12 justify-content-center">
+                <b>Dodanych komentarzy({{$user->comments->count()}}) </b>
+            </div>
+            
+            <div class="row col-12 justify-content-center">
+                <b> Polubione firmy({{$user->businesses->count()}})</b>
+            </div>
+            data założenia konta, komenatrze i ocena usera, publikowanie swojej imprezy?
+        @endif
 
-    <br><br>
-    <b>polubione firmy({{$user->businesses->count()}})</b><br>
-
-    @foreach($user->businesses as $busines)
-    <div style="width:100%;">
-        nazwa {{$busines->title}}<br>
-        Ocena {{str_limit($busines->description,50)}}
-        <a href="{{route('businessDetails', ['id' => $busines->id])}}">Link do firmy</a>
+        @if($user->role == 'business')
+            Wyświetlenie wszystkich firm należących do tego usera
+        @endif
     </div>
-    @endforeach
+    
 
-    <!--
-      
-    -->
-    </div>
+    
 </div>
 @endsection

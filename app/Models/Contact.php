@@ -9,7 +9,7 @@ class Contact extends Model
 {
     use HasFactory;
     public $timestamps = false;
-
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -25,6 +25,8 @@ class Contact extends Model
 
     public function contactable()
     {
-        return $this->morphTo();
+        return $this->morphTo('contactable_id');
     }
+
+    //$table->morphs('taggable');
 }

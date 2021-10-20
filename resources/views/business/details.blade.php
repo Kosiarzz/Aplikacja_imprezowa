@@ -28,27 +28,77 @@
         <br><br>
         Ilość polubień: {{$business->users->count()}}
         <br><br>
+
+        Kategorie <br>
+      
+        IMPREZY<br>
+        @foreach($business->categories as $category)
+            @foreach($category->category as $categ)
+                @if($categ->type == 'party')
+                    {{$categ->name}},
+                @endif
+            @endforeach
+        @endforeach
+
+        <br>LOKAL<br>
+        @foreach($business->categories as $category)
+            @foreach($category->category as $categ)
+                @if($categ->type == 'lokal')
+                    {{$categ->name}}
+                @endif
+            @endforeach
+        @endforeach
+
+        <br>Dodatkowe informacje<br>
+        @foreach($business->categories as $category)
+            @foreach($category->category as $categ)
+                @if($categ->type == 'dinfo')
+                    {{$categ->name}},
+                @endif
+            @endforeach
+        @endforeach
+
+        <br>Atrakcje<br>
+        @foreach($business->categories as $category)
+            @foreach($category->category as $categ)
+                @if($categ->type == 'atrakcje')
+                    {{$categ->name}},
+                @endif
+            @endforeach
+        @endforeach
+
+        <br>>Własne kategorie<br>
+        @foreach($business->categories as $category)
+            @foreach($category->category as $categ)
+                @if($categ->type == 'user')
+                    {{$categ->name}},
+                @endif
+            @endforeach
+        @endforeach
+        <br>
         
         Zdjęcia firmy
         <div class="mb-2" style="width:100%;">
             @foreach($business->photos as $photo)
-                <img src="{{$photo->path}}" class="mr-3 mb-3" width="219" height="121" alt="NIE MA">
+                <img src="{{asset('storage/'.$photo->path)}}" class="mr-3 mb-3" width="219" height="121" alt="NIE MA">
             @endforeach
         </div>
 
         <br>Polubili to:<br>
         <div style="width:100%">
             @foreach($business->users as $user)
-                <a href="{{route('user', ['id' => $user->id])}}" class="mr-3 mb-3" style="width:200px; height:80px;">
+                <a href="{{route('findUserProfile', ['id' => $user->id])}}" class="mr-3 mb-3" style="width:200px; height:80px;">
                     <img src="{{$user->photos->path ?? $defaultPhoto}}" title="{{$user->name}} {{$user->surname}} | {{$user->email}}" width="119" height="61" alt="NIE MA">
                 </a>
             @endforeach
         </div>
+        
         <br><br>SALE<br>
         @foreach($business->rooms as $room)
             <a href="{{route('roomDetails', ['id' => $room->id])}}" class="w-100 mb-4">
                 <div class="row border mb-4">
-                    <img src="{{$room->photos->first()->path ?? $defaultPhoto}}" width="250" height="121" class="mr-3" alt="SALA"><br>
+                    
+                    <img src="{{asset('storage/'.$room->photos[0]->path)}}" width="250" height="121" class="mr-3" alt="SALA"><br>
                     Tytuł: {{$room->title}}<br>
                     Opis: {{ str_limit($room->description, 50) }}<br>
                     Ludzi od: {{$room->people_from}}<br>

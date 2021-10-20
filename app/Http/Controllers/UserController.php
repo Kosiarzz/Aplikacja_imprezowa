@@ -34,6 +34,13 @@ class UserController extends Controller
         return view('user.like', ['user' => $data]);
     }
 
+    public function updateProfile(Request $request)
+    {
+        $data = $this->uRepository->updateProfile($request);
+
+        return redirect()->back();
+    }
+
     public function events()
     {
         return view('user.events');
@@ -63,5 +70,17 @@ class UserController extends Controller
         $reservation = $this->uRepository->checkNotificationStatus($request);
     }
 
+    //publiczne funkcje użytkowników
+    public function findUserProfile($id)
+    {
+        $user  = $this->uRepository->getProfileUser($id);
+
+        if($user == false)
+        {
+            return redirect()->back();
+        }
+        
+        return view('frontend.user', ['user' => $user]);
+    }
     
 }

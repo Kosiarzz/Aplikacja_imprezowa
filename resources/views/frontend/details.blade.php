@@ -2,86 +2,133 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
 
-        @can('isUser')
-            @if($business->isLiked())
-                <a href="{{ route('unlike', ['likeable_id' => $business->id, 'type' => 'App\Models\Business']) }}">Usuń z ulubionych</a>
-            @else
-                <a href="{{ route('like', ['likeable_id' => $business->id, 'type' => 'App\Models\Business']) }}">Dodaj do ulubionych</a> 
-            @endif
-            
+    @can('isUser')
+        @if($business->isLiked())
+            <a href="{{ route('unlike', ['likeable_id' => $business->id, 'type' => 'App\Models\Business']) }}">Usuń z ulubionych</a>
         @else
-            <a href="{{ route('login') }}">Zaloguj się aby dodać do ulubionych</a>
-        @endcan
+            <a href="{{ route('like', ['likeable_id' => $business->id, 'type' => 'App\Models\Business']) }}">Dodaj do ulubionych</a> 
+        @endif
         
-        @can('isUser')
-            SKOMENTUJ
-        @endcan
-        {{$business->title}} ({{$business->city->name}})<br>
-        {{$business->range}}<br>
-        {{$business->description}}<br>
-        od {{$business->priceFrom}}
-        do {{$business->priceTo}} 
-        {{$business->unit}} <br><br>Adres: 
-        {{$business->address->street}} -  {{$business->address->post_code}}  
+    @elseif(!'isBusiness')
+        <a href="{{ route('login') }}">Zaloguj się aby dodać do ulubionych</a>
+    @endcan
 
-        <br><br>
-        {{$business->address->phone}}<br>
-        {{$business->address->business_name}}<br>  
-        {{$business->address->details_address}}<br>
-        <br>Odwiedź nas: <br>
-        {{$business->social->facebook}}
-        {{$business->social->instagram}}
-        {{$business->social->www}}
-        {{$business->social->youtube}}
-        {{$business->social->movie_youtube}}
-        <br><br>
-        Ilość polubień: {{$business->users->count()}}
-        <br><br>
+    <div class="row justify-content-center">
+        <section class="col-12">
+                <div class="d-flex justify-content-between align-items-start titlePrice">
+                    <h1 id="notice-header" itemprop="name">
+                    {{$business->title}}						
+                    </h1>
+                    <div id="priceRight">
+                            190 zł / osoba
+                    </div>
+                </div>
+                <div id="addInfo" class="d-flex mt-2 mb-2">
+                    <span id="city-up">Województwo, {{$business->city->name}}</span>
+                </div>
+                                
+                <div class="mt-3 hidden-md-down d-flex flex-wrap">
+                    <div class="phones">
+                       Tel: {{$business->contactable[0]->phone}} Ilość polubień: {{$business->users->count()}}
+                    </div>
+                </div>
+                <div class="line-overflow mt-3">
+                    <h2>
+                        O nas
+                    </h2>
+                </div>						
+                <p class="description" itemprop="description">{{$business->description}}</p>					
+        </section>
+    </div>
         
-        Zdjęcia firmy
+    <div class="row justify-content-center">
+        <h2>Galeria zdjęć</h2>
         <div class="mb-2" style="width:100%;">
             @foreach($business->photos as $photo)
-                <img src="{{$photo->path}}" class="mr-3 mb-3" width="219" height="121" alt="NIE MA">
+                <img src="{{asset('storage/'.$photo->path)}}" class="mr-3 mb-3" width="219" height="121" alt="NIE MA">
             @endforeach
         </div>
 
-        <br>Polubili to:<br>
-        <div style="width:100%">
-            @foreach($business->users as $user)
-                <a href="{{route('user', ['id' => $user->id])}}" class="mr-3 mb-3" style="width:200px; height:80px;">
-                    <img src="{{$user->photos->path ?? $defaultPhoto}}" title="{{$user->name}} {{$user->surname}} | {{$user->email}}" width="119" height="61" alt="NIE MA">
-                </a>
-            @endforeach
-        </div>
-        <br><br>SALE<br>
+        <div class="row mt-4">
+            <h2>
+                Dostępne obiekty
+            </h2>
+        </div>	
         @foreach($business->rooms as $room)
             <a href="{{route('roomDetails', ['id' => $room->id])}}" class="w-100 mb-4">
                 <div class="row border mb-4">
-                    <img src="{{$room->photos->first()->path ?? $defaultPhoto}}" width="250" height="121" class="mr-3" alt="SALA"><br>
+                    <img src="{{asset('storage/'.$room->photos[0]->path)}}" width="250" height="141" class="mr-3" alt="SALA"><br>
                     Tytuł: {{$room->title}}<br>
                     Opis: {{ str_limit($room->description, 50) }}<br>
-                    Ludzi od: {{$room->people_from}}<br>
-                    Ludzi do: {{$room->people_to}}<br>
-                        
+                    Osób od: {{$room->people_from}}<br>
+                    Osób do: {{$room->people_to}}<br>      
+                    Metraż: {{$room->size}} m^2<br> 
                 </div>
             </a>
         @endforeach
+        <div class="row mt-5">
+            <h2>
+                Komentarze <span class="h2">({{count($business->comments)}})</span>
+            </h2>
+        </div>	
 
-        <br><br>KOMENTARZE<br>
         @foreach($business->comments as $comment)
+ 
             <a href="{{route('user', ['id' => $comment->user->id])}}" class="w-100 mb-4">
                 <div class="row border mb-4">
-                    <img src="{{$comment->photos->first()->path ?? $defaultPhoto}}" width="250" height="121" class="mr-3" alt="SALA"><br>
+                    <img src="{{asset('storage/'.$comment->user->photos->path)}}" width="250" height="121" class="mr-3" alt="SALA"><br>
                     {{$comment->user->name}} {{$comment->user->surname}}<br>
                     {{str_limit($comment->content,100)}}<br>
                     rating: {{ $comment->rating }}<br>
                 </div>
             </a>
         @endforeach
+        <div class="row w-100 justify-content-center">
+            @can('isUser')
+                <form method="POST" action="{{ route('addComment',['commentable_id'=>$business->id, 'App\Models\Business']) }}" class="form-horizontal">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="textArea" class="col-lg-2 control-label">Komentarz/opinia</label>
+                                <div class="col-lg-10">
+                                    <textarea required name="content" class="form-control" rows="3" id="textArea"></textarea>
+                                </div>
+                            </div>
 
-        <br><br>Q&A<br>
+                            <div class="form-group">
+                                <label for="selectRating" class="col-lg-2 control-label">Ocena</label>
+                                <div class="col-lg-10">
+                                    <select name="rating" class="form-control" id="selectRating">
+                                        <option value="5">5</option>
+                                        <option value="4">4</option>
+                                        <option value="3">3</option>
+                                        <option value="2">2</option>
+                                        <option value="1">1</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10 col-lg-offset-2">
+                                    <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    {{ csrf_field() }}
+                </form>
+            @elseif(!'isBusiness')
+                <a href="{{ route('login') }}">Zaloguj się aby dodać komentarz</a>
+            @endcan
+        </div>
+
+  
+        <section id="gbook">
+            <div class="line-overflow">
+                <h2>
+                    Częste pytania i odpowiedzi
+                </h2>
+            </div>
+        </section>
+ 
         @foreach($business->questionsAndAnswers as $qAndA)
             <div class="row border w-100 mb-4">
                 pytanie: {{$qAndA->question}}<br>
@@ -89,63 +136,43 @@
             </div>
         @endforeach
 
-        @auth()
-            <form method="POST" action="{{ route('addComment',['commentable_id'=>$business->id, 'App\Models\Business']) }}" class="form-horizontal">
-                <fieldset>
-                    <div class="form-group">
-                        <label for="textArea" class="col-lg-2 control-label">Komentarz</label>
-                        <div class="col-lg-10">
-                            <textarea required name="content" class="form-control" rows="3" id="textArea"></textarea>
-                            <span class="help-block">Dodaj komentarz</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="select" class="col-lg-2 control-label">Ocena</label>
-                        <div class="col-lg-10">
-                            <select name="rating" class="form-control" id="select">
-                                <option value="5">5</option>
-                                <option value="4">4</option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-lg-10 col-lg-offset-2">
-                            <button type="submit" class="btn btn-primary">Wyślij</button>
-                        </div>
-                    </div>
-                </fieldset>
-                {{ csrf_field() }}
-            </form>
-        @else
-            <a href="{{ route('login') }}">Zaloguj się aby dodać komentarz</a>
-        @endauth
+        
                 
     <!--
-        #tytuł
-        #adres firmy (miasto,ulica i numer)
-        #zakres działania firmy
-        dodatkowe info do adresu
-        telefon
-        #opis
-        dodanie do ulubionych
-        polubiane
-        oceny(gwiazdki)
-        #zakres cenowy
-        #jednostka(za dzień/godzine/osobę etc)
-    kategorie
-        komentarze
+
     mapa
-        #dane firmy
-        #socials
-        #galeria zdjęć
-        #filmik promujący
-        Q&A
-        
+
     -->
+        <h2>Filmik promujący</h2>
+        <iframe width="1080" height="520" src="https://www.youtube.com/embed/Sug433bP-mw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        
+        <div class="row w-100 justify-content-center mt-5">
+            <div class="line-overflow clearfix">
+                <h2>Kontakt</h2>
+            </div>
+            <div class="row w-100 justify-content-center">
+                <address class="business-card">
+                        <div class="item">
+                            Nazwa firmy: xxxx								
+                        </div>
+                        <div class="item"> 
+                            
+                            Imię i nazwisko: {{$business->contactable[0]->name}} {{$business->contactable[0]->surname}}<br>
+                            Telefon:  {{$business->contactable[0]->phone}}
+                        </div>
+                        <div class="item">
+                            Adres: {{$business->address->street}} | {{$business->address->post_code}} <br>
+                            {{$business->city->name}}, Województwo
+                        </div>
+                </address>
+            </div>
+        </div>
+            <div id="contactMoreInfo mt-4">
+                <h2>Odwiedź nas:</h2>
+                <a href="{{$business->social->www}}">Strona WWW</a>
+                <a href="{{$business->social->facebook}}">Facebook</a>
+                <a href="{{$business->social->instagram}}">Instagram</a>
+                <a href="{{$business->social->youtube}}">YouTube</a>
+            </div>
     </div>
-</div>
 @endsection

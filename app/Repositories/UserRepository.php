@@ -6,8 +6,12 @@ use App\Models\User;
 use App\Models\UserData;
 use App\Models\Notification;
 use App\Models\Reservation;
+use App\Models\Contact;
+use App\Models\Photo;
 use App\Interfaces\UserRepositoryInterface;
+use App\Enums\UserRole;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 class UserRepository implements UserRepositoryInterface
@@ -15,6 +19,13 @@ class UserRepository implements UserRepositoryInterface
 
     public function getProfileUser($id)
     {
+        $user = User::with(['contactable', 'photos'])->find($id);
+
+        if($user->role != (UserRole::USER) && $user->role != (UserRole::BUSINESS))
+        {
+            return false;
+        }
+
         return User::with(['contactable', 'photos'])->find($id);
     }
 
@@ -30,8 +41,35 @@ class UserRepository implements UserRepositoryInterface
         ->where('notification_type','App\Models\User')->get();
     }
 
-    
+    public function updateProfile($request)
+    {
+        $contact = [
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'phone' => $request->phone
+        ];
 
+        $user = [
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ];
+
+        $photo = [
+            'path' => $request->file('image')->store('photos')
+        ];
+
+        Contact::where('contactable_id', Auth::user()->id)
+        ->where('contactable_type', 'App\Models\User')->update($contact);
+
+        User::find(Auth::user()->id)->update($user);
+
+        Photo::where('photoable_id', Auth::user()->id)
+        ->where('photoable_type', 'App\Models\User')->update($photo);
+
+
+        return 'git';
+    }
+ 
     public function addNotification($reservation, $text)
     {   
 

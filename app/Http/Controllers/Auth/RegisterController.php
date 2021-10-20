@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Contact;
+use App\Models\Photo;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -53,6 +56,13 @@ class RegisterController extends Controller
             'role' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'name' => ['required', 'string', 'max:20'],
+            'surname' => ['required', 'string', 'max:30'],
+            'phone' => ['required', 'numeric'],
+            'role' => [
+                'required',
+                Rule::in(['user', 'business']),
+            ],
         ]);
     }
 
@@ -64,12 +74,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => 'tymczasowe',
-            'surname' => 'tymczasowe',
+        
+        $user = User::create([
             'role' => $data['role'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $photo = Photo::create([
+            'photoable_type' => 'App\Models\User',
+            'photoable_id' => $user->id,
+            'path' => $data['image']->store('photos'),
+        ]);
+
+        $contact = Contact::create([
+            'name' => $data['name'],
+            'surname' => $data['surname'],
+            'phone' => $data['phone'],
+            'contactable_type' => 'App\Models\\'.ucfirst($data['role']),
+            'contactable_id' => $user->id,
+        ]);
+
+        return $user;
     }
 }

@@ -14,8 +14,9 @@
            </div>
            <br>Zdjęcia<br>
         <div class="mb-2" style="width:100%;">
+            
            @foreach($room->photos as $photo)
-           <img src="{{$photo->path ?? $defaultPhoto}}" class="mr-3 mb-3" width="219" height="121" alt="SALA">
+           <img src="{{asset('storage/'.$photo->path)}}" class="mr-3 mb-3" width="219" height="121" alt="SALA">
            @endforeach
         </div>
         <br>

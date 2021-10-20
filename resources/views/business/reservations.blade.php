@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.business')
 
 @section('content')
 <div class="container">
@@ -59,7 +59,6 @@
                                             <th>Data do</th>
                                             <th>Rezerwujący</th>
                                             <th>Telefon</th>
-                                            <th>Potwierdzenie</th>
                                             <th>Usunięcie</th>
                                         </tr>
                                     </thead>
@@ -71,7 +70,6 @@
                                                     <td class="reservationDateTo">{{$reservation->date_to}}</td>
                                                     <td class="reservationUser"><a target="_blank">{{ $reservation->user->contact[0]->name ?? 'Brak danych'}} {{$reservation->user->contact[0]->surname ?? ''}}</a></td>
                                                     <td class="reservationUserPhone">{{ $reservation->user->contact[0]->phone ?? 'Brak'}}</td>
-                                                    <td class="reservationConfirm"><a href="{{ route('reservation.confirmReservation', ['id' => $reservation->id]) }}" class="btn btn-primary btn-xs">Potwierdź</a></td>
                                                     <td class="reservationDelete"><a href="{{ route('reservation.deleteReservation', ['id' => $reservation->id]) }}" class="btn btn-danger btn-xs">Odmów</a></td>
                                                 </tr>
                                             </tbody>

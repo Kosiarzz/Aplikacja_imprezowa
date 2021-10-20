@@ -16,7 +16,7 @@ class NotificationRepository
 
     public function addNotification($reservation, $text)
     {   
-
+        dd($reservation);
         $notification = new Notification;
         $notification->content = $text.': '.$reservation->user->contactable[0]->name.' '.$reservation->user->contactable[0]->surname;
         $notification->notification_type = 'App\Models\Business';

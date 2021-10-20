@@ -12,11 +12,11 @@ trait CommentPresenter
         for($i=1; $i<=5; $i++)
         {
             if($value >= $i){
-                $str.='X';
+                $str.='🞳';
             }
             else
             {
-                $str.='x';
+                $str.='';
             }
         }
 

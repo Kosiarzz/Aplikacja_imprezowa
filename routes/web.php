@@ -35,13 +35,12 @@ Route::get('/', [App\Http\Controllers\FrontendController::class, 'index'])->name
 Route::get('/rejestracja/użytkownik', function () {  return view('auth.registerUser');  })->name('role.user');
 Route::get('/rejestracja/firma', function () {  return view('auth.registerBusiness');  })->name('role.bussines');
 
+// id w pasku, zabezpieczenia, komentarze i ocena usera
 
-
-Route::get('/firma/sala/{id}', [App\Http\Controllers\FrontendController::class, 'roomDetails'])->name('roomDetails');
 Route::get('/searchCities', [App\Http\Controllers\FrontendController::class, 'searchCities']);
 Route::post('/businessSearch', [App\Http\Controllers\FrontendController::class, 'businessSearch'])->name('businessSearch');
-Route::get('/uzytkownikss/{id}', [App\Http\Controllers\FrontendController::class, 'user'])->name('user');
-Route::get('/firmaaa/{id}', [App\Http\Controllers\FrontendController::class, 'businessDetails'])->name('businessDetails');
+Route::get('/wfirma/{id}', [App\Http\Controllers\FrontendController::class, 'businessDetails'])->name('businessDetails');
+Route::get('/firmaa/sala/{id}', [App\Http\Controllers\FrontendController::class, 'roomDetails'])->name('roomDetails');
 
 //
 Route::get('/like/{likeable_id}/{type}', [App\Http\Controllers\LikeController::class, 'like'])->name('like');
@@ -56,10 +55,13 @@ Route::post('/addReservation/{room_id}/{city_id}', [App\Http\Controllers\Reserva
 Route::get('/confirmReservation/{id}', [App\Http\Controllers\ReservationController::class, 'confirmReservation'])->name('reservation.confirmReservation');
 Route::get('/deleteReservation/{id}', [App\Http\Controllers\ReservationController::class, 'deleteReservation'])->name('reservation.deleteReservation');
 
+Route::get('/wyszukiwanie/uzytkownik/profil/{id}', [App\Http\Controllers\UserController::class, 'findUserProfile'])->name('findUserProfile');
 
 //Strony wymagające zalogowania
 Route::middleware(['auth','verified'])->group(function()
 {
+    Route::post('/uzytkownik/profil/update', [App\Http\Controllers\UserController::class, 'updateProfile'])->name('user.updateProfile');
+
     Route::middleware(['can:isAdmin'])->group(function()
     {
         Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index']);
@@ -73,13 +75,13 @@ Route::middleware(['auth','verified'])->group(function()
     Route::middleware(['can:isBusiness'])->group(function()
     {
         Route::get('/firma', [App\Http\Controllers\BusinessController::class, 'index'])->name('business.index');
-        Route::get('/firmaa/{id}', [App\Http\Controllers\BusinessController::class, 'businessDetails'])->name('business.id');
-        Route::get('/firma/rezerwacje', [App\Http\Controllers\BusinessController::class, 'reservations'])->name('business.reservations');
-        Route::get('/firma/profil', [App\Http\Controllers\BusinessController::class, 'category'])->name('businessProfile.profile');
-        Route::get('/firma/kategorie', function () {  return view('business.categoryBusiness');  })->name('business.category');
+        Route::get('/firma/{id}', [App\Http\Controllers\BusinessController::class, 'businessDetails'])->name('business.id');
+        Route::get('/firma/panel/rezerwacje', [App\Http\Controllers\BusinessController::class, 'reservations'])->name('business.reservations');
+        Route::get('/firma/panel/profil', [App\Http\Controllers\BusinessController::class, 'category'])->name('businessProfile.profile');
+        Route::get('/firma/panel/kategorie', function () {  return view('business.categoryBusiness');  })->name('business.category');
 
         Route::post('/firma/dodawanie', [App\Http\Controllers\BusinessController::class, 'addBusiness'])->name('addBusiness');
-        Route::get('/firma/powiadomienia', [App\Http\Controllers\BusinessController::class, 'notifications'])->name('business.notifications');
+        Route::get('/firma/panel/powiadomienia', [App\Http\Controllers\BusinessController::class, 'notifications'])->name('business.notifications');
 
    });
 

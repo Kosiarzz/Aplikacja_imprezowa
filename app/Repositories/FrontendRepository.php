@@ -24,7 +24,7 @@ class FrontendRepository implements FrontendRepositoryInterface
     //Pobranie danych wybranej firmy
     public function getBusinessDetails($id)
     {
-        return Business::with(['city','photos','comments.user','comments.photos','questionsAndAnswers','address','users.photos','rooms.photos'])->find($id);
+        return Business::with(['city','photos','comments.user.photos','questionsAndAnswers','address','users.photos','rooms.photos'])->find($id);
     }
 
     //Wyszukanie miasta po pierwszych kilku literach
