@@ -13,8 +13,26 @@ class EventController extends Controller
         $this->eRepository = $eRepository;
     }
 
-    public function index()
-    {
-        return view('event.index');
+    public function index($id)
+    {    
+        $events = $this->eRepository->getEvent($id);
+        
+        return view('event.index', ['events' => $events]);
     }
+
+    public function createEvent()
+    {
+        $categories = $this->eRepository->getEventCategories();
+
+        return view('event.createEvent', ['categories' => $categories]);
+    }
+
+    public function addEvent(Request $request)
+    {
+        $events = $this->eRepository->createEvent($request);
+
+        return view('event.index', ['events' => $events]);
+    }
+
+    
 }

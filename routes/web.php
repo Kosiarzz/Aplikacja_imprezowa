@@ -96,6 +96,9 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/uzytkownik/powiadomienia', [App\Http\Controllers\UserController::class, 'notifications'])->name('user.notification');
 
         Route::get('/uzytkownik/wydarzenie/{id}', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
+        Route::get('/uzytkownik/nowe/wydarzenie', [App\Http\Controllers\EventController::class, 'createEvent'])->name('event.createEvent');
+
+        Route::post('/uzytkownik/nowe/wydarzenie/dodawanie', [App\Http\Controllers\EventController::class, 'addEvent'])->name('addEvent');
 
 
         Route::get('/setReadNotification', [App\Http\Controllers\UserController::class, 'setReadNotification']);

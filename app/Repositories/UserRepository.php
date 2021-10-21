@@ -8,6 +8,7 @@ use App\Models\Notification;
 use App\Models\Reservation;
 use App\Models\Contact;
 use App\Models\Photo;
+use App\Models\Event;
 use App\Interfaces\UserRepositoryInterface;
 use App\Enums\UserRole;
 
@@ -54,17 +55,22 @@ class UserRepository implements UserRepositoryInterface
             'password' => Hash::make($request->password)
         ];
 
-        $photo = [
-            'path' => $request->file('image')->store('photos')
-        ];
-
+        if($request->file('image') != null)
+        {
+            $photo = [
+                'path' => $request->file('image')->store('photos')
+            ];
+    
+            Photo::where('photoable_id', Auth::user()->id)
+            ->where('photoable_type', 'App\Models\User')->update($photo);
+        }
+        
         Contact::where('contactable_id', Auth::user()->id)
         ->where('contactable_type', 'App\Models\User')->update($contact);
 
         User::find(Auth::user()->id)->update($user);
 
-        Photo::where('photoable_id', Auth::user()->id)
-        ->where('photoable_type', 'App\Models\User')->update($photo);
+        
 
 
         return 'git';
@@ -85,6 +91,11 @@ class UserRepository implements UserRepositoryInterface
     public function setReadNotification($request)
     {
         return Notification::where('id', $request->id)->update(['status' => 1]);
+    }
+
+    public function getEvents($id)
+    {
+        return Event::where('user_id', $id)->paginate(5);
     }
 
 }

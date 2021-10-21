@@ -43,7 +43,8 @@ class UserController extends Controller
 
     public function events()
     {
-        return view('user.events');
+        $events = $this->uRepository->getEvents(Auth::user()->id);
+        return view('user.events', ['events' => $events]);
     }
 
     public function notifications(Request $request)

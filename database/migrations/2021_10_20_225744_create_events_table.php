@@ -18,6 +18,7 @@ class CreateEventsTable extends Migration
             $table->string('name');
             $table->string('budget');
             $table->date('date_event');
+            $table->integer('category_id')->unsigned();
             $table->timestamps();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->unsigned();
         });

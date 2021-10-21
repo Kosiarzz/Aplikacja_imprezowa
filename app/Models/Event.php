@@ -18,7 +18,13 @@ class Event extends Model
         'name',
         'budget',
         'date_event',
-        'user_id',
-    ]
+        'category_id',
+        'user_id' 
+    ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 
 }
