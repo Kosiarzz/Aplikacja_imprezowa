@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FrontednController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\BusinessController;
@@ -40,6 +40,7 @@ Route::get('/rejestracja/firma', function () {  return view('auth.registerBusine
 
 Route::get('/searchCities', [App\Http\Controllers\FrontendController::class, 'searchCities']);
 Route::post('/businessSearch', [App\Http\Controllers\FrontendController::class, 'businessSearch'])->name('businessSearch');
+Route::get('/wyszukaj', [App\Http\Controllers\FrontendController::class, 'businessIndex'])->name('frontend.search');
 Route::get('/wfirma/{id}', [App\Http\Controllers\FrontendController::class, 'businessDetails'])->name('businessDetails');
 Route::get('/firmaa/sala/{id}', [App\Http\Controllers\FrontendController::class, 'roomDetails'])->name('roomDetails');
 
@@ -95,11 +96,24 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/uzytkownik/rezerwacje', [App\Http\Controllers\UserController::class, 'reservation'])->name('user.reservation');
         Route::get('/uzytkownik/powiadomienia', [App\Http\Controllers\UserController::class, 'notifications'])->name('user.notification');
 
-        Route::get('/uzytkownik/wydarzenie/{id}', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
-        Route::get('/uzytkownik/nowe/wydarzenie', [App\Http\Controllers\EventController::class, 'createEvent'])->name('event.createEvent');
+        Route::get('/uzytkownik/wydarzenie/główna/{id}', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
+        Route::get('/uzytkownik/nowe/wydarzenie', [App\Http\Controllers\EventController::class, 'createEventView'])->name('event.createEvent');
+
+        Route::get('/uzytkownik/wydarzenie/daty', [App\Http\Controllers\EventController::class, 'dateView'])->name('event.date');
+        Route::get('/uzytkownik/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'financesView'])->name('event.finances');
+        Route::get('/uzytkownik/wydarzenie/goście', [App\Http\Controllers\EventController::class, 'guestView'])->name('event.guest');
+        Route::get('/uzytkownik/wydarzenie/polubione', [App\Http\Controllers\EventController::class, 'likeView'])->name('event.like');
+        Route::get('/uzytkownik/wydarzenie/powiadomienia', [App\Http\Controllers\EventController::class, 'notificationsView'])->name('event.notifications');
+        Route::get('/uzytkownik/wydarzenie/zadania', [App\Http\Controllers\EventController::class, 'tasksView'])->name('event.tasks');
+        Route::get('/uzytkownik/wydarzenie/rezerwacje', [App\Http\Controllers\EventController::class, 'reservationsView'])->name('event.reservations');
+
+        
 
         Route::post('/uzytkownik/nowe/wydarzenie/dodawanie', [App\Http\Controllers\EventController::class, 'addEvent'])->name('addEvent');
-
+        Route::post('/uzytkownik/nowe/wydarzenie/grupa', [App\Http\Controllers\EventController::class, 'addGroup'])->name('addGroup');
+        Route::post('/uzytkownik/nowe/wydarzenie/gość', [App\Http\Controllers\EventController::class, 'addGuest'])->name('addGuest');
+        Route::post('/uzytkownik/nowe/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'addFinance'])->name('addFinance');
+        Route::post('/uzytkownik/nowe/wydarzenie/zadanie', [App\Http\Controllers\EventController::class, 'addTask'])->name('addTask');
 
         Route::get('/setReadNotification', [App\Http\Controllers\UserController::class, 'setReadNotification']);
         Route::get('/getNotShownNotify', [App\Http\Controllers\UserController::class, 'getNotShownNotify']);

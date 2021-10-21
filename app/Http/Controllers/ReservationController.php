@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\ReservationRepository;
 use App\Repositories\NotificationRepository;
 use App\Models\Reservation;
+use App\Models\Room;
 
 use Illuminate\Http\Request;
 
@@ -20,8 +21,10 @@ class ReservationController extends Controller
 
     public function addReservation($room_id, $city_id, Request $request)
     {
+
         $this->rRepository->addReservation($room_id, $city_id, $request);
-        #$this->nRepository->addNotification($request, 'Dodano rezerwacje');
+        $business = Room::find($room_id);
+        $this->nRepository->addNotificationBusiness($business->business_id, 'Nowa rezerwacja');
 
         return redirect()->back();
     }
@@ -42,7 +45,8 @@ class ReservationController extends Controller
         $this->authorize('reservation', $reservation);
 
         $this->rRepository->confirmReservation($reservation);
-        //$this->rRepository->addNotification($reservation, 'Rezerwacja zaakceptowana');
+
+        $this->nRepository->addNotificationUser($reservation->user_id, 'Rezerwacja została zaakceptowana');
 
         return redirect()->back();
     }
@@ -53,8 +57,11 @@ class ReservationController extends Controller
 
         $this->authorize('reservation', $reservation);
         
+        $room = Room::find($reservation->room_id);
+
         $this->rRepository->deleteReservation($reservation);
-        //$this->rRepository->addNotification($reservation, 'Rezerwacja odrzucona');
+        $this->nRepository->addNotificationBusiness($room->business_id, 'Rezerwacja została anulowana');
+        $this->nRepository->addNotificationUser($reservation->user_id, 'Rezerwacja została anulowana');
 
         return redirect()->back();
     }

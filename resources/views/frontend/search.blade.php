@@ -37,7 +37,16 @@
                     {{$business->title}} ({{$business->city->name}})<br>
                     {{$business->range}}<br>
                     {{$business->short_description}}<br>
-                    <button style="width:140px; height:30px; font-size:12px;">Dodaj do ulubionych</button>
+                    @can('isUser')
+                        @if($business->isLiked())
+                            <a href="{{ route('unlike', ['likeable_id' => $business->id, 'type' => 'App\Models\Business']) }}">Usuń z ulubionych</a>
+                        @else
+                            <a href="{{ route('like', ['likeable_id' => $business->id, 'type' => 'App\Models\Business']) }}">Dodaj do ulubionych</a> 
+                        @endif
+                        
+                    @elseif(!'isBusiness')
+                        <a href="{{ route('login') }}">Zaloguj się</a>
+                    @endcan
                 </div>
             </a>
         @endforeach

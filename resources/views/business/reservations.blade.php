@@ -34,11 +34,11 @@
                                     @foreach( $room->reservations as $reservation )
                                         @if($reservation->status == 0)
                                             <tbody>
-                                                <tr>
+                                                <tr> 
                                                     <td class="reservationDateFrom">{{$reservation->date_from}}</td>
                                                     <td class="reservationDateTo">{{$reservation->date_to}}</td>
-                                                    <td class="reservationUser"><a target="_blank">{{ $reservation->user->contact[0]->name ?? 'Brak danych'}} {{$reservation->user->contact[0]->surname ?? ''}}</a></td>
-                                                    <td class="reservationUserPhone">{{ $reservation->user->contact[0]->phone ?? 'Brak'}}</td>
+                                                    <td class="reservationUser"><a target="_blank">{{ $reservation->user->contactable[0]->name ?? 'Brak danych'}} {{$reservation->user->contactable[0]->surname ?? ''}}</a></td>
+                                                    <td class="reservationUserPhone">{{ $reservation->user->contactable[0]->phone ?? 'Brak'}}</td>
                                                     <td class="reservationConfirm"><a href="{{ route('reservation.confirmReservation', ['id' => $reservation->id]) }}" class="btn btn-primary btn-xs">Potwierdź</a></td>
                                                     <td class="reservationDelete"><a href="{{ route('reservation.deleteReservation', ['id' => $reservation->id]) }}" class="btn btn-danger btn-xs">Odmów</a></td>
                                                 </tr>
@@ -68,8 +68,8 @@
                                                 <tr>
                                                     <td class="reservationDateFrom">{{$reservation->date_from}}</td>
                                                     <td class="reservationDateTo">{{$reservation->date_to}}</td>
-                                                    <td class="reservationUser"><a target="_blank">{{ $reservation->user->contact[0]->name ?? 'Brak danych'}} {{$reservation->user->contact[0]->surname ?? ''}}</a></td>
-                                                    <td class="reservationUserPhone">{{ $reservation->user->contact[0]->phone ?? 'Brak'}}</td>
+                                                    <td class="reservationUser"><a target="_blank">{{ $reservation->user->contactable[0]->name ?? 'Brak danych'}} {{$reservation->user->contactable[0]->surname ?? ''}}</a></td>
+                                                    <td class="reservationUserPhone">{{ $reservation->user->contactable[0]->phone ?? 'Brak'}}</td>
                                                     <td class="reservationDelete"><a href="{{ route('reservation.deleteReservation', ['id' => $reservation->id]) }}" class="btn btn-danger btn-xs">Odmów</a></td>
                                                 </tr>
                                             </tbody>

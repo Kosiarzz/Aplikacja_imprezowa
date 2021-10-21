@@ -4,10 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
       
-        {{$events->name}}<br>
-        {{$events->date_event}}<br>
-        {{$events->category->name}}<br>
-        {{$events->budget}}
+        Powiadomienia
     </div>
 </div>
 @endsection

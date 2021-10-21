@@ -22,7 +22,6 @@ class Cost extends Model
         'advance',
         'date_payment',
         'status',
-        'note',
         'group_id',
     ];
 

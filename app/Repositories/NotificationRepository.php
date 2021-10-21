@@ -14,14 +14,24 @@ class NotificationRepository
         ->where('notification_type',$type)->get();
     }
 
-    public function addNotification($reservation, $text)
+    public function addNotificationUser($id, $content)
     {   
-        dd($reservation);
         $notification = new Notification;
-        $notification->content = $text.': '.$reservation->user->contactable[0]->name.' '.$reservation->user->contactable[0]->surname;
+        $notification->content = $content;
+        $notification->notification_type = 'App\Models\User';
+        $notification->status = false;
+        $notification->notification_id = $id;
+
+        return $notification->save();
+    }
+
+    public function addNotificationBusiness($id, $content)
+    {   
+        $notification = new Notification;
+        $notification->content = $content;
         $notification->notification_type = 'App\Models\Business';
         $notification->status = false;
-        $notification->notification_id = $reservation->room->business->id;
+        $notification->notification_id = $id;
 
         return $notification->save();
     }

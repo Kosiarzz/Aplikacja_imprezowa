@@ -110,7 +110,7 @@
 
         <br><br>KOMENTARZE<br>
         @foreach($business->comments as $comment)
-            <a href="{{route('user', ['id' => $comment->user->id])}}" class="w-100 mb-4">
+            <a href="{{route('findUserProfile', ['id' => $comment->user->id])}}" class="w-100 mb-4">
                 <div class="row border mb-4">
                     <img src="{{$comment->photos->first()->path ?? $defaultPhoto}}" width="250" height="121" class="mr-3" alt="SALA"><br>
                     {{$comment->user->name}} {{$comment->user->surname}}<br>

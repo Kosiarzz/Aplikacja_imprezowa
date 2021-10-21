@@ -21,4 +21,18 @@ class Group extends Model
         'event_id',
     ];
 
+    public function costs()
+    {
+        return $this->hasMany(Cost::class);
+    }
+
+    public function guests()
+    {
+        return $this->hasMany(Guest::class);
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

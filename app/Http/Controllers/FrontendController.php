@@ -22,11 +22,12 @@ class FrontendController extends Controller
         return view('frontend.index');
     }
 
-    // public function businessIndex()
-    // {
-    //     $data = $this->fRepository->getDataMainPage();
-    //     return view('frontend.index', ['businesses' => $data]);
-    // }
+    public function businessIndex()
+    {
+        $data = $this->fRepository->getDataMainPage();
+
+        return view('frontend.search', ['businesses' => $data]);
+    }
 
     public function businessDetails($id)
     {
