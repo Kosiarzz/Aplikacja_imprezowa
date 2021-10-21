@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model
+class Guest extends Model
 {
     use HasFactory;
-    public $timestamps = false;
     
     /**
      * The attributes that are mass assignable.
@@ -18,13 +17,13 @@ class Contact extends Model
     protected $fillable = [
         'name',
         'surname',
-        'phone',
-        'contactable_type',
-        'contactable_id',
+        'invitation',
+        'confirmation',
+        'accommodation',
+        'type',
+        'transport',
+        'note',
+        'group_id',
     ];
 
-    public function contactable()
-    {
-        return $this->morphTo('contactable_id');
-    }
 }

@@ -8,7 +8,8 @@ use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\UserController; 
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ReservationController; 
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +94,9 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/uzytkownik/wydarzenia', [App\Http\Controllers\UserController::class, 'events'])->name('user.events');
         Route::get('/uzytkownik/rezerwacje', [App\Http\Controllers\UserController::class, 'reservation'])->name('user.reservation');
         Route::get('/uzytkownik/powiadomienia', [App\Http\Controllers\UserController::class, 'notifications'])->name('user.notification');
+
+        Route::get('/uzytkownik/wydarzenie/{id}', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
+
 
         Route::get('/setReadNotification', [App\Http\Controllers\UserController::class, 'setReadNotification']);
         Route::get('/getNotShownNotify', [App\Http\Controllers\UserController::class, 'getNotShownNotify']);

@@ -29,19 +29,21 @@ class CategorySeeder extends Seeder
             ['name' => 'Namiot', 'type' => 'lokal'],
             ['name' => 'Ogród',  'type' => 'lokal'],
             ['name' => 'Dom',   'type' => 'lokal'],
+
+            ['name' => 'Nocleg',   'type' => 'dinfo'],
+            ['name' => 'Parking', 'type' => 'dinfo'],
+            ['name' => 'Taras',  'type' => 'dinfo'],
+            ['name' => 'Ogród',  'type' => 'dinfo'],
+            ['name' => 'Klimatyzacja',  'type' => 'dinfo'],
+
+            ['name' => 'Dekoracje światłem',   'type' => 'atrakcje'],
+            ['name' => 'Fotobudka', 'type' => 'atrakcje'],
+            ['name' => 'Napis LOVE',  'type' => 'atrakcje'],
+            ['name' => 'Słądki kącik',  'type' => 'atrakcje'],
+
+            ['name' => 'Kategoria usera 1',  'type' => 'user'],
         ];
 
         Category::insert($data);
     }
 }
-
-<option value="sala">Sala</option>
-<option value="lokal">Lokal</option>
-<option value="hotel">Hotel</option>
-<option value="palac">Pałac</option>
-<option value="dworek">Dworek</option>
-<option value="zamek">Zamek</option>
-<option value="gospoda">Gospoda</option>
-<option value="namiot">Namiot</option>
-<option value="ogrod">Ogród</option>
-<option value="dom">Dom</option>

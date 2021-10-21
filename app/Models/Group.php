@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model
+class Group extends Model
 {
     use HasFactory;
     public $timestamps = false;
@@ -17,14 +17,8 @@ class Contact extends Model
      */
     protected $fillable = [
         'name',
-        'surname',
-        'phone',
-        'contactable_type',
-        'contactable_id',
+        'type',
+        'event_id',
     ];
 
-    public function contactable()
-    {
-        return $this->morphTo('contactable_id');
-    }
 }
