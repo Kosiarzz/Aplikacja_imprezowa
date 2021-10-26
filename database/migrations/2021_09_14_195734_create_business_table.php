@@ -19,6 +19,7 @@ class CreateBusinessTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('short_description');
+            $table->foreignId('main_category_id')->constrained('categories')->onDelete('cascade')->unsigned();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->unsigned();
             $table->integer('city_id')->constrained('cities')->unsigned();
         });

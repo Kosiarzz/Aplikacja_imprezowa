@@ -94,15 +94,15 @@
         </div>
         
         <br><br>SALE<br>
-        @foreach($business->rooms as $room)
-            <a href="{{route('roomDetails', ['id' => $room->id])}}" class="w-100 mb-4">
+        @foreach($business->services as $service)
+            <a href="{{route('serviceDetails', ['id' => $service->id])}}" class="w-100 mb-4">
                 <div class="row border mb-4">
                     
-                    <img src="{{asset('storage/'.$room->photos[0]->path)}}" width="250" height="121" class="mr-3" alt="SALA"><br>
-                    Tytuł: {{$room->title}}<br>
-                    Opis: {{ str_limit($room->description, 50) }}<br>
-                    Ludzi od: {{$room->people_from}}<br>
-                    Ludzi do: {{$room->people_to}}<br>
+                    <img src="{{asset('storage/'.$service->photos[0]->path)}}" width="250" height="121" class="mr-3" alt="SALA"><br>
+                    Tytuł: {{$service->title}}<br>
+                    Opis: {{ str_limit($service->description, 50) }}<br>
+                    Ludzi od: {{$service->people_from}}<br>
+                    Ludzi do: {{$service->people_to}}<br>
                         
                 </div>
             </a>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\ReservationRepository;
 use App\Repositories\NotificationRepository;
 use App\Models\Reservation;
-use App\Models\Room;
+use App\Models\Service;
 
 use Illuminate\Http\Request;
 
@@ -19,19 +19,19 @@ class ReservationController extends Controller
         $this->nRepository = $nRepository;
     }
 
-    public function addReservation($room_id, $city_id, Request $request)
+    public function addReservation($service_id, $city_id, Request $request)
     {
 
-        $this->rRepository->addReservation($room_id, $city_id, $request);
-        $business = Room::find($room_id);
+        $this->rRepository->addReservation($service_id, $city_id, $request);
+        $business = Service::find($service_id);
         $this->nRepository->addNotificationBusiness($business->business_id, 'Nowa rezerwacja');
 
         return redirect()->back();
     }
 
-    public function ajaxGetRoomReservations($id)
+    public function ajaxGetServiceReservations($id)
     {
-        $reservations = $this->rRepository->getReservationsByRoomId($id);
+        $reservations = $this->rRepository->getReservationsByServiceId($id);
 
         return response()->json([
             'reservations' => $reservations
@@ -57,10 +57,10 @@ class ReservationController extends Controller
 
         $this->authorize('reservation', $reservation);
         
-        $room = Room::find($reservation->room_id);
+        $service = Service::find($reservation->service_id);
 
         $this->rRepository->deleteReservation($reservation);
-        $this->nRepository->addNotificationBusiness($room->business_id, 'Rezerwacja została anulowana');
+        $this->nRepository->addNotificationBusiness($service->business_id, 'Rezerwacja została anulowana');
         $this->nRepository->addNotificationUser($reservation->user_id, 'Rezerwacja została anulowana');
 
         return redirect()->back();

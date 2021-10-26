@@ -8,7 +8,7 @@ use App\Models\Category;
 use App\Models\Social;
 use App\Models\Address;
 use App\Models\Contact;
-use App\Models\Room; 
+use App\Models\Service; 
 use App\Models\Photo; 
 use App\Models\City; 
 use App\Models\BusinessCategory; 
@@ -28,29 +28,29 @@ class BusinessRepository implements BusinessRepositoryInterface
     public function getBusinessDetails($id)
     {
         session(['business' => $id]);
-        return Business::with(['city','photos','comments.user','questionsAndAnswers','address','users.photos','rooms.photos','contactable','categories.category'])->find($id);
+        return Business::with(['city','photos','comments.user','questionsAndAnswers','address','users.photos','services.photos','contactable','categories.category'])->find($id);
     }
 
     public function getBusinessReservations($request)
     {
         return Business::with([
 
-                  'rooms' => function($q) { //zwracanie sali która ma przynajmniej jedną rezerwacje
+                  'services' => function($q) { //zwracanie sali która ma przynajmniej jedną rezerwacje
                         $q->has('reservations');
                     }, 
 
-                    'rooms.reservations.user.contactable',
+                    'services.reservations.user.contactable',
 
                   ])
-                    ->has('rooms.reservations') 
+                    ->has('services.reservations') 
                     ->where('id', session('business'))
                     ->get();
     }
 
     public function getReservationData($request)
     {
-        return Reservation::with('user', 'room')
-                ->where('room_id', $request->input('room_id'))
+        return Reservation::with('user', 'service')
+                ->where('service_id', $request->input('service_id'))
                 ->where('day_in', '<=', date('Y-m-d', strtotime($request->input('date'))))
                 ->where('day_out', '>=', date('Y-m-d', strtotime($request->input('date'))))
                 ->first();
@@ -152,23 +152,23 @@ class BusinessRepository implements BusinessRepositoryInterface
         $i = 0;
         foreach($request->priceFrom as $categoryId)
         {
-            $room = new Room;
-            $room->title = $request->titleRoom[$i];
-            $room->description = $request->descriptionRoom[$i];
-            $room->price_from = $request->priceFrom[$i];
-            $room->price_to = $request->priceTo[$i];
-            $room->people_from = $request->minPeople[$i];
-            $room->people_to = $request->maxPeople[$i];
-            $room->size = $request->sizeRoom[$i];
-            $room->unit = $request->unit[$i];
-            $business->rooms()->save($room);
+            $service = new Service;
+            $service->title = $request->titleService[$i];
+            $service->description = $request->descriptionService[$i];
+            $service->price_from = $request->priceFrom[$i];
+            $service->price_to = $request->priceTo[$i];
+            $service->people_from = $request->minPeople[$i];
+            $service->people_to = $request->maxPeople[$i];
+            $service->size = $request->sizeService[$i];
+            $service->unit = $request->unit[$i];
+            $business->services()->save($service);
             
-            foreach($request->imageRoom as $image)
+            foreach($request->imageService as $image)
             {
                 $photo = new Photo();
                 $photo->path = $image->store('photos');
-                $photo->photoable_type = 'App\Models\Room';
-                $photo->photoable_id = $room->id;
+                $photo->photoable_type = 'App\Models\Service';
+                $photo->photoable_id = $service->id;
                 $photo->save();
             }
 

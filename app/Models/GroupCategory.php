@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
+class GroupCategory extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+    public $table = 'groups_categories';
+    protected $primaryKey = 'category_id';
     
     /**
      * The attributes that are mass assignable.
@@ -15,21 +18,14 @@ class Event extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name',
-        'budget',
-        'date_event',
+        'icon_name',
+        'group_id',
         'category_id',
-        'user_id' 
     ];
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
-    }
-
-    public function notifications()
-    {
-        return $this->morphMany(Notification::class, 'notification');
+        return $this->hasMany(Category::class, 'id');
     }
 
 }

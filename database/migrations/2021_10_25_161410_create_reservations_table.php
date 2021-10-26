@@ -19,9 +19,9 @@ class CreateReservationsTable extends Migration
             $table->date('date_to');
             $table->boolean('status');
             $table->timestamps();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->unsigned();
-            $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade')->unsigned();
-            $table->foreignId('city_id')->constrained('cities')->onDelete('cascade')->unsigned();
+            $table->foreignId('event_id')->constrained('events')->onDelete('cascade');
+            $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
+            $table->foreignId('city_id')->constrained('cities')->onDelete('cascade');
         });
     }
 

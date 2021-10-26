@@ -42,7 +42,7 @@ Route::get('/searchCities', [App\Http\Controllers\FrontendController::class, 'se
 Route::post('/businessSearch', [App\Http\Controllers\FrontendController::class, 'businessSearch'])->name('businessSearch');
 Route::get('/wyszukaj', [App\Http\Controllers\FrontendController::class, 'businessIndex'])->name('frontend.search');
 Route::get('/wfirma/{id}', [App\Http\Controllers\FrontendController::class, 'businessDetails'])->name('businessDetails');
-Route::get('/firmaa/sala/{id}', [App\Http\Controllers\FrontendController::class, 'roomDetails'])->name('roomDetails');
+Route::get('/firmaa/sala/{id}', [App\Http\Controllers\FrontendController::class, 'serviceDetails'])->name('serviceDetails');
 
 //
 Route::get('/like/{likeable_id}/{type}', [App\Http\Controllers\LikeController::class, 'like'])->name('like');
@@ -52,8 +52,8 @@ Route::get('/unlike/{likeable_id}/{type}', [App\Http\Controllers\LikeController:
 Route::post('/addComment/{commentable_id}/{type}', [App\Http\Controllers\CommentController::class, 'addComment'])->name('addComment');
 
 //
-Route::get('/ajaxGetRoomReservations/{id}', [App\Http\Controllers\ReservationController::class, 'ajaxGetRoomReservations']);
-Route::post('/addReservation/{room_id}/{city_id}', [App\Http\Controllers\ReservationController::class, 'addReservation'])->name('reservation.addReservation');
+Route::get('/ajaxGetServiceReservations/{id}', [App\Http\Controllers\ReservationController::class, 'ajaxGetServiceReservations']);
+Route::post('/addReservation/{service_id}/{city_id}', [App\Http\Controllers\ReservationController::class, 'addReservation'])->name('reservation.addReservation');
 Route::get('/confirmReservation/{id}', [App\Http\Controllers\ReservationController::class, 'confirmReservation'])->name('reservation.confirmReservation');
 Route::get('/deleteReservation/{id}', [App\Http\Controllers\ReservationController::class, 'deleteReservation'])->name('reservation.deleteReservation');
 
@@ -102,7 +102,8 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/uzytkownik/wydarzenie/daty', [App\Http\Controllers\EventController::class, 'dateView'])->name('event.date');
         Route::get('/uzytkownik/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'financesView'])->name('event.finances');
         Route::get('/uzytkownik/wydarzenie/goście', [App\Http\Controllers\EventController::class, 'guestView'])->name('event.guest');
-        Route::get('/uzytkownik/wydarzenie/polubione', [App\Http\Controllers\EventController::class, 'likeView'])->name('event.like');
+        Route::get('/uzytkownik/wydarzenie/usługi', [App\Http\Controllers\EventController::class, 'serviceView'])->name('event.services');
+        Route::get('/uzytkownik/wydarzenie/usługi/{idCategory}', [App\Http\Controllers\EventController::class, 'serviceDetails'])->name('event.servicesDetails');
         Route::get('/uzytkownik/wydarzenie/powiadomienia', [App\Http\Controllers\EventController::class, 'notificationsView'])->name('event.notifications');
         Route::get('/uzytkownik/wydarzenie/zadania', [App\Http\Controllers\EventController::class, 'tasksView'])->name('event.tasks');
         Route::get('/uzytkownik/wydarzenie/rezerwacje', [App\Http\Controllers\EventController::class, 'reservationsView'])->name('event.reservations');

@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Business;
 use App\Models\City;
-use App\Models\Room;
+use App\Models\Service;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Comment;
@@ -24,7 +24,7 @@ class FrontendRepository implements FrontendRepositoryInterface
     //Pobranie danych wybranej firmy
     public function getBusinessDetails($id)
     {
-        return Business::with(['city','photos','comments.user.photos','questionsAndAnswers','address','users.photos','rooms.photos'])->find($id);
+        return Business::with(['city','photos','comments.user.photos','questionsAndAnswers','address','users.photos','services.photos'])->find($id);
     }
 
     //Wyszukanie miasta po pierwszych kilku literach
@@ -36,13 +36,13 @@ class FrontendRepository implements FrontendRepositoryInterface
     //Wyszukanie firm po filtrach
     public function getSearchResults(string $city)
     {
-        return City::with(['businesses.photos', 'businesses.address', 'rooms.reservations'])->where('name', $city)->get() ?? false;  
+        return City::with(['businesses.photos', 'businesses.address', 'services.reservations'])->where('name', $city)->get() ?? false;  
     } 
 
     //Pobranie danych wybranej sali
-    public function getRoomDetails($id)
+    public function getServiceDetails($id)
     {
-        return Room::with(['photos', 'reservations'])->find($id);  
+        return Service::with(['photos', 'reservations'])->find($id);  
     } 
 
 
@@ -54,13 +54,13 @@ class FrontendRepository implements FrontendRepositoryInterface
     
     public function addNotification($id)
     {
-        $room = Room::with(['business'])->find($id);
+        $service = Service::with(['business'])->find($id);
 
         $notification = new Notification;
-        $notification->content = 'Dokonano rezerwacji w '. $room->business->name;
+        $notification->content = 'Dokonano rezerwacji w '. $service->business->name;
         $notification->notification_type = 'App\Models\Business';
         $notification->status = false;
-        $notification->notification_id = $room->business->id;
+        $notification->notification_id = $service->business->id;
 
         return $notification->save();
     }

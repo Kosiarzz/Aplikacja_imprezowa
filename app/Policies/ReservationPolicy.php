@@ -24,7 +24,7 @@ class ReservationPolicy
 
         if($user->isBusiness())
         {
-            return $user->id === $reservation->room->business->user_id;
+            return $user->id === $reservation->service->business->user_id;
         }
         
         return $user->id === $reservation->user_id;

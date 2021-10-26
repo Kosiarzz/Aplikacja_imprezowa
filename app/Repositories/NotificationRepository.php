@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Notification;
 
+
 class NotificationRepository
 {
    
@@ -11,7 +12,7 @@ class NotificationRepository
     {
         return Notification::with(['notification'])
         ->where('notification_id', $id)
-        ->where('notification_type',$type)->get();
+        ->where('notification_type', $type)->get();
     }
 
     public function addNotificationUser($id, $content)
@@ -30,6 +31,17 @@ class NotificationRepository
         $notification = new Notification;
         $notification->content = $content;
         $notification->notification_type = 'App\Models\Business';
+        $notification->status = false;
+        $notification->notification_id = $id;
+
+        return $notification->save();
+    }
+
+    public function addNotificationEvent($id, $content)
+    {   
+        $notification = new Notification;
+        $notification->content = $content;
+        $notification->notification_type = 'App\Models\Event';
         $notification->status = false;
         $notification->notification_id = $id;
 

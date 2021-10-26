@@ -40,24 +40,24 @@ class FrontendGateway {
             {
                 foreach($result as $r)
                 {
-                    foreach($r->rooms as $k=>$room)
+                    foreach($r->services as $k=>$service)
                     {
                         //Sprawdzenie ilości miejsc
                         if($request->input('check_in') > 0)
                         {
-                            if($request->input('check_in') < $room->people_from && $request->input('check_out') > $room->people_to)
+                            if($request->input('check_in') < $service->people_from && $request->input('check_out') > $service->people_to)
                             {
-                                $r->rooms->forget($k);
+                                $r->services->forget($k);
                             }
                         }
                         
                         /*
                         //Sprawdzenie czy jest wolny termin
-                        foreach($room->reservations as $reservation)
+                        foreach($service->reservations as $reservation)
                         {
                             if($request->input('date') != $reservation->date)
                             {
-                                $result->rooms->forget($k);
+                                $result->services->forget($k);
                             }
                         }
                         */ 
@@ -66,7 +66,7 @@ class FrontendGateway {
 
                 foreach($result as $r)
                 {
-                    if(count($r->rooms) > 0)
+                    if(count($r->services) > 0)
                     {
                         return $result; 
                     }
@@ -78,12 +78,12 @@ class FrontendGateway {
         return false;
     }
 
-    public function checkAvailableReservations($room_id, $request)
+    public function checkAvailableReservations($service_id, $request)
     {
         $dateFrom = date('Y-m-d', strtotime($request->input('dateFrom')));
         $dateTo = date('Y-m-d', strtotime($request->input('dateTo')));
 
-        $reservations = $this->fRepository->getReservationsByRoomId($room_id);
+        $reservations = $this->fRepository->getReservationsByServiceId($service_id);
 
         $available = true;
         foreach($reservations as $reservation)

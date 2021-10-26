@@ -35,11 +35,11 @@ class FrontendController extends Controller
         return view('frontend.details', ['business' => $data]);
     }
     
-    public function roomDetails($id)
+    public function serviceDetails($id)
     {
-        $data = $this->fRepository->getRoomDetails($id);
+        $data = $this->fRepository->getServiceDetails($id);
         
-        return view('frontend.roomDetails', ['room' => $data]);
+        return view('frontend.serviceDetails', ['service' => $data]);
     }
 
 

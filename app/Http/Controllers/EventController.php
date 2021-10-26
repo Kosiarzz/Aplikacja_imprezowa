@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\EventRepository;
+use App\Repositories\ReservationRepository;
 
 use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    public function __construct(EventRepository $eRepository)
+    public function __construct(EventRepository $eRepository, ReservationRepository $reservationRepository)
     {
         $this->eRepository = $eRepository;
+        $this->reservationRepository = $reservationRepository;
     }
 
     public function index($id)
@@ -82,11 +84,18 @@ class EventController extends Controller
     }
 
 
-    public function likeView()
+    public function serviceView()
     {
-        $likes = $this->eRepository->getLikeBusiness();
+        $services = $this->eRepository->getServices();
 
-        return view('event.like', ['likes' => $likes]);
+        return view('event.services', ['services' => $services]);
+    }
+
+    public function serviceDetails($idCategory)
+    {
+        $services = $this->eRepository->getLikeableServices($idCategory);
+
+        return view('event.servicesDetails', ['services' => $services]);
     }
 
     public function notificationsView()
@@ -103,7 +112,9 @@ class EventController extends Controller
 
     public function reservationsView()
     {
-        return view('event.reservations');
+        $reservations = $this->reservationRepository->getReservations(session('event'));
+
+        return view('event.reservations', ['reservations' => $reservations]);
     }
 
 }

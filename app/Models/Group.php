@@ -35,4 +35,9 @@ class Group extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function groupCategory()
+    {
+        return $this->hasMany(GroupCategory::class);
+    }
 }

@@ -22,8 +22,8 @@ class Reservation extends Model
         'date_from',
         'date_to',
         'status',
-        'user_id',
-        'room_id',
+        'event_id',
+        'service_id',
         'city_id',
     ];
 
@@ -32,8 +32,8 @@ class Reservation extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function room()
+    public function service()
     {
-        return $this->belongsTo(Room::class);
+        return $this->belongsTo(Service::class);
     } 
 }

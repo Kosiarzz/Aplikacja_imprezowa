@@ -192,12 +192,12 @@
 
 
             <div class="form-group row">
-                <label for="titleRoom" class="col-md-4 col-form-label text-md-right">Tytuł</label>
+                <label for="titleService" class="col-md-4 col-form-label text-md-right">Tytuł</label>
 
                 <div class="col-md-6">
-                    <input id="titleRoom" type="text" class="form-control @error('titleRoom') is-invalid @enderror" name="titleRoom[]" value="{{ old('titleRoom') }}">
+                    <input id="titleService" type="text" class="form-control @error('titleService') is-invalid @enderror" name="titleService[]" value="{{ old('titleService') }}">
 
-                    @error('titleRoom')
+                    @error('titleService')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -206,12 +206,12 @@
             </div>
 
             <div class="form-group row">
-                <label for="descriptionRoom" class="col-md-4 col-form-label text-md-right">Opis</label>
+                <label for="descriptionService" class="col-md-4 col-form-label text-md-right">Opis</label>
 
                 <div class="col-md-6">
-                    <input id="descriptionRoom" type="text" class="form-control @error('descriptionRoom') is-invalid @enderror" name="descriptionRoom[]" value="{{ old('descriptionRoom') }}">
+                    <input id="descriptionService" type="text" class="form-control @error('descriptionService') is-invalid @enderror" name="descriptionService[]" value="{{ old('descriptionService') }}">
 
-                    @error('descriptionRoom')
+                    @error('descriptionService')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -248,12 +248,12 @@
             </div>
 
             <div class="form-group row">
-                <label for="sizeRoom" class="col-md-4 col-form-label text-md-right">Wielkość [m^2]</label>
+                <label for="sizeService" class="col-md-4 col-form-label text-md-right">Wielkość [m^2]</label>
 
                 <div class="col-md-6">
-                    <input id="sizeRoom" type="number" min="0" class="form-control @error('sizeRoom') is-invalid @enderror" name="sizeRoom[]" value="{{ old('sizeRoom') }}">
+                    <input id="sizeService" type="number" min="0" class="form-control @error('sizeService') is-invalid @enderror" name="sizeService[]" value="{{ old('sizeService') }}">
 
-                    @error('sizeRoom')
+                    @error('sizeService')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -265,7 +265,7 @@
                 <label for="image" class="col-md-4 col-form-label text-md-right">Zdjęcia sali</label>
 
                 <div class="col-md-6">
-                    <input type="file" class="form-control @error('image') is-invalid @enderror" name="imageRoom[]" multiple>
+                    <input type="file" class="form-control @error('image') is-invalid @enderror" name="imageService[]" multiple>
                    
                     @error('image')
                     <span class="invalid-feedback" role="alert">
@@ -275,8 +275,8 @@
                 </div>
             </div>
             <hr>
-            <div id="room"></div>
-            <a class="btn-primary p-2" onClick="addRoom()">Dodaj sale</a>
+            <div id="service"></div>
+            <a class="btn-primary p-2" onClick="addService()">Dodaj sale</a>
             <hr>
             Dane kontaktowe
             <div class="form-group row">
@@ -512,7 +512,7 @@
     <script>
 
         var checkboxN = 0;
-        var roomN = 0;
+        var serviceN = 0;
         var qaN = 0;
 
         function questions()
@@ -584,12 +584,12 @@
             
         }
 
-        function addRoom()
+        function addService()
         {
-            room = document.getElementById("room");
+            service = document.getElementById("service");
             
             var data = ['Cena od', 'Cena do', 'Jednostka', 'Tytuł', 'Opis', 'Minimalna ilość osób', 'Maksymalna ilość osób', 'Wielkość [m^2]'];
-            var name = ['priceFrom', 'priceTo', 'unit', 'titleRoom', 'descriptionRoom', 'minPeople', 'maxPeople', 'sizeRoom'];
+            var name = ['priceFrom', 'priceTo', 'unit', 'titleService', 'descriptionService', 'minPeople', 'maxPeople', 'sizeService'];
             var type = ['number', 'number', 'text', 'text', 'text', 'number', 'number', 'number'];
 
             for(var i=0; i<data.length; i++)
@@ -598,11 +598,11 @@
                 var divForm = document.createElement('div');
                 divForm.classList.add("form-group");
                 divForm.classList.add("row");
-                room.appendChild(divForm);
+                service.appendChild(divForm);
 
                 //create label
                 var label = document.createElement('label');
-                label.htmlFor = "id" + roomN;
+                label.htmlFor = "id" + serviceN;
                 label.classList.add("col-md-4");
                 label.classList.add("col-form-label");
                 label.classList.add("text-md-right");
@@ -619,11 +619,11 @@
                 input.type = type[i];
                 input.name = name[i] + "[]";
                 input.value = "{{ old('"+ name[i] +"') }}";
-                input.id = "id" + roomN;
+                input.id = "id" + serviceN;
                 input.classList.add("form-control");
                 divInput.appendChild(input);
 
-                roomN++;
+                serviceN++;
             }
 
             //create files
@@ -632,11 +632,11 @@
             var divForm = document.createElement('div');
             divForm.classList.add("form-group");
             divForm.classList.add("row");
-            room.appendChild(divForm);
+            service.appendChild(divForm);
 
             //create label
             var label = document.createElement('label');
-            label.htmlFor = "id" + roomN;
+            label.htmlFor = "id" + serviceN;
             label.classList.add("col-md-4");
             label.classList.add("col-form-label");
             label.classList.add("text-md-right");
@@ -651,16 +651,16 @@
             //creat input files
             var input = document.createElement('input');
             input.type = "file";
-            input.name = 'imageRoom[]';
-            input.id = "id" + roomN;
+            input.name = 'imageService[]';
+            input.id = "id" + serviceN;
             input.multiple = true;  
             input.classList.add("form-control");
             divInput.appendChild(input);
 
-            roomN++;
+            serviceN++;
 
             var hr = document.createElement('hr');
-            room.appendChild(hr);
+            service.appendChild(hr);
         }
 
         function addCategory()

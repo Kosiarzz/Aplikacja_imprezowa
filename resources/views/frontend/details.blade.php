@@ -55,15 +55,15 @@
                 Dostępne obiekty
             </h2>
         </div>	
-        @foreach($business->rooms as $room)
-            <a href="{{route('roomDetails', ['id' => $room->id])}}" class="w-100 mb-4">
+        @foreach($business->services as $service)
+            <a href="{{route('serviceDetails', ['id' => $service->id])}}" class="w-100 mb-4">
                 <div class="row border mb-4">
-                    <img src="{{asset('storage/'.$room->photos[0]->path)}}" width="250" height="141" class="mr-3" alt="SALA"><br>
-                    Tytuł: {{$room->title}}<br>
-                    Opis: {{ str_limit($room->description, 50) }}<br>
-                    Osób od: {{$room->people_from}}<br>
-                    Osób do: {{$room->people_to}}<br>      
-                    Metraż: {{$room->size}} m^2<br> 
+                    <img src="{{asset('storage/'.$service->photos[0]->path)}}" width="250" height="141" class="mr-3" alt="SALA"><br>
+                    Tytuł: {{$service->title}}<br>
+                    Opis: {{ str_limit($service->description, 50) }}<br>
+                    Osób od: {{$service->people_from}}<br>
+                    Osób do: {{$service->people_to}}<br>      
+                    Metraż: {{$service->size}} m^2<br> 
                 </div>
             </a>
         @endforeach
@@ -75,7 +75,7 @@
 
         @foreach($business->comments as $comment)
  
-            <a href="{{route('user', ['id' => $comment->user->id])}}" class="w-100 mb-4">
+            <a href="{{route('findUserProfile', ['id' => $comment->user->id])}}" class="w-100 mb-4">
                 <div class="row border mb-4">
                     <img src="{{asset('storage/'.$comment->user->photos->path)}}" width="250" height="121" class="mr-3" alt="SALA"><br>
                     {{$comment->user->name}} {{$comment->user->surname}}<br>

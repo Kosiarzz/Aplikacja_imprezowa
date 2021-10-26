@@ -25,8 +25,8 @@ class ReservationFactory extends Factory
             'date_to' => $this->faker->dateTimeBetween('now','+6 days'),
             'date_from' => $this->faker->dateTimeBetween('-6 days','now'),
             'status' => $this->faker->boolean(50),
-            'user_id' => $this->faker->numberBetween(1,10),
-            'room_id' => $this->faker->numberBetween(1,50),
+            'event_id' => $this->faker->numberBetween(1,10),
+            'service_id' => $this->faker->numberBetween(1,50),
             'city_id' => $this->faker->numberBetween(1,10),
         ];
     }

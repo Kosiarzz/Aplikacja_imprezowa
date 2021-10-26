@@ -7,10 +7,10 @@
     <h2 class="sub-header">Rezerwacje</h2>
     
         @foreach( $business as $business )
-            @foreach( $business->rooms as $r=>$room ) 
+            @foreach( $business->services as $r=>$service ) 
             @php ( $r++ ) 
 
-                <h4 class="blue"> Sala: {{ $room->title }}</h4>
+                <h4 class="blue"> Sala: {{ $service->title }}</h4>
 
                 <div class="row top-buffer">
                     <div class="col-md-3">
@@ -31,7 +31,7 @@
                                             <th>Usunięcie</th>
                                         </tr>
                                     </thead>
-                                    @foreach( $room->reservations as $reservation )
+                                    @foreach( $service->reservations as $reservation )
                                         @if($reservation->status == 0)
                                             <tbody>
                                                 <tr> 
@@ -62,7 +62,7 @@
                                             <th>Usunięcie</th>
                                         </tr>
                                     </thead>
-                                    @foreach( $room->reservations as $reservation )
+                                    @foreach( $service->reservations as $reservation )
                                         @if($reservation->status == 1)
                                             <tbody>
                                                 <tr>

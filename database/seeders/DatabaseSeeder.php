@@ -22,8 +22,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\Social::factory(10)->create();
         \App\Models\Likeable::factory(150)->create();
         \App\Models\Photo::factory(200)->create();
-        \App\Models\Room::factory(100)->create();
-        \App\Models\Reservation::factory(200)->create();
+        \App\Models\Service::factory(100)->create();
+        //\App\Models\Reservation::factory(200)->create();
         \App\Models\QuestionAndAnswer::factory(100)->create();
         \App\Models\BusinessCategory::factory(50)->create();
         \App\Models\Contact::factory(20)->create();

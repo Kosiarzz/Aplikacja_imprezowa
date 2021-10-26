@@ -8,6 +8,7 @@
 
         <div class="row md-12">
             @foreach($user->businesses as $busines)
+                {{dd($busines)}}
                 <div class="md-4 likeBusiness position-relative">
                     <a href="{{ route('unlike', ['likeable_id' => $busines->id, 'type' => 'App\Models\Business']) }}" class="btn-danger p-1 deleteLink">x</a>
                     nazwa {{$busines->title}}<br>

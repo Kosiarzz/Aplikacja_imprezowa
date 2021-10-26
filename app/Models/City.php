@@ -20,9 +20,9 @@ class City extends Model
         'name',
     ];
 
-    public function rooms()
+    public function services()
     {
-        return $this->hasManyThrough(Room::class, Business::class);
+        return $this->hasManyThrough(Service::class, Business::class);
     }
 
     public function businesses()

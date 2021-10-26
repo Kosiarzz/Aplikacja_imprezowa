@@ -69,9 +69,9 @@ class Business extends Model
         return $this->hasOne(Social::class);
     }
 
-    public function rooms()
+    public function services()
     {
-        return $this->hasMany(Room::class);
+        return $this->hasMany(Service::class);
     }
 
     public function questionsAndAnswers()
@@ -92,5 +92,10 @@ class Business extends Model
     public function categories()
     {
         return $this->hasMany(BusinessCategory::class);
+    }
+
+    public function mainCategory()
+    {
+        return $this->hasOne(Category::class);
     }
 }

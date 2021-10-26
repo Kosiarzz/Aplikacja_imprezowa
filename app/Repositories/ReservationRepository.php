@@ -6,43 +6,43 @@ use App\Models\Reservation;
 class ReservationRepository
 {
    
-    public function addReservation($room_id, $city_id, $request)
+    public function addReservation($service_id, $city_id, $request)
     {
         return Reservation::create([
-                'user_id'=>$request->user()->id,
+                'event_id'=>$request->user()->id,
                 'city_id'=>$city_id,
-                'room_id'=>$room_id,
+                'service_id'=>$service_id,
                 'status'=>0,
                 'date_from'=>date('Y-m-d', strtotime($request->input('dateFrom'))),
                 'date_to'=>date('Y-m-d', strtotime($request->input('dateTo')))
             ]);
     }
 
-    public function getReservationsByRoomId($id)
+    public function getReservationsByServiceId($id)
     {
-        return Reservation::where('room_id', $id)->get(); 
+        return Reservation::where('service_id', $id)->get(); 
     }
 
     public function getBusinessReservations($request)
     {
         return Business::with([
 
-                  'rooms' => function($q) { //zwracanie sali która ma przynajmniej jedną rezerwacje
+                  'services' => function($q) { //zwracanie sali która ma przynajmniej jedną rezerwacje
                         $q->has('reservations');
                     }, 
 
-                    'rooms.reservations.user.contactable',
+                    'services.reservations.user.contactable',
 
                   ])
-                    ->has('rooms.reservations') 
+                    ->has('services.reservations') 
                     ->where('id', session('business'))
                     ->get();
     }
 
     public function getReservationData($request)
     {
-        return Reservation::with('user', 'room')
-                ->where('room_id', $request->input('room_id'))
+        return Reservation::with('user', 'service')
+                ->where('service_id', $request->input('service_id'))
                 ->where('day_in', '<=', date('Y-m-d', strtotime($request->input('date'))))
                 ->where('day_out', '>=', date('Y-m-d', strtotime($request->input('date'))))
                 ->first();
@@ -50,7 +50,7 @@ class ReservationRepository
 
     public function getReservations($id)
     {
-        return Reservation::where('user_id', $id)->get();
+        return Reservation::where('event_id', $id)->get();
     }
 
     public function getReservation($id)

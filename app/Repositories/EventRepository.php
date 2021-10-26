@@ -11,6 +11,7 @@ use App\Models\Guest;
 use App\Models\Task;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 
 class EventRepository
 {
@@ -84,6 +85,9 @@ class EventRepository
         ];
         Task::insert($dataTasks);
 
+
+        
+
         return $event;
     }
     
@@ -112,6 +116,23 @@ class EventRepository
     public function getTasks()
     {
         return Group::with(['tasks'])->where('type','task')->where('event_id', session('event'))->get();
+    }
+
+    public function getServices()
+    {
+        return Group::with(['groupCategory.category'])->where('type','service')->where('event_id', session('event'))->get();
+    }
+
+    public function getServicesDetails($name)
+    {
+        return Group::with(['groupCategory.category'])->where('type','service')->where('groupCategory.category.name', $name)->where('event_id', session('event'))->get();
+    }
+
+    public function getLikeableServices($idCategory)
+    {   
+        return User::with(['businesses'])->whereHas('businesses', function (Builder $query) use ($idCategory) {
+            $query->where('main_category_id', $idCategory);
+        })->get();
     }
 
     public function addGroup($request)
@@ -156,7 +177,7 @@ class EventRepository
     {
         $task = new Task();
         $task->name = $request->name;
-        $task->end_task = '2021-12-12';
+        $task->end_task = $request->date;
         $task->status = 0;
         $task->group_id = $request->group;
         $task->save();

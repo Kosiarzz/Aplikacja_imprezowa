@@ -4,18 +4,18 @@
 <div class="container">
     <div class="row justify-content-center">
             <br>
-           <a href="{{route('business.id',['id' => $room->business_id])}}">Powrót</a><br>
+           <a href="{{route('business.id',['id' => $service->business_id])}}">Powrót</a><br>
            <div style="width:100%;">
            
-            {{$room->title}}<br>
-            {{$room->description}}<br>
-            {{$room->people_from}}<br>
-            {{$room->people_to}}<br>
+            {{$service->title}}<br>
+            {{$service->description}}<br>
+            {{$service->people_from}}<br>
+            {{$service->people_to}}<br>
            </div>
            <br>Zdjęcia<br>
         <div class="mb-2" style="width:100%;">
             
-           @foreach($room->photos as $photo)
+           @foreach($service->photos as $photo)
            <img src="{{asset('storage/'.$photo->path)}}" class="mr-3 mb-3" width="219" height="121" alt="SALA">
            @endforeach
         </div>
@@ -26,7 +26,7 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <form method="POST" action="{{ route('reservation.addReservation', ['room_id' => $room->id, 'city_id' => $room->business->city->id]) }}">
+                    <form method="POST" action="{{ route('reservation.addReservation', ['service_id' => $service->id, 'city_id' => $service->business->city->id]) }}">
                         <div class="form-group">
                             <label for="dateFrom">Data od</label>
                             <input required name="dateFrom" type="text" class="form-control datepicker" id="dateFrom" placeholder="">
@@ -35,7 +35,7 @@
                             <label for="dateTo">Data do</label>
                             <input required name="dateTo" type="text" class="form-control datepicker" id="dateTo" placeholder="">
                         </div>
-                        <button type="submit" class="btn btn-primary reservationBtn" data-id="{{$room->id}}">Rezerwacja</button> 
+                        <button type="submit" class="btn btn-primary reservationBtn" data-id="{{$service->id}}">Rezerwacja</button> 
                         <p class="text-danger">
                             {{ Session::get('reservationMsg') }}
                         </p>
@@ -74,7 +74,7 @@
         $.ajax({
 
         cache: false,
-        url: base_url + '/ajaxGetRoomReservations/' + {{ $room->id }},
+        url: base_url + '/ajaxGetServiceReservations/' + {{ $service->id }},
         type: "GET",
         success: function(response){
 

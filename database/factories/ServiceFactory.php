@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Room;
+use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class RoomFactory extends Factory
+class ServiceFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Room::class;
+    protected $model = Service::class;
 
     /**
      * Define the model's default state.
