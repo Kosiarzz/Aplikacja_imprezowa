@@ -172,7 +172,7 @@ class EventRepository
         $finance->group_id = $request->group;
         $finance->save();
     }
-
+    
     public function addTask($request)
     {
         $task = new Task();
@@ -181,5 +181,32 @@ class EventRepository
         $task->status = 0;
         $task->group_id = $request->group;
         $task->save();
+    }
+
+    public function editTask($request)
+    {
+        Task::where('id', $request->id)->update(['name' => $request->name, 'end_task' => $request->date]);
+    }
+
+    public function deleteTask($request)
+    {
+        $task = Task::find($request->id);
+        $task->delete();
+    }
+
+    public function statusTask($request)
+    {
+        Task::where('id', $request->id)->update(['status' => $request->status]);
+    }
+
+    public function editGroup($request)
+    {
+        Group::where('id', $request->id)->update(['name' => $request->name]);
+    }
+
+    public function deleteGroup($request)
+    {
+        $task = Group::find($request->id);
+        $task->delete();
     }
 }

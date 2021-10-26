@@ -10121,10 +10121,20 @@ input[type=file] {
   color: #fff;
   font-size: 20px;
   background-color: #3490dc;
+  margin-bottom: -60px;
 }
 
 .task:hover {
   background-color: #dfe3e8;
+}
+
+.titlePage {
+  font-size: 24px;
+  color: #878d97;
+}
+
+.taskChecked {
+  background-color: #8cc8ff;
 }
 
 body {

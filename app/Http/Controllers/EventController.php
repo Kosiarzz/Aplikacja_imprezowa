@@ -62,6 +62,20 @@ class EventController extends Controller
         return redirect()->back();
     }
 
+    public function editGroup(Request $request)
+    {
+        $events = $this->eRepository->editGroup($request);
+
+        return redirect()->back();
+    }
+
+    public function deleteGroup(Request $request)
+    {
+        $events = $this->eRepository->deleteGroup($request);
+
+        return redirect()->back();
+    }
+
     public function addGuest(Request $request)
     {
         $events = $this->eRepository->addGuest($request);
@@ -83,6 +97,26 @@ class EventController extends Controller
         return redirect()->back();
     }
 
+    public function editTask(Request $request)
+    {
+        $events = $this->eRepository->editTask($request);
+
+        return redirect()->back();
+    }
+    
+    public function deleteTask(Request $request)
+    {
+        $events = $this->eRepository->deleteTask($request);
+
+        return redirect()->back();
+    }
+
+    public function statusTask(Request $request)
+    {
+        $events = $this->eRepository->statusTask($request);
+
+        return redirect()->back();
+    }
 
     public function serviceView()
     {

@@ -24,32 +24,28 @@
   <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
     <div class="position-sticky">
       <div class="list-group list-group-flush mx-3 mt-4">
-        <a
-          href="#"
-          class="list-group-item list-group-item-action py-2 ripple"
-          aria-current="true"
-        >
-          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
+        <a id="dashboard" href="{{ route('user.events') }}" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-chart-area fa-fw me-3"></i><span>Panel główny</span>
         </a>
-        <a href="{{ route('user.events') }}" class="list-group-item list-group-item-action py-2 ripple active">
+        <a id="events" href="{{ route('user.events') }}" class="list-group-item list-group-item-action py-2 ripple active">
           <i class="fas fa-chart-area fa-fw me-3"></i><span>Wydarzenia</span>
         </a>
-        <a href="{{ route('event.date') }}" class="list-group-item list-group-item-action py-2 ripple"
+        <a id="calendar" href="{{ route('event.date') }}" class="list-group-item list-group-item-action py-2 ripple"
           ><i class="fas fa-lock fa-fw me-3"></i><span>Kalendarz</span></a
         >
-        <a href="{{ route('event.finances') }}" class="list-group-item list-group-item-action py-2 ripple"
+        <a id="finance" href="{{ route('event.finances') }}" class="list-group-item list-group-item-action py-2 ripple"
           ><i class="fas fa-chart-line fa-fw me-3"></i><span>Finanse</span></a
         >
-        <a href="{{ route('event.guest') }}" class="list-group-item list-group-item-action py-2 ripple">
+        <a id="guest" href="{{ route('event.guest') }}" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-chart-pie fa-fw me-3"></i><span>Goście</span>
         </a>
-        <a href="{{ route('event.services') }}" class="list-group-item list-group-item-action py-2 ripple"
+        <a id="service" href="{{ route('event.services') }}" class="list-group-item list-group-item-action py-2 ripple"
           ><i class="fas fa-chart-bar fa-fw me-3"></i><span>Usługi</span></a
         >
-        <a href="{{ route('event.tasks') }}" class="list-group-item list-group-item-action py-2 ripple"
+        <a id="task" href="{{ route('event.tasks') }}" class="list-group-item list-group-item-action py-2 ripple"
           ><i class="fas fa-globe fa-fw me-3"></i><span>Zadania</span></a
         >
-        <a href="{{ route('event.notifications') }}" class="list-group-item list-group-item-action py-2 ripple"
+        <a id="notification" href="{{ route('event.notifications') }}" class="list-group-item list-group-item-action py-2 ripple"
           ><i class="fas fa-building fa-fw me-3"></i><span>
                                     @if(!empty($notifications))
                                         Powiadomienia({{count($notifications)}})
@@ -57,7 +53,7 @@
                                         Powiadomienia
                                     @endif</span></a
         >
-        <a href="{{ route('event.reservations') }}" class="list-group-item list-group-item-action py-2 ripple"
+        <a id="reservation" href="{{ route('event.reservations') }}" class="list-group-item list-group-item-action py-2 ripple"
           ><i class="fas fa-calendar fa-fw me-3"></i><span>Rezerwacje</span></a
         >
       </div>
@@ -66,7 +62,7 @@
   <!-- Sidebar -->
 
   <!-- Navbar -->
-  <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+  <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-secondary fixed-top">
     <!-- Container wrapper -->
     <div class="container-fluid">
       <!-- Toggle button -->
@@ -85,11 +81,11 @@
       <!-- Brand -->
       <a class="navbar-brand" href="#">
         <img
-          src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png"
+          src="x"
           height="25"
           alt=""
           loading="lazy"
-        />
+        /> logo/nazwa
       </a>
     
 
