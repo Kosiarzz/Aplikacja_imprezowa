@@ -22,6 +22,13 @@ class EventController extends Controller
         return view('event.index', ['events' => $events]);
     }
 
+    public function dashboardView()
+    {    
+        $events = $this->eRepository->getEventDashboard();
+        
+        return view('event.index', ['events' => $events]);
+    }
+
     public function createEventView()
     {
         $categories = $this->eRepository->getEventCategories();
@@ -114,6 +121,27 @@ class EventController extends Controller
     public function statusTask(Request $request)
     {
         $events = $this->eRepository->statusTask($request);
+
+        return redirect()->back();
+    }
+
+    public function editFinance(Request $request)
+    {
+        $events = $this->eRepository->editFinance($request);
+
+        return redirect()->back();
+    }
+    
+    public function deleteFinance(Request $request)
+    {
+        $events = $this->eRepository->deleteFinance($request);
+
+        return redirect()->back();
+    }
+
+    public function statusFinance(Request $request)
+    {
+        $events = $this->eRepository->statusFinance($request);
 
         return redirect()->back();
     }

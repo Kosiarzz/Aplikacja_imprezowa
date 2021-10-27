@@ -37,7 +37,9 @@
                      <button class="btn btn-warning mr-2">U</button>
                   </form>
                   @endif
-                  {{$task->name}} 
+                  <div class="float-left">
+                     {{$task->name}}
+                  </div> 
                   <div class="float-right"> 
                      {{$task->end_task}}
                      <a class="btn btn-primary data" data-toggle="modal" data-target="#exampleModal" data-id="{{$task->id}}" data-name="{{$task->name}}" data-date="{{$task->end_task}}">E</a>
@@ -287,6 +289,7 @@
    
    $("#id-delete").val(id);
    });
+   
    $('.dataGroup').on('click', function () {
    
    var id = $(this).attr("data-id");

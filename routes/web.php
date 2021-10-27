@@ -99,6 +99,7 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/uzytkownik/wydarzenie/główna/{id}', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
         Route::get('/uzytkownik/nowe/wydarzenie', [App\Http\Controllers\EventController::class, 'createEventView'])->name('event.createEvent');
 
+        Route::get('/uzytkownik/wydarzenie/główna', [App\Http\Controllers\EventController::class, 'dashboardView'])->name('event.dashboardView');
         Route::get('/uzytkownik/wydarzenie/daty', [App\Http\Controllers\EventController::class, 'dateView'])->name('event.date');
         Route::get('/uzytkownik/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'financesView'])->name('event.finances');
         Route::get('/uzytkownik/wydarzenie/goście', [App\Http\Controllers\EventController::class, 'guestView'])->name('event.guest');
@@ -123,6 +124,10 @@ Route::middleware(['auth','verified'])->group(function()
         Route::post('/uzytkownik/edycja/wydarzenie/zadanie', [App\Http\Controllers\EventController::class, 'editTask'])->name('editTask');
         Route::post('/uzytkownik/usuwanie/wydarzenie/zadanie', [App\Http\Controllers\EventController::class, 'deleteTask'])->name('deleteTask');
         Route::post('/uzytkownik/status/wydarzenie/zadanie', [App\Http\Controllers\EventController::class, 'statusTask'])->name('statusTask');
+
+        Route::post('/uzytkownik/status/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'statusFinance'])->name('statusFinance');
+        Route::post('/uzytkownik/edycja/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'editFinance'])->name('editFinance');
+        Route::post('/uzytkownik/usuwanie/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'deleteFinance'])->name('deleteFinance');
 
         Route::get('/setReadNotification', [App\Http\Controllers\UserController::class, 'setReadNotification']);
         Route::get('/getNotShownNotify', [App\Http\Controllers\UserController::class, 'getNotShownNotify']);

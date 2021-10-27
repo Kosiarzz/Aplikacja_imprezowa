@@ -93,8 +93,14 @@ class EventRepository
     
     public function getEvent($id)
     {   
-        session(['event' => $id]);
-        return Event::with(['category'])->find($id);
+        $event = Event::with(['category'])->find($id);
+        session(['event' => $event->id]);
+        return $event;
+    }
+
+    public function getEventDashboard()
+    {   
+        return Event::with(['category'])->find(session('event'));
     }
 
     public function getLikeBusiness()
@@ -162,11 +168,11 @@ class EventRepository
     {
         $finance = new Cost();
         $finance->name = $request->name;
-        $finance->note = 'NOTATKA';
-        $finance->cost = 500;
-        $finance->quantity = 1;
-        $finance->advance = 0;
-        $finance->date_payment = '2021-12-12';
+        $finance->note = $request->note;
+        $finance->cost = $request->cost;
+        $finance->quantity = $request->count;
+        $finance->advance = $request->advance;
+        $finance->date_payment = $request->date;
         $finance->status = 0;
         $finance->group_id = $request->group;
         $finance->save();
@@ -196,6 +202,31 @@ class EventRepository
     public function statusTask($request)
     {
         Task::where('id', $request->id)->update(['status' => $request->status]);
+    }
+
+    public function statusFinance($request)
+    {
+        Cost::where('id', $request->id)->update(['status' => $request->status]);
+    }
+
+    public function editFinance($request)
+    {
+        Cost::where('id', $request->id)->update([
+            'name' => $request->name, 
+            'date_payment' => $request->date,
+            'note' => $request->note,
+            'cost' => $request->cost,
+            'quantity' => $request->count,
+            'advance' => $request->advance,
+            'status' => 0,
+            'group_id' => $request->group
+        ]);
+    }
+
+    public function deleteFinance($request)
+    {
+        $cost = Cost::find($request->id);
+        $cost->delete();
     }
 
     public function editGroup($request)
