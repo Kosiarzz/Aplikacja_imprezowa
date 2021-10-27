@@ -146,6 +146,20 @@ class EventController extends Controller
         return redirect()->back();
     }
 
+    public function editGuest(Request $request)
+    {
+        $events = $this->eRepository->editGuest($request);
+
+        return redirect()->back();
+    }
+    
+    public function deleteGuest(Request $request)
+    {
+        $events = $this->eRepository->deleteGuest($request);
+
+        return redirect()->back();
+    }
+
     public function serviceView()
     {
         $services = $this->eRepository->getServices();

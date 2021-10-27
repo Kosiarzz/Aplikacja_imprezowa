@@ -129,6 +129,9 @@ Route::middleware(['auth','verified'])->group(function()
         Route::post('/uzytkownik/edycja/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'editFinance'])->name('editFinance');
         Route::post('/uzytkownik/usuwanie/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'deleteFinance'])->name('deleteFinance');
 
+        Route::post('/uzytkownik/edycja/wydarzenie/goście', [App\Http\Controllers\EventController::class, 'editGuest'])->name('editGuest');
+        Route::post('/uzytkownik/usuwanie/wydarzenie/goście', [App\Http\Controllers\EventController::class, 'deleteGuest'])->name('deleteGuest');
+
         Route::get('/setReadNotification', [App\Http\Controllers\UserController::class, 'setReadNotification']);
         Route::get('/getNotShownNotify', [App\Http\Controllers\UserController::class, 'getNotShownNotify']);
     });

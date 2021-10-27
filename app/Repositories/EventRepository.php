@@ -229,6 +229,29 @@ class EventRepository
         $cost->delete();
     }
 
+    public function editGuest($request)
+    {
+
+        dd($request);
+        Guest::where('id', $request->id)->update([
+            'name' => $request->name, 
+            'surname' => $request->surname,
+            'invitation' => $request->invitation,
+            'confirmation' => $request->confirmation,
+            'accommodation' => $request->accommodation,
+            'type' => $request->type,
+            'transport' => $request->transport,
+            'note' => $request->note,
+            'group_id' => $request->group
+        ]);
+    }
+
+    public function deleteGuest($request)
+    {
+        $cost = Guest::find($request->id);
+        $cost->delete();
+    }
+
     public function editGroup($request)
     {
         Group::where('id', $request->id)->update(['name' => $request->name]);
