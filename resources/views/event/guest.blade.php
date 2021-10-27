@@ -1,7 +1,7 @@
 @extends('layouts.event')
 
 @section('content')
-<div class="container">
+<div class="container mt-5">
     <div class="row justify-content-center">
     <div class="titlePage">
          Goście
@@ -42,7 +42,7 @@
                   {{$guest->name}} 
                   <div class="float-right"> 
                      
-                     <a class="btn btn-primary data" data-toggle="modal" data-target="#exampleModal" data-groupId="{{$guestGroup->id}}" data-groupName="{{$guestGroup->name}}" data-id="{{$guest->id}}" data-name="{{$guest->name}}" data-date="{{$guest->date_payment}}" data-note="{{$guest->note}}" data-cost="{{$guest->cost}}" data-count="{{$guest->quantity}}" data-advance="{{$guest->advance}}">E</a>
+                     <a class="btn btn-primary data" data-toggle="modal" data-target="#exampleModal" data-groupId="{{$guestGroup->id}}" data-id="{{$guest->id}}" data-name="{{$guest->name}}" data-surname="{{$guest->surname}}" data-invitation="{{$guest->invitation}}" data-confirmation="{{$guest->confirmation}}" data-accommodation="{{$guest->accommodation}}" data-diet="{{$guest->diet}}" data-type="{{$guest->type}}" data-advance="{{$guest->advance}}" data-transport="{{$guest->transport}}" data-note="{{$guest->note}}">E</a>
                      <a class="btn btn-danger delete" data-toggle="modal" data-target="#exampleModalDelete" data-id="{{$guest->id}}">X</a>
                   </div>
                </li>
@@ -55,12 +55,12 @@
                      <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalCenterTitle">Nowe koszty</h5>
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Nowy gość</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                               </button>
                            </div>
-                           <form method="POST" action="{{ route('addFinance') }}">
+                           <form method="POST" action="{{ route('addGuest') }}">
                               @csrf
                               <div class="form-group">
                                  <label for="name" class="col-md-12 col-form-label">Imie</label>
@@ -84,42 +84,49 @@
                                     @enderror
                                  </div>
                               </div>
-                              <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                                <label class="form-check-label" for="flexSwitchCheckDefault">Zaproszenie</label>
-                              </div>
                               <div class="form-group">
-                              
-                                 
-                                 <div class="col-md-12">
-                                    <input id="cost" type="number" class="form-control @error('cost') is-invalid @enderror" name="cost" value="{{ old('cost') }}">
-                                    @error('cost')
-                                    <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                 <div class="col-md-12">        
+                                    <!-- Default switch -->
+                                    <div class="custom-control custom-switch">
+                                       <input type="checkbox" class="custom-control-input" id="invitation" name="invitation">
+                                       <label class="custom-control-label" for="invitation">Wysłane zaproszenie</label>
+                                    </div>
                                  </div>
                               </div>
                               <div class="form-group">
-                                 <label for="count" class="col-md-12 col-form-label">Ilość</label>
-                                 <div class="col-md-12">
-                                    <input id="count" type="number" class="form-control @error('count') is-invalid @enderror" name="count" value="{{ old('count') }}">
-                                    @error('count')
-                                    <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                 <div class="col-md-12">        
+                                    <!-- Default switch -->
+                                    <div class="custom-control custom-switch">
+                                       <input type="checkbox" class="custom-control-input" id="confirmation" name="confirmation">
+                                       <label class="custom-control-label" for="confirmation">Potwierdzenie przybycia</label>
+                                    </div>
                                  </div>
                               </div>
                               <div class="form-group">
-                                 <label for="advance" class="col-md-12 col-form-label">Zaliczka</label>
-                                 <div class="col-md-12">
-                                    <input id="advance" type="number" class="form-control @error('advance') is-invalid @enderror" name="advance" value="{{ old('advance') }}">
-                                    @error('advance')
-                                    <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                 <div class="col-md-12">        
+                                    <!-- Default switch -->
+                                    <div class="custom-control custom-switch">
+                                       <input type="checkbox" class="custom-control-input" id="accommodation" name="accommodation">
+                                       <label class="custom-control-label" for="accommodation">Nocleg</label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <div class="col-md-12">        
+                                    <!-- Default switch -->
+                                    <div class="custom-control custom-switch">
+                                       <input type="checkbox" class="custom-control-input" id="diet" name="diet">
+                                       <label class="custom-control-label" for="diet">Specjalna dieta</label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <div class="col-md-12">        
+                                    <!-- Default switch -->
+                                    <div class="custom-control custom-switch">
+                                       <input type="checkbox" class="custom-control-input" id="transport" name="transport">
+                                       <label class="custom-control-label" for="transport">Transport</label>
+                                    </div>
                                  </div>
                               </div>
                               <div class="form-group">
@@ -134,19 +141,17 @@
                                  </div>
                               </div>
                               <div class="form-group">
-                                 <label for="date" class="col-md-12 col-form-label">Data zapłaty</label>
+                                 <label for="type" class="col-md-12 col-form-label">Wiek gościa</label>
                                  <div class="col-md-12">
-                                    <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') }}">
-                                    @error('date')
-                                    <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                 </div>
-                              </div>
-                              <div class="modal-body">
-                                 <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="group" value="{{$guestGroup->id}}" required>
-                              </div>
+                              <select id="type" class="form-select form-control" name="type" aria-label="Default select example">
+                                <option value="Dorosły" selected>Dorosły</option>
+                                <option value="Dziecko">Dziecko</option>
+                              </select>
+                                    </div>
+                                    </div>
+
+                              <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="group" value="{{$guestGroup->id}}" required>
+
                               <div class="modal-footer">
                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
                                  <button type="submit" class="btn btn-primary">Dodaj gościa</button>
@@ -186,7 +191,7 @@
                            @enderror
                         </div>
                      </div>
-                     <input  type="hidden" class="form-control @error('type') is-invalid @enderror" name="type" value="cost" required>
+                     <input  type="hidden" class="form-control @error('type') is-invalid @enderror" name="type" value="guest" required>
                </div>
                <div class="modal-footer">
                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
@@ -206,16 +211,16 @@
    <div class="modal-dialog" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title edit" id="exampleModalLabel">Koszt</h5>
+            <h5 class="modal-title edit" id="exampleModalLabel">Gość</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
          </div>
          <div class="modal-body">
-            <form method="POST" action="{{ route('editGuest') }}">
-               @csrf
-               <div class="form-group">
-                                 <label for="name-edit" class="col-md-12 col-form-label">Nazwa kosztów</label>
+         <form method="POST" action="{{ route('editGuest') }}">
+                              @csrf
+                              <div class="form-group">
+                                 <label for="name-edit" class="col-md-12 col-form-label">Imie</label>
                                  <div class="col-md-12">
                                     <input id="name-edit" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
                                     @error('name')
@@ -226,10 +231,10 @@
                                  </div>
                               </div>
                               <div class="form-group">
-                                 <label for="cost-edit" class="col-md-12 col-form-label">Koszt</label>
+                                 <label for="surname-edit" class="col-md-12 col-form-label">Nazwisko</label>
                                  <div class="col-md-12">
-                                    <input id="cost-edit" type="number" class="form-control @error('cost') is-invalid @enderror" name="cost" value="{{ old('cost') }}">
-                                    @error('cost')
+                                    <input id="surname-edit" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required>
+                                    @error('surname')
                                     <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                     </span>
@@ -237,25 +242,48 @@
                                  </div>
                               </div>
                               <div class="form-group">
-                                 <label for="count-edit" class="col-md-12 col-form-label">Ilość</label>
-                                 <div class="col-md-12">
-                                    <input id="count-edit" type="number" class="form-control @error('count') is-invalid @enderror" name="count" value="{{ old('count') }}">
-                                    @error('count')
-                                    <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                 <div class="col-md-12">        
+                                    <!-- Default switch -->
+                                    <div class="custom-control custom-switch">
+                                       <input type="checkbox" class="custom-control-input" id="invitation-edit" name="invitation">
+                                       <label class="custom-control-label" for="invitation-edit">Wysłane zaproszenie</label>
+                                    </div>
                                  </div>
                               </div>
                               <div class="form-group">
-                                 <label for="advance-edit" class="col-md-12 col-form-label">Zaliczka</label>
-                                 <div class="col-md-12">
-                                    <input id="advance-edit" type="number" class="form-control @error('advance') is-invalid @enderror" name="advance" value="{{ old('advance') }}">
-                                    @error('advance')
-                                    <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                 <div class="col-md-12">        
+                                    <!-- Default switch -->
+                                    <div class="custom-control custom-switch">
+                                       <input type="checkbox" class="custom-control-input" id="confirmation-edit" name="confirmation">
+                                       <label class="custom-control-label" for="confirmation-edit">Potwierdzenie przybycia</label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <div class="col-md-12">        
+                                    <!-- Default switch -->
+                                    <div class="custom-control custom-switch">
+                                       <input type="checkbox" class="custom-control-input" id="accommodation-edit" name="accommodation">
+                                       <label class="custom-control-label" for="accommodation-edit">Nocleg</label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <div class="col-md-12">        
+                                    <!-- Default switch -->
+                                    <div class="custom-control custom-switch">
+                                       <input type="checkbox" class="custom-control-input" id="diet-edit" name="diet">
+                                       <label class="custom-control-label" for="diet-edit">Specjalna dieta</label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <div class="col-md-12">        
+                                    <!-- Default switch -->
+                                    <div class="custom-control custom-switch">
+                                       <input type="checkbox" class="custom-control-input" id="transport-edit" name="transport">
+                                       <label class="custom-control-label" for="transport-edit">Transport</label>
+                                    </div>
                                  </div>
                               </div>
                               <div class="form-group">
@@ -270,34 +298,32 @@
                                  </div>
                               </div>
                               <div class="form-group">
-                                 <label for="date-edit" class="col-md-12 col-form-label">Data zapłaty</label>
+                                 <label for="type-edit" class="col-md-12 col-form-label">Wiek gościa</label>
                                  <div class="col-md-12">
-                                    <input id="date-edit" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') }}">
-                                    @error('date')
-                                    <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                 </div>
-                              </div>
+                              <select id="type-edit" class="form-select form-control" name="type" aria-label="Default select example">
+                                <option value="Dorosły" selected>Dorosły</option>
+                                <option value="Dziecko">Dziecko</option>
+                              </select>
+                                    </div>
+                                    </div>
 
-                              <div class="form-group">
+                                    <div class="form-group">
                                  <label for="edit-group" class="col-md-12 col-form-label">Grupa</label>
                                  <div class="col-md-12">
-                              <select id="edit-group" class="form-select form-control" name="group" aria-label="Default select example">
-                              @foreach($guests as $guestGroup)
-                                <option value="{{$guestGroup->id}}">{{$guestGroup->name}}</option>
-                              @endforeach
-                              </select>
-</div>
-</div>
-
-               <input id="id-edit" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                  <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
-               </div>
-            </form>
+                                    <select id="edit-group" class="form-select form-control" name="group" aria-label="Default select example">
+                                    @foreach($guests as $group)
+                                       <option value="{{$group->id}}">{{$group->name}}</option>
+                                    @endforeach
+                                    </select>
+                              </div>
+                              </div>
+                              <input id="id-edit" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
+         
+                              <div class="modal-footer">
+                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                                 <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                              </div>
+                           </form>
          </div>
       </div>
    </div>
@@ -307,7 +333,7 @@
    <div class="modal-dialog" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Usuwanie kosztów</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Usuń</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -320,7 +346,7 @@
          </div>
          <div class="modal-footer">
          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-         <button type="submit" class="btn btn-primary">Usuń zadanie</button>
+         <button type="submit" class="btn btn-primary">Usuń gościa</button>
          </div>
          </form>
       </div>
@@ -396,23 +422,45 @@
    
    var id = $(this).attr("data-id");
    var name = $(this).attr("data-name");
-   var date = $(this).attr("data-date");
+   var surname = $(this).attr("data-surname");
+   var invitation = $(this).attr("data-invitation");
+   var confirmation = $(this).attr("data-confirmation");
+   var accommodation = $(this).attr("data-accommodation");
+   var diet = $(this).attr("data-diet");
+   var type = $(this).attr("data-type");
+   var transport = $(this).attr("data-transport");
    var note = $(this).attr("data-note");
-   var cost = $(this).attr("data-cost");
-   var count = $(this).attr("data-count");
-   var advance = $(this).attr("data-advance");
-    
+
    var groupId = $(this).attr("data-groupId");
-   var groupName = $(this).attr("data-groupName");
 
    $("#id-edit").val(id);
    $("#name-edit").val(name);
-   $("#date-edit").val(date);
+   $("#surname-edit").val(surname);
+   $("#type-edit").val(type); 
    $("#note-edit").val(note);
-   $("#cost-edit").val(cost);
-   $("#count-edit").val(count);
-   $("#advance-edit").val(advance);
 
+
+   if(invitation == 1){
+      $( "#invitation-edit" ).attr( "checked", true);
+   }
+
+   if(confirmation == 1){
+      $( "#confirmation-edit" ).attr( "checked", true);
+   }
+
+   if(accommodation == 1){
+      $( "#accommodation-edit" ).attr( "checked", true);
+   }
+
+   if(diet == 1){
+      $( "#diet-edit" ).attr( "checked", true);
+   }
+
+   if(transport == 1){
+      $( "#transport-edit" ).attr( "checked", true);
+   }
+   
+   
    $("#edit-group option[value=" + groupId + "]").prop("selected", true);
   });
 

@@ -151,15 +151,19 @@ class EventRepository
 
     public function addGuest($request)
     {
+        
         $guest = new Guest();
         $guest->name = $request->name;
-        $guest->surname = $request->name;
-        $guest->invitation = 0;
-        $guest->confirmation = 0;
-        $guest->accommodation = 0;
-        $guest->type = 'Dorosły';
-        $guest->transport = 0;
-        $guest->note = 'Notatka';
+        $guest->surname = $request->surname;
+
+        $guest->invitation = ($request->invitation == 'on') ? 1 : 0;
+        $guest->confirmation = ($request->confirmation == 'on') ? 1 : 0;
+        $guest->accommodation = ($request->accommodation == 'on') ? 1 : 0;
+        $guest->transport = ($request->transport == 'on') ? 1 : 0;
+        $guest->diet = ($request->diet == 'on') ? 1 : 0;
+
+        $guest->type = $request->type;
+        $guest->note = $request->note;
         $guest->group_id = $request->group;
         $guest->save();
     }
@@ -231,16 +235,16 @@ class EventRepository
 
     public function editGuest($request)
     {
-
-        dd($request);
+        
         Guest::where('id', $request->id)->update([
             'name' => $request->name, 
             'surname' => $request->surname,
-            'invitation' => $request->invitation,
-            'confirmation' => $request->confirmation,
-            'accommodation' => $request->accommodation,
+            'invitation' => ($request->invitation == 'on') ? 1 : 0,
+            'confirmation' => ($request->confirmation == 'on') ? 1 : 0,
+            'accommodation' => ($request->accommodation == 'on') ? 1 : 0,
             'type' => $request->type,
-            'transport' => $request->transport,
+            'transport' => ($request->transport == 'on') ? 1 : 0,
+            'diet' => ($request->diet == 'on') ? 1 : 0,
             'note' => $request->note,
             'group_id' => $request->group
         ]);

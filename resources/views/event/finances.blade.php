@@ -19,10 +19,22 @@
                </li>
             </ul>
             <ul id="groupModal{{$finance->id}}">
+            <li class="list-group-item row">
+                  <div class="d-inline">
+                     <div class="statusTask d-inline">Status</div>
+                     <div class="nameTask d-inline ml-3">Nazwa</div>
+                     <div class="nameTask d-inline ml-3">Koszt</div>
+                     <div class="nameTask d-inline ml-3">Zaliczka</div>
+                  </div> 
+                  <div class="float-right d-inline">
+                     <div class="dateTask d-inline mr-5">Data</div>
+                     <div class="buttonsTask d-inline ml-4 mr-3">Akcja</div>
+                  </div>
+               </li>
                @foreach($finance->costs as $cost)
                @if($cost->status == 0)
                <li class="list-group-item row task">
-                  <form method="POST" action="{{ route('statusFinance') }}">
+                  <form method="POST" action="{{ route('statusFinance') }}" class="d-inline">
                      @csrf
                      <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{$cost->id}}" required>
                      <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="status" value="1" required>
@@ -30,16 +42,21 @@
                   </form>
                   @else
                <li class="list-group-item row task taskChecked">
-                  <form method="POST" action="{{ route('statusFinance') }}">
+                  <form method="POST" action="{{ route('statusFinance') }}" class="d-inline">
                      @csrf
                      <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{$cost->id}}" required>
                      <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="status" value="0" required>
                      <button class="btn btn-warning mr-2">U</button>
                   </form>
                   @endif
-                  {{$cost->name}} 
+                  <div class="col-12  d-inline">{{$cost->name}}</div>
+                  <div class="col-2  d-inline">{{$cost->cost}}zł</div>
+                  <div class="col-2  d-inline">{{$cost->advance}}zł</div>
+
                   <div class="float-right"> 
+                     <div class="d-inline mr-4">
                      {{$cost->date_payment}}
+                     </div>
                      <a class="btn btn-primary data" data-toggle="modal" data-target="#exampleModal" data-groupId="{{$finance->id}}" data-groupName="{{$finance->name}}" data-id="{{$cost->id}}" data-name="{{$cost->name}}" data-date="{{$cost->date_payment}}" data-note="{{$cost->note}}" data-cost="{{$cost->cost}}" data-count="{{$cost->quantity}}" data-advance="{{$cost->advance}}">E</a>
                      <a class="btn btn-danger delete" data-toggle="modal" data-target="#exampleModalDelete" data-id="{{$cost->id}}">X</a>
                   </div>

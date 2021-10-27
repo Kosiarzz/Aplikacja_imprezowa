@@ -117,7 +117,7 @@ Route::middleware(['auth','verified'])->group(function()
         Route::post('/uzytkownik/edycja/wydarzenie/grupa', [App\Http\Controllers\EventController::class, 'editGroup'])->name('editGroup');
         Route::post('/uzytkownik/usuwanie/wydarzenie/grupa', [App\Http\Controllers\EventController::class, 'deleteGroup'])->name('deleteGroup');
 
-        Route::post('/uzytkownik/nowe/wydarzenie/gość', [App\Http\Controllers\EventController::class, 'addGuest'])->name('addGuest');
+        
         Route::post('/uzytkownik/nowe/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'addFinance'])->name('addFinance');
 
         Route::post('/uzytkownik/nowe/wydarzenie/zadanie', [App\Http\Controllers\EventController::class, 'addTask'])->name('addTask');
@@ -129,6 +129,7 @@ Route::middleware(['auth','verified'])->group(function()
         Route::post('/uzytkownik/edycja/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'editFinance'])->name('editFinance');
         Route::post('/uzytkownik/usuwanie/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'deleteFinance'])->name('deleteFinance');
 
+        Route::post('/uzytkownik/nowe/wydarzenie/gość', [App\Http\Controllers\EventController::class, 'addGuest'])->name('addGuest');
         Route::post('/uzytkownik/edycja/wydarzenie/goście', [App\Http\Controllers\EventController::class, 'editGuest'])->name('editGuest');
         Route::post('/uzytkownik/usuwanie/wydarzenie/goście', [App\Http\Controllers\EventController::class, 'deleteGuest'])->name('deleteGuest');
 
