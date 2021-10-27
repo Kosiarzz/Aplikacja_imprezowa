@@ -92,9 +92,8 @@ class EventRepository
     }
     
     public function getEvent($id)
-    {
+    {   
         session(['event' => $id]);
-
         return Event::with(['category'])->find($id);
     }
 

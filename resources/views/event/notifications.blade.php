@@ -8,3 +8,9 @@
     </div>
 </div>
 @endsection
+@push('script')
+<script>
+   $( "a" ).removeClass( "active" );
+   $("#notification").addClass("active");
+</script>
+@endpush

@@ -17,3 +17,9 @@
     </div>
 </div>
 @endsection
+@push('script')
+<script>
+   $( "a" ).removeClass( "active" );
+   $("#service").addClass("active");
+</script>
+@endpush

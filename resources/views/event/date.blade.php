@@ -7,3 +7,9 @@
     </div>
 </div>
 @endsection
+@push('script')
+<script>
+   $( "a" ).removeClass( "active" );
+   $("#calendar").addClass("active");
+</script>
+@endpush

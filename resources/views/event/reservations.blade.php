@@ -35,3 +35,9 @@
 </div>
 </div>
 @endsection
+@push('script')
+<script>
+   $( "a" ).removeClass( "active" );
+   $("#reservation").addClass("active");
+</script>
+@endpush

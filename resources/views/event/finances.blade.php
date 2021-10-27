@@ -62,3 +62,9 @@
     </div>
 </div>
 @endsection
+@push('script')
+<script>
+   $( "a" ).removeClass( "active" );
+   $("#finance").addClass("active");
+</script>
+@endpush

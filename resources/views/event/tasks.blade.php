@@ -3,44 +3,41 @@
 <div class="container mt-5">
    <div class="row justify-content-center">
       <div class="titlePage">
-      Lista zadań   
+         Lista zadań   
       </div>
       <div class="row col-12">
          @foreach($tasks as $groupTask)
          <div class="list-group col-12">
             <ul class="mb-0 mt-4 pb-2">
-         <li class="list-group-item row nameGroupTask">
+               <li class="list-group-item row nameGroupTask">
                   {{$groupTask->name}} ({{ count($groupTask->tasks->where('status', 1)) }}/{{ count($groupTask->tasks) }})
                   <div class="float-right"> 
                      <a class="btn btn-primary dataGroup" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$groupTask->id}}" data-name="{{$groupTask->name}}">E</a>
                      <a class="btn btn-danger deleteGroup" data-toggle="modal" data-target="#exampleModalGroupDelete" data-id="{{$groupTask->id}}">X</a>
                      <a class="btn btn-info showGroup" data-name="groupModal{{$groupTask->id}}">></a>
                   </div>
-               </li></ul>
+               </li>
+            </ul>
             <ul id="groupModal{{$groupTask->id}}">
-               
                @foreach($groupTask->tasks as $task)
                @if($task->status == 0)
-               <li class="list-group-item row task">   
-               <form method="POST" action="{{ route('statusTask') }}">
-                              @csrf
-                              <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{$task->id}}" required>
-                              
-                              <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="status" value="1" required>
-               <button class="btn btn-warning mr-2">R</button>
-</form>  
-               @else
-               <li class="list-group-item row task taskChecked">  
-               <form method="POST" action="{{ route('statusTask') }}">
-                              @csrf
-                              <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{$task->id}}" required>
-                              
-                              <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="status" value="0" required>
-                              
-               <button class="btn btn-warning mr-2">U</button>
-</form>
-               @endif
-               {{$task->name}} 
+               <li class="list-group-item row task">
+                  <form method="POST" action="{{ route('statusTask') }}">
+                     @csrf
+                     <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{$task->id}}" required>
+                     <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="status" value="1" required>
+                     <button class="btn btn-warning mr-2">R</button>
+                  </form>
+                  @else
+               <li class="list-group-item row task taskChecked">
+                  <form method="POST" action="{{ route('statusTask') }}">
+                     @csrf
+                     <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{$task->id}}" required>
+                     <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="status" value="0" required>
+                     <button class="btn btn-warning mr-2">U</button>
+                  </form>
+                  @endif
+                  {{$task->name}} 
                   <div class="float-right"> 
                      {{$task->end_task}}
                      <a class="btn btn-primary data" data-toggle="modal" data-target="#exampleModal" data-id="{{$task->id}}" data-name="{{$task->name}}" data-date="{{$task->end_task}}">E</a>
@@ -101,11 +98,9 @@
          </div>
          @endforeach
          <hr>
-
          <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#addGroup">
          Dodaj grupę
          </button>
-
          <div class="modal fade" id="addGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                <div class="modal-content">
@@ -139,151 +134,142 @@
                </div>
             </div>
          </div>
-        
       </div>
    </div>
 </div>
-
- <!-- Edit task modal -->
- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <h5 class="modal-title edit" id="exampleModalLabel">Twoje zadanie</h5>
-                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                     </button>
-                  </div>
-                  <div class="modal-body">
-                     <form method="POST" action="{{ route('editTask') }}">
-                        @csrf
-                        <div class="form-group">
-                           <label for="name-edit" class="col-md-12 col-form-label">Nazwa zadania</label>
-                           <div class="col-md-12">
-                              <input id="name-edit" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
-                              @error('name')
-                              <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                              </span>
-                              @enderror
-                           </div>
-                        </div>
-                        <div class="form-group">
-                           <label for="date-edit" class="col-md-12 col-form-label">Data</label>
-                           <div class="col-md-12">
-                              <input id="date-edit" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') }}">
-                              @error('date')
-                              <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                              </span>
-                              @enderror
-                           </div>
-                        </div>
-                           <input id="id-edit" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
-                        <div class="modal-footer">
-                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                           <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
-                        </div>
-                     </form>
-                  </div>
-               </div>
-            </div>
-            
+<!-- Edit task modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title edit" id="exampleModalLabel">Twoje zadanie</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
          </div>
-         <!-- Delete task modal -->
-         <div class="modal fade" id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Usuwanie zadania</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                     </div>
-                     <div class="modal-body">
-                        Czy chcesz usunąć to zadanie?
-                     <form method="POST" action="{{ route('deleteTask') }}">
-                        @csrf
-                           <input id="id-delete" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
-                     
-                     </div>
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                        <button type="submit" class="btn btn-primary">Usuń zadanie</button>
-                     </div>
-                     </form>
+         <div class="modal-body">
+            <form method="POST" action="{{ route('editTask') }}">
+               @csrf
+               <div class="form-group">
+                  <label for="name-edit" class="col-md-12 col-form-label">Nazwa zadania</label>
+                  <div class="col-md-12">
+                     <input id="name-edit" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
+                     @error('name')
+                     <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
                   </div>
                </div>
-            </div>
-
-
-            
- <!-- Edit group modal -->
- <div class="modal fade" id="exampleModalGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <h5 class="modal-title edit" id="exampleModalLabel">Twoja grupa</h5>
-                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                     </button>
-                  </div>
-                  <div class="modal-body">
-                     <form method="POST" action="{{ route('editGroup') }}">
-                        @csrf
-                        <div class="form-group">
-                           <label for="name-group-edit" class="col-md-12 col-form-label">Nazwa grupy</label>
-                           <div class="col-md-12">
-                              <input id="name-group-edit" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
-                              @error('name')
-                              <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                              </span>
-                              @enderror
-                           </div>
-                        </div>
-                           <input id="id-group-edit" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
-                        <div class="modal-footer">
-                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                           <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
-                        </div>
-                     </form>
+               <div class="form-group">
+                  <label for="date-edit" class="col-md-12 col-form-label">Data</label>
+                  <div class="col-md-12">
+                     <input id="date-edit" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') }}">
+                     @error('date')
+                     <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
                   </div>
                </div>
-            </div>
-            
+               <input id="id-edit" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                  <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+               </div>
+            </form>
          </div>
-         <!-- Delete group modal -->
-         <div class="modal fade" id="exampleModalGroupDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Usuwanie grupy</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                     </div>
-                     <div class="modal-body">
-                        Czy chcesz usunąć grupę i wszyskie należące do niej zadania?
-                     <form method="POST" action="{{ route('deleteGroup') }}">
-                        @csrf
-                           <input id="id-group-delete" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
-                     
-                     </div>
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                        <button type="submit" class="btn btn-primary">Usuń Grupę</button>
-                     </div>
-                     </form>
+      </div>
+   </div>
+</div>
+<!-- Delete task modal -->
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Usuwanie zadania</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            Czy chcesz usunąć to zadanie?
+            <form method="POST" action="{{ route('deleteTask') }}">
+               @csrf
+               <input id="id-delete" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
+         </div>
+         <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+         <button type="submit" class="btn btn-primary">Usuń zadanie</button>
+         </div>
+         </form>
+      </div>
+   </div>
+</div>
+<!-- Edit group modal -->
+<div class="modal fade" id="exampleModalGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title edit" id="exampleModalLabel">Twoja grupa</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form method="POST" action="{{ route('editGroup') }}">
+               @csrf
+               <div class="form-group">
+                  <label for="name-group-edit" class="col-md-12 col-form-label">Nazwa grupy</label>
+                  <div class="col-md-12">
+                     <input id="name-group-edit" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
+                     @error('name')
+                     <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
                   </div>
                </div>
-            </div>
+               <input id="id-group-edit" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                  <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- Delete group modal -->
+<div class="modal fade" id="exampleModalGroupDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Usuwanie grupy</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            Czy chcesz usunąć grupę i wszyskie należące do niej zadania?
+            <form method="POST" action="{{ route('deleteGroup') }}">
+               @csrf
+               <input id="id-group-delete" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
+         </div>
+         <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+         <button type="submit" class="btn btn-primary">Usuń Grupę</button>
+         </div>
+         </form>
+      </div>
+   </div>
+</div>
 @endsection
 @push('script')
 <script>
    $( "a" ).removeClass( "active" );
    $("#task").addClass("active");
-
+   
    $('.data').on('click', function () {
    
       var id = $(this).attr("data-id");
@@ -298,30 +284,30 @@
    $('.delete').on('click', function () {
    
    var id = $(this).attr("data-id");
-
+   
    $("#id-delete").val(id);
-});
+   });
    $('.dataGroup').on('click', function () {
    
    var id = $(this).attr("data-id");
    var name = $(this).attr("data-name");
-
+   
    console.log(id + " | " + name);
    $("#id-group-edit").val(id);
    $("#name-group-edit").val(name);
-
+   
    });
-
+   
    $('.deleteGroup').on('click', function () {
-
+   
    var id = $(this).attr("data-id");
-
+   
    $("#id-group-delete").val(id);
-
+   
    });
-
+   
    $('.showGroup').on('click', function () {
-
+   
    var name = "#" + $(this).attr("data-name");
    console.log($(name).is(":visible"))
       if($(name).is(":visible"))
@@ -332,7 +318,7 @@
       {
          $( name  ).slideDown(800);
       }
-
+   
    });
    
 </script>

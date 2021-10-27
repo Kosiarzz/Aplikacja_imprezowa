@@ -11,3 +11,9 @@
     </div>
 </div>
 @endsection
+@push('script')
+<script>
+   $( "a" ).removeClass( "active" );
+   $("#dashboard").addClass("active");
+</script>
+@endpush

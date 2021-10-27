@@ -66,3 +66,9 @@
     </div>
 </div>
 @endsection
+@push('script')
+<script>
+   $( "a" ).removeClass( "active" );
+   $("#guest").addClass("active");
+</script>
+@endpush

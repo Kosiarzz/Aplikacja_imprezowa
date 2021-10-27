@@ -18,14 +18,14 @@ class EventController extends Controller
     public function index($id)
     {    
         $events = $this->eRepository->getEvent($id);
-
+        
         return view('event.index', ['events' => $events]);
     }
 
     public function createEventView()
     {
         $categories = $this->eRepository->getEventCategories();
-
+        
         return view('event.createEvent', ['categories' => $categories]);
     }
 
@@ -37,7 +37,7 @@ class EventController extends Controller
     }
 
     public function dateView()
-    {
+    {   
         return view('event.date');
     }
 

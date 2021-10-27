@@ -27,9 +27,6 @@
         <a id="dashboard" href="{{ route('user.events') }}" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-chart-area fa-fw me-3"></i><span>Panel główny</span>
         </a>
-        <a id="events" href="{{ route('user.events') }}" class="list-group-item list-group-item-action py-2 ripple active">
-          <i class="fas fa-chart-area fa-fw me-3"></i><span>Wydarzenia</span>
-        </a>
         <a id="calendar" href="{{ route('event.date') }}" class="list-group-item list-group-item-action py-2 ripple"
           ><i class="fas fa-lock fa-fw me-3"></i><span>Kalendarz</span></a
         >
@@ -56,6 +53,9 @@
         <a id="reservation" href="{{ route('event.reservations') }}" class="list-group-item list-group-item-action py-2 ripple"
           ><i class="fas fa-calendar fa-fw me-3"></i><span>Rezerwacje</span></a
         >
+        <a id="events" href="{{ route('user.events') }}" class="list-group-item list-group-item-action py-2 ripple active">
+          <i class="fas fa-chart-area fa-fw me-3"></i><span>Wszystkie wydarzenia</span>
+        </a>
       </div>
     </div>
   </nav>
