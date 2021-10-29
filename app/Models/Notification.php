@@ -18,6 +18,7 @@ class Notification extends Model
      */
     protected $fillable = [
         'content',
+        'content_type',
         'status',
         'shown',
         'notification_type',
@@ -27,5 +28,10 @@ class Notification extends Model
     public function notification()
     {
         return $this->morphTo();
+    }
+    
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('id','asc');
     }
 }

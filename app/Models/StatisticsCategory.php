@@ -5,9 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
+class StatisticsCategory extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+    public $table = 'statistics_category';
+    protected $primaryKey = 'category_id';
     
     /**
      * The attributes that are mass assignable.
@@ -15,21 +19,13 @@ class Event extends Model
      * @var string[]
      */
     protected $fillable = [
-        'name',
-        'budget',
-        'date_event',
+        'type',
         'category_id',
-        'user_id' 
+        'stats',
     ];
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->hasOne(Category::class, 'id');
     }
-
-    public function notifications()
-    {
-        return $this->morphMany(Notification::class, 'notification')->orderBy('id', 'desc');
-    }
-
 }

@@ -7,6 +7,8 @@ use App\Repositories\NotificationRepository;
 use App\Models\Reservation;
 use App\Models\Service;
 
+use App\Providers\Events\NotificationEvent;
+
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -45,8 +47,7 @@ class ReservationController extends Controller
         $this->authorize('reservation', $reservation);
 
         $this->rRepository->confirmReservation($reservation);
-
-        $this->nRepository->addNotificationUser($reservation->user_id, 'Rezerwacja została zaakceptowana');
+        $this->nRepository->addNotificationEvent($reservation->event_id, 'Rezerwacja została zaakceptowana', 'good');
 
         return redirect()->back();
     }
@@ -55,13 +56,12 @@ class ReservationController extends Controller
     {
         $reservation = $this->rRepository->getReservation($id);
 
-        $this->authorize('reservation', $reservation);
+        #$this->authorize('reservation', $reservation);
         
         $service = Service::find($reservation->service_id);
 
         $this->rRepository->deleteReservation($reservation);
-        $this->nRepository->addNotificationBusiness($service->business_id, 'Rezerwacja została anulowana');
-        $this->nRepository->addNotificationUser($reservation->user_id, 'Rezerwacja została anulowana');
+        $this->nRepository->addNotificationEvent($reservation->event_id, 'Rezerwacja została odrzucona', 'danger');
 
         return redirect()->back();
     }

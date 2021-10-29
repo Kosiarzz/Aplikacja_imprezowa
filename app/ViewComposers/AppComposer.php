@@ -3,10 +3,10 @@
 namespace App\ViewComposers;
 
 use Illuminate\View\View;
-use App\Models\Notification;
+use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 
-class UserComposer
+class AppComposer
 {
 
     /**
@@ -17,7 +17,7 @@ class UserComposer
      */
     public function compose(View $view)
     {
-        $view->with('notifications', Notification::where('notification_id', 1)->where('notification_type', 'App\Models\Event')->where('status',0)->get());
+        $view->with('eventSession', Event::where('id',session('event'))->get());
     }
 }
 

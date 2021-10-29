@@ -95,7 +95,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function getEvents($id)
     {
-        return Event::where('user_id', $id)->paginate(5);
+        return Event::where('user_id', $id)->paginate(10);
     }
 
 }

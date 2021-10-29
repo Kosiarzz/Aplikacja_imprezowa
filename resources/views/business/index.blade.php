@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container mt-5">
             <div class="row">
                 @foreach($businesses as $business)
                     <a href="{{ route('business.id', ['id' => $business->id]) }}" class="col-4 boxBusiness">

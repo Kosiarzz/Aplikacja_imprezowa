@@ -41,11 +41,16 @@ class CategorySeeder extends Seeder
             ['name' => 'Napis LOVE',  'type' => 'atrakcje'],
             ['name' => 'Słądki kącik',  'type' => 'atrakcje'],
 
-            ['name' => 'Kategoria usera 1',  'type' => 'user'],
 
             ['name' => 'Fotograf',  'type' => 'mainCategory'],
             ['name' => 'DJ',  'type' => 'mainCategory'],
             ['name' => 'Barman',  'type' => 'mainCategory'],
+            ['name' => 'Sale',  'type' => 'mainCategory'],
+            ['name' => 'Kamerzysta',  'type' => 'mainCategory'],
+            ['name' => 'Dekoracje',  'type' => 'mainCategory'],
+            ['name' => 'Artysta',  'type' => 'mainCategory'],
+            ['name' => 'Torty',  'type' => 'mainCategory'],
+            ['name' => 'Zaproszenia',  'type' => 'mainCategory'],
         ];
 
         Category::insert($data);

@@ -38,13 +38,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('user.*', '\App\ViewComposers\UserComposer');
+        View::composer('event.*', '\App\ViewComposers\UserComposer');
+        View::composer('layouts.app', '\App\ViewComposers\AppComposer');
 
         View::composer('frontend.*', function($view){
             $view->with('defaultPhoto', asset('images/defaultPhoto.png'));
         });
 
         View::composer('business.*', function($view){
+            $view->with('defaultPhoto', asset('images/defaultPhoto.png'));
+        });
+
+        View::composer('event.*', function($view){
             $view->with('defaultPhoto', asset('images/defaultPhoto.png'));
         });
     }

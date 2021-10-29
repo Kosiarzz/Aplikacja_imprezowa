@@ -76,6 +76,7 @@ class BusinessRepository implements BusinessRepositoryInterface
         $business->title = $request->title;
         $business->description = $request->description;
         $business->short_description = $request->shortDescription;
+        $business->main_category_id = 1;
         //$business->nip = $request->nip;
         //$business->beds = $request->beds;
         $business->save();

@@ -50,7 +50,7 @@
             @endforeach
         </div>
 
-        <div class="row mt-4">
+        <div id="services" class="row mt-4">
             <h2>
                 Dostępne obiekty
             </h2>
@@ -77,7 +77,7 @@
  
             <a href="{{route('findUserProfile', ['id' => $comment->user->id])}}" class="w-100 mb-4">
                 <div class="row border mb-4">
-                    <img src="{{asset('storage/'.$comment->user->photos[0]->path)}}" width="250" height="121" class="mr-3" alt="SALA"><br>
+                    <img src="" width="250" height="121" class="mr-3" alt="SALA"><br>
                     {{$comment->user->name}} {{$comment->user->surname}}<br>
                     {{str_limit($comment->content,100)}}<br>
                     rating: {{ $comment->rating }}<br>

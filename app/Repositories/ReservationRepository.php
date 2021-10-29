@@ -9,7 +9,7 @@ class ReservationRepository
     public function addReservation($service_id, $city_id, $request)
     {
         return Reservation::create([
-                'event_id'=>$request->user()->id,
+                'event_id'=>session('event'),
                 'city_id'=>$city_id,
                 'service_id'=>$service_id,
                 'status'=>0,
@@ -50,7 +50,7 @@ class ReservationRepository
 
     public function getReservations($id)
     {
-        return Reservation::where('event_id', $id)->get();
+        return Reservation::with(['service.business.photos', 'service.business.contactable', 'service.business.address'])->where('event_id', $id)->get();
     }
 
     public function getReservation($id)

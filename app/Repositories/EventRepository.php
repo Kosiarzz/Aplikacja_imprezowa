@@ -9,9 +9,13 @@ use App\Models\Cost;
 use App\Models\Group;
 use App\Models\Guest;
 use App\Models\Task;
+use App\Models\Notification;
+use App\Models\GroupCategory;
+use App\Models\StatisticsCategory;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class EventRepository
 {
@@ -20,8 +24,19 @@ class EventRepository
         return Category::where('type', 'party')->get();
     }
 
+    public function getServiceCategories()
+    {
+        return Category::where('type', 'mainCategory')->get();
+    }
+
+    public function getStatisticCategories()
+    {
+        return StatisticsCategory::where('type', 'wedding')->with(['category'])->orderBy('stats','desc')->paginate(3);
+    }
+
     public function createEvent($request)
     {
+
         $event = new Event();
         $event->name = $request->name;
         $event->budget = $request->budget;
@@ -48,47 +63,177 @@ class EventRepository
         $groupGuestsFriends->event_id = $event->id;
         $groupGuestsFriends->save();
 
-        $groupGuestsCosts = new Group();
-        $groupGuestsCosts->name = "Wydatki";
-        $groupGuestsCosts->type = "cost";
-        $groupGuestsCosts->event_id = $event->id;
-        $groupGuestsCosts->save();
+        $groupCosts = new Group();
+        $groupCosts->name = "Wydatki";
+        $groupCosts->type = "cost";
+        $groupCosts->event_id = $event->id;
+        $groupCosts->save();
+
+        $groupService = new Group();
+        $groupService->name = "Usługi";
+        $groupService->type = "service";
+        $groupService->event_id = $event->id;
+        $groupService->save();
+
 
         session(['event' => $event->id]);
-    
-        $dataCost = [
-            ['name' => 'Sala weselna',       'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupGuestsCosts->id],
-            ['name' => 'Dekoracje sali',     'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupGuestsCosts->id],
-            ['name' => 'Dekoracje kościoła', 'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupGuestsCosts->id],
-            ['name' => 'Tort',               'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupGuestsCosts->id],
-            ['name' => 'Katering',           'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupGuestsCosts->id],
-            ['name' => 'Alkohol',            'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupGuestsCosts->id],
-            ['name' => 'Orkiestra',          'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupGuestsCosts->id],
-            ['name' => 'Suknia',             'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupGuestsCosts->id],
-            ['name' => 'Fotograf',           'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupGuestsCosts->id],
+        if($request->party == 1) //wesele
+        {
+            $dataCost = [
+                ['name' => 'Sala weselna',       'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Dekoracje sali',     'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Dekoracje kościoła', 'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Tort',               'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Katering',           'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Alkohol',            'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Orkiestra',          'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Suknia',             'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Fotograf',           'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
 
-        ];
-        Cost::insert($dataCost);
+            ];
 
-        $dataTasks = [
-            ['name' => 'Zamówić mszę',      'end_task' => '2021-12-12' , 'status' => 0 , 'group_id' => $groupTasks->id],
-            ['name' => 'Zarezerwować salę', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
-            ['name' => 'Zarezerwować zespół muzyczny', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
-            ['name' => 'Zapisać się na nauki przedmałżeńskie', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
-            ['name' => 'Wybrać świadków', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
-            ['name' => 'Określić budżet', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
-            ['name' => 'Wysłać zaproszenia', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
-            ['name' => 'Zarezerwować fryzjera', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
-            ['name' => 'Ustalić menu', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
-            ['name' => 'Zarezerwować makijażystkę', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+            $dataTasks = [
+                ['name' => 'Zamówić mszę',      'end_task' => '2021-12-12' , 'status' => 0 , 'group_id' => $groupTasks->id],
+                ['name' => 'Zarezerwować salę', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Zarezerwować zespół muzyczny', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Zapisać się na nauki przedmałżeńskie', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Wybrać świadków', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Określić budżet', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Wysłać zaproszenia', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Zarezerwować fryzjera', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Ustalić menu', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Zarezerwować makijażystkę', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
 
-        ];
-        Task::insert($dataTasks);
+            ];
 
+            $dataService = [
+                ['group_id' => $groupService->id, 'icon_name' => 'brak', 'category_id' => 26],
+                ['group_id' => $groupService->id, 'icon_name' => 'brak', 'category_id' => 31],
+                ['group_id' => $groupService->id, 'icon_name' => 'brak', 'category_id' => 28],
+            ];
+
+            $groupGuestsFriends = new Group();
+            $groupGuestsFriends->name = "Nocleg";
+            $groupGuestsFriends->type = "guest";
+            $groupGuestsFriends->event_id = $event->id;
+            $groupGuestsFriends->save();
+
+            $groupGuestsFriends = new Group();
+            $groupGuestsFriends->name = "Transport";
+            $groupGuestsFriends->type = "guest";
+            $groupGuestsFriends->event_id = $event->id;
+            $groupGuestsFriends->save();
+        }
+
+        if($request->party == 2) //urodziny
+        {
+            $dataCost = [
+                ['name' => 'Opłacić sale',       'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Dekorator sali',     'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Katering', 'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Tort',               'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Alkohol',            'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'DJ',          'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Fryzjer',             'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Fotograf',           'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+
+            ];
+
+            $dataTasks = [
+                ['name' => 'Zarezerwować sale',      'end_task' => '2021-12-12' , 'status' => 0 , 'group_id' => $groupTasks->id],
+                ['name' => 'Zamówić tort', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Kupić alkohol', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Zarezerwować DJ', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Umówić się na wizytę do fryzjera', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Zobaczyć salę', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Określić liczbę gości', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Wybrać muzykę', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Wysłać zaprosznia', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+ 
+            ];
+
+            $dataService = [
+                ['group_id' => $groupService->id, 'icon_name' => 'brak', 'category_id' => 26],
+                ['group_id' => $groupService->id, 'icon_name' => 'brak', 'category_id' => 27],
+                ['group_id' => $groupService->id, 'icon_name' => 'brak', 'category_id' => 28],
+                ['group_id' => $groupService->id, 'icon_name' => 'brak', 'category_id' => 33]
+            ];
+        }
+
+        if($request->party == 3) //chrzciny
+        {
+            $groupGuestsFriends = new Group();
+            $groupGuestsFriends->name = "Rodzice chrzestni";
+            $groupGuestsFriends->type = "guest";
+            $groupGuestsFriends->event_id = $event->id;
+            $groupGuestsFriends->save();
+
+            $dataCost = [
+                ['name' => 'Sala',       'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Dekorator',     'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Dekoracje kościoła', 'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Fotogram',               'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Kamerzysta',           'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+                ['name' => 'Zaproszenia',            'note' => '', 'cost' => 0, 'quantity' => 1, 'advance' => 0, 'date_payment' => '2021-12-12', 'status' => 0, 'group_id' => $groupCosts->id],
+            ];
+
+            $dataTasks = [
+                ['name' => 'Zamówić mszę',      'end_task' => '2021-12-12' , 'status' => 0 , 'group_id' => $groupTasks->id],
+                ['name' => 'Zarezerwować salę', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Wybrać chrzestnych', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Zaprosić gości', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Zarezerować fryzjera', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Zarezerwować makijażystkę', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Kupić ubranko dziecku', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Ustalić menu', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Ustalić ile gości potrzebuje noclegu', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+                ['name' => 'Odebrać tort', 'end_task' => '2021-12-12' , 'status' => 0 ,'group_id' => $groupTasks->id],
+
+            ];
+
+            $dataService = [
+                ['group_id' => $groupService->id, 'icon_name' => 'brak', 'category_id' => 26],
+                ['group_id' => $groupService->id, 'icon_name' => 'brak', 'category_id' => 28],
+                ['group_id' => $groupService->id, 'icon_name' => 'brak', 'category_id' => 30]
+            ];
+        }
 
         
+        Cost::insert($dataCost);
+        Task::insert($dataTasks);
+        GroupCategory::insert($dataService);
+
 
         return $event;
+    }
+
+    public function addMainCategoryGroup($request)
+    {
+        $temp = GroupCategory::where('group_id', $request->group)->get();
+        
+        foreach($temp as $category)
+        {
+            StatisticsCategory::firstOrCreate([
+                "category_id" => $category->category_id,
+                "type" => 'wedding',
+            ])->decrement('stats', 1);
+        }
+
+        GroupCategory::where('group_id', $request->group)->delete();
+        foreach($request->mainCategories as $categoryId)
+        {
+            $GroupCategory = new GroupCategory;
+            $GroupCategory->group_id = $request->group;
+            $GroupCategory->category_id = $categoryId;
+            $GroupCategory->icon_name = 'brak';
+            $GroupCategory->save();
+            
+            StatisticsCategory::firstOrCreate([
+                "category_id" => $categoryId,
+                "type" => 'wedding',
+            ])->increment('stats', 1);
+
+        }
     }
     
     public function getEvent($id)
@@ -135,9 +280,10 @@ class EventRepository
 
     public function getLikeableServices($idCategory)
     {   
-        return User::with(['businesses'])->whereHas('businesses', function (Builder $query) use ($idCategory) {
-            $query->where('main_category_id', $idCategory);
-        })->get();
+        return User::where('id', Auth::user()->id)->with(["businesses" => function($q) use($idCategory){
+            $q->where('businesses.main_category_id', '=', $idCategory);
+        }])->get();
+
     }
 
     public function addGroup($request)
@@ -266,4 +412,19 @@ class EventRepository
         $task = Group::find($request->id);
         $task->delete();
     }
+
+    public function getNotifications()
+    {
+        return Event::with(['notifications'])->find(session('event'));
+    }
+
+    public function setReadNotifications($notifications)
+    {
+        foreach($notifications->notifications as $notification)
+        {
+            Notification::where('id', $notification->id)->update(['status' => 1]);
+        }
+    }
+
+    
 }

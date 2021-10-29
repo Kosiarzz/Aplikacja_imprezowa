@@ -37,11 +37,13 @@ class NotificationRepository
         return $notification->save();
     }
 
-    public function addNotificationEvent($id, $content)
+    public function addNotificationEvent($id, $content, $content_type)
     {   
         $notification = new Notification;
         $notification->content = $content;
+        $notification->content_type = $content_type;
         $notification->notification_type = 'App\Models\Event';
+        $notification->created_at = now();
         $notification->status = false;
         $notification->notification_id = $id;
 

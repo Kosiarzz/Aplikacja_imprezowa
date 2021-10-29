@@ -163,8 +163,17 @@ class EventController extends Controller
     public function serviceView()
     {
         $services = $this->eRepository->getServices();
+        $categories = $this->eRepository->getServiceCategories();
+        $statisticCategories = $this->eRepository->getStatisticCategories();
+        
+        return view('event.services', ['services' => $services, 'mainCategories' => $categories, 'statisticCategories' => $statisticCategories]);
+    }
 
-        return view('event.services', ['services' => $services]);
+    public function addMainCategoryGroup(Request $request)
+    {
+        $this->eRepository->addMainCategoryGroup($request);
+
+        return redirect()->back();
     }
 
     public function serviceDetails($idCategory)
@@ -176,7 +185,11 @@ class EventController extends Controller
 
     public function notificationsView()
     {
-        return view('event.notifications');
+        $notifications = $this->eRepository->getNotifications();
+        
+        $this->eRepository->setReadNotifications($notifications);
+
+        return view('event.notifications', ['notificationsList' => $notifications]);
     }
 
     public function tasksView()

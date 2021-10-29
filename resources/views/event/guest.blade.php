@@ -24,7 +24,7 @@
           @foreach($guestGroup->guests as $guest) 
             @if($guest->status == 0)
                <li class="list-group-item row task">
-                  <form method="POST" action="{{ route('statusFinance') }}">
+                  <form method="POST" action="{{ route('statusFinance') }}" class="d-inline">
                      @csrf
                      <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{$guest->id}}" required>
                      <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="status" value="1" required>
@@ -32,14 +32,16 @@
                   </form>
                   @else
                <li class="list-group-item row task taskChecked">
-                  <form method="POST" action="{{ route('statusFinance') }}">
+                  <form method="POST" action="{{ route('statusFinance') }}" class="d-inline">
                      @csrf
                      <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{$guest->id}}" required>
                      <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="status" value="0" required>
                      <button class="btn btn-warning mr-2">U</button>
                   </form>
                   @endif
+                  <div class="d-inline">
                   {{$guest->name}} 
+</div>
                   <div class="float-right"> 
                      
                      <a class="btn btn-primary data" data-toggle="modal" data-target="#exampleModal" data-groupId="{{$guestGroup->id}}" data-id="{{$guest->id}}" data-name="{{$guest->name}}" data-surname="{{$guest->surname}}" data-invitation="{{$guest->invitation}}" data-confirmation="{{$guest->confirmation}}" data-accommodation="{{$guest->accommodation}}" data-diet="{{$guest->diet}}" data-type="{{$guest->type}}" data-advance="{{$guest->advance}}" data-transport="{{$guest->transport}}" data-note="{{$guest->note}}">E</a>
