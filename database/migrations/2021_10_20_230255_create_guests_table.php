@@ -16,15 +16,14 @@ class CreateGuestsTable extends Migration
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('surname');
+            $table->string('surname')->default('-');
             $table->boolean('invitation')->default(false);
             $table->boolean('confirmation')->default(false);
             $table->boolean('accommodation')->default(false);
             $table->boolean('diet')->default(false);
-            $table->enum('type', ['Dorosły', 'Dziecko', 'Niemowlę','Usługodawcy']);
+            $table->enum('type', ['Dorosły', 'Dziecko', 'Niemowlę','Usługodawcy'])->default('Dorosły');
             $table->boolean('transport')->default(false);
-            $table->string('note');
-            $table->timestamps();
+            $table->string('note')->nullable();
             $table->foreignId('group_id')->constrained('groups')->onDelete('cascade')->unsigned();
         });
     }

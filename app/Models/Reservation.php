@@ -8,11 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     use HasFactory;
-
-    public $timestamps = false;
-    
-    protected $guarded = ['id'];
-    
+ 
     /**
      * The attributes that are mass assignable.
      *

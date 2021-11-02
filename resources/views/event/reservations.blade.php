@@ -15,7 +15,8 @@
             </div>
             <div class="col-md-4">
                 <div class="card-body">
-                    <a href="#"><h5 class="card-title">{{$reservation->service->business->title}}</h5></a>
+                    
+                    <a href="{{ route('businessDetails', ['id' => $reservation->service->business_id])}}"><h5 class="card-title">{{$reservation->service->business->title}}</h5></a>
                     <h6 class="card-title">{{$reservation->service->business->name}}</h6>
                     <h6 class="card-title">
                     @foreach($reservation->service->business->contactable as $contact)

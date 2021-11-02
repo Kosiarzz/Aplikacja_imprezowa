@@ -25,6 +25,7 @@ class NotificationFactory extends Factory
             'content' => $this->faker->sentence,
             'status' => $this->faker->boolean(50),
             'shown' => $this->faker->boolean(0),
+            'content_type' => $this->faker->randomElement(['success','danger']),
             'notification_type' => $this->faker->randomElement(['App\Models\Business','App\Models\User']),
             'notification_id' => $this->faker->numberBetween(1,10),
         ];

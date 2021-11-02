@@ -23,11 +23,11 @@ class SocialFactory extends Factory
     public function definition()
     {
         return [
-            'facebook' => 'facebook',
-            'instagram' => 'instagram',
-            'www' => 'www',
-            'youtube' => 'youtube',
-            'movie_youtube' => 'movie_youtube',
+            'facebook' => 'https://www.facebook.com/',
+            'instagram' => 'https://www.instagram.com/',
+            'www' => 'https://www.google.com/',
+            'youtube' => 'https://www.youtube.com/',
+            'movie_youtube' => 'https://www.youtube.com/embed/5wmgF0WZfcY',
             'business_id' => self::$businessId++,
         ];
     }

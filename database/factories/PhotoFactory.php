@@ -23,8 +23,8 @@ class PhotoFactory extends Factory
     {
         return [
             'photoable_type' => $this->faker->randomElement(['App\Models\Business','App\Models\User','App\Models\Service']),
-            'photoable_id' => $this->faker->numberBetween(1,40),
-            'path' => $this->faker->imageUrl(800,400,'city'),
+            'photoable_id' => $this->faker->numberBetween(1,10),
+            'path' => 'photos/test.png',
         ];
     }
 }

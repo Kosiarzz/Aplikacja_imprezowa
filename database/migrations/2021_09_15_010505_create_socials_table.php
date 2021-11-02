@@ -15,11 +15,11 @@ class CreateSocialsTable extends Migration
     {
         Schema::create('socials', function (Blueprint $table) {
             $table->id();
-            $table->string('facebook');
-            $table->string('instagram');
-            $table->string('www');
-            $table->string('youtube');
-            $table->string('movie_youtube');
+            $table->string('facebook')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('www')->nullable();
+            $table->string('youtube')->nullable();
+            $table->string('movie_youtube')->nullable();
             $table->foreignId('business_id')->constrained('businesses')->onDelete('cascade');
         });
     }

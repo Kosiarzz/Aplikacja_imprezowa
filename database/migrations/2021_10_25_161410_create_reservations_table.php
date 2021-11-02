@@ -17,11 +17,11 @@ class CreateReservationsTable extends Migration
             $table->id();
             $table->date('date_from');
             $table->date('date_to');
-            $table->boolean('status');
-            $table->timestamps();
+            $table->string('status');
             $table->foreignId('event_id')->constrained('events')->onDelete('cascade');
             $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
-            $table->foreignId('city_id')->constrained('cities')->onDelete('cascade');
+            $table->foreignId('city_id')->constrained('cities');
+            $table->timestamps();
         });
     }
 

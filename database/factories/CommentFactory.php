@@ -22,7 +22,7 @@ class CommentFactory extends Factory
     public function definition()
     {
         return [
-            'content' => $this->faker->text(200),
+            'content' => $this->faker->text(100),
             'commentable_type' => 'App\Models\Business',
             'commentable_id' => $this->faker->numberBetween(1,30),
             'rating' => $this->faker->numberBetween(1,5),

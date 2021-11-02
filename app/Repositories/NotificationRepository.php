@@ -26,10 +26,11 @@ class NotificationRepository
         return $notification->save();
     }
 
-    public function addNotificationBusiness($id, $content)
+    public function addNotificationBusiness($id, $content, $content_type)
     {   
         $notification = new Notification;
         $notification->content = $content;
+        $notification->content_type = $content_type;
         $notification->notification_type = 'App\Models\Business';
         $notification->status = false;
         $notification->notification_id = $id;

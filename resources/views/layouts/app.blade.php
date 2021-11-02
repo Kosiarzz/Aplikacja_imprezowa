@@ -110,7 +110,7 @@
             <!-- Container wrapper -->
          </nav>
          <!-- Navbar -->
-    <main class="py-4">
+    <main class="py-5 mt-5">
         @yield('content')
     </main>
     </div>

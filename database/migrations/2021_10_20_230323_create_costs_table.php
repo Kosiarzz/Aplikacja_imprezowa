@@ -16,13 +16,12 @@ class CreateCostsTable extends Migration
         Schema::create('costs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('note');
-            $table->string('cost');
-            $table->string('quantity');
-            $table->string('advance');
-            $table->date('date_payment');
+            $table->string('note')->nullable();
+            $table->string('cost')->default('0');
+            $table->string('quantity')->default('1');
+            $table->string('advance')->default('0');
+            $table->date('date_payment')->nullable();
             $table->boolean('status')->default(false);
-            $table->timestamps();
             $table->foreignId('group_id')->constrained('groups')->onDelete('cascade')->unsigned();
         });
     }

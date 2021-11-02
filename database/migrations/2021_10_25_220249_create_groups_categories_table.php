@@ -16,7 +16,6 @@ class CreateGroupsCategoriesTable extends Migration
         Schema::create('groups_categories', function (Blueprint $table) {
             $table->id();
             $table->string('icon_name');
-            $table->boolean('status');
             $table->integer('group_id')->constrained('groups')->onDelete('cascade')->unsigned();
             $table->integer('category_id')->constrained('category')->onDelete('cascade')->unsigned();
         });

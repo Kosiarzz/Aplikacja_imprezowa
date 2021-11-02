@@ -26,7 +26,7 @@ class ReservationController extends Controller
 
         $this->rRepository->addReservation($service_id, $city_id, $request);
         $business = Service::find($service_id);
-        $this->nRepository->addNotificationBusiness($business->business_id, 'Nowa rezerwacja');
+        $this->nRepository->addNotificationBusiness($business->business_id, 'Nowa rezerwacja', 'success');
 
         return redirect()->back();
     }

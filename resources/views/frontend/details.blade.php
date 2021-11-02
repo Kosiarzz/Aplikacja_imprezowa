@@ -1,18 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container mt-5">
 
-    @can('isUser')
-        @if($business->isLiked())
-            <a href="{{ route('unlike', ['likeable_id' => $business->id, 'type' => 'App\Models\Business']) }}">Usuń z ulubionych</a>
-        @else
-            <a href="{{ route('like', ['likeable_id' => $business->id, 'type' => 'App\Models\Business']) }}">Dodaj do ulubionych</a> 
-        @endif
-        
-    @elseif(!'isBusiness')
-        <a href="{{ route('login') }}">Zaloguj się aby dodać do ulubionych</a>
-    @endcan
 
     <div class="row justify-content-center">
         <section class="col-12">
@@ -27,6 +17,18 @@
                 <div id="addInfo" class="d-flex mt-2 mb-2">
                     <span id="city-up">Województwo, {{$business->city->name}}</span>
                 </div>
+
+                
+    @can('isUser')
+        @if($business->isLiked())
+            <a href="{{ route('unlike', ['likeable_id' => $business->id, 'type' => 'App\Models\Business']) }}">Usuń z ulubionych</a>
+        @else
+            <a href="{{ route('like', ['likeable_id' => $business->id, 'type' => 'App\Models\Business']) }}">Dodaj do ulubionych</a> 
+        @endif
+        
+    @elseif(!'isBusiness')
+        <a href="{{ route('login') }}">Zaloguj się aby dodać do ulubionych</a>
+    @endcan
                                 
                 <div class="mt-3 hidden-md-down d-flex flex-wrap">
                     <div class="phones">
@@ -41,7 +43,7 @@
                 <p class="description" itemprop="description">{{$business->description}}</p>					
         </section>
     </div>
-        
+        {{$business->photos->first()->path}}
     <div class="row justify-content-center">
         <h2>Galeria zdjęć</h2>
         <div class="mb-2" style="width:100%;">
@@ -55,10 +57,13 @@
                 Dostępne obiekty
             </h2>
         </div>	
+        
         @foreach($business->services as $service)
             <a href="{{route('serviceDetails', ['id' => $service->id])}}" class="w-100 mb-4">
-                <div class="row border mb-4">
-                    <img src="{{asset('storage/'.$service->photos[0]->path)}}" width="250" height="141" class="mr-3" alt="SALA"><br>
+                <div class="row border mb-4">   
+                        {{dd($service)}}
+                        <img src="{{asset('storage/'.$service->photos->first()->path)}}" width="250" height="141" class="mr-3" alt="SALA"><br>
+                    
                     Tytuł: {{$service->title}}<br>
                     Opis: {{ str_limit($service->description, 50) }}<br>
                     Osób od: {{$service->people_from}}<br>

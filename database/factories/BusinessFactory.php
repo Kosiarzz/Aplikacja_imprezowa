@@ -27,8 +27,9 @@ class BusinessFactory extends Factory
             'title' => $this->faker->jobTitle,
             'description' => $this->faker->text(500),
             'short_description' => $this->faker->text(100),
+            'main_category_id' => $this->faker->numberBetween(1,10),
             'user_id' => self::$userId++,
-            'city_id' => $this->faker->unique()->numberBetween(1,50),
+            'city_id' => $this->faker->unique()->numberBetween(1,20),
         ];
     }
 }
