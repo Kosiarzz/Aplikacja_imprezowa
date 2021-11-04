@@ -30,7 +30,8 @@ class DatabaseSeeder extends Seeder
         \App\Models\Contact::factory(20)->create();
 
         $this->call([
-            CategorySeeder::class
+            CategorySeeder::class,
+            GroupSeeder::class
         ]);
     }
 }

@@ -6,7 +6,7 @@ use App\Models\Category;
 use App\Models\Event;
 use App\Models\User;
 use App\Models\Cost;
-use App\Models\Group;
+use App\Models\GroupEvent;
 use App\Models\Guest;
 use App\Models\Task;
 use App\Models\Notification;
@@ -45,31 +45,31 @@ class EventRepository
         $event->user_id = Auth::user()->id;
         $event->save();
 
-        $groupTasks = new Group();
+        $groupTasks = new GroupEvent();
         $groupTasks->name = "Zadania1";
         $groupTasks->type = "task";
         $groupTasks->event_id = $event->id;
         $groupTasks->save();
 
-        $groupGuestsFamily = new Group();
+        $groupGuestsFamily = new GroupEvent();
         $groupGuestsFamily->name = "Rodzina";
         $groupGuestsFamily->type = "guest";
         $groupGuestsFamily->event_id = $event->id;
         $groupGuestsFamily->save();
 
-        $groupGuestsFriends = new Group();
+        $groupGuestsFriends = new GroupEvent();
         $groupGuestsFriends->name = "Znajomi";
         $groupGuestsFriends->type = "guest";
         $groupGuestsFriends->event_id = $event->id;
         $groupGuestsFriends->save();
 
-        $groupCosts = new Group();
+        $groupCosts = new GroupEvent();
         $groupCosts->name = "Wydatki";
         $groupCosts->type = "cost";
         $groupCosts->event_id = $event->id;
         $groupCosts->save();
 
-        $groupService = new Group();
+        $groupService = new GroupEvent();
         $groupService->name = "Usługi";
         $groupService->type = "service";
         $groupService->event_id = $event->id;
@@ -112,13 +112,13 @@ class EventRepository
                 ['group_id' => $groupService->id, 'icon_name' => 'brak', 'category_id' => 28],
             ];
 
-            $groupGuestsFriends = new Group();
+            $groupGuestsFriends = new GroupEvent();
             $groupGuestsFriends->name = "Nocleg";
             $groupGuestsFriends->type = "guest";
             $groupGuestsFriends->event_id = $event->id;
             $groupGuestsFriends->save();
 
-            $groupGuestsFriends = new Group();
+            $groupGuestsFriends = new GroupEvent();
             $groupGuestsFriends->name = "Transport";
             $groupGuestsFriends->type = "guest";
             $groupGuestsFriends->event_id = $event->id;
@@ -162,7 +162,7 @@ class EventRepository
 
         if($request->party == 3) //chrzciny
         {
-            $groupGuestsFriends = new Group();
+            $groupGuestsFriends = new GroupEvent();
             $groupGuestsFriends->name = "Rodzice chrzestni";
             $groupGuestsFriends->type = "guest";
             $groupGuestsFriends->event_id = $event->id;
@@ -255,27 +255,27 @@ class EventRepository
 
     public function getFinances()
     {
-        return Group::with(['costs'])->where('type','cost')->where('event_id', session('event'))->get();
+        return GroupEvent::with(['costs'])->where('type','cost')->where('event_id', session('event'))->get();
     }
 
     public function getGuests()
     {
-        return Group::with(['guests'])->where('type','guest')->where('event_id', session('event'))->get();
+        return GroupEvent::with(['guests'])->where('type','guest')->where('event_id', session('event'))->get();
     }
 
     public function getTasks()
     {
-        return Group::with(['tasks'])->where('type','task')->where('event_id', session('event'))->get();
+        return GroupEvent::with(['tasks'])->where('type','task')->where('event_id', session('event'))->get();
     }
 
     public function getServices()
     {
-        return Group::with(['groupCategory.category'])->where('type','service')->where('event_id', session('event'))->get();
+        return GroupEvent::with(['groupCategory.category'])->where('type','service')->where('event_id', session('event'))->get();
     }
 
     public function getServicesDetails($name)
     {
-        return Group::with(['groupCategory.category'])->where('type','service')->where('groupCategory.category.name', $name)->where('event_id', session('event'))->get();
+        return GroupEvent::with(['groupCategory.category'])->where('type','service')->where('groupCategory.category.name', $name)->where('event_id', session('event'))->get();
     }
 
     public function getLikeableServices($idCategory)
@@ -288,7 +288,7 @@ class EventRepository
 
     public function addGroup($request)
     {
-        $group = new Group();
+        $group = new GroupEvent();
         $group->name = $request->group;
         $group->type = $request->type;
         $group->event_id = session('event');
@@ -404,12 +404,12 @@ class EventRepository
 
     public function editGroup($request)
     {
-        Group::where('id', $request->id)->update(['name' => $request->name]);
+        GroupEvent::where('id', $request->id)->update(['name' => $request->name]);
     }
 
     public function deleteGroup($request)
     {
-        $task = Group::find($request->id);
+        $task = GroupEvent::find($request->id);
         $task->delete();
     }
 

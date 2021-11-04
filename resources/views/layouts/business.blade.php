@@ -18,66 +18,88 @@
 
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<div id="app">
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-secondary fixed-top">
+            <!-- Container wrapper -->
+            <div class="container-fluid">
+               <!-- Toggle button -->
+               <b   utton
+                  class="navbar-toggler"
+                  type="button"
+                  data-mdb-toggle="collapse"
+                  data-mdb-target="#sidebarMenu"
+                  aria-controls="sidebarMenu"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                  >
+               <i class="fas fa-bars"></i>
+               </b>
+               <!-- Brand -->
+               <a class="navbar-brand" href="#">
+               <img
+                  src="x"
+                  height="25"
+                  alt=""
+                  loading="lazy"
+                  /> logo/nazwa
+               </a>
+               <!-- Right links -->
+               <ul class="navbar-nav ms-auto d-flex flex-row">
+                    @guest
+                        @if (Route::has('login'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                        @endif
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+                        @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                        @endif
+                    @else
+                        @can('isBusiness')
+                        <li class="nav-item"><a class="dropdown-item" href="{{ route('business.index') }}" class="mr-3">Usługi</a></li>
+                        <li class="nav-item"><a class="dropdown-item" href="{{ route('business.notifications') }}" class="mr-3">Powiadomienia</a></li>
+                        <li class="nav-item"><a class="dropdown-item" href="{{ route('business.notifications') }}" class="mr-3">Ustawienia</a></li>
+                        @endcan
 
-                    </ul>
+                  <li class="nav-item">
+                     <a class="dropdown-item" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                     {{ __('Logout') }}
+                     </a>
+                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                     </form>
+                  </li>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            @can('isUser')
-                                <a href="{{ route('user.profile') }}" class="mr-3">Profil</a>
-                                <a href="{{ route('user.like') }}" class="mr-3">Polubione</a>
-                                <a href="{{ route('user.events') }}" class="mr-3">Wydarzenia</a>  
-                            @endcan
-                            @can('isBusiness')
-                                <a href="{{ route('business.index') }}" class="mr-3">Usługi</a>
-                                <a href="{{ route('business.notifications') }}" class="mr-3">Powiadomienia</a>
-                                <a href="{{ route('business.notifications') }}" class="mr-3">Statystyki</a>
-                                <a href="{{ route('business.notifications') }}" class="mr-3">Profil</a>
-                                <a href="{{ route('business.reservations') }}" class="mr-3">Rezerwacje</a>
-                                <a href="{{ route('business.notifications') }}" class="mr-3">Ustawienia</a>
-                            @endcan
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                            
-                        @endguest
-                    </ul>
-                </div>
+                  <!-- Avatar -->
+                     <a
+                        class="nav-link hidden-arrow d-flex align-items-center"
+                        href="{{ route('user.profile') }}"
+                        id="navbarDropdownMenuLink"
+                        role="button"
+                        data-mdb-toggle="dropdown"
+                        aria-expanded="false"
+                        >
+                     <img
+                        src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
+                        class="rounded-circle"
+                        height="22"
+                        alt=""
+                        loading="lazy"
+                        />
+                     </a>
+                    @endguest
+               </ul>
             </div>
-        </nav>
-    <main class="py-4">
+            <!-- Container wrapper -->
+         </nav>
+         <!-- Navbar -->
+    <main class="py-4 mt-5">
         @yield('content')
     </main>
     </div>
@@ -92,6 +114,7 @@
     
     @stack('calendar')
     @stack('business')
+    @stack('script')
     
 </body>
 

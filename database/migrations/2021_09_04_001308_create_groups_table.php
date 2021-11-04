@@ -17,7 +17,6 @@ class CreateGroupsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('type');
-            $table->foreignId('event_id')->constrained('events')->onDelete('cascade')->unsigned();
         });
     }
 

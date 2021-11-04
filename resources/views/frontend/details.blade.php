@@ -61,9 +61,10 @@
         @foreach($business->services as $service)
             <a href="{{route('serviceDetails', ['id' => $service->id])}}" class="w-100 mb-4">
                 <div class="row border mb-4">   
-                        {{dd($service)}}
-                        <img src="{{asset('storage/'.$service->photos->first()->path)}}" width="250" height="141" class="mr-3" alt="SALA"><br>
-                    
+                        @foreach($service->photos as $photo)
+                            <img src="{{asset('storage/'.$photo->path)}}" width="250" height="141" class="mr-3" alt="SALA"><br>
+                            @break
+                        @endforeach
                     Tytuł: {{$service->title}}<br>
                     Opis: {{ str_limit($service->description, 50) }}<br>
                     Osób od: {{$service->people_from}}<br>

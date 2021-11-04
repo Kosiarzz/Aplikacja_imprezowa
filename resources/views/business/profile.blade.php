@@ -1,154 +1,188 @@
 @extends('layouts.business')
 
 @section('content')
-<div class="container">
+<div class="container w-100">
     <div class="row justify-content-center">
         <form method="POST" action="{{ route('addBusiness') }}" enctype="multipart/form-data">
             @csrf
-            <div class="form-group row">
-                <label for="title" class="col-md-6 col-form-label text-md-left">Tytuł ogłoszenia</label>
-                <label for="title" class="col-md-6 col-form-label text-md-right">100</label>
-                <div class="col-md-12">
-                    <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}">
 
-                    @error('title')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
+            <div class="row section">
+                <div class="sectionTittle">
+                    <div class="textTittle">@if($selectCategory == "lokal")
+                        Rodzaj budynku
+                    @elseif($selectCategory == "music")
+                        Typ zespołu
+                    @elseif($selectCategory == "photo")
+                        Fotograf
+                    @endif</div>
+                    <div class="showSectionButton"><a class="btn btn-info showSection" data-name="mainCategorySection">></a></div>
+                
+                </div> 
+                <div id="mainCategorySection">
 
-            <div class="form-group row">
-                <label for="shortDescription" class="col-md-10 col-form-label text-md-left">Opis wyświetlany na liście wyszukiwania</label>
-                <label for="shortDescription" class="col-md-2 col-form-label text-md-right">300</label>
-                <div class="col-md-12">
-                    <textarea id="shortDescription" type="text" class="form-control @error('shortDescription') is-invalid @enderror" name="shortDescription" value="{{ old('shortDescription') }}"></textarea>
-
-                    @error('shortDescription')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="description" class="col-md-6 col-form-label text-md-left">Pełny opis</label>
-                <label for="description" class="col-md-6 col-form-label text-md-right">2000</label>
-                <div class="col-md-12">
-                    <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}"></textarea>
-
-                    @error('description')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="select" class="col-lg-4 control-label">Rodzaj budynku</label>
+                <div class="form-group mt-3">
                 <div class="col-lg-6">
-                    <select name="mainCategory" class="form-control" id="select">
-                        @foreach($category as $cate)
-                            @if($cate->type == 'lokal')
-                                <option value="{{$cate->id}}">{{$cate->name}}</option>
-                            @endif
+                    <select name="mainCategory" class="form-control" id="select">   
+                        @foreach($category as $serviceCategory) 
+                            @foreach($serviceCategory->groupCategory as $gCategory) 
+                                @foreach($gCategory->category as $mainCategory) 
+                                    <option value="{{$mainCategory->id}}">{{$mainCategory->name}}</option>
+                            @endforeach
+                        @endforeach
                         @endforeach
                     </select>
                 </div>
             </div>
+
+
+                </div> </div>  
+
+            <div class="row section">
+                <div class="sectionTittle">
+                    <div class="textTittle">Informacje o ogłoszeniu </div>
+                    <div class="showSectionButton"><a class="btn btn-info showSection" data-name="informationSection">></a></div>
+                
+                </div> 
+                <div id="informationSection">
+                    <div class="form-group row">
+                        <label for="title" class="col-md-6 col-form-label text-md-left">Tytuł ogłoszenia</label>
+                        <label for="title" class="col-md-6 col-form-label text-md-right">100</label>
+                        <div class="col-md-12">
+                            <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}">
+
+                            @error('title')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="shortDescription" class="col-md-10 col-form-label text-md-left">Opis wyświetlany na liście wyszukiwania</label>
+                        <label for="shortDescription" class="col-md-2 col-form-label text-md-right">300</label>
+                        <div class="col-md-12">
+                            <textarea id="shortDescription" type="text" class="form-control @error('shortDescription') is-invalid @enderror" name="shortDescription" value="{{ old('shortDescription') }}"></textarea>
+
+                            @error('shortDescription')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="description" class="col-md-6 col-form-label text-md-left">Pełny opis</label>
+                        <label for="description" class="col-md-6 col-form-label text-md-right">2000</label>
+                        <div class="col-md-12">
+                            <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}"></textarea>
+
+                            @error('description')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+            </div>
             
+            
+            <div class="row section">
+                <div class="sectionTittle">
+                    <div class="textTittle">Wybór kategori</div>
+                    <div class="showSectionButton"><a class="btn btn-info showSection" data-name="categorySection">></a></div>
+                
+                </div> 
+                <div id="categorySection">
             <div class="form-group row">
                 <div class="col-md-12 mb-2">Obsługiwane imprezy</div>
-                @foreach($category as $cate)
-                    @if($cate->type == 'party')
-                        <div class="form-check">
-                            <label class="form-check-label mr-4" for="{{$cate->name}}">
-                            {{$cate->name}}
-                            </label>
-                            <input class="form-check-input" type="checkbox" value="{{$cate->id}}" id="{{$cate->name}}" name="party[]">
-                        </div>
-                    @endif
+                @foreach($categoryParty as $cParty) 
+                        @foreach($cParty->groupCategory as $gPartyCategory) 
+                            @foreach($gPartyCategory->category as $partyCategory) 
+                
+                    <div class="form-check">
+                        <label class="form-check-label mr-4" for="{{$partyCategory->name}}">
+                        {{$partyCategory->name}}
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="{{$partyCategory->id}}" id="{{$partyCategory->name}}" name="party[]">
+                    </div>
+                
+                @endforeach
+                @endforeach
                 @endforeach
             </div>
             <hr>
             <div class="form-group row">
                 <div class="col-md-12 mb-2">Dodatkowe informacje</div>
-                @foreach($category as $cate)
-                    @if($cate->type == 'dinfo')
+                @foreach($categoryAdditional as $cAdditional) 
+                        @foreach($cAdditional->groupCategory as $gAdditionalCategory) 
+                            @foreach($gAdditionalCategory->category as $additionalCategory) 
                         <div class="form-check">
-                            <label class="form-check-label mr-4" for="{{$cate->name}}">
-                                {{$cate->name}}
+                            <label class="form-check-label mr-4" for="{{$additionalCategory->name}}">
+                                {{$additionalCategory->name}}
                             </label>
-                            <input class="form-check-input" type="checkbox" value="{{$cate->id}}" id="{{$cate->name}}" name="dodatkowe[]">
+                            <input class="form-check-input" type="checkbox" value="{{$additionalCategory->id}}" id="{{$additionalCategory->name}}" name="additional[]">
                         </div>
-                    @endif
+                    
                 @endforeach
-            </div>
-            <hr>
-            <div class="form-group row">
-                <div class="col-md-12 mb-2">Atrakcje</div>
-                
-                @foreach($category as $cate)
-                    @if($cate->type == 'atrakcje')
-                        <div class="form-check">
-                            <label class="form-check-label mr-4" for="{{$cate->name}}">
-                                {{$cate->name}}
-                            </label>
-                            <input class="form-check-input" type="checkbox" value="{{$cate->id}}" id="{{$cate->name}}" name="atrakcje[]">
-                        </div>
-                    @endif
+                @endforeach
                 @endforeach
             </div>
             <hr>
             <div class="form-group row">
                 <div class="col-md-12 mb-2">Inni użytkownicy dodali również</div>
                 
-                @foreach($category as $cate)
-                    @if($cate->type == 'user')
+                @foreach($categoryStats as $categoryUser)
                         <div class="form-check">
-                            <label class="form-check-label mr-4" for="{{$cate->name}}">
-                                {{$cate->name}}
+                            <label class="form-check-label mr-4" for="{{$categoryUser->category->name}}">
+                                {{$categoryUser->category->name}}
                             </label>
-                            <input class="form-check-input" type="checkbox" value="{{$cate->id}}" id="{{$cate->name}}" name="popular[]">
+                            <input class="form-check-input" type="checkbox" value="{{$categoryUser->category->id}}" id="{{$categoryUser->category->name}}" name="popular[]">
                         </div>
-                    @endif
                 @endforeach
-                <div class="form-check">
-                    <label class="form-check-label mr-4" for="test">
-                        Popularne
-                    </label>
-                    <input class="form-check-input" type="checkbox" value="1" id="test"  name="popular[]">
-                </div>
             </div>
             <hr>
             <div id="userCategory" class="form-group row">
                 <div class="col-md-12 mb-2">Dodaj własne kategorie</div>
                 <!-- Kategorie dodane przez usera -->
             </div>
-            <div class="row">
+            <div class="row justify-content-center">
                     <input type="text" id="userInputCategory">
                     <div class="btn-info p-2 ml-2" onClick="addCategory();">Dodaj kategorie</div>
                 </div>
-            <hr>
-            <div class="form-group row">
-                <label for="beds" class="col-md-4 col-form-label text-md-right">Ilość miejsc noclegowych</label>
+                <div id="modalBeds" class="form-group row mt-3">
+                    <label for="beds" class="col-md-4 col-form-label text-md-right">Ilość miejsc noclegowych</label>
 
-                <div class="col-md-6">
-                    <input id="beds" type="number" min="0" class="form-control @error('beds') is-invalid @enderror" name="beds" value="{{ old('beds') }}">
+                    <div class="col-md-6">
+                        <input id="beds" type="number" min="0" class="form-control @error('beds') is-invalid @enderror" name="beds" value="{{ old('beds') }}">
 
-                    @error('beds')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                        @error('beds')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
-            </div>
-            <hr> 
-            Wynajmowana przestrzeń
-            <div class="form-group row">
+</div></div>
+            
+            
+            <div class="row section">
+                <div class="sectionTittle">
+                    <div class="textTittle">
+                        @if($selectCategory == "lokal")
+                            Wynajmowana przestrzeń
+                        @elseif($selectCategory == "music" || $selectCategory == "photo")
+                            Oferowana usługa
+                        @endif
+                    </div>
+                    <div class="showSectionButton"><a class="btn btn-info showSection" data-name="serviceSection">></a></div>
+                
+                </div> 
+                <div id="serviceSection">
+            
+            <div class="form-group row mt-4">
                 <label for="priceFrom" class="col-md-4 col-form-label text-md-right">Cena od</label>
 
                 <div class="col-md-6">
@@ -218,9 +252,15 @@
                     @enderror
                 </div>
             </div>
-
+            
             <div class="form-group row">
-                <label for="minPeople" class="col-md-4 col-form-label text-md-right">Minimalna ilość osób</label>
+                <label for="minPeople" class="col-md-4 col-form-label text-md-right">
+                @if($selectCategory == "lokal")
+                    Minimalna ilość osób
+                @elseif($selectCategory == "music" || $selectCategory == "photo")
+                    Ilość osób w zespole
+                @endif
+                </label>
 
                 <div class="col-md-6">
                     <input id="minPeople" type="number" min="0" class="form-control @error('minPeople') is-invalid @enderror" name="minPeople[]" value="{{ old('minPeople') }}">
@@ -232,7 +272,7 @@
                     @enderror
                 </div>
             </div>
-
+            @if($selectCategory == "lokal")
             <div class="form-group row">
                 <label for="maxPeople" class="col-md-4 col-form-label text-md-right">Maksymalna ilość osób</label>
 
@@ -246,7 +286,7 @@
                     @enderror
                 </div>
             </div>
-
+            
             <div class="form-group row">
                 <label for="sizeService" class="col-md-4 col-form-label text-md-right">Wielkość [m^2]</label>
 
@@ -260,9 +300,15 @@
                     @enderror
                 </div>
             </div>
-
+            @endif
             <div class="form-group row">
-                <label for="image" class="col-md-4 col-form-label text-md-right">Zdjęcia sali</label>
+                <label for="image" class="col-md-4 col-form-label text-md-right">
+                    @if($selectCategory == "local")
+                        Zdjęcia sali
+                    @elseif($selectCategory == "music" || $selectCategory == "photo")
+                        Zdjęcia związane z usługą
+                    @endif
+                </label>
 
                 <div class="col-md-6">
                     <input type="file" class="form-control @error('image') is-invalid @enderror" name="imageService[]" multiple>
@@ -276,10 +322,16 @@
             </div>
             <hr>
             <div id="service"></div>
-            <a class="btn-primary p-2" onClick="addService()">Dodaj sale</a>
-            <hr>
-            Dane kontaktowe
-            <div class="form-group row">
+            <a class="btn-primary p-2" onClick="addService()">Dodaj więcej</a>
+            </div></div>
+            <div class="row section">
+                <div class="sectionTittle">
+                    <div class="textTittle">Dane kontaktowe</div>
+                    <div class="showSectionButton"><a class="btn btn-info showSection" data-name="contactSection">></a></div>
+                
+                </div> 
+                <div id="contactSection">
+            <div class="form-group row mt-4">
                 <label for="name" class="col-md-4 col-form-label text-md-right">Imie</label>
 
                 <div class="col-md-6">
@@ -348,9 +400,16 @@
                     @enderror
                 </div>
             </div>
-            <hr>
-            Media społecznośćiowe
-            <div class="form-group row">
+            </div></div>
+           
+            <div class="row section">
+                <div class="sectionTittle">
+                    <div class="textTittle"> Media społecznośćiowe</div>
+                    <div class="showSectionButton"><a class="btn btn-info showSection" data-name="socialSection">></a></div>
+                
+                </div> 
+                <div id="socialSection">
+            <div class="form-group row mt-4">
                 <label for="www" class="col-md-4 col-form-label text-md-right">Link do strony wwww</label>
 
                 <div class="col-md-6">
@@ -418,10 +477,16 @@
                         </span>
                     @enderror
                 </div>
-            </div>
-            <hr>
-            Adres
-            <div class="form-group row">
+            </div></div></div>
+           
+            <div class="row section">
+                <div class="sectionTittle">
+                    <div class="textTittle"> Adres firmy</div>
+                    <div class="showSectionButton"><a class="btn btn-info showSection" data-name="addressSection">></a></div>
+                
+                </div> 
+                <div id="addressSection">
+            <div class="form-group row mt-4">
                 <label for="city" class="col-md-4 col-form-label text-md-right">Miasto</label>
 
                 <div class="col-md-6">
@@ -463,6 +528,125 @@
                 </div>
             </div>
             <hr>
+            </div></div>
+            <div class="row section">
+                <div class="sectionTittle">
+                    <div class="textTittle">Godziny otwarcia</div>
+                    <div class="showSectionButton"><a class="btn btn-info showSection" data-name="openSection">></a></div>
+                </div> 
+            <div id="openSection">
+            <div class="form-group row mt-4">
+                <label for="monday" class="col-md-4 col-form-label text-md-right">Poniedziałek</label>
+
+                <div class="col-md-6">
+                    <input id="monday" type="text" class="form-control @error('monday') is-invalid @enderror" name="monday" value="{{ old('monday') }}" placeholder="zamknięte">
+
+                    @error('monday')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="tuesday" class="col-md-4 col-form-label text-md-right">Wtorek</label>
+
+                <div class="col-md-6">
+                    <input id="tuesday" type="text" class="form-control @error('tuesday') is-invalid @enderror" name="tuesday" value="{{ old('tuesday') }}" placeholder="zamknięte">
+
+                    @error('tuesday')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="wednesday" class="col-md-4 col-form-label text-md-right">Środa</label>
+
+                <div class="col-md-6">
+                    <input id="wednesday" type="text" class="form-control @error('wednesday') is-invalid @enderror" name="wednesday" value="{{ old('wednesday') }}" placeholder="zamknięte">
+
+                    @error('wednesday')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="thursday" class="col-md-4 col-form-label text-md-right">Czwartek</label>
+
+                <div class="col-md-6">
+                    <input id="thursday" type="text" class="form-control @error('thursday') is-invalid @enderror" name="thursday" value="{{ old('thursday') }}" placeholder="zamknięte">
+
+                    @error('thursday')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="friday" class="col-md-4 col-form-label text-md-right">Piątek</label>
+
+                <div class="col-md-6">
+                    <input id="friday" type="text" class="form-control @error('friday') is-invalid @enderror" name="friday" value="{{ old('friday') }}" placeholder="zamknięte">
+
+                    @error('friday')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="saturday" class="col-md-4 col-form-label text-md-right">Sobota</label>
+
+                <div class="col-md-6">
+                    <input id="saturday" type="text" class="form-control @error('saturday') is-invalid @enderror" name="saturday" value="{{ old('saturday') }}" placeholder="zamknięte">
+
+                    @error('saturday')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="sunday" class="col-md-4 col-form-label text-md-right">Niedziela</label>
+
+                <div class="col-md-6">
+                    <input id="sunday" type="text" class="form-control @error('sunday') is-invalid @enderror" name="sunday" value="{{ old('sunday') }}" placeholder="zamknięte">
+
+                    @error('sunday')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+        </div> </div> 
+            <div class="row section">
+                <div class="sectionTittle">
+                    <div class="textTittle">Często zadawane pytania i odpowiedzi </div>
+                    <div class="showSectionButton"><a class="btn btn-info showSection" data-name="qandaSection">></a></div>
+                
+                </div> 
+            <div id="qandaSection">
+            <div id="questions" class="mt-3">
+
+            </div>
+            <a class="btn-primary p-2" onClick="questions()">Dodaj pytanie</a>
+            </div> </div> </div>
+            <hr>
             <div class="form-group row">
                 <label for="image" class="col-md-4 col-form-label text-md-right">Zdjęcia lokalu</label>
 
@@ -476,30 +660,10 @@
                     @enderror
                 </div>
             </div>
-
-           
-            <hr>
-            <div class="form-group row">
-                <label for="timeOpen" class="col-md-4 col-form-label text-md-right">Godziny otwarcia</label>
-
-                <div class="col-md-6">
-                    <textarea id="timeOpen" type="text" class="form-control @error('timeOpen') is-invalid @enderror" name="timeOpen" value="{{ old('timeOpen') }}"></textarea>
-
-                    @error('timeOpen')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            <hr>
-            Często zadawane pytania i odpowiedzi 
-            <div id="questions" class="mt-3">
-
-            </div>
-            <a class="btn-primary p-2" onClick="questions()">Dodaj pytanie</a>
-            <div class="row mt-5 text-md-right">
-                <button>Dodaj usługę</button>
+            
+            <input type="hidden" name="type" value="{{$selectCategory}}" require>
+            <div class="row mt-5">
+                <button class="btn-primary p-2">Dodaj usługę</button>
             </div>
         </form>
     </div>
@@ -707,5 +871,37 @@
                 checkboxN++;
             }
         }
+
+        $('.showSection').on('click', function () {
+   
+        var name = "#" + $(this).attr("data-name");
+            if($(name).is(":visible"))
+            {
+                $( name  ).slideUp(800);
+            }
+            else
+            {
+                $( name  ).slideDown(800);
+            }
+        
+        });
+
+        $(document).ready(function(){
+            $('#modalBeds').hide();
+        $('input[type="checkbox"]').click(function(){
+            if($(this).val() == 14){
+                if($(this).prop("checked") == true){
+
+                    $('#modalBeds').show();
+
+
+                }
+                else if($(this).prop("checked") == false){
+                    $('#modalBeds').hide();
+
+                }
+        }
+        });
+    });
     </script>
 @endpush

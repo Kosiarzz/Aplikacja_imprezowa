@@ -10300,3 +10300,58 @@ body {
   overflow-y: auto;
   /* Scrollable contents if viewport is shorter than content. */
 }
+
+.businessBoxButton {
+  background-color: #fff;
+  width: 300px;
+  height: 160px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.13);
+  margin-right: 15px;
+  margin-bottom: 15px;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.businessBoxButton:hover {
+  background-color: #3490dc;
+  color: #fff;
+}
+
+.businessBoxButtonTitle {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 0px;
+}
+
+.businessBoxButtonDescription {
+  font-size: 16px;
+  padding: 10px 0px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  border: 1px solid black;
+  padding: 20px;
+  width: 800px;
+}
+
+.sectionTittle {
+  font-size: 20px;
+  border-bottom: 1px solid black;
+}
+
+.textTittle {
+  display: flex;
+  justify-content: flex-start;
+  display: inline-block;
+}
+
+.showSectionButton {
+  float: right;
+}

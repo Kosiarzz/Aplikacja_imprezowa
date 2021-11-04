@@ -18,11 +18,11 @@ class CreateServicesTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->integer('people_from');
-            $table->integer('people_to');
-            $table->integer('price_from');
-            $table->integer('price_to');
+            $table->integer('people_to')->nullable();
+            $table->integer('price_from')->nullable();
+            $table->integer('price_to')->nullable();
             $table->string('unit');
-            $table->integer('size');
+            $table->integer('size')->nullable();
             $table->foreignId('business_id')->constrained('businesses')->onDelete('cascade')->unsigned();
         });
     }

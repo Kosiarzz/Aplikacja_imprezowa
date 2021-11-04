@@ -1,63 +1,47 @@
 @extends('layouts.business')
-
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        Wybór branży
-        <a href="{{route('businessProfile.profile', 'lokal')}}" class="text-decoration-none box w-100">
-            <div class="title">
-                Lokal?
+   <div class="row justify-content-center">
+      <div class="row mt-5">
+         <a href="{{route('businessProfile.profile', 'lokal')}}" class="text-decoration-none businessBoxButton">
+            <div class="businessBoxButtonTitle">
+               Lokal
             </div>
-            <div class="description">
-                Miejsce w którym może zostać zorganizowana impreza np. sala, lokal, dworek, karczma, ogród itp.
+            <div class="businessBoxButtonDescription">
+               Lokal, dworek, sala
             </div>
-        </a>
-
-        <a href="{{route('businessProfile.profile', 'atrakcje')}}" class="text-decoration-none box w-100">
-            <div class="title">
-                Atrakcje
+         </a>
+         <a href="{{route('businessProfile.profile', 'music')}}" class="text-decoration-none businessBoxButton">
+            <div class="businessBoxButtonTitle">
+               Muzyka
             </div>
-            <div class="description">
-                Usługi takie jak atakcjowe itp. 
+            <div class="businessBoxButtonDescription">
+               Zespół muzyczny, DJ
             </div>
-        </a>
-
-        <a href="{{route('businessProfile.profile', 'zespolmuzyczny')}}" class="text-decoration-none box w-100">
-            <div class="title">
-                Muzyka
+         </a>
+         <a href="{{route('businessProfile.profile', 'photo')}}" class="text-decoration-none businessBoxButton">
+            <div class="businessBoxButtonTitle">
+               Fotograf
             </div>
-            <div class="description">
-                Grupa wykonawców muzycznych, DJ itp.
+            <div class="businessBoxButtonDescription">
+               Kamerzysta, fotograf, dron
             </div>
-        </a>
-
-        <a href="{{route('businessProfile.profile', 'dekoracje')}}" class="text-decoration-none box w-100">
-            <div class="title">
-                Dekoracje
-            </div>
-            <div class="description">
-                Usługi takie jak dekoratorzy, kwiaciarnie, itp.
-            </div>
-        </a>
-
-        <a href="{{route('businessProfile.profile', 'katering')}}" class="text-decoration-none box w-100">
-            <div class="title">
-                Jedzenie i napoje
-            </div>
-            <div class="description">
-                Usługi takie jak katering, barman, barista itp.
-            </div>
-        </a>
-
-        <a href="{{route('businessProfile.profile', 'pokazy')}}" class="text-decoration-none box w-100">
-            <div class="title">
-                Pokazy
-            </div>
-            <div class="description">
-                Usługi takie jak sztuczne ognie, pokazy laserowe, pokazy barmańskie itp.
-            </div>
-        </a>
-
-    </div>
+         </a>
+      </div>
+   </div>
 </div>
 @endsection
+@push('script')
+<script>
+   $( ".serviceBoxButton" ).hover(
+        
+    function() 
+    {
+        $( this ).append( $( "<span> ***</span>" ) );
+    }, 
+    function() {
+        $( this ).find( "span" ).last().remove();
+    }
+   );
+</script>
+@endpush

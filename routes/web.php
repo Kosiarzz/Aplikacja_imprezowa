@@ -10,6 +10,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReservationController; 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,13 +78,21 @@ Route::middleware(['auth','verified'])->group(function()
     Route::middleware(['can:isBusiness'])->group(function()
     {
         Route::get('/firma', [App\Http\Controllers\BusinessController::class, 'index'])->name('business.index');
-        Route::get('/firma/{id}', [App\Http\Controllers\BusinessController::class, 'businessDetails'])->name('business.id');
+        //Route::get('/firma/{id}', [App\Http\Controllers\BusinessController::class, 'businessDetails'])->name('business.id');
         Route::get('/firma/panel/rezerwacje', [App\Http\Controllers\BusinessController::class, 'reservations'])->name('business.reservations');
-        Route::get('/firma/panel/profil', [App\Http\Controllers\BusinessController::class, 'category'])->name('businessProfile.profile');
+        Route::get('/firma/panel/profil/{category}', [App\Http\Controllers\BusinessController::class, 'category'])->name('businessProfile.profile');
         Route::get('/firma/panel/kategorie', function () {  return view('business.categoryBusiness');  })->name('business.category');
 
         Route::post('/firma/dodawanie', [App\Http\Controllers\BusinessController::class, 'addBusiness'])->name('addBusiness');
         Route::get('/firma/panel/powiadomienia', [App\Http\Controllers\BusinessController::class, 'notifications'])->name('business.notifications');
+
+        //Usługi
+        Route::get('/firma/usługa/panel-główny/{id}', [App\Http\Controllers\ServiceController::class, 'index'])->name('service.index');
+        Route::get('/firma/usługa/rezerwacje', [App\Http\Controllers\ServiceController::class, 'reservations'])->name('service.reservations');
+        Route::get('/firma/usługa/powiadomienia', [App\Http\Controllers\ServiceController::class, 'notifications'])->name('service.notifications');
+        Route::get('/firma/usługa/statystyki', [App\Http\Controllers\ServiceController::class, 'stats'])->name('service.stats');
+        Route::get('/firma/usługa/podgląd', [App\Http\Controllers\ServiceController::class, 'preview'])->name('service.preview');
+        Route::get('/firma/usługa/podgląd-usługa', [App\Http\Controllers\ServiceController::class, 'previewService'])->name('service.previewService');
 
    });
 

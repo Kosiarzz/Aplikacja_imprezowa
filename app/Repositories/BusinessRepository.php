@@ -11,9 +11,11 @@ use App\Models\Contact;
 use App\Models\Service; 
 use App\Models\Photo; 
 use App\Models\City; 
+use App\Models\Group; 
 use App\Models\BusinessCategory; 
 use App\Models\Notification;
 use App\Models\QuestionAndAnswer;
+use App\Models\StatisticsCategory;
 use App\Interfaces\BusinessRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,9 +58,24 @@ class BusinessRepository implements BusinessRepositoryInterface
                 ->first();
     }
 
-    public function getCategory()
+    public function getCategory($type)
     {
-        return Category::all();
+        return Group::with(['groupCategory.category'])->where('type', $type)->where('name', $type)->get();
+    }
+    
+    public function getAdditionalCategory($type)
+    {
+        return Group::with(['groupCategory.category'])->where('type', 'category_'.$type)->where('name', 'category_'.$type)->get();
+    }
+
+    public function getPartyCategory()
+    {
+        return Group::with(['groupCategory.category'])->where('type', 'party')->where('name', 'party')->get();
+    }
+    
+    public function getStatsCategory($type)
+    {
+        return StatisticsCategory::with(['category'])->where('type', $type)->where('stats', '>' , -1)->orderBy('stats','desc')->take(50)->get();
     }
 
     public function addBusiness($request)
@@ -111,14 +128,7 @@ class BusinessRepository implements BusinessRepositoryInterface
             $business->categories()->save($category);
         }
 
-        foreach($request->dodatkowe as $categoryId)
-        {
-            $category = new BusinessCategory;
-            $category->category_id = $categoryId;
-            $business->categories()->save($category);
-        }
-
-        foreach($request->atrakcje as $categoryId)
+        foreach($request->additional as $categoryId)
         {
             $category = new BusinessCategory;
             $category->category_id = $categoryId;
@@ -130,8 +140,12 @@ class BusinessRepository implements BusinessRepositoryInterface
             {
                 $category = Category::firstOrCreate([
                     "name" => $categoryName,
-                    "type" => 'user'
                 ]);
+
+                $statisticCategory = StatisticsCategory::firstOrCreate([
+                    "category_id" => $category->id,
+                    "type" => $request->type,
+                ])->increment('stats', 1);
 
                 $BusinessCategory = new BusinessCategory;
                 $BusinessCategory->category_id = $category->id;
@@ -139,11 +153,20 @@ class BusinessRepository implements BusinessRepositoryInterface
             }
         }
 
-        foreach($request->popular as $categoryId)
+        if($request->popular != null)
         {
-            $BusinessCategory = new BusinessCategory;
-            $BusinessCategory->category_id = $categoryId;
-            $business->categories()->save($BusinessCategory);
+            foreach($request->popular as $categoryId)
+            {
+                $BusinessCategory = new BusinessCategory;
+                $BusinessCategory->category_id = $categoryId;
+
+                $statisticCategory = StatisticsCategory::firstOrCreate([
+                    "category_id" => $categoryId,
+                    "type" => $request->type,
+                ])->increment('stats', 1);
+
+                $business->categories()->save($BusinessCategory);
+            }
         }
 
         $category = new BusinessCategory;
