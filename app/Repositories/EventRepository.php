@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Cost;
 use App\Models\GroupEvent;
 use App\Models\Guest;
+use App\Models\Group;
 use App\Models\Task;
 use App\Models\Notification;
 use App\Models\GroupCategory;
@@ -21,12 +22,12 @@ class EventRepository
 {
     public function getEventCategories()
     {
-        return Category::where('type', 'party')->get();
+        return Group::with(['groupCategory.category'])->where('type', 'party')->where('name', 'party')->get();
     }
 
     public function getServiceCategories()
     {
-        return Category::where('type', 'mainCategory')->get();
+        return GroupEvent::with(['groupCategory'])->where('type','mainCategory')->where('name', 'mainCategory')->get();
     }
 
     public function getStatisticCategories()

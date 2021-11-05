@@ -96,6 +96,6 @@ class Business extends Model
 
     public function mainCategory()
     {
-        return $this->hasOne(Category::class);
+        return $this->belongsTo(Category::class);
     }
 }

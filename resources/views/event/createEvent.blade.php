@@ -7,13 +7,18 @@
         @csrf
         <div class="form-group row">
             <div class="col-md-12 mb-2">Wybierz rodzaj wydarzenia</div>
-            @foreach($categories as $category)
+            @foreach($categories as $cParty) 
+                        @foreach($cParty->groupCategory as $gPartyCategory) 
+                            @foreach($gPartyCategory->category as $partyCategory) 
+
                     <div class="form-check">
-                        <label class="form-check-label mr-4" for="{{$category->name}}">
-                            {{$category->name}}
+                        <label class="form-check-label mr-4" for="{{$partyCategory->name}}">
+                            {{$partyCategory->name}}
                         </label>
-                        <input class="form-check-input" type="radio" value="{{$category->id}}" id="{{$category->name}}" name="party">
+                        <input class="form-check-input" type="radio" value="{{$partyCategory->id}}" id="{{$partyCategory->name}}" name="party">
                     </div>
+            @endforeach
+            @endforeach
             @endforeach
         </div>
             

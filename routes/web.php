@@ -78,7 +78,7 @@ Route::middleware(['auth','verified'])->group(function()
     Route::middleware(['can:isBusiness'])->group(function()
     {
         Route::get('/firma', [App\Http\Controllers\BusinessController::class, 'index'])->name('business.index');
-        //Route::get('/firma/{id}', [App\Http\Controllers\BusinessController::class, 'businessDetails'])->name('business.id');
+        Route::get('/firma/{id}', [App\Http\Controllers\BusinessController::class, 'businessDetails'])->name('business.id');
         Route::get('/firma/panel/rezerwacje', [App\Http\Controllers\BusinessController::class, 'reservations'])->name('business.reservations');
         Route::get('/firma/panel/profil/{category}', [App\Http\Controllers\BusinessController::class, 'category'])->name('businessProfile.profile');
         Route::get('/firma/panel/kategorie', function () {  return view('business.categoryBusiness');  })->name('business.category');
@@ -87,12 +87,19 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/firma/panel/powiadomienia', [App\Http\Controllers\BusinessController::class, 'notifications'])->name('business.notifications');
 
         //Usługi
-        Route::get('/firma/usługa/panel-główny/{id}', [App\Http\Controllers\ServiceController::class, 'index'])->name('service.index');
+        Route::get('/firma/usługa/panel/{id}', [App\Http\Controllers\ServiceController::class, 'index'])->name('service.index');
+        Route::get('/firma/usługa/panel', [App\Http\Controllers\ServiceController::class, 'dashboard'])->name('service.dashboard');
         Route::get('/firma/usługa/rezerwacje', [App\Http\Controllers\ServiceController::class, 'reservations'])->name('service.reservations');
         Route::get('/firma/usługa/powiadomienia', [App\Http\Controllers\ServiceController::class, 'notifications'])->name('service.notifications');
         Route::get('/firma/usługa/statystyki', [App\Http\Controllers\ServiceController::class, 'stats'])->name('service.stats');
         Route::get('/firma/usługa/podgląd', [App\Http\Controllers\ServiceController::class, 'preview'])->name('service.preview');
-        Route::get('/firma/usługa/podgląd-usługa', [App\Http\Controllers\ServiceController::class, 'previewService'])->name('service.previewService');
+        Route::get('/firma/usługa/podgląd-usługi', [App\Http\Controllers\ServiceController::class, 'previewService'])->name('service.previewService');
+
+        Route::get('/firma/usługa/edycja', [App\Http\Controllers\ServiceController::class, 'serviceEdit'])->name('service.serviceEdit');
+        Route::get('/firma/usługa/nowa', [App\Http\Controllers\ServiceController::class, 'serviceAdd'])->name('service.serviceAdd');
+        Route::get('/firma/usługa/podgląd-usługi/{id}', [App\Http\Controllers\ServiceController::class, 'serviceDetails'])->name('service.serviceDetails');
+
+        Route::post('/firma/usługa/nowa/dodawanie', [App\Http\Controllers\ServiceController::class, 'addService'])->name('addService');
 
    });
 

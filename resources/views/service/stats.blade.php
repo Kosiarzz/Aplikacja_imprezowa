@@ -7,3 +7,9 @@
     </div>
 </div>
 @endsection
+@push('script')
+<script>
+   $( "a" ).removeClass( "active" );
+   $("#stats").addClass("active");
+</script>
+@endpush

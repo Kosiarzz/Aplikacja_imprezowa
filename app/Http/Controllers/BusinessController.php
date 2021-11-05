@@ -32,7 +32,7 @@ class BusinessController extends Controller
     {
         $reservations = $this->bGateway->getReservations($request);
 
-        return view('business.reservations', ['business' => $reservations]);
+        return view('service.reservations', ['business' => $reservations]);
     }
 
     public function category($selectCategory)

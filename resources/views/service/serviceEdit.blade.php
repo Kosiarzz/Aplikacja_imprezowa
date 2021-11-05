@@ -10,6 +10,6 @@
 @push('script')
 <script>
    $( "a" ).removeClass( "active" );
-   $("#preview").addClass("active");
+   $("#servicePreview").addClass("active");
 </script>
 @endpush
