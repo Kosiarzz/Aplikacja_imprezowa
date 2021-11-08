@@ -18,7 +18,7 @@ class CreateTasksTable extends Migration
             $table->string('name');
             $table->date('end_task')->nullable();
             $table->boolean('status')->default(false);
-            $table->foreignId('group_id')->constrained('groups')->onDelete('cascade')->unsigned();
+            $table->foreignId('group_id')->constrained('groups_events')->onDelete('cascade')->unsigned();
         });
     }
 

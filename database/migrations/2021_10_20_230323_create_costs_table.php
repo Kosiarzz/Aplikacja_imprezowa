@@ -22,7 +22,7 @@ class CreateCostsTable extends Migration
             $table->string('advance')->default('0');
             $table->date('date_payment')->nullable();
             $table->boolean('status')->default(false);
-            $table->foreignId('group_id')->constrained('groups')->onDelete('cascade')->unsigned();
+            $table->foreignId('group_id')->constrained('groups_events')->onDelete('cascade')->unsigned();
         });
     }
 

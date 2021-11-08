@@ -10355,3 +10355,8 @@ body {
 .showSectionButton {
   float: right;
 }
+
+.space {
+  width: 100%;
+  height: 80px;
+}

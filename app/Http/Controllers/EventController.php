@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Repositories\EventRepository;
 use App\Repositories\ReservationRepository;
 
+use App\Models\GroupEvent;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -43,7 +45,7 @@ class EventController extends Controller
         return view('event.index', ['events' => $events]);
     }
 
-    public function dateView()
+    public function dateView(Request $request)
     {   
         return view('event.date');
     }
@@ -207,3 +209,4 @@ class EventController extends Controller
     }
 
 }
+ 

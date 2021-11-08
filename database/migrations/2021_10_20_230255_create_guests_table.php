@@ -24,7 +24,7 @@ class CreateGuestsTable extends Migration
             $table->enum('type', ['Dorosły', 'Dziecko', 'Niemowlę','Usługodawcy'])->default('Dorosły');
             $table->boolean('transport')->default(false);
             $table->string('note')->nullable();
-            $table->foreignId('group_id')->constrained('groups')->onDelete('cascade')->unsigned();
+            $table->foreignId('group_id')->constrained('groups_events')->onDelete('cascade')->unsigned();
         });
     }
 

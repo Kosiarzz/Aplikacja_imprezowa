@@ -11,6 +11,13 @@
       <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
       <!-- Styles -->
       <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+      
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+    
+
+
    </head>
    <body>
       <!--Main Navigation-->
@@ -22,7 +29,7 @@
                   <a id="dashboard" href="{{ route('event.dashboardView') }}" class="list-group-item list-group-item-action py-2 ripple">
                   <i class="fas fa-chart-area fa-fw me-3"></i><span>Panel główny</span>
                   </a>
-                  <a id="calendar" href="{{ route('event.date') }}" class="list-group-item list-group-item-action py-2 ripple"
+                  <a id="date" href="{{ route('event.date') }}" class="list-group-item list-group-item-action py-2 ripple"
                      ><i class="fas fa-lock fa-fw me-3"></i><span>Kalendarz</span></a
                      >
                   <a id="finance" href="{{ route('event.finances') }}" class="list-group-item list-group-item-action py-2 ripple"
@@ -81,7 +88,7 @@
                   height="25"
                   alt=""
                   loading="lazy"
-                  /> logo/nazwa
+                  /> logo/nazwa ({{session('event')}})
                </a>
                <!-- Right links -->
                <ul class="navbar-nav ms-auto d-flex flex-row">
@@ -123,7 +130,7 @@
          <!-- Navbar -->
       </header>
       <!--Main Navigation-->
-      <main class="py-4">
+      <main class="py-4 mb-5">
          @yield('content')
       </main>
       </div>
@@ -131,6 +138,12 @@
       <script src="{{ asset('js/app.js') }}"></script>
       <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+
+      
+      
       <script>
          var base_url = '{{url("/")}}';
       </script>

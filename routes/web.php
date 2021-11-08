@@ -11,6 +11,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReservationController; 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\FullCalenderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,11 @@ Route::get('/confirmReservation/{id}', [App\Http\Controllers\ReservationControll
 Route::get('/deleteReservation/{id}', [App\Http\Controllers\ReservationController::class, 'deleteReservation'])->name('reservation.deleteReservation');
 
 Route::get('/wyszukiwanie/uzytkownik/profil/{id}', [App\Http\Controllers\UserController::class, 'findUserProfile'])->name('findUserProfile');
+
+Route::get('/full-calender', [FullCalenderController::class, 'index']);
+
+Route::post('/full-calender/action', [FullCalenderController::class, 'action']);
+
 
 //Strony wymagające zalogowania
 Route::middleware(['auth','verified'])->group(function()
@@ -117,6 +123,7 @@ Route::middleware(['auth','verified'])->group(function()
 
         Route::get('/uzytkownik/wydarzenie/główna', [App\Http\Controllers\EventController::class, 'dashboardView'])->name('event.dashboardView');
         Route::get('/uzytkownik/wydarzenie/daty', [App\Http\Controllers\EventController::class, 'dateView'])->name('event.date');
+        Route::get('/uzytkownik/wydarzenie/daty/kalendarz', [App\Http\Controllers\FullCalenderController::class, 'dateEvent']);
         Route::get('/uzytkownik/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'financesView'])->name('event.finances');
         Route::get('/uzytkownik/wydarzenie/goście', [App\Http\Controllers\EventController::class, 'guestView'])->name('event.guest');
         Route::get('/uzytkownik/wydarzenie/usługi', [App\Http\Controllers\EventController::class, 'serviceView'])->name('event.services');
