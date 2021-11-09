@@ -19,16 +19,16 @@ class EventController extends Controller
 
     public function index($id)
     {    
-        $events = $this->eRepository->getEvent($id);
+        $data = $this->eRepository->getEvent($id);
         
-        return view('event.index', ['events' => $events]);
+        return view('event.index', ['data' => $data]);
     }
 
     public function dashboardView()
     {    
-        $events = $this->eRepository->getEventDashboard();
-        
-        return view('event.index', ['events' => $events]);
+        $event = $this->eRepository->getEventDashboard();
+
+        return view('event.index', ['event' => $event]);
     }
 
     public function createEventView()

@@ -27,7 +27,7 @@ class EventRepository
 
     public function getServiceCategories()
     {
-        return GroupEvent::with(['groupCategory'])->where('type','mainCategory')->where('name', 'mainCategory')->get();
+        return Group::with(['groupCategory.category'])->where('type','mainCategory')->where('name', 'mainCategory')->get();
     }
 
     public function getStatisticCategories()
@@ -241,7 +241,19 @@ class EventRepository
     {   
         $event = Event::with(['category'])->find($id);
         session(['event' => $event->id]);
-        return $event;
+
+        $tasks = GroupEvent::with(['tasks'])->where('type','task')->where('event_id', session('event'))->count();
+        $guests = GroupEvent::with(['guests'])->where('type','guest')->where('event_id', session('event'))->count();
+        $costs = GroupEvent::with(['costs'])->where('type','cost')->where('event_id', session('event'))->count();
+
+        $data = [
+            'event' => $event,
+            'tasks' => $tasks,
+            'guests' => $guests,
+            'costs' => $costs,
+        ];
+
+        return $data;
     }
 
     public function getEventDashboard()
@@ -292,6 +304,7 @@ class EventRepository
         $group = new GroupEvent();
         $group->name = $request->group;
         $group->type = $request->type;
+        $group->color = $request->color;
         $group->event_id = session('event');
         $group->save();
     }
@@ -341,7 +354,7 @@ class EventRepository
 
     public function editTask($request)
     {
-        Task::where('id', $request->id)->update(['name' => $request->name, 'end_task' => $request->date]);
+        Task::where('id', $request->id)->update(['name' => $request->name, 'end_task' => $request->date, 'group_id' => $request->group]);
     }
 
     public function deleteTask($request)
@@ -405,7 +418,7 @@ class EventRepository
 
     public function editGroup($request)
     {
-        GroupEvent::where('id', $request->id)->update(['name' => $request->name]);
+        GroupEvent::where('id', $request->id)->update(['name' => $request->name, 'color' => $request->color]);
     }
 
     public function deleteGroup($request)

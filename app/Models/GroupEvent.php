@@ -19,6 +19,7 @@ class GroupEvent extends Model
     protected $fillable = [
         'name',
         'type',
+        'color',
         'event_id',
     ];
 

@@ -12,7 +12,7 @@
                <li class="list-group-item row nameGroupTask">
                   {{$groupTask->name}} ({{ count($groupTask->tasks->where('status', 1)) }}/{{ count($groupTask->tasks) }})
                   <div class="float-right"> 
-                     <a class="btn btn-primary dataGroup" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$groupTask->id}}" data-name="{{$groupTask->name}}">E</a>
+                     <a class="btn btn-primary dataGroup" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$groupTask->id}}" data-name="{{$groupTask->name}}" data-color="{{$groupTask->color}}">E</a>
                      <a class="btn btn-danger deleteGroup" data-toggle="modal" data-target="#exampleModalGroupDelete" data-id="{{$groupTask->id}}">X</a>
                      <a class="btn btn-info showGroup" data-name="groupModal{{$groupTask->id}}">></a>
                   </div>
@@ -54,7 +54,7 @@
                      <div class="mr-4 d-inline">
                      {{$task->end_task}}
                      </div>
-                     <a class="btn btn-primary data" data-toggle="modal" data-target="#exampleModal" data-id="{{$task->id}}" data-name="{{$task->name}}" data-date="{{$task->end_task}}">E</a>
+                     <a class="btn btn-primary data" data-toggle="modal" data-target="#exampleModal" data-id="{{$task->id}}" data-groupId="{{$groupTask->id}}" data-name="{{$task->name}}" data-date="{{$task->end_task}}">E</a>
                      <a class="btn btn-danger delete" data-toggle="modal" data-target="#exampleModalDelete" data-id="{{$task->id}}">X</a>
                   </div>
                </li>
@@ -138,6 +138,16 @@
                               @enderror
                            </div>
                         </div>
+                        <div class="form-group">
+                     <label for="color-group-add" class="col-md-12 col-form-label">Kolor grupy</label>
+                     <div class="col-md-12">
+                        <input id="color-group-add" type="color" class="form-control @error('color') is-invalid @enderror" name="color" value="{{ old('color') }}" required autocomplete="color">
+                        @error('color')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>
                         <input  type="hidden" class="form-control @error('type') is-invalid @enderror" name="type" value="task" required>
                   </div>
                   <div class="modal-footer">
@@ -186,6 +196,16 @@
                      @enderror
                   </div>
                </div>
+               <div class="form-group">
+                                 <label for="edit-group" class="col-md-12 col-form-label">Grupa</label>
+                                 <div class="col-md-12">
+                              <select id="edit-group" class="form-select form-control" name="group" aria-label="Default select example">
+                              @foreach($tasks as $groupTask)
+                                <option value="{{$groupTask->id}}">{{$groupTask->name}}</option>
+                              @endforeach
+                              </select>
+                     </div>
+                     </div>
                <input id="id-edit" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
@@ -244,6 +264,17 @@
                      @enderror
                   </div>
                </div>
+               <div class="form-group">
+                  <label for="color-group-edit" class="col-md-12 col-form-label">Nazwa grupy</label>
+                  <div class="col-md-12">
+                     <input id="color-group-edit" type="color" class="form-control @error('color') is-invalid @enderror" name="color" value="{{ old('color') }}" required autocomplete="color">
+                     @error('color')
+                     <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
+                  </div>
+               </div>
                <input id="id-group-edit" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
@@ -289,10 +320,13 @@
       var id = $(this).attr("data-id");
       var name = $(this).attr("data-name");
       var date = $(this).attr("data-date");
+      var groupId = $(this).attr("data-groupId");
    
       $("#id-edit").val(id);
       $("#name-edit").val(name);
       $("#date-edit").val(date);
+
+      $("#edit-group option[value=" + groupId + "]").prop("selected", true);
    });
    
    $('.delete').on('click', function () {
@@ -306,10 +340,12 @@
    
    var id = $(this).attr("data-id");
    var name = $(this).attr("data-name");
-   
+   var color = $(this).attr("data-color");
+
    console.log(id + " | " + name);
    $("#id-group-edit").val(id);
    $("#name-group-edit").val(name);
+   $("#color-group-edit").val(color);
    
    });
    

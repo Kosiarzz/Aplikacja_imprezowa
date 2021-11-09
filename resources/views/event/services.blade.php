@@ -21,6 +21,7 @@
                 @endforeach
             @endforeach
         </div>
+
         <div class="row col-12">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addServices">
                 Wybierz usługi
@@ -37,14 +38,19 @@
                         <form method="POST" action="{{ route('addMainCategoryGroup') }}">
                             @csrf
                             @foreach($mainCategories as $mainCategory)
+                            @foreach($mainCategory->groupCategory as $gCategory)
+                            @foreach($gCategory->category as $category)
+
                                 <div class="form-check ml-2">   
-                                    <input class="form-check-input" type="checkbox" value="{{$mainCategory->id}}" id="flexCheckDefault{{$mainCategory->id}}" name="mainCategories[]">
-                                    <label class="form-check-label" for="flexCheckDefault{{$mainCategory->id}}">
-                                        {{$mainCategory->name}}
+                                    <input class="form-check-input" type="checkbox" value="{{$category->id}}" id="flexCheckDefault{{$category->id}}" name="mainCategories[]">
+                                    <label class="form-check-label" for="flexCheckDefault{{$category->id}}">
+                                        {{$category->name}}
                                     </label>
                                 </div>
                                 <input id="group" type="hidden" class="form-control @error('group') is-invalid @enderror" name="group" value="{{ $services[0]->id }}" required>
                                 
+                            @endforeach
+                            @endforeach
                             @endforeach
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>

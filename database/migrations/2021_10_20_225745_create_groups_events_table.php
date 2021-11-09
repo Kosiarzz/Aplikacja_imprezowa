@@ -17,6 +17,7 @@ class CreateGroupsEventsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('type');
+            $table->string('color')->default('#75c4ff');
             $table->foreignId('event_id')->constrained('events')->onDelete('cascade')->unsigned();
         });
     }

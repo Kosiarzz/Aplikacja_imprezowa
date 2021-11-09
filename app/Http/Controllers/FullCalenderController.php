@@ -29,7 +29,7 @@ class FullCalenderController extends Controller
                         'title' => $task->name,
                         'start' => $task->end_task,
                         'end' => date('Y-m-d', strtotime($task->end_task . ' +1 day')),
-                        'color' => 'purple',
+                        'color' => $group->color,
                     ];
                 }
 			}
@@ -43,7 +43,7 @@ class FullCalenderController extends Controller
                         'title' => $cost->name,
                         'start' => $cost->date_payment,
                         'end' => date('Y-m-d', strtotime($cost->date_payment . ' +1 day')),
-                        'color' => '#fff',
+                        'color' => $group->color,
                     ];
                 }
 			}

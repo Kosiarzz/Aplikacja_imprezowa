@@ -12,7 +12,7 @@
                <li class="list-group-item row nameGroupTask">
                   {{$finance->name}} ({{ count($finance->costs->where('status', 1)) }}/{{ count($finance->costs) }})
                   <div class="float-right"> 
-                     <a class="btn btn-primary dataGroup" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$finance->id}}" data-name="{{$finance->name}}">E</a>
+                     <a class="btn btn-primary dataGroup" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$finance->id}}" data-name="{{$finance->name}}" data-color="{{$finance->color}}">E</a>
                      <a class="btn btn-danger deleteGroup" data-toggle="modal" data-target="#exampleModalGroupDelete" data-id="{{$finance->id}}">X</a>
                      <a class="btn btn-info showGroup" data-name="groupModal{{$finance->id}}">></a>
                   </div>
@@ -185,8 +185,20 @@
                            @enderror
                         </div>
                      </div>
+                     <div class="form-group row">
+                        <label for="group-color" class="col-md-12 col-form-label">Kolor grupy</label>
+                        <div class="col-md-12">
+                           <input id="group-color" type="color" class="form-control @error('group-color') is-invalid @enderror" name="color" value="{{ old('group-color') }}" required>
+                           @error('group-color')
+                           <span class="invalid-feedback" role="alert">
+                           <strong>{{ $message }}</strong>
+                           </span>
+                           @enderror
+                        </div>
+                     </div>
                      <input  type="hidden" class="form-control @error('type') is-invalid @enderror" name="type" value="cost" required>
                </div>
+               
                <div class="modal-footer">
                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
                <button type="submit" class="btn btn-primary">Dodaj grupę</button>
@@ -288,8 +300,8 @@
                                 <option value="{{$finance->id}}">{{$finance->name}}</option>
                               @endforeach
                               </select>
-</div>
-</div>
+                     </div>
+                     </div>
 
                <input id="id-edit" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
                <div class="modal-footer">
@@ -342,7 +354,7 @@
                <div class="form-group">
                   <label for="name-group-edit" class="col-md-12 col-form-label">Nazwa grupy</label>
                   <div class="col-md-12">
-                     <input id="name-group-edit" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
+                     <input id="name-group-edit" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -350,6 +362,17 @@
                      @enderror
                   </div>
                </div>
+               <div class="form-group row">
+                     <label for="group-color-edit" class="col-md-12 col-form-label">Kolor grupy</label>
+                     <div class="col-md-12">
+                        <input id="group-color-edit" type="color" class="form-control @error('group-color-edit') is-invalid @enderror" name="color" value="{{ old('group-color-edit') }}" required>
+                        @error('group-color-edit')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>
+                  </div>
                <input id="id-group-edit" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
@@ -426,10 +449,12 @@
    
    var id = $(this).attr("data-id");
    var name = $(this).attr("data-name");
+   var color = $(this).attr("data-color");
    
    console.log(id + " | " + name);
    $("#id-group-edit").val(id);
    $("#name-group-edit").val(name);
+   $("#group-color-edit").val(color);
    
    });
    

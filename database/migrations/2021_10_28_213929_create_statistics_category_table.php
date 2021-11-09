@@ -17,7 +17,7 @@ class CreateStatisticsCategoryTable extends Migration
             $table->id();
             $table->string('type');
             $table->integer('category_id');
-            $table->integer('stats')->defualt(1.0);
+            $table->integer('stats')->default('1');
         });
     }
 
