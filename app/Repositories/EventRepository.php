@@ -242,23 +242,17 @@ class EventRepository
         $event = Event::with(['category'])->find($id);
         session(['event' => $event->id]);
 
-        $tasks = GroupEvent::with(['tasks'])->where('type','task')->where('event_id', session('event'))->count();
-        $guests = GroupEvent::with(['guests'])->where('type','guest')->where('event_id', session('event'))->count();
-        $costs = GroupEvent::with(['costs'])->where('type','cost')->where('event_id', session('event'))->count();
-
-        $data = [
-            'event' => $event,
-            'tasks' => $tasks,
-            'guests' => $guests,
-            'costs' => $costs,
-        ];
-
-        return $data;
+        return $event;
     }
 
     public function getEventDashboard()
     {   
         return Event::with(['category'])->find(session('event'));
+    }
+
+    public function getEventBudget()
+    {   
+        return Event::where('id', session('event'))->get('budget');
     }
 
     public function getLikeBusiness()

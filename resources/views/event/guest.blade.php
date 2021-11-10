@@ -11,7 +11,7 @@
         <div class="list-group col-12">
             <ul class="mb-0 mt-4 pb-2">
                <li class="list-group-item row nameGroupTask">
-                  {{$guestGroup->name}} ({{ count($guestGroup->guests->where('status', 1)) }}/{{ count($guestGroup->guests) }})
+                  {{$guestGroup->name}} ({{ count($guestGroup->guests->where('status', 1)) }}/{{ count($guestGroup->guests) }}) {{$guestGroup->color}}
                   <div class="float-right"> 
                      <a class="btn btn-primary dataGroup" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$guestGroup->id}}" data-name="{{$guestGroup->name}}" data-color="{{$guestGroup->color}}">E</a>
                      <a class="btn btn-danger deleteGroup" data-toggle="modal" data-target="#exampleModalGroupDelete" data-id="{{$guestGroup->id}}">X</a>
@@ -215,6 +215,8 @@
          </div>
       </div>
    </div>
+
+   {{$guestsDetails['invitation']}}
 </div>
 </div>
 
@@ -465,23 +467,53 @@
 
 
    if(invitation == 1){
-      $( "#invitation-edit" ).attr( "checked", true);
+      $( "#invitation-edit" ).prop( "checked", true);
+      console.log("invitation: true");
+   }
+   else
+   {
+      $( "#invitation-edit" ).prop( "checked", false);
+      console.log("invitation: false");
    }
 
    if(confirmation == 1){
-      $( "#confirmation-edit" ).attr( "checked", true);
+      $( "#confirmation-edit" ).prop( "checked", true);
+      console.log("confirmation: true");
+   }
+   else
+   {
+      $( "#confirmation-edit" ).prop( "checked", false);
+      console.log("confirmation: false");
    }
 
    if(accommodation == 1){
-      $( "#accommodation-edit" ).attr( "checked", true);
+      $( "#accommodation-edit" ).prop( "checked", true);
+      console.log("accommodation: true");
+   }
+   else
+   {
+      $( "#accommodation-edit" ).prop( "checked", false);
+      console.log("accommodation: false");
    }
 
    if(diet == 1){
-      $( "#diet-edit" ).attr( "checked", true);
+      $( "#diet-edit" ).prop( "checked", true);
+      console.log("diet: true");
+   }
+   else
+   {
+      $( "#diet-edit" ).prop( "checked", false);
+      console.log("diet: false");
    }
 
    if(transport == 1){
-      $( "#transport-edit" ).attr( "checked", true);
+      $( "#transport-edit" ).prop( "checked", true);
+      console.log("transport: true");
+   }
+   else
+   {
+      $( "#transport-edit" ).prop( "checked", false);
+      console.log("transport: false");
    }
    
    

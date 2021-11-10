@@ -6,6 +6,52 @@
          Finanse
       </div>
       <div class="row col-12">
+         <div class="indexBoxTasks">
+            <div class="indexBoxTasksNumber">
+               {{ $budgetDetails['budget'] }}
+            </div>
+            <div class="indexBoxTasksName">
+               Budżet
+            </div>
+         </div>
+
+         <div class="indexBoxTasks">
+            <div class="indexBoxTasksNumber">
+               {{ $budgetDetails['sumExpenses'] }}
+            </div>
+            <div class="indexBoxTasksName">
+               Zaplanowane wydatki
+            </div>
+         </div>
+
+         <div class="indexBoxTasks">
+            <div class="indexBoxTasksNumber">
+               {{$budgetDetails['budget'] - $budgetDetails['sumExpenses'] }}
+            </div>
+            <div class="indexBoxTasksName">
+               Pozostało do wydania
+            </div>
+         </div>
+
+         <div class="indexBoxTasks">
+            <div class="indexBoxTasksNumber">
+               {{ $budgetDetails['advancePayments'] }}
+            </div>
+            <div class="indexBoxTasksName">
+               Opłacone zaliczki
+            </div>
+         </div>
+
+         <div class="indexBoxTasks">
+            <div class="indexBoxTasksNumber">
+               {{ $budgetDetails['sumExpenses'] - $budgetDetails['advancePayments'] }}
+            </div>
+            <div class="indexBoxTasksName">
+               Pozostało do zapłaty
+            </div>
+         </div>
+      </div>
+      <div class="row col-12">
          @foreach($finances as $finance)
          <div class="list-group col-12">
             <ul class="mb-0 mt-4 pb-2">
