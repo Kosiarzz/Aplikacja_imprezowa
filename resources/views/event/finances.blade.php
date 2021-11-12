@@ -6,57 +6,64 @@
          Finanse
       </div>
       <div class="row col-12">
-         <div class="indexBoxTasks">
-            <div class="indexBoxTasksNumber">
-               {{ $budgetDetails['budget'] }}
-            </div>
-            <div class="indexBoxTasksName">
+         <div class="indexBoxFinances">
+            <div class="indexBoxFinancesName">
                Budżet
             </div>
+            <div class="indexBoxFinancesNumber">
+               {{ $budgetDetails['budget'] }} zł
+            </div>
          </div>
 
-         <div class="indexBoxTasks">
-            <div class="indexBoxTasksNumber">
-               {{ $budgetDetails['sumExpenses'] }}
-            </div>
-            <div class="indexBoxTasksName">
+         <div class="indexBoxFinances">
+            <div class="indexBoxFinancesName">
                Zaplanowane wydatki
             </div>
+            <div class="indexBoxFinancesNumber">
+               {{ $budgetDetails['sumExpenses'] }} zł
+            </div>
+ 
          </div>
 
-         <div class="indexBoxTasks">
-            <div class="indexBoxTasksNumber">
-               {{$budgetDetails['budget'] - $budgetDetails['sumExpenses'] }}
-            </div>
-            <div class="indexBoxTasksName">
+         <div class="indexBoxFinances">
+         <div class="indexBoxFinancesName">
                Pozostało do wydania
             </div>
+            <div class="indexBoxFinancesNumber">
+               {{$budgetDetails['budget'] - $budgetDetails['sumExpenses'] }} zł
+            </div>
+ 
          </div>
 
-         <div class="indexBoxTasks">
-            <div class="indexBoxTasksNumber">
-               {{ $budgetDetails['advancePayments'] }}
-            </div>
-            <div class="indexBoxTasksName">
+         <div class="indexBoxFinances">
+         <div class="indexBoxFinancesName">
                Opłacone zaliczki
             </div>
+            <div class="indexBoxFinancesNumber">
+               {{ $budgetDetails['advancePayments'] }}
+            </div>
+
          </div>
 
-         <div class="indexBoxTasks">
-            <div class="indexBoxTasksNumber">
-               {{ $budgetDetails['sumExpenses'] - $budgetDetails['advancePayments'] }}
-            </div>
-            <div class="indexBoxTasksName">
+         <div class="indexBoxFinances">
+         <div class="indexBoxFinancesName">
                Pozostało do zapłaty
             </div>
+            <div class="indexBoxFinancesNumber">
+               {{ $budgetDetails['sumExpenses'] - $budgetDetails['advancePayments'] }}
+            </div>
+
          </div>
+         
       </div>
+      <button class="btn btn-danger mr-4">Pobierz pdf</button>
+         <button class="btn btn-success">Pobierz excel</button>
       <div class="row col-12">
          @foreach($finances as $finance)
          <div class="list-group col-12">
             <ul class="mb-0 mt-4 pb-2">
                <li class="list-group-item row nameGroupTask">
-                  {{$finance->name}} ({{ count($finance->costs->where('status', 1)) }}/{{ count($finance->costs) }})
+               <div class="color-group" style="background-color: {{$finance->color}}; width:20px; height:20px; float:left;"></div> {{$finance->name}} ({{ count($finance->costs->where('status', 1)) }}/{{ count($finance->costs) }})
                   <div class="float-right"> 
                      <a class="btn btn-primary dataGroup" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$finance->id}}" data-name="{{$finance->name}}" data-color="{{$finance->color}}">E</a>
                      <a class="btn btn-danger deleteGroup" data-toggle="modal" data-target="#exampleModalGroupDelete" data-id="{{$finance->id}}">X</a>

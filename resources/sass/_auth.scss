@@ -160,11 +160,11 @@ input[type=file]{
 
 //notifications
 .success{
-    background-color: #4caf50;
+    background-color: #4caf50!important;
 }
 
 .danger{
-    background-color: #f44336;
+    background-color: #f44336!important;
 }
 
 .serviceBoxButton{
@@ -192,16 +192,24 @@ input[type=file]{
 }
 
 .indexBoxName{
-    background-color: #fff;
+
+    background: rgb(117,64,238);
+    background: linear-gradient(174deg, rgba(117,64,238,1) 0%, rgba(112,110,245,1) 69%);
     width: 300px;
-    height: 200px;
+    height: 240px;
     border-radius: 10px;
     border:1px solid rgba(0, 0, 0, 0.13);
     margin-right: 15px;
     margin-bottom: 15px;
-    color:black;
+    color:#fff;
     display: flex;
     flex-direction: column;
+}
+
+.indexBoxNameCategory{
+    display: flex;
+    justify-content: center;
+    font-size:25px;
 }
 
 .indexBoxNameTitle{
@@ -211,53 +219,107 @@ input[type=file]{
 }
 
 .indexBoxNameDays{
-    font-size: 30px;
     display: flex;
     justify-content: center;
 }
 
 .indexBoxNameDaysNumber{
-    font-size: 60px;
+    font-size: 70px;
     justify-content: center;
 }
 
 .indexBoxNameDate{
-    font-size: 15px;
+    font-size: 18px;
     display: flex;
     justify-content: center;
 }   
 
-.indexBoxTasks{
-    background-color: #fff;
+.indexBoxEvent{
     width: 32%;
     height: 150px;
     border-radius: 10px;
-    border:1px solid rgba(0, 0, 0, 0.13);
     margin-right: 15px;
     margin-bottom: 15px;
     color:black;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    text-decoration: none!important;
+    box-shadow: 9px 7px 26px -10px rgba(66, 68, 90, 1);
 }
 
-.indexBoxTasksNumber{
-    width: 100%;
+
+.task-color{
+    background: rgb(95,83,243);
+    background: linear-gradient(126deg, rgba(95,83,243,1) 0%, rgba(112,110,245,1) 100%);
+}
+
+.task-color:hover{
+    background: #4c3ff2;
+}
+
+.guest-color{
+    background: rgb(95,83,243);
+background: linear-gradient(126deg, rgba(95,83,243,1) 0%, rgba(112,110,245,1) 100%);
+}
+
+.finance-color{
+    background: rgb(95,83,243);
+background: linear-gradient(126deg, rgba(95,83,243,1) 0%, rgba(112,110,245,1) 100%);
+}
+
+.indexBoxEventNumber{
+    width: 90%;
     height: 110px;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
-    font-size:30px;
-    border-bottom: 1px solid black;
+    margin-left: 20px;
+    padding-right: 20px;
+    font-size:20px;
+    color:#d1d1d1 ;
 }
 
-.indexBoxTasksName{
+.indexBoxEventName{
     width: 100%;
     height: 40px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    padding-left: 20px;
+    padding-top: 20px;
+    font-size:25px;
+    color:#fff;
 }
+
+.progress-bar{
+ 
+    
+}
+
+
+.indexBoxFinances{
+    width: 31%;
+    height: 150px;
+    border-radius: 10px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    color:#000;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-decoration: none!important;
+    box-shadow: 9px 7px 21px -10px rgba(66, 68, 90, 1);
+    padding-left:15px;
+}
+
+.indexBoxFinancesName{
+    font-size:19px;
+}
+
+.indexBoxFinancesNumber{
+    font-size:40px;
+}
+
 
 .serviceBoxBusiness{
     background-color: #fff;
@@ -290,33 +352,33 @@ body {
 
 /* Sidebar */
 .sidebar {
-position: fixed;
-top: 0;
-bottom: 0;
-left: 0;
-padding: 58px 0 0; /* Height of navbar */
-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-width: 240px;
-z-index: 600;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding: 58px 0 0; /* Height of navbar */
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+    width: 240px;
+    z-index: 600;
 }
 
 @media (max-width: 991.98px) {
-.sidebar {
-    width: 100%;
-}
+    .sidebar {
+        width: 100%;
+    }
 }
 .sidebar .active {
-border-radius: 5px;
-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    background: rgb(95,83,243)!important;
+    background: linear-gradient(126deg, rgba(95,83,243,1) 0%, rgba(112,110,245,1) 100%);
 }
 
 .sidebar-sticky {
-position: relative;
-top: 0;
-height: calc(100vh - 48px);
-padding-top: 0.5rem;
-overflow-x: hidden;
-overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: 0.5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
 
 
@@ -365,7 +427,6 @@ overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 .sectionTittle{
     font-size: 20px;
     border-bottom: 1px solid black;
-    
 }   
 
 .textTittle{
@@ -380,6 +441,19 @@ overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 .space{
     width:100%;
     height: 80px;
+}
+
+.space40{
+    width:100%;
+    height: 40px;
+}
+
+.navbar{
+    box-shadow: 3px 4px 34px -20px rgba(66, 68, 90, 1);
+}
+
+.myButton{
+
 }
 
 //############################

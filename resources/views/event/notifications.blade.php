@@ -5,7 +5,7 @@
       <div class="titlePage mb-3 col-12">
          Powiadomienia
       </div>
-      <div class="card col-12 mb-3 p-0">
+      <div class="col-12 mb-3 p-0">
          @foreach($notificationsList->notifications as $notification)
          <div class="card text-white {{$notification->content_type}} mb-3 col-md-10">
             <div class="card-header">{{$notification->created_at}}</div>

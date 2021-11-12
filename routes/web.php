@@ -95,13 +95,17 @@ Route::middleware(['auth','verified'])->group(function()
         //Usługi
         Route::get('/firma/usługa/panel/{id}', [App\Http\Controllers\ServiceController::class, 'index'])->name('service.index');
         Route::get('/firma/usługa/panel', [App\Http\Controllers\ServiceController::class, 'dashboard'])->name('service.dashboard');
+        Route::get('/firma/usługa/kalendarz', [App\Http\Controllers\ServiceController::class, 'calendar'])->name('service.calendar');
+        Route::get('/firma/usługa/daty/kalendarz', [App\Http\Controllers\FullCalenderController::class, 'dateService']);
+        Route::post('/firma/usługa/daty/kalendarz/akcja', [App\Http\Controllers\FullCalenderController::class, 'actionService']);
         Route::get('/firma/usługa/rezerwacje', [App\Http\Controllers\ServiceController::class, 'reservations'])->name('service.reservations');
         Route::get('/firma/usługa/powiadomienia', [App\Http\Controllers\ServiceController::class, 'notifications'])->name('service.notifications');
         Route::get('/firma/usługa/statystyki', [App\Http\Controllers\ServiceController::class, 'stats'])->name('service.stats');
         Route::get('/firma/usługa/podgląd', [App\Http\Controllers\ServiceController::class, 'preview'])->name('service.preview');
         Route::get('/firma/usługa/podgląd-usługi', [App\Http\Controllers\ServiceController::class, 'previewService'])->name('service.previewService');
 
-        Route::get('/firma/usługa/edycja', [App\Http\Controllers\ServiceController::class, 'serviceEdit'])->name('service.serviceEdit');
+        Route::get('/firma/usługa/edycja/{id}', [App\Http\Controllers\ServiceController::class, 'serviceEdit'])->name('service.serviceEdit');
+        Route::get('/firma/usługa/usuń/{id}', [App\Http\Controllers\ServiceController::class, 'serviceDelete'])->name('service.serviceDelete');
         Route::get('/firma/usługa/nowa', [App\Http\Controllers\ServiceController::class, 'serviceAdd'])->name('service.serviceAdd');
         Route::get('/firma/usługa/podgląd-usługi/{id}', [App\Http\Controllers\ServiceController::class, 'serviceDetails'])->name('service.serviceDetails');
 

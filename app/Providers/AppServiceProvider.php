@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
+use ConsoleTVs\Charts\Registrar as Charts;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -40,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Charts $charts)
     {
         View::composer('event.*', '\App\ViewComposers\UserComposer');
         View::composer('layouts.app', '\App\ViewComposers\AppComposer');
@@ -56,5 +58,9 @@ class AppServiceProvider extends ServiceProvider
         View::composer('event.*', function($view){
             $view->with('defaultPhoto', asset('images/defaultPhoto.png'));
         });
+
+        $charts->register([
+            \App\Charts\ServiceChart::class
+        ]);
     }
 }

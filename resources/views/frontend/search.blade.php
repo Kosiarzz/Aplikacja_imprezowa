@@ -33,7 +33,7 @@
         @foreach($businesses as $business)
             <a href="{{route('businessDetails',['id' => $business->id])}}">
                 <div class="row border mb-4" style="width:1000px;">
-                    <img width="219" height="121" src="{{$business->photos->first()->path ?? $defaultPhoto}}" alt="NIE MA">
+                    <img width="219" height="121" src="{{asset('storage/'.$business->photos->first()->path)}}" alt="NIE MA">
                     {{$business->title}} ({{$business->city->name}})<br>
                     {{$business->range}}<br>
                     {{$business->short_description}}<br>

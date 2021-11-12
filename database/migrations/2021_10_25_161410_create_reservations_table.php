@@ -15,12 +15,14 @@ class CreateReservationsTable extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
+            $table->string('name_user')->nullable();
+            $table->string('name_business')->nullable();
             $table->date('date_from');
             $table->date('date_to');
             $table->string('status');
-            $table->foreignId('event_id')->constrained('events')->onDelete('cascade');
+            $table->foreignId('event_id')->constrained('events')->onDelete('cascade')->nullable();
             $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
-            $table->foreignId('city_id')->constrained('cities');
+            $table->foreignId('city_id')->constrained('cities')->nullable();
             $table->timestamps();
         });
     }

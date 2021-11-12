@@ -47,7 +47,7 @@ class ReservationController extends Controller
         $this->authorize('reservation', $reservation);
 
         $this->rRepository->confirmReservation($reservation);
-        $this->nRepository->addNotificationEvent($reservation->event_id, 'Rezerwacja została zaakceptowana', 'good');
+        $this->nRepository->addNotificationEvent($reservation->event_id, 'Rezerwacja została zaakceptowana', 'success');
 
         return redirect()->back();
     }

@@ -11,6 +11,12 @@
       <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
       <!-- Styles -->
       <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+      <!-- Calendar -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+    
+
    </head>
    <body>
       <!--Main Navigation-->
@@ -22,6 +28,8 @@
                   <a id="dashboard" href="{{ route('service.dashboard') }}" class="list-group-item list-group-item-action py-2 ripple">
                   <i class="fas fa-chart-area fa-fw me-3"></i><span>Panel główny</span>
                   </a>
+                  <a id="calendarMenu" href="{{ route('service.calendar') }}" class="list-group-item list-group-item-action py-2 ripple">
+                     <i class="fas fa-chart-line fa-fw me-3"></i><span>Kalendarz</span></a>
                   <a id="notifications" href="{{ route('service.notifications') }}" class="list-group-item list-group-item-action py-2 ripple"
                      ><i class="fas fa-building fa-fw me-3"></i><span>
                   @if(!empty($notifications) && count($notifications) != 0)
@@ -33,9 +41,8 @@
                     Powiadomienia
                   @endif
                </span></a>
-                  <a id="reservations" href="{{ route('service.reservations') }}" class="list-group-item list-group-item-action py-2 ripple"
-                     ><i class="fas fa-chart-line fa-fw me-3"></i><span>Rezerwacje</span></a
-                     >
+                  <a id="reservations" href="{{ route('service.reservations') }}" class="list-group-item list-group-item-action py-2 ripple">
+                     <i class="fas fa-chart-line fa-fw me-3"></i><span>Rezerwacje</span></a>
                   <a id="stats" href="{{ route('service.stats') }}" class="list-group-item list-group-item-action py-2 ripple">
                   <i class="fas fa-chart-pie fa-fw me-3"></i><span>Statystyki</span>
                   </a>
@@ -118,7 +125,7 @@
          <!-- Navbar -->
       </header>
       <!--Main Navigation-->
-      <main class="py-4">
+      <main class="py-4 mb-5">
          @yield('content')
       </main>
       </div>
@@ -126,6 +133,19 @@
       <script src="{{ asset('js/app.js') }}"></script>
       <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+      <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
+    <!-- Chartisan -->
+    <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
+    <!-- Your application script -->
+    <script>
+      const chart = new Chartisan({
+        el: '#chart',
+        url: "@chart('service_chart')",
+      });
+    </script>
       <script>
          var base_url = '{{url("/")}}';
       </script>

@@ -8,6 +8,8 @@ use App\Interfaces\ServiceRepositoryInterface;
 use App\Repositories\ServiceRepository;
 use App\Repositories\ReservationRepository;
 
+use App\Charts\ServiceChart;
+
 class ServiceController extends Controller
 {
     public function __construct(ServiceRepositoryInterface $sRepository)
@@ -48,7 +50,11 @@ class ServiceController extends Controller
 
     public function preview()
     {     
-        return view('service.preview');
+        $data = $this->sRepository->getDashboard();
+
+        return view('service.preview',[
+            'data' => $data,
+        ]);
     }
 
     public function previewService()
@@ -60,12 +66,29 @@ class ServiceController extends Controller
     
     public function stats()
     {     
+        
         return view('service.stats');
+    }
+
+    public function calendar()
+    {     
+        return view('service.calendar');
     }
 
     public function serviceEdit($id)
     {     
-        return view('service.serviceEdit');
+        $business = $this->sRepository->getEditServiceDetails($id);
+
+        return view('service.serviceEdit', ['business' => $business]);
+    }
+
+    public function serviceDelete($id)
+    {     
+        $this->sRepository->deleteService($id);
+        
+        $services = $this->sRepository->getBusinessServices();
+
+        return view('service.previewService', ['services' => $services]);
     }
 
     public function serviceAdd()

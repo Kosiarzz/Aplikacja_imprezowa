@@ -10,7 +10,7 @@
          <div class="list-group col-12">
             <ul class="mb-0 mt-4 pb-2">
                <li class="list-group-item row nameGroupTask">
-                  {{$groupTask->name}} ({{ count($groupTask->tasks->where('status', 1)) }}/{{ count($groupTask->tasks) }})
+               <div class="color-group" style="background-color: {{$groupTask->color}}; width:20px; height:20px; float:left;"></div>{{$groupTask->name}} ({{ count($groupTask->tasks->where('status', 1)) }}/{{ count($groupTask->tasks) }})
                   <div class="float-right"> 
                      <a class="btn btn-primary dataGroup" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$groupTask->id}}" data-name="{{$groupTask->name}}" data-color="{{$groupTask->color}}">E</a>
                      <a class="btn btn-danger deleteGroup" data-toggle="modal" data-target="#exampleModalGroupDelete" data-id="{{$groupTask->id}}">X</a>

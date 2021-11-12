@@ -11,7 +11,7 @@
         <div class="list-group col-12">
             <ul class="mb-0 mt-4 pb-2">
                <li class="list-group-item row nameGroupTask">
-                  {{$guestGroup->name}} ({{ count($guestGroup->guests->where('status', 1)) }}/{{ count($guestGroup->guests) }}) {{$guestGroup->color}}
+               <div class="color-group" style="background-color: {{$guestGroup->color}}; width:20px; height:20px; float:left;"></div>{{$guestGroup->name}} ({{ count($guestGroup->guests->where('status', 1)) }}/{{ count($guestGroup->guests) }})
                   <div class="float-right"> 
                      <a class="btn btn-primary dataGroup" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$guestGroup->id}}" data-name="{{$guestGroup->name}}" data-color="{{$guestGroup->color}}">E</a>
                      <a class="btn btn-danger deleteGroup" data-toggle="modal" data-target="#exampleModalGroupDelete" data-id="{{$guestGroup->id}}">X</a>
@@ -216,7 +216,16 @@
       </div>
    </div>
 
-   {{$guestsDetails['invitation']}}
+   
+   <button class="btn btn-danger mr-4">Pobierz pdf</button><br>
+   Wysłanych zaproszeń: {{$guestsDetails['invitation']}}<br>
+   Potwierdzenie przybycia: {{$guestsDetails['confirmation']}}<br>
+   Nocleg: {{$guestsDetails['accommodation']}}<br>
+   Specjalna dieta: {{$guestsDetails['diet']}}<br>
+   Transport: {{$guestsDetails['transport']}}<br>
+   Dorosłych: {{$guestsDetails['adults']}}<br>
+   Dzieci: {{$guestsDetails['children']}}<br>
+
 </div>
 </div>
 

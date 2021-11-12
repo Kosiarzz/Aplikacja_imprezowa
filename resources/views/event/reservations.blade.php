@@ -11,7 +11,7 @@
     <div class="card col-12 mb-3 p-0">
         <div class="row no-gutters">
             <div class="col-md-4">
-            <img src="{{$reservation->service->business->photos->first()->path}}" class="card-img" alt="zdjęcie">
+            <img src="{{asset('storage/'.$reservation->service->business->photos->first()->path)}}" class="card-img" alt="zdjęcie">
             </div>
             <div class="col-md-4">
                 <div class="card-body">

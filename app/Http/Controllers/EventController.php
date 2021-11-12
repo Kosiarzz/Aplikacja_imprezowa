@@ -32,6 +32,11 @@ class EventController extends Controller
         $guests = $this->dashboard->getGuestsProgress();
         $finances = $this->dashboard->getFinancesProgress();
         
+        if(!session('event')){
+            $events = $this->eRepository->getEvents(Auth::user()->id);
+            return view('user.events', ['events' => $events]);
+        }
+        
         return view('event.index', [
             'event' => $event,
             'tasks' => $tasks,

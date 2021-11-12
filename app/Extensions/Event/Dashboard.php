@@ -63,7 +63,10 @@ class Dashboard{
             }
         }
 
+        if($numberAllGuests != 0)
+        {
         $percentageGuestsConfirmed = floor(($numberGuestsConfirmed*100)/$numberAllGuests);
+        }
 
         return [
             "numberAllGuests" => $numberAllGuests,

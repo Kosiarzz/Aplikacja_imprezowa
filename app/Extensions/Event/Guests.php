@@ -19,6 +19,7 @@ class Guests{
         $confirmation = 0;
         $accommodation = 0;
         $transport = 0;
+        $diet = 0;
         $adults = 0;
         $children = 0;
 
@@ -37,6 +38,10 @@ class Guests{
                 if($guest->accommodation)
                 {
                     $accommodation++;
+                }
+                if($guest->diet)
+                {
+                    $diet++;
                 }
                 if($guest->transport)
                 {
@@ -58,6 +63,7 @@ class Guests{
             'invitation' => $invitation,
             'confirmation' => $confirmation,
             'accommodation' => $accommodation,
+            'diet' => $diet,
             'transport' => $transport,
             'adults' => $adults,
             'children' => $children

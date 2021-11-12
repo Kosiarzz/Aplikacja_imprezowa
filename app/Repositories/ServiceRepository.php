@@ -77,9 +77,23 @@ class ServiceRepository implements ServiceRepositoryInterface
         return $service;
     }
 
+    public function deleteService($id)
+    {
+        return Service::where('id', $id)->delete();  
+    }
+    
     public function getServiceDetails($id)
     {
         return Service::with(['photos', 'reservations'])->find($id);  
+    }
+
+    public function getEditServiceDetails($id)
+    {
+        return Business::with([
+            'services' => function($q) use($id){ //zwracanie sali która ma przynajmniej jedną rezerwacje
+            $q->where('id', $id);
+            },
+        ])->find(session('service'));  
     }
     
     

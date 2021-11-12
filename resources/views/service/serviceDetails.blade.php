@@ -25,7 +25,8 @@
           @endforeach
        </div>
        <br>
-       </section>
+       <a href="{{ route('service.serviceEdit', ['id' => $service->id]) }}" class="btn btn-primary mr-3">Edytuj</a>
+       <a href="{{ route('service.serviceDelete', ['id' => $service->id]) }}" class="btn btn-danger">Usuń</a>
     </div>
 </div>
 @endsection

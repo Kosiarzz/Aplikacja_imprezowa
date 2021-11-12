@@ -66,7 +66,7 @@
          </nav>
          <!-- Sidebar -->
          <!-- Navbar -->
-         <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-secondary fixed-top">
+         <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white border-secondary fixed-top">
             <!-- Container wrapper -->
             <div class="container-fluid">
                <!-- Toggle button -->

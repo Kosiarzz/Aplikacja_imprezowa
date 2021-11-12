@@ -434,5 +434,10 @@ class EventRepository
         }
     }
 
+    public function getEvents()
+    {
+        return Event::where('user_id', Auth::user()->id)->paginate(10);
+    }
+
     
 }

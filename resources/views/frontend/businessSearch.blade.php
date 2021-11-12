@@ -28,7 +28,7 @@
         @foreach($businesses as $business)
             @foreach($business->businesses as $object)
                 <a href="{{route('businessDetails',['id' => $object->id])}}"><div class="row border w-100 mb-4">
-                <img src="{{$object->photos->first()->path ?? $defaultPhoto}}" class="w-50" alt="NIE MA">
+                <img src="{{asset('storage/'.$object->photos->first()->path)}}" class="w-50" alt="NIE MA">
                     {{$object->title}} ({{$business->name}})<br>
                     {{$object->range}}<br>
                     {{$object->short_description}}<br>
