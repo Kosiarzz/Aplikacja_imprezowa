@@ -254,4 +254,10 @@ class BusinessRepository implements BusinessRepositoryInterface
 
         return $notification->save();
     }
+
+    public function getServiceBusiness($id)
+    {
+        return Service::with(['business'])->find($id);
+    }
+    
 }

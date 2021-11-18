@@ -33,9 +33,9 @@ class MusicSelectCategorySeeder extends Seeder
         $savedCategory = [];
         foreach($dataCategories as $dCategory)
         {
-            $category = new Category;
-            $category->name = $dCategory['name'];
-            $category->save();
+            $category = Category::firstOrCreate([
+                "name" => $dCategory['name'],
+            ]);
 
             $savedCategory[] = $category;
         }
@@ -57,6 +57,7 @@ class MusicSelectCategorySeeder extends Seeder
         {
             $groupCategory = new GroupCategory;
             $groupCategory->icon_name = '';
+            $groupCategory->type = 'default';
             $groupCategory->group_id = $group->id;
             $groupCategory->category_id = $sCategory->id;
             $groupCategory->save();

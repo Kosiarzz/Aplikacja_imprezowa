@@ -49,8 +49,6 @@
       </div>
       <a class="btn btn-danger mr-4" data-toggle="modal" data-target="#pdfModal">Pobierz pdf</a>
       
-      <button class="btn btn-success">Pobierz excel</button>
-
       <div class="row col-12">
          @foreach($finances as $finance)
          <div class="row col-12 mt-2 border">
@@ -266,9 +264,9 @@
             <form method="POST" action="{{ route('event.pdfFinances') }}"> 
                @csrf
                <div class="form-group">
-                  <label for="name-edit" class="col-md-12 col-form-label">Nazwa pliku</label>
+                  <label for="name-pdf" class="col-md-12 col-form-label">Nazwa pliku</label>
                   <div class="col-md-12">
-                     <input id="name-edit" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="finanse" required autocomplete="name">
+                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="finanse" required autocomplete="name">
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>

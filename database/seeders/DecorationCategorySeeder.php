@@ -50,6 +50,7 @@ class DecorationCategorySeeder extends Seeder
         {
             $groupCategory = new GroupCategory;
             $groupCategory->icon_name = '';
+            $groupCategory->type = 'default';
             $groupCategory->group_id = $group->id;
             $groupCategory->category_id = $sCategory->id;
             $groupCategory->save();

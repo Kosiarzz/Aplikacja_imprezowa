@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Comment;
 use App\Models\Notification;
 use App\Models\Group;
+use App\Models\Statistic;
 use App\Interfaces\FrontendRepositoryInterface;
 //use App\Models\{Business,City};
 class FrontendRepository implements FrontendRepositoryInterface
@@ -30,6 +31,10 @@ class FrontendRepository implements FrontendRepositoryInterface
     //Pobranie danych wybranej firmy
     public function getBusinessDetails($id)
     {
+        Statistic::firstOrCreate([
+            "business_id" => $id,
+        ])->increment('views', 1);
+
         return Business::with(['city','photos','comments.user.photos','questionsAndAnswers','address','users.photos','services.photos'])->find($id);
     }
 

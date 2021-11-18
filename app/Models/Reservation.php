@@ -18,6 +18,8 @@ class Reservation extends Model
         'date_from',
         'date_to',
         'status',
+        'name_business',
+        'name_user',
         'event_id',
         'service_id',
         'city_id',

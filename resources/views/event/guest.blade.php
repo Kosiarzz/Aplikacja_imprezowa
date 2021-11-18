@@ -249,9 +249,9 @@
             <form method="POST" action="{{ route('event.pdfGuests') }}"> 
                @csrf
                <div class="form-group">
-                  <label for="name-edit" class="col-md-12 col-form-label">Nazwa pliku</label>
+                  <label for="name-pdf" class="col-md-12 col-form-label">Nazwa pliku</label>
                   <div class="col-md-12">
-                     <input id="name-edit" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="goście" required autocomplete="name">
+                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="goście" required autocomplete="name">
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>

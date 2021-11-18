@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\EventRepository;
 use App\Repositories\ReservationRepository;
+use App\Interfaces\UserRepositoryInterface;
 
 use App\Extensions\Event\Dashboard;
 use App\Extensions\Event\Finances;
@@ -13,16 +14,18 @@ use App\Models\GroupEvent;
 use App\Models\Reservation;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
-    public function __construct(EventRepository $eRepository, ReservationRepository $reservationRepository, Dashboard $dashboard, Finances $finances, Guests $guests)
+    public function __construct(EventRepository $eRepository, ReservationRepository $reservationRepository, Dashboard $dashboard, Finances $finances, Guests $guests, UserRepositoryInterface $uRepository,)
     {
         $this->eRepository = $eRepository;
         $this->reservationRepository = $reservationRepository;
         $this->dashboard = $dashboard;
         $this->finances = $finances;
         $this->guests = $guests;
+        $this->uRepository = $uRepository;
     }
 
     public function index($id)
@@ -59,7 +62,7 @@ class EventController extends Controller
             'finances' => $finances,
         ]);
     }
-
+    
     public function createEventView()
     {
         $categories = $this->eRepository->getEventCategories();
@@ -67,11 +70,27 @@ class EventController extends Controller
         return view('event.createEvent', ['categories' => $categories]);
     }
 
+    public function deleteEvent()
+    {
+        $this->eRepository->deleteEvent();
+        
+        $events = $this->uRepository->getEvents(Auth::user()->id);
+        return view('user.events', ['events' => $events]);
+    }
+
     public function addEvent(Request $request)
     {
-        $events = $this->eRepository->createEvent($request);
-
-        return view('event.index', ['events' => $events]);
+        $event = $this->eRepository->createEvent($request);
+        $tasks = $this->dashboard->getTasksProgress();
+        $guests = $this->dashboard->getGuestsProgress();
+        $finances = $this->dashboard->getFinancesProgress();
+        
+        return view('event.index', [
+            'event' => $event,
+            'tasks' => $tasks,
+            'guests' => $guests,
+            'finances' => $finances,
+        ]);
     }
 
     public function dateView(Request $request)
@@ -201,9 +220,10 @@ class EventController extends Controller
 
     public function serviceView()
     {
+        $event = $this->eRepository->getEventDashboard();
         $services = $this->eRepository->getServices();
         $categories = $this->eRepository->getServiceCategories();
-        $statisticCategories = $this->eRepository->getStatisticCategories();
+        $statisticCategories = $this->eRepository->getStatisticCategories($event->category->name);
         
         return view('event.services', ['services' => $services, 'mainCategories' => $categories, 'statisticCategories' => $statisticCategories]);
     }
@@ -219,7 +239,7 @@ class EventController extends Controller
     {
         $services = $this->eRepository->getLikeableServices($idCategory);
 
-        return view('event.servicesDetails', ['services' => $services]);
+        return view('event.servicesDetails', ['services' => $services, 'category' => $idCategory]);
     }
 
     public function notificationsView()

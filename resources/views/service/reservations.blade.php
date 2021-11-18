@@ -31,13 +31,13 @@
                                         </tr>
                                     </thead>
                                     @foreach( $service->reservations as $reservation )
-                                        @if($reservation->status == 0)
+                                        @if($reservation->status == 'Oczekiwanie na akceptację')
                                             <tbody>
                                                 <tr>        
                                                     <td class="reservationDateFrom">{{$reservation->date_from}}</td>
                                                     <td class="reservationDateTo">{{$reservation->date_to}}</td>
-                                                    <td class="reservationUser"><a target="_blank">{{ $reservation->user->contactable[0]->name ?? 'Brak danych'}} {{$reservation->user->contactable[0]->surname ?? ''}}</a></td>
-                                                    <td class="reservationUserPhone">{{ $reservation->user->contactable[0]->phone ?? 'Brak'}}</td>
+                                                    <td class="reservationUser"><a target="_blank">{{ $reservation->event->user->contactable[0]->name ?? 'Brak danych'}} {{$reservation->event->user->contactable[0]->surname ?? ''}}</a></td>
+                                                    <td class="reservationUserPhone">{{ $reservation->event->user->contactable[0]->phone ?? 'Brak'}}</td>
                                                     <td class="reservationConfirm">
                                                         <a href="{{ route('reservation.confirmReservation', ['id' => $reservation->id]) }}" class="btn btn-primary btn-xs">Potwierdź</a> 
                                                         <a href="{{ route('reservation.deleteReservation', ['id' => $reservation->id]) }}" class="btn btn-danger btn-xs">Odmów</a>
@@ -64,7 +64,7 @@
                                         </tr>
                                     </thead>
                                     @foreach( $service->reservations as $reservation )
-                                        @if($reservation->status == 1)
+                                        @if($reservation->status == 'Rezerwacja zaakceptowana')
                                             <tbody>
                                                 <tr>
                                                     <td class="reservationDateFrom">{{$reservation->date_from}}</td>

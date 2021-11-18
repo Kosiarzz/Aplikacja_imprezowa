@@ -4,7 +4,7 @@
 <div class="container mt-5">
 
       <div class="titlePage justify-content-center">
-         Usługi
+         Oferty
       </div>
     <div class="row col-md-12">
 
@@ -19,7 +19,7 @@
 
         <a href="{{route('service.serviceAdd')}}" class="serviceBoxButton">
 
-            <div class="serviceBoxTitle">Dodaj usługę</div>
+            <div class="serviceBoxTitle">Dodaj ofertę</div>
             
         </a>  
     </div>

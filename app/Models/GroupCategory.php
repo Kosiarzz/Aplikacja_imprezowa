@@ -19,6 +19,7 @@ class GroupCategory extends Model
      */
     protected $fillable = [
         'icon_name',
+        'type',
         'group_id',
         'category_id',
     ];

@@ -4,29 +4,37 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ReservationRepository;
 use App\Repositories\NotificationRepository;
+use App\Repositories\EventRepository;
 use App\Models\Reservation;
 use App\Models\Service;
 
+use App\Interfaces\BusinessRepositoryInterface;
 use App\Providers\Events\NotificationEvent;
 
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
-    public function __construct(ReservationRepository $rRepository, NotificationRepository $nRepository)
+    public function __construct(ReservationRepository $rRepository, NotificationRepository $nRepository, BusinessRepositoryInterface $bRepository, EventRepository $eRepository,)
     {
         $this->middleware('auth')->only(['addReservation', 'confirmReservation', 'deleteReservation']);
 
         $this->rRepository = $rRepository;
         $this->nRepository = $nRepository;
+        $this->bRepository = $bRepository;
+        $this->eRepository = $eRepository;
     }
 
-    public function addReservation($service_id, $city_id, Request $request)
+    public function addReservation($service_id, $city_id, $service_name, Request $request)
     {
+        $this->rRepository->addReservation($service_id, $service_name, $city_id,  $request);
+        $business = $this->bRepository->getServiceBusiness($service_id);
+       
+        $this->nRepository->addNotificationBusiness($business->business_id, 'Nowa rezerwacja oferty '.$service_name, 'success');
+        $this->nRepository->addNotificationEvent(session('event'), 'Wysłano proźbę o rezerwację oferty '.$service_name , 'success');
 
-        $this->rRepository->addReservation($service_id, $city_id, $request);
-        $business = Service::find($service_id);
-        $this->nRepository->addNotificationBusiness($business->business_id, 'Nowa rezerwacja', 'success');
+        $this->eRepository->addTaskReservation($service_name, session('event'));
+        $this->eRepository->addFinanceReservation($service_name, session('event'));
 
         return redirect()->back();
     }
@@ -43,11 +51,15 @@ class ReservationController extends Controller
     public function confirmReservation($id)
     {
         $reservation = $this->rRepository->getReservation($id);
+        $reservationService =  $this->rRepository->getReservationWithService($id);
 
         $this->authorize('reservation', $reservation);
 
         $this->rRepository->confirmReservation($reservation);
-        $this->nRepository->addNotificationEvent($reservation->event_id, 'Rezerwacja została zaakceptowana', 'success');
+
+        $this->nRepository->addNotificationBusiness(session('service'), 'Potwierdziłeś rezerwację oferty '.$reservationService->service->title, 'success');
+        $this->nRepository->addNotificationEvent($reservationService->event_id, 'Rezerwacja oferty '.$reservationService->service->title.' została zaakceptowana.' , 'success');
+
 
         return redirect()->back();
     }
@@ -55,13 +67,15 @@ class ReservationController extends Controller
     public function deleteReservation($id)
     {
         $reservation = $this->rRepository->getReservation($id);
-
+        $reservationService =  $this->rRepository->getReservationWithService($id);
         #$this->authorize('reservation', $reservation);
         
-        $service = Service::find($reservation->service_id);
-
         $this->rRepository->deleteReservation($reservation);
-        $this->nRepository->addNotificationEvent($reservation->event_id, 'Rezerwacja została odrzucona', 'danger');
+
+        $service = $this->bRepository->getServiceBusiness($reservationService->service->id);
+        
+        $this->nRepository->addNotificationBusiness($service->business->id, 'Rezerwacja oferty '.$reservationService->service->title.' została anulowana', 'danger');
+        $this->nRepository->addNotificationEvent($reservationService->event_id, 'Rezerwacja oferty '.$reservationService->service->title.' została anulowana' , 'danger');
 
         return redirect()->back();
     }

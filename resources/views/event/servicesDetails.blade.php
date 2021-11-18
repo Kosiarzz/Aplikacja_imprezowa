@@ -7,14 +7,12 @@
     <div class="titlePage mb-3">
             Polubione usługi
         </div>
-
-                 
        <div class="row col-md-12">
         @foreach($services as $service) 
-        @if(empty($services[0]->businesses[0])) 
-            <div class="titlePage mb-3">
-            Nie masz jeszcze żadnych Ulubionych firm
-            </div>
+            @if(empty($services[0]->businesses[0])) 
+                <div class="titlePage mb-3">
+                Nie masz jeszcze żadnych Ulubionych firm
+                </div>
             @endif
             @foreach($service->businesses as $business)
             <div class="row col-md-12">
@@ -57,8 +55,13 @@
         @endforeach
         </div>
 
+        <form method="post" action="{{route('businessSearch')}}" class="form-inline" style="margin-bottom:30px;">
+            <input type="hidden" name="mainCategory" value="{{$category}}">
+            <input type="hidden" name="city" value="">
+            <button type="submit" class="btn btn-info">Wyszukaj więcej firm</button>
+             {{csrf_field()}}
+        </form>
 
-        <a href="{{ route('frontend.search')}}" class="links p-2 btn-primary">Wyszukaj więcej firm</a>
     </div>
 </div>
 @endsection

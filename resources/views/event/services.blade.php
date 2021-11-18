@@ -8,6 +8,7 @@
             Polecane usługi
         </div>
        <div class="row col-md-12 justify-content-center">
+           
             @foreach($services as $service)
                 @foreach($service->groupCategory as $categories)
                     @foreach($categories->category as $mainCategory)
@@ -35,6 +36,7 @@
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
+                        
                         <form method="POST" action="{{ route('addMainCategoryGroup') }}">
                             @csrf
                             @foreach($mainCategories as $mainCategory)

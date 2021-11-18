@@ -35,7 +35,7 @@
                     </h5>
                     <h6 class="card-title">Status rezerwacji</h6>
                     <h5 class="card-title">
-                    {{$reservation->status}} Oczekiwanie na akceptacje
+                    {{$reservation->status}}
                     </h5>
                 
                 </div>

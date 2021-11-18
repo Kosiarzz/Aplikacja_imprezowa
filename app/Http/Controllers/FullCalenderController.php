@@ -83,7 +83,7 @@ class FullCalenderController extends Controller
 
 							$color = '#4caf50';
 
-							if($reservation->status == 0){ //'Oczekiwanie na akceptację'
+							if($reservation->status == 'Oczekiwanie na akceptację'){ //'Oczekiwanie na akceptację'
 								$color = '#ff4f4f';
 							}
 

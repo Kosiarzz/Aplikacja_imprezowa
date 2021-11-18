@@ -18,12 +18,16 @@ class MainCategorySeeder extends Seeder
     public function run()
     {
 
-        //Kategorie
+        //Kategorie główne
         $dataCategories = [
-            ['name' => 'Sale'],
+            ['name' => 'Sala'],
             ['name' => 'Muzyka'],
             ['name' => 'Fotograf'],
             ['name' => 'Dekoracje'],
+            ['name' => 'Catering'],
+            ['name' => 'Zespół muzyczny'],
+            ['name' => 'Auto do wynajęcia'],
+            ['name' => 'Salon sukien'],
         ];
 
         $savedCategory = [];
@@ -53,6 +57,7 @@ class MainCategorySeeder extends Seeder
         {
             $groupCategory = new GroupCategory;
             $groupCategory->icon_name = '';
+            $groupCategory->type = 'default';
             $groupCategory->group_id = $group->id;
             $groupCategory->category_id = $sCategory->id;
             $groupCategory->save();

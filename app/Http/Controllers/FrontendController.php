@@ -58,8 +58,11 @@ class FrontendController extends Controller
     }
 
     public function businessSearch(Request $request)
-    {
-        if($result = $this->fGateway->getSearchResults($request))
+    {   
+        $result = $this->fGateway->getSearchResults($request);
+        $mainCategories = $this->fRepository->getCategoryMainPage();
+
+        if(!$result->isEmpty())
         {
             if($request->mainCategory == 0){
                 $category = 0;
@@ -71,11 +74,18 @@ class FrontendController extends Controller
 
             return view('frontend.businessSearch', [
                 'businesses' => $result,
-                'category' => $category
+                'category' => $category,
+                'mainCategories' => $mainCategories,
             ]);
         }
 
-        return redirect('/')->with('nobusiness', 'Brak wyników wyszykiwania.');
+        return view('frontend.businessSearch', [
+            'businesses' => $result,
+            'category' => 0,
+            'mainCategories' => $mainCategories,
+        ])->with('nobusiness', 'Brak wyników wyszykiwania.');
+        
+        #return redirect('/wyszukaj')->with('nobusiness', 'Brak wyników wyszykiwania.');
     }
 
     public function user($id)

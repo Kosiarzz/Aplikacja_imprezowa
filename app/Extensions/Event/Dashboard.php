@@ -33,7 +33,10 @@ class Dashboard{
             }
         }
 
-        $percentageTasksCompleted = floor(($numberTasksCompleted*100)/$numberAllTasks);
+        if($numberAllTasks != 0)
+        {
+            $percentageTasksCompleted = floor(($numberTasksCompleted*100)/$numberAllTasks);
+        }
 
         return [
             "numberAllTasks" => $numberAllTasks,
@@ -96,7 +99,10 @@ class Dashboard{
             }
         }
 
-        $percentageFinancesCompleted = floor(($numberFinancesCompleted*100)/$numberAllFinances);
+        if($numberAllFinances != 0)
+        {
+            $percentageFinancesCompleted = floor(($numberFinancesCompleted*100)/$numberAllFinances);
+        }
 
         return [
             "numberAllFinances" => $numberAllFinances,

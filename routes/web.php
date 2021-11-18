@@ -55,7 +55,7 @@ Route::post('/addComment/{commentable_id}/{type}', [App\Http\Controllers\Comment
 
 //
 Route::get('/ajaxGetServiceReservations/{id}', [App\Http\Controllers\ReservationController::class, 'ajaxGetServiceReservations']);
-Route::post('/addReservation/{service_id}/{city_id}', [App\Http\Controllers\ReservationController::class, 'addReservation'])->name('reservation.addReservation');
+Route::post('/addReservation/{service_id}/{city_id}/{service_name}', [App\Http\Controllers\ReservationController::class, 'addReservation'])->name('reservation.addReservation');
 Route::get('/confirmReservation/{id}', [App\Http\Controllers\ReservationController::class, 'confirmReservation'])->name('reservation.confirmReservation');
 Route::get('/deleteReservation/{id}', [App\Http\Controllers\ReservationController::class, 'deleteReservation'])->name('reservation.deleteReservation');
 
@@ -135,6 +135,8 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/uzytkownik/wydarzenie/powiadomienia', [App\Http\Controllers\EventController::class, 'notificationsView'])->name('event.notifications');
         Route::get('/uzytkownik/wydarzenie/zadania', [App\Http\Controllers\EventController::class, 'tasksView'])->name('event.tasks');
         Route::get('/uzytkownik/wydarzenie/rezerwacje', [App\Http\Controllers\EventController::class, 'reservationsView'])->name('event.reservations');
+
+        Route::get('/uzytkownik/wydarzenie/usunięcie', [App\Http\Controllers\EventController::class, 'deleteEvent'])->name('event.delete');
 
         Route::post('/uzytkownik/wydarzenie/zadania/pdf', [App\Http\Controllers\PdfController::class, 'createTaskPDF'])->name('event.pdfTasks');
         Route::post('/uzytkownik/wydarzenie/goście/pdf', [App\Http\Controllers\PdfController::class, 'createGuestPDF'])->name('event.pdfGuests');

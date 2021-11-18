@@ -35,7 +35,7 @@ class ServiceChart extends BaseChart
 
         $noDate = true;
 
-        for($i=7; $i>0; $i--)
+        for($i=8; $i>0; $i--)
         {       
             $labelDate = Carbon::now();
             $labelDate->subDay($i);
