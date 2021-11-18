@@ -18,15 +18,14 @@ class GroupSeeder extends Seeder
         $data = [
             ['name' => 'party', 'type' => 'party'],
 
+            ['name' => 'mainCategory', 'type' => 'mainCategory'],
+
             ['name' => 'lokal', 'type' => 'lokal'],
             ['name' => 'category_lokal', 'type' => 'category_lokal'],
-
-            ['name' => 'mainCategory', 'type' => 'mainCategory'],
 
             ['name' => 'music', 'type' => 'music'],
             ['name' => 'category_photo', 'type' => 'category_photo'],
             
-
             ['name' => 'photo', 'type' => 'photo'],
             ['name' => 'category_music', 'type' => 'category_music'],
         ];
@@ -39,34 +38,34 @@ class GroupSeeder extends Seeder
             ['icon_name' => '', 'group_id' => 1 , 'category_id' => 2],
             ['icon_name' => '', 'group_id' => 1 , 'category_id' => 3],
 
-            //main category local
-            ['icon_name' => '', 'group_id' => 2 , 'category_id' => 4],
-            ['icon_name' => '', 'group_id' => 2 , 'category_id' => 5],
-            ['icon_name' => '', 'group_id' => 2 , 'category_id' => 6],
-            ['icon_name' => '', 'group_id' => 2 , 'category_id' => 7],
-            ['icon_name' => '', 'group_id' => 2 , 'category_id' => 8],
-            ['icon_name' => '', 'group_id' => 2 , 'category_id' => 9],
-            ['icon_name' => '', 'group_id' => 2 , 'category_id' => 10],
-            ['icon_name' => '', 'group_id' => 2 , 'category_id' => 11],
-            ['icon_name' => '', 'group_id' => 2 , 'category_id' => 12],
-            ['icon_name' => '', 'group_id' => 2 , 'category_id' => 13],
+            //main category
+            ['icon_name' => '', 'group_id' => 2 , 'category_id' => 23],
+            ['icon_name' => '', 'group_id' => 2 , 'category_id' => 24],
+            ['icon_name' => '', 'group_id' => 2 , 'category_id' => 25],
+
+            //main category loca3
+            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 4],
+            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 5],
+            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 6],
+            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 7],
+            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 8],
+            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 9],
+            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 10],
+            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 11],
+            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 12],
+            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 13],
 
             //additional category local
-            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 14],
-            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 15],
-            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 16],
-            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 17],
-            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 18],
-            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 19],
-            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 20],
-            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 21],
-            ['icon_name' => '', 'group_id' => 3 , 'category_id' => 22],
+            ['icon_name' => '', 'group_id' => 4 , 'category_id' => 14],
+            ['icon_name' => '', 'group_id' => 4 , 'category_id' => 15],
+            ['icon_name' => '', 'group_id' => 4 , 'category_id' => 16],
+            ['icon_name' => '', 'group_id' => 4 , 'category_id' => 17],
+            ['icon_name' => '', 'group_id' => 4 , 'category_id' => 18],
+            ['icon_name' => '', 'group_id' => 4 , 'category_id' => 19],
+            ['icon_name' => '', 'group_id' => 4 , 'category_id' => 20],
+            ['icon_name' => '', 'group_id' => 4 , 'category_id' => 21],
+            ['icon_name' => '', 'group_id' => 4 , 'category_id' => 22],
             
-            //main category
-            ['icon_name' => '', 'group_id' => 4 , 'category_id' => 23],
-            ['icon_name' => '', 'group_id' => 4 , 'category_id' => 24],
-            ['icon_name' => '', 'group_id' => 4 , 'category_id' => 25],
-
 
             //music main
             ['icon_name' => '', 'group_id' => 5 , 'category_id' => 26],

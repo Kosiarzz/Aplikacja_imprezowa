@@ -15,10 +15,32 @@ class CategorySeeder extends Seeder
     public function run()
     {
         $data = [
+            //Obsługiwane imprezy
             ['name' => 'Wesele'],
             ['name' => 'Urodziny'],
             ['name' => 'Komunie'],
 
+            //Kategorie usług
+            ['name' => 'Sale'],
+            ['name' => 'Fotograf'],
+            ['name' => 'Muzyka'],
+            ['name' => 'Dekoracje'],
+            ['name' => 'Atrakcje'],
+
+            ['name' => 'Wynajem'],
+            ['name' => 'Barman'],
+            ['name' => 'Uroda'],
+            ['name' => 'Barista'],
+            ['name' => 'Catering'],
+            ['name' => 'Animatorzy'],
+            ['name' => 'Artysta'], 
+            ['name' => 'Cukiernia'],
+            ['name' => 'Fryzjer'],
+            ['name' => 'Garnitury'],
+            ['name' => 'Biżuteria'],
+            ['name' => 'Szkoła tańca'],
+
+             //konkretne usług
             ['name' => 'Sala'],
             ['name' => 'Lokal'],
             ['name' => 'Hotel'],
@@ -29,40 +51,32 @@ class CategorySeeder extends Seeder
             ['name' => 'Namiot'],
             ['name' => 'Ogród'],
             ['name' => 'Dom'],
-
-            ['name' => 'Nocleg'],
-            ['name' => 'Parking'],
-            ['name' => 'Taras'],
-            ['name' => 'Ogród'],
-            ['name' => 'Klimatyzacja'],
-            ['name' => 'Dekoracje światłem'],
-            ['name' => 'Fotobudka'],
-            ['name' => 'Napis LOVE'],
-            ['name' => 'Słądki kącik'],
-
-
             ['name' => 'Fotograf'],
-            ['name' => 'Muzyka'],
-            ['name' => 'Sale'],
-
-            ['name' => 'DJ'],
-            ['name' => 'Zespół muzyczny'],
-
-            ['name' => '4K'],
-            ['name' => 'Dron'],
             ['name' => 'Kamerzysta'],
-            ['name' => 'Fotograf'],
-            ['name' => 'Sesja plenerowa'],
-            ['name' => 'Sesja narzeczeńska'],
-
-            ['name' => 'gra na żywo'],
-            ['name' => 'efekty świetlne'],
-            ['name' => 'prowadzenie zabaw'],
-            ['name' => 'wokalista'],
-            ['name' => 'wokalistka'],
-            ['name' => 'akordeon'],
-            ['name' => 'saksofon'],
-            ['name' => 'skrzypce'],
+            ['name' => 'Zespół muzyczny'],
+            ['name' => 'DJ'],
+            ['name' => 'Salon sukien'],
+            ['name' => 'Auto do wynajęcia'],
+            ['name' => 'Fotobudka'],
+            ['name' => 'Wynajem busów'],
+            ['name' => 'Artykuły'],
+            ['name' => 'Cięzki dym'],
+            ['name' => 'Balony'],
+            ['name' => 'Artysta'],
+            ['name' => 'Czekoladowa fontanna'],
+            ['name' => 'Dekoracje światłem'],
+            ['name' => 'Iluzjonista'],
+            ['name' => 'Bukiety'],
+            ['name' => 'Napis love'],
+            ['name' => 'Oprawa muzyczna'],
+            ['name' => 'Pokaz sztucznych ogni'],
+            ['name' => 'Pokaz tańca'],
+            ['name' => 'Pokazy laserowe'],
+            ['name' => 'Prezenty'],
+            ['name' => 'Słodki kącik'],
+            ['name' => 'Tort'],
+            ['name' => 'Teatr ognia'],
+            ['name' => 'Zaproszenia'],
 
         ];
 
