@@ -32,4 +32,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(Service::class);
     } 
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }

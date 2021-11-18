@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Interfaces\BusinessRepositoryInterface;
 use App\Gateways\BusinessGateway;
+use App\Models\Category;
 
 class BusinessController extends Controller
 {
@@ -35,14 +36,21 @@ class BusinessController extends Controller
         return view('service.reservations', ['business' => $reservations]);
     }
 
-    public function category($selectCategory)
+    public function profile()
+    {
+        $profile = $this->bRepository->getProfile();
+
+        return view('business.profile',  ['user' => $profile]);
+    }
+
+    public function register($selectCategory)
     {
         $category = $this->bRepository->getCategory($selectCategory);
         $categoryStats = $this->bRepository->getStatsCategory($selectCategory);
         $categoryAdditional = $this->bRepository->getAdditionalCategory($selectCategory);
         $categoryParty = $this->bRepository->getPartyCategory();
 
-        return view('business.profile',  [
+        return view('business.registerBusiness',  [
             'category' => $category, 
             'selectCategory' => $selectCategory, 
             'categoryStats' => $categoryStats,
@@ -53,7 +61,6 @@ class BusinessController extends Controller
 
     public function addBusiness(Request $request)
     {
-        
         $this->bRepository->addBusiness($request);
 
         $businesses = $this->bRepository->getAllBusiness();

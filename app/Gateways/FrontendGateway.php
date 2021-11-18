@@ -32,50 +32,9 @@ class FrontendGateway {
     {
         $request->flash();
 
-        if($request->input('city') != null)
-        {
-            $result = $this->fRepository->getSearchResults($request->input('city'));
+        $result = $this->fRepository->getSearchResults($request);
 
-            if($result)
-            {
-                foreach($result as $r)
-                {
-                    foreach($r->services as $k=>$service)
-                    {
-                        //Sprawdzenie ilości miejsc
-                        if($request->input('check_in') > 0)
-                        {
-                            if($request->input('check_in') < $service->people_from && $request->input('check_out') > $service->people_to)
-                            {
-                                $r->services->forget($k);
-                            }
-                        }
-                        
-                        /*
-                        //Sprawdzenie czy jest wolny termin
-                        foreach($service->reservations as $reservation)
-                        {
-                            if($request->input('date') != $reservation->date)
-                            {
-                                $result->services->forget($k);
-                            }
-                        }
-                        */ 
-                    }
-                }
-
-                foreach($result as $r)
-                {
-                    if(count($r->services) > 0)
-                    {
-                        return $result; 
-                    }
-
-                    return false;   
-                }          
-            }
-        }
-        return false;
+        return $result;
     }
 
     public function checkAvailableReservations($service_id, $request)

@@ -6,7 +6,7 @@ use Illuminate\View\View;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 
-class UserComposer
+class ServiceComposer
 {
 
     /**
@@ -17,7 +17,7 @@ class UserComposer
      */
     public function compose(View $view)
     {
-        $view->with('notifications', Notification::where('notification_id', session('event'))->where('notification_type', 'App\Models\Event')->where('status',0)->get());
+        $view->with('notifications', Notification::where('notification_id', session('service'))->where('notification_type', 'App\Models\Business')->where('status', 0)->get());
     }
 }
 

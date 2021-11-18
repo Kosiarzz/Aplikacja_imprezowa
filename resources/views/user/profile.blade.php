@@ -7,7 +7,11 @@
             @csrf 
             <div class="row">
                 <div class="md-4">
-                    <img id="image" src="{{asset('storage/'.$user->photos->path)}}" class="rounded-circle" alt="avatar">
+                    @if(!is_null($user->photos->path))
+                        <img id="image" src="{{asset('storage/'.$user->photos->path)}}" class="rounded-circle" alt="avatar">
+                    @else
+                        <img id="image" src="defaultAvatar" class="rounded-circle" alt="avatar">
+                    @endif
                     <div class="form-group row">
 
                         <div class="row">
@@ -124,15 +128,12 @@
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-
                 reader.onload = function (e) {
                     $('#image')
                         .attr('src', e.target.result);
                 };
-
                 reader.readAsDataURL(input.files[0]);
             }
         }
     </script>
 @endpush
-

@@ -10,7 +10,7 @@
             @foreach( $business->services as $r=>$service ) 
             @php ( $r++ ) 
 
-                <h4 class="blue"> Usługa: {{ $service->title }}</h4>
+                <h4 class="blue"> Oferta: {{ $service->title }}</h4>
 
                 <div class="row">
                     <div class="col-md-3">
@@ -27,20 +27,21 @@
                                             <th>Data do</th>
                                             <th>Rezerwujący</th>
                                             <th>Telefon</th>
-                                            <th>Potwierdzenie</th>
-                                            <th>Usunięcie</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     @foreach( $service->reservations as $reservation )
                                         @if($reservation->status == 0)
                                             <tbody>
-                                                <tr> 
+                                                <tr>        
                                                     <td class="reservationDateFrom">{{$reservation->date_from}}</td>
                                                     <td class="reservationDateTo">{{$reservation->date_to}}</td>
                                                     <td class="reservationUser"><a target="_blank">{{ $reservation->user->contactable[0]->name ?? 'Brak danych'}} {{$reservation->user->contactable[0]->surname ?? ''}}</a></td>
                                                     <td class="reservationUserPhone">{{ $reservation->user->contactable[0]->phone ?? 'Brak'}}</td>
-                                                    <td class="reservationConfirm"><a href="{{ route('reservation.confirmReservation', ['id' => $reservation->id]) }}" class="btn btn-primary btn-xs">Potwierdź</a></td>
-                                                    <td class="reservationDelete"><a href="{{ route('reservation.deleteReservation', ['id' => $reservation->id]) }}" class="btn btn-danger btn-xs">Odmów</a></td>
+                                                    <td class="reservationConfirm">
+                                                        <a href="{{ route('reservation.confirmReservation', ['id' => $reservation->id]) }}" class="btn btn-primary btn-xs">Potwierdź</a> 
+                                                        <a href="{{ route('reservation.deleteReservation', ['id' => $reservation->id]) }}" class="btn btn-danger btn-xs">Odmów</a>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         @endif
@@ -59,7 +60,7 @@
                                             <th>Data do</th>
                                             <th>Rezerwujący</th>
                                             <th>Telefon</th>
-                                            <th>Usunięcie</th>
+                                            <th>Akcja</th>
                                         </tr>
                                     </thead>
                                     @foreach( $service->reservations as $reservation )
@@ -68,8 +69,8 @@
                                                 <tr>
                                                     <td class="reservationDateFrom">{{$reservation->date_from}}</td>
                                                     <td class="reservationDateTo">{{$reservation->date_to}}</td>
-                                                    <td class="reservationUser"><a target="_blank">{{ $reservation->user->contactable[0]->name ?? 'Brak danych'}} {{$reservation->user->contactable[0]->surname ?? ''}}</a></td>
-                                                    <td class="reservationUserPhone">{{ $reservation->user->contactable[0]->phone ?? 'Brak'}}</td>
+                                                    <td class="reservationUser"><a target="_blank">{{ $reservation->event->user->contactable[0]->name ?? 'Brak danych'}} {{$reservation->event->user->contactable[0]->surname ?? ''}}</a></td>
+                                                    <td class="reservationUserPhone">{{ $reservation->event->user->contactable[0]->phone ?? 'Brak'}}</td>
                                                     <td class="reservationDelete"><a href="{{ route('reservation.deleteReservation', ['id' => $reservation->id]) }}" class="btn btn-danger btn-xs">Odmów</a></td>
                                                 </tr>
                                             </tbody>

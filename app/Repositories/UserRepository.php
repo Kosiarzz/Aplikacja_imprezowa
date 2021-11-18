@@ -27,7 +27,7 @@ class UserRepository implements UserRepositoryInterface
             return false;
         }
 
-        return User::with(['contactable', 'photos'])->find($id);
+        return $user;
     }
 
     public function getLikeableUser($id)
@@ -95,7 +95,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function getEvents($id)
     {
-        return Event::where('user_id', $id)->paginate(10);
+        return Event::with(['notifications'])->where('user_id', $id)->paginate(10);
     }
 
 }

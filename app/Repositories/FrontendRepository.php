@@ -9,6 +9,7 @@ use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\Notification;
+use App\Models\Group;
 use App\Interfaces\FrontendRepositoryInterface;
 //use App\Models\{Business,City};
 class FrontendRepository implements FrontendRepositoryInterface
@@ -19,6 +20,11 @@ class FrontendRepository implements FrontendRepositoryInterface
     public function getDataMainPage()
     {
         return Business::with(['city','photos','address'])->ordered()->paginate(10);
+    }
+
+    public function getCategoryMainPage()
+    {
+        return Group::with(['groupCategory.category'])->where('type','mainCategory')->where('name','mainCategory')->get();
     }
 
     //Pobranie danych wybranej firmy
@@ -34,9 +40,25 @@ class FrontendRepository implements FrontendRepositoryInterface
     } 
     
     //Wyszukanie firm po filtrach
-    public function getSearchResults(string $city)
+    public function getSearchResults($request)
     {
-        return City::with(['businesses.photos', 'businesses.address', 'services.reservations'])->where('name', $city)->get() ?? false;  
+        $business = Business::with(['photos', 'address', 'services.reservations', 'categories', 'mainCategory', 'city']);
+
+        //Nazwa miasta
+        if(!is_null($request->city))
+        {
+            $business->whereHas('city', function($query) use ($request) {
+                $query->where('name', $request->city);
+            });
+        } 
+
+        //Głowna kategoria usługi
+        if($request->mainCategory != 0)
+        {
+            $business->where('main_category_id', $request->mainCategory);
+        }      
+
+        return $business->get();
     } 
 
     //Pobranie danych wybranej sali

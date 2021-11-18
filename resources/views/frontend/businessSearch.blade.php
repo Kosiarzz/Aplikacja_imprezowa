@@ -5,7 +5,11 @@
 
     <div class="row justify-content-center mt-5">
         <form method="post" action="#" class="form-inline">
+            @if($category == 'room')
+                ROOM
+            @endif
             
+
             <div class="form-group">
                 <label class="sr-only" for="city">City</label>
                 <input name="city" type="text" class="form-control autocomplete" id="city" placeholder="City">
@@ -25,18 +29,15 @@
         </form>
         
         
-        @foreach($businesses as $business)
-            @foreach($business->businesses as $object)
-                <a href="{{route('businessDetails',['id' => $object->id])}}"><div class="row border w-100 mb-4">
-                <img src="{{asset('storage/'.$object->photos->first()->path)}}" class="w-50" alt="NIE MA">
-                    {{$object->title}} ({{$business->name}})<br>
-                    {{$object->range}}<br>
-                    {{$object->short_description}}<br>
-                    od {{$object->priceFrom}}
-                    do {{$object->priceTo}} 
-                    {{$object->unit}} <br>              
-                </div></a>
-            @endforeach
+        @foreach($businesses as $object)
+            <a href="{{route('businessDetails',['id' => $object->id])}}"><div class="row border w-100 mb-4">
+            <img src="{{asset('storage/'.$object->photos->first()->path)}}" class="w-50" alt="NIE MA">
+                {{$object->title}} ({{$object->name}})<br>
+                {{$object->short_description}}<br>
+                od {{$object->priceFrom}}
+                do {{$object->priceTo}} 
+                {{$object->unit}} <br>              
+            </div></a>
         @endforeach
     </div>
     <!--

@@ -50,7 +50,7 @@
                      ><i class="fas fa-chart-bar fa-fw me-3"></i><span>Podgląd</span></a
                      >
                   <a id="servicePreview" href="{{ route('service.previewService') }}" class="list-group-item list-group-item-action py-2 ripple"
-                     ><i class="fas fa-chart-bar fa-fw me-3"></i><span>Usługi</span></a
+                     ><i class="fas fa-chart-bar fa-fw me-3"></i><span>Oferty</span></a
                      >
                   
                   <a id="services" href="{{ route('business.index') }}" class="list-group-item list-group-item-action py-2 ripple active">
@@ -103,7 +103,7 @@
                   <li class="nav-item dropdown">
                      <a
                         class="nav-link  hidden-arrow d-flex align-items-center"
-                        href="#"
+                        href="{{ route('business.profile') }}"
                         id="navbarDropdownMenuLink"
                         role="button"
                         data-mdb-toggle="dropdown"

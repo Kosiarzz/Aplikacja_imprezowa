@@ -5,10 +5,15 @@
 <div class="container">
     <div class="row justify-content-center">
         <form method="post" action="{{route('businessSearch')}}" class="form-inline" style="margin-bottom:30px;">
-            <!-- 
-                Dynamieczne wczytywanie miast
-                FIltry dla wybranej firmy(raczej po wszystkich danych)
-            -->
+            
+            <select class="form-select" aria-label="Default select example" name="mainCategory">
+                <option value="0" selected>Wszystkie</option>
+                @foreach($mainCategories[0]->groupCategory as $gCategory)
+                    @foreach($gCategory->category as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                    @endforeach
+                @endforeach
+            </select>
             <div class="form-group mr-2">
                 <label class="sr-only" for="city">Miasto</label>
                 <input name="city" type="text" value="{{old('city')}}" class="form-control autocomplete" id="city" placeholder="City">

@@ -5,29 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class City extends Model
+class Statistic extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
-
+    
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
     protected $fillable = [
-        'id',
-        'name',
+        'views',
+        'likes',
+        'reservations',
+        'date',
+        'business_id',
     ];
-
-    public function services()
-    {
-        return $this->hasManyThrough(Service::class, Business::class);
-    }
-
-    public function businesses()
-    {
-        return $this->hasMany(Business::class);
-    }
 }

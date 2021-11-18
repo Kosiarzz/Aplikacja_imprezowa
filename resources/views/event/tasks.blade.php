@@ -159,6 +159,40 @@
             </div>
          </div>
       </div>
+      <a class="btn btn-danger mr-4" data-toggle="modal" data-target="#pdfModal">Pobierz pdf</a>
+   </div>
+</div>
+<!-- PDF task modal -->
+<div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title edit" id="exampleModalLabel">Export do PDF</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form method="POST" action="{{ route('event.pdfTasks') }}"> 
+               @csrf
+               <div class="form-group">
+                  <label for="name-edit" class="col-md-12 col-form-label">Nazwa pliku</label>
+                  <div class="col-md-12">
+                     <input id="name-edit" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="zadania" required autocomplete="name">
+                     @error('name')
+                     <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                  <button type="submit" class="btn btn-primary">Exportuj</button>
+               </div>
+            </form>
+         </div>
+      </div>
    </div>
 </div>
 <!-- Edit task modal -->
@@ -370,6 +404,11 @@
          $( name  ).slideDown(800);
       }
    
+   });
+
+   
+   $('#pdfExport').on('click', function () {
+      $('#pdfModal').hide();
    });
    
 </script>

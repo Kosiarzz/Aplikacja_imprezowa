@@ -15,8 +15,7 @@
                             Oferowana usługa
                         @endif
                     </div>
-                    <div class="showSectionButton"><a class="btn btn-info showSection" data-name="serviceSection">></a></div>
-                
+
                 </div> 
                 <div id="serviceSection">
             

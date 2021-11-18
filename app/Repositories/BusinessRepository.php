@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Enums\UserRole;
+use App\Models\User;
 use App\Models\Business;
 use App\Models\Reservation;
 use App\Models\Category;
@@ -23,7 +25,7 @@ class BusinessRepository implements BusinessRepositoryInterface
 {
     public function getAllBusiness()
     {
-        return Business::where('user_id', Auth::user()->id)->get();
+        return Business::with(['notification'])->where('user_id', Auth::user()->id)->get();
     }
 
     //Pobranie danych wybranej firmy
@@ -31,6 +33,18 @@ class BusinessRepository implements BusinessRepositoryInterface
     {
         session(['business' => $id]);
         return Business::with(['city','photos','comments.user','questionsAndAnswers','address','users.photos','services.photos','contactable','categories.category'])->find($id);
+    }
+
+    public function getProfile()
+    {
+        $profile = User::with(['contactable', 'photos'])->find(Auth::user()->id);
+
+        if($profile->role != (UserRole::USER) && $profile->role != (UserRole::BUSINESS))
+        {
+            return false;
+        }
+
+        return $profile;
     }
 
     public function getBusinessReservations($request)
@@ -60,17 +74,17 @@ class BusinessRepository implements BusinessRepositoryInterface
 
     public function getCategory($type)
     {
-        return Group::with(['groupCategory.category'])->where('type', $type)->where('name', $type)->get();
+        return Group::with(['groupCategory.category'])->where('type', $type.'Category')->where('name', $type.'Category')->get();
     }
     
     public function getAdditionalCategory($type)
     {
-        return Group::with(['groupCategory.category'])->where('type', 'category_'.$type)->where('name', 'category_'.$type)->get();
+        return Group::with(['groupCategory.category'])->where('type', $type.'SelectCategory')->where('name', $type.'SelectCategory')->get();
     }
 
     public function getPartyCategory()
     {
-        return Group::with(['groupCategory.category'])->where('type', 'party')->where('name', 'party')->get();
+        return Group::with(['groupCategory.category'])->where('type', 'partyCategory')->where('name', 'partyCategory')->get();
     }
     
     public function getStatsCategory($type)

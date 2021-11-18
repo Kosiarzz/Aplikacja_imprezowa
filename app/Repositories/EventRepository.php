@@ -22,7 +22,7 @@ class EventRepository
 {
     public function getEventCategories()
     {
-        return Group::with(['groupCategory.category'])->where('type', 'party')->where('name', 'party')->get();
+        return Group::with(['groupCategory.category'])->where('type', 'partyCategory')->where('name', 'partyCategory')->get();
     }
 
     public function getServiceCategories()

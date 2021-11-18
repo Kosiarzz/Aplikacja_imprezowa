@@ -79,7 +79,7 @@
                   <!-- Avatar -->
                      <a
                         class="nav-link hidden-arrow d-flex align-items-center"
-                        href="{{ route('user.profile') }}"
+                        href="{{ route('business.profile') }}"
                         id="navbarDropdownMenuLink"
                         role="button"
                         data-mdb-toggle="dropdown"

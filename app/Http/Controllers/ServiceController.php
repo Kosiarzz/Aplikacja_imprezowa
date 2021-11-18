@@ -8,7 +8,11 @@ use App\Interfaces\ServiceRepositoryInterface;
 use App\Repositories\ServiceRepository;
 use App\Repositories\ReservationRepository;
 
+use App\Models\Statistic;
 use App\Charts\ServiceChart;
+
+use Illuminate\Support\Carbon;
+
 
 class ServiceController extends Controller
 {
@@ -36,7 +40,7 @@ class ServiceController extends Controller
     {     
         $notifications = $this->sRepository->getNotifications();
         
-        #$this->eRepository->setReadNotifications($notifications);
+        $this->sRepository->setReadNotifications($notifications);
 
         return view('service.notifications', ['notificationsList' => $notifications]);
     }
@@ -65,9 +69,10 @@ class ServiceController extends Controller
     }
     
     public function stats()
-    {     
-        
-        return view('service.stats');
+    {        
+        $stats = $this->sRepository->getToDayStats();
+
+        return view('service.stats', ['stats' => $stats]);
     }
 
     public function calendar()

@@ -4,9 +4,13 @@ namespace App\Repositories;
 use App\Models\Business;
 use App\Models\Service;
 use App\Models\Photo;
+use App\Models\Notification;
+use App\Models\Statistic;
+
 use App\Interfaces\ServiceRepositoryInterface;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class ServiceRepository implements ServiceRepositoryInterface
 {
@@ -33,7 +37,7 @@ class ServiceRepository implements ServiceRepositoryInterface
                         $q->has('reservations');
                     }, 
 
-                    'services.reservations.user.contactable',
+                    'services.reservations.event.user.contactable',
 
                   ])
                     ->has('services.reservations') 
@@ -96,7 +100,21 @@ class ServiceRepository implements ServiceRepositoryInterface
         ])->find(session('service'));  
     }
     
-    
+    public function setReadNotifications($notifications)
+    {
+        foreach($notifications->notification as $notification)
+        {
+            Notification::where('id', $notification->id)->update(['status' => 1]);
+        }
+    }
 
+    public function getToDayStats()
+    {
+        return Statistic::firstOrCreate([
+            "date" => Carbon::now()->format('Y-m-d'),
+            "business_id" => session('service'),
+        ]);
 
+    }
+  
 }

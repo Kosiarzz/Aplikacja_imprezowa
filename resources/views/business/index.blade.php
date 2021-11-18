@@ -9,7 +9,7 @@
                     {{$business->title}}
                 </div>
                 <div class="businessBoxNotifications">
-                    
+                    {{ count($business->notification->where('status', 0)) }}
                 </div>
             </a>
         @endforeach

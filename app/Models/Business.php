@@ -74,6 +74,11 @@ class Business extends Model
         return $this->hasMany(Service::class);
     }
 
+    public function statistic()
+    {
+        return $this->hasMany(Service::class);
+    }
+
     public function questionsAndAnswers()
     {
         return $this->hasMany(QuestionAndAnswer::class);

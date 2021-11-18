@@ -12,7 +12,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FullCalenderController;
-
+use App\Http\Controllers\PdfController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -84,9 +84,9 @@ Route::middleware(['auth','verified'])->group(function()
     Route::middleware(['can:isBusiness'])->group(function()
     {
         Route::get('/firma', [App\Http\Controllers\BusinessController::class, 'index'])->name('business.index');
-        Route::get('/firma/{id}', [App\Http\Controllers\BusinessController::class, 'businessDetails'])->name('business.id');
-        Route::get('/firma/panel/rezerwacje', [App\Http\Controllers\BusinessController::class, 'reservations'])->name('business.reservations');
-        Route::get('/firma/panel/profil/{category}', [App\Http\Controllers\BusinessController::class, 'category'])->name('businessProfile.profile');
+        Route::get('/firma/xx/{id}', [App\Http\Controllers\BusinessController::class, 'businessDetails'])->name('business.id');
+        Route::get('/firma/profil', [App\Http\Controllers\BusinessController::class, 'profile'])->name('business.profile');
+        Route::get('/firma/rejestracja/{category}', [App\Http\Controllers\BusinessController::class, 'register'])->name('business.register');
         Route::get('/firma/panel/kategorie', function () {  return view('business.categoryBusiness');  })->name('business.category');
 
         Route::post('/firma/dodawanie', [App\Http\Controllers\BusinessController::class, 'addBusiness'])->name('addBusiness');
@@ -136,7 +136,9 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/uzytkownik/wydarzenie/zadania', [App\Http\Controllers\EventController::class, 'tasksView'])->name('event.tasks');
         Route::get('/uzytkownik/wydarzenie/rezerwacje', [App\Http\Controllers\EventController::class, 'reservationsView'])->name('event.reservations');
 
-        
+        Route::post('/uzytkownik/wydarzenie/zadania/pdf', [App\Http\Controllers\PdfController::class, 'createTaskPDF'])->name('event.pdfTasks');
+        Route::post('/uzytkownik/wydarzenie/goście/pdf', [App\Http\Controllers\PdfController::class, 'createGuestPDF'])->name('event.pdfGuests');
+        Route::post('/uzytkownik/wydarzenie/finanse/pdf', [App\Http\Controllers\PdfController::class, 'createFinancePDF'])->name('event.pdfFinances');
 
         Route::post('/uzytkownik/nowe/wydarzenie/dodawanie', [App\Http\Controllers\EventController::class, 'addEvent'])->name('addEvent');
 

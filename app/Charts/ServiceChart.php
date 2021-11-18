@@ -8,6 +8,9 @@ use Chartisan\PHP\Chartisan;
 use ConsoleTVs\Charts\BaseChart;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Carbon;
+use App\Models\Statistic;
+
 class ServiceChart extends BaseChart
 {
     /**
@@ -17,10 +20,57 @@ class ServiceChart extends BaseChart
      */
     public function handler(Request $request): Chartisan
     {
+        $toDate = Carbon::now();
+        $toDate->subDay(1);
+
+        $fromDate = Carbon::createFromFormat('Y-m-d', $toDate->toDateString()); 
+        $fromDate->subDay(7);
+
+        $statistics = Statistic::whereBetween('date', [$fromDate , $toDate])->where('business_id', session('service'))->get();
+        
+        $labelsDate = []; 
+        $views = []; 
+        $reservations = []; 
+        $likes = []; 
+
+        $noDate = true;
+
+        for($i=7; $i>0; $i--)
+        {       
+            $labelDate = Carbon::now();
+            $labelDate->subDay($i);
+
+            $noDate = true;
+
+            foreach($statistics as $stat)
+            {
+                if(($stat->date) == ($labelDate->toDateString())){
+                    $views[] = $stat->views;
+                    $reservations[] = $stat->reservations;
+                    $likes[] = $stat->likes;
+                    $noDate = false;
+                }
+
+                unset($stat);
+            }
+
+            if($noDate)
+            {
+                $views[] = 0;
+                $reservations[] = 0;
+                $likes[] = 0;
+            }
+
+            $labelsDate[] = $labelDate->toDateString();
+        }    
+
+
         return Chartisan::build()
-            ->labels(['20.11.2021', '21.11.2021', '22.11.2021', '23.11.2021', '24.11.2021', '25.11.2021', '26.11.2021'])
-            ->dataset('Wyświetlenia', [12, 8, 10, 16, 8, 10, 7])
-            ->dataset('Rezerwacje', [2, 1, 0, 2, 0, 1, 0])
-            ->dataset('Ulubione', [1, 0, 2, 1, 0, 1, 3]);
+        ->labels($labelsDate)
+        ->dataset('Wyświetlenia', $views)
+        ->dataset('Rezerwacje', $reservations)
+        ->dataset('Ulubione', $likes);
+
+
     }
 }

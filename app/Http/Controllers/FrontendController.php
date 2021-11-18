@@ -25,8 +25,12 @@ class FrontendController extends Controller
     public function businessIndex()
     {
         $data = $this->fRepository->getDataMainPage();
+        $mainCategories = $this->fRepository->getCategoryMainPage();
 
-        return view('frontend.search', ['businesses' => $data]);
+        return view('frontend.search', [
+            'businesses' => $data,
+            'mainCategories' => $mainCategories,
+        ]);
     }
 
     public function businessDetails($id)
@@ -57,7 +61,18 @@ class FrontendController extends Controller
     {
         if($result = $this->fGateway->getSearchResults($request))
         {
-            return view('frontend.businessSearch', ['businesses' => $result]);
+            if($request->mainCategory == 0){
+                $category = 0;
+            }
+            else
+            {
+                $category = $result[0]->name_category;
+            }
+
+            return view('frontend.businessSearch', [
+                'businesses' => $result,
+                'category' => $category
+            ]);
         }
 
         return redirect('/')->with('nobusiness', 'Brak wyników wyszykiwania.');

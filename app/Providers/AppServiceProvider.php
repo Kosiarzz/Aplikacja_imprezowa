@@ -45,6 +45,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(Charts $charts)
     {
         View::composer('event.*', '\App\ViewComposers\UserComposer');
+        View::composer('service.*', '\App\ViewComposers\ServiceComposer');
+
         View::composer('layouts.app', '\App\ViewComposers\AppComposer');
 
         View::composer('frontend.*', function($view){
