@@ -12,6 +12,8 @@ use App\Models\Notification;
 use App\Models\Group;
 use App\Models\Statistic;
 use App\Interfaces\FrontendRepositoryInterface;
+
+use Illuminate\Support\Carbon;
 //use App\Models\{Business,City};
 class FrontendRepository implements FrontendRepositoryInterface
 {
@@ -31,8 +33,11 @@ class FrontendRepository implements FrontendRepositoryInterface
     //Pobranie danych wybranej firmy
     public function getBusinessDetails($id)
     {
+        $date = Carbon::now();
+
         Statistic::firstOrCreate([
             "business_id" => $id,
+            "date" => $date->toDateString(),
         ])->increment('views', 1);
 
         return Business::with(['city','photos','comments.user.photos','questionsAndAnswers','address','users.photos','services.photos'])->find($id);
@@ -47,7 +52,7 @@ class FrontendRepository implements FrontendRepositoryInterface
     //Wyszukanie firm po filtrach
     public function getSearchResults($request)
     {
-        $business = Business::with(['photos', 'address', 'services.reservations', 'categories', 'mainCategory', 'city']);
+        $business = Business::with(['photos', 'address', 'services.reservations', 'categories.category', 'mainCategory', 'city', 'services']);
 
         //Nazwa miasta
         if(!is_null($request->city))

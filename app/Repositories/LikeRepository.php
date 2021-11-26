@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Statistic;
+use Illuminate\Support\Carbon;
 
 class LikeRepository
 {
@@ -13,8 +14,11 @@ class LikeRepository
 
         if($type = "App\Models\Business")
         {
+            $date = Carbon::now();
+
             Statistic::firstOrCreate([
                 "business_id" => $likeable_id,
+                "date" => $date->toDateString(),
             ])->increment('likes', 1);
         }
 
@@ -27,8 +31,11 @@ class LikeRepository
       
         if($type = "App\Models\Business")
         {
+            $date = Carbon::now();
+
             Statistic::firstOrCreate([
                 "business_id" => $likeable_id,
+                "date" => $date->toDateString(),
             ])->decrement('likes', 1);
         }
 

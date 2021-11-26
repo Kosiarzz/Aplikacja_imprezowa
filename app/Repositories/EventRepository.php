@@ -27,21 +27,12 @@ class EventRepository
 
     public function getServiceCategories()
     {
-        return Group::with(['groupCategory.category'])->where('type','mainCategory')->where('name', 'mainCategory')->get();
+        return Group::with(['groupCategory.category'])->where('type','mainCategory')->where('name', 'mainCategory')->orderBy('name','asc')->get();
     }
 
     public function getStatisticCategories($categoryName)
     {
-        $type = '';
-
-        if($categoryName == "Urodziny")
-            $type = 'brithday';
-        else if($categoryName == "Wesele")
-            $type = 'wedding';
-        else if($categoryName == "Chrzciny")
-            $type = 'baptism';
-
-        return StatisticsCategory::where('type', $type)->with(['category'])->orderBy('stats','desc')->get();
+        return StatisticsCategory::where('type', $categoryName)->with(['category'])->orderBy('stats','desc')->get();
     }
 
     public function createEvent($request)
@@ -133,7 +124,7 @@ class EventRepository
 
                         StatisticsCategory::firstOrCreate([
                             "category_id" => $cat->id,
-                            "type" => 'wedding',
+                            "type" => 'Wesele',
                         ])->increment('stats', 1);
                     } 
                 } 
@@ -194,7 +185,7 @@ class EventRepository
 
                         StatisticsCategory::firstOrCreate([
                             "category_id" => $cat->id,
-                            "type" => 'brithday',
+                            "type" => 'Urodziny',
                         ])->increment('stats', 1);
                     } 
                 } 
@@ -248,7 +239,7 @@ class EventRepository
 
                         StatisticsCategory::firstOrCreate([
                             "category_id" => $cat->id,
-                            "type" => 'baptism',
+                            "type" => 'Komunia',
                         ])->increment('stats', 1);
                     } 
                 } 
@@ -268,12 +259,13 @@ class EventRepository
     {
         
         $temp = GroupCategory::where('group_id', $request->group)->where('type', 'service')->get();
-
+        $event = Event::with('category')->find(session('event'));
+        
         foreach($temp as $category)
         {
             StatisticsCategory::firstOrCreate([
                 "category_id" => $category->category_id,
-                "type" => 'wedding',
+                "type" => $event->category->name,
             ])->decrement('stats', 1);
         }
 
@@ -281,6 +273,7 @@ class EventRepository
 
         if(!is_null($request->mainCategories))
         {
+
             foreach($request->mainCategories as $categoryId)
             {
                 $GroupCategory = new GroupCategory;
@@ -292,7 +285,7 @@ class EventRepository
                 
                 StatisticsCategory::firstOrCreate([
                     "category_id" => $categoryId,
-                    "type" => 'wedding',
+                    "type" => $event->category->name,
                 ])->increment('stats', 1);
 
             }
@@ -327,14 +320,47 @@ class EventRepository
         return GroupEvent::with(['costs'])->where('type','cost')->where('event_id', session('event'))->get();
     }
 
+    public function getFinancesPdf()
+    {
+        $groupEvent = GroupEvent::with(['costs'])->where('type','cost')->where('event_id', session('event'))->get();
+        $event = Event::find(session("event"));
+ 
+        return $data = [
+            'groupEvent' => $groupEvent,
+            'event' => $event
+        ];
+    }
+
     public function getGuests()
     {
         return GroupEvent::with(['guests'])->where('type','guest')->where('event_id', session('event'))->get();
     }
 
+    public function getGuestsPdf()
+    {
+        $groupEvent = GroupEvent::with(['guests'])->where('type','guest')->where('event_id', session('event'))->get();
+        $event = Event::find(session("event"));
+
+        return $data = [
+            'groupEvent' => $groupEvent,
+            'event' => $event
+        ];
+    }
+
     public function getTasks()
     {
         return GroupEvent::with(['tasks'])->where('type','task')->where('event_id', session('event'))->get();
+    }
+
+    public function getTasksPdf()
+    {
+        $groupEvent = GroupEvent::with(['tasks'])->where('type','task')->where('event_id', session('event'))->get();
+        $event = Event::find(session("event"));
+ 
+        return $data = [
+            'groupEvent' => $groupEvent,
+            'event' => $event
+        ];
     }
 
     public function getServices()
@@ -471,6 +497,11 @@ class EventRepository
         Cost::where('id', $request->id)->update(['status' => $request->status]);
     }
 
+    public function statusGuest($request)
+    {
+        Guest::where('id', $request->id)->update(['confirmation' => $request->status]);
+    }
+
     public function editFinance($request)
     {
         Cost::where('id', $request->id)->update([
@@ -527,11 +558,13 @@ class EventRepository
 
     public function getNotifications()
     {
-        return Event::with(['notifications'])->find(session('event'));
+        return Notification::where('notification_type', 'App\Models\Event')->where('notification_id', session('event'))->orderBy('created_at','desc')->paginate(8);
     }
 
-    public function setReadNotifications($notifications)
+    public function setReadNotifications()
     {
+        $notifications = Event::with(['notifications'])->find(session('event'));
+
         foreach($notifications->notifications as $notification)
         {
             Notification::where('id', $notification->id)->update(['status' => 1]);

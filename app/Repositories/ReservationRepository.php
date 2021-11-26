@@ -4,6 +4,7 @@ namespace App\Repositories;
 use App\Models\Reservation;
 use App\Models\Statistic;
 use App\Models\Service;
+use App\Models\Category;
 
 class ReservationRepository
 {
@@ -11,17 +12,18 @@ class ReservationRepository
     public function addReservation($service_id, $service_name, $city_id, $request)
     {
         $service = Service::with(['business'])->find($service_id);
+        $category = Category::where('id', $service->business->main_category_id)->get();
 
         Statistic::firstOrCreate([
             "business_id" => $service->business->id,
         ])->increment('reservations', 1);
-
+            
         return Reservation::create([
                 'event_id'=>session('event'),
                 'city_id'=>$city_id,
                 'service_id'=>$service_id,
                 'status'=> 'Oczekiwanie na akceptację',
-                'name_user' => '',
+                'name_user' => $category[0]->name.' ('.$service->title.')',
                 'name_business' => 'Oferta '.$service_name,
                 'date_from' => date('Y-m-d', strtotime($request->input('dateFrom'))),
                 'date_to' => date('Y-m-d', strtotime($request->input('dateTo')))

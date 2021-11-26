@@ -32,7 +32,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function getLikeableUser($id)
     {
-        return User::with(['businesses'])->find($id);
+        return User::with(['businesses' ])->find($id);
     }
 
     public function getUserNotifications($request)

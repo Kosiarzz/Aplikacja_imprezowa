@@ -15,14 +15,15 @@ use PDF;
 
 class PdfController extends Controller
 {
-    public function __construct(EventRepository $eRepository)
+    public function __construct(EventRepository $eRepository, Guests $guests)
     {
         $this->eRepository = $eRepository;
+        $this->guests = $guests;
     }
     
     public function createTaskPDF(Request $request){
         
-        $tasks = $this->eRepository->getTasks();
+        $tasks = $this->eRepository->getTasksPdf();
 
         view()->share('tasks', $tasks);
         $pdf = PDF::loadView('event.PDF.tasks', $tasks);
@@ -33,10 +34,16 @@ class PdfController extends Controller
 
     public function createGuestPDF(Request $request){
         
-        $guests = $this->eRepository->getGuests();
+        $guests = $this->eRepository->getGuestsPdf();
+        $guestsDetails = $this->guests->getGuestsDetails();
 
-        view()->share('guests', $guests);
-        $pdf = PDF::loadView('event.PDF.guests', $guests);
+        $data = [
+            'guests' => $guests,
+            'guestsDetails'=> $guestsDetails
+        ];
+
+        view()->share('data', $data);
+        $pdf = PDF::loadView('event.PDF.guests', $data);
   
         
         return $pdf->download($request->name.'.pdf');
@@ -44,7 +51,7 @@ class PdfController extends Controller
 
     public function createFinancePDF(Request $request){
         
-        $finances = $this->eRepository->getFinances();
+        $finances = $this->eRepository->getFinancesPdf();
 
         view()->share('finances', $finances);
         $pdf = PDF::loadView('event.PDF.finances', $finances);

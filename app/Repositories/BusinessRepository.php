@@ -197,8 +197,8 @@ class BusinessRepository implements BusinessRepositoryInterface
             $service->price_from = $request->priceFrom[$i];
             $service->price_to = $request->priceTo[$i];
             $service->people_from = $request->minPeople[$i];
-            $service->people_to = $request->maxPeople[$i];
-            $service->size = $request->sizeService[$i];
+            $service->people_to = 0;
+            $service->size = 0;
             $service->unit = $request->unit[$i];
             $business->services()->save($service);
             
@@ -257,7 +257,7 @@ class BusinessRepository implements BusinessRepositoryInterface
 
     public function getServiceBusiness($id)
     {
-        return Service::with(['business'])->find($id);
+        return Service::with(['business.mainCategory'])->find($id);
     }
     
 }

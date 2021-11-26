@@ -7,60 +7,90 @@
       </div>
       <div class="row col-12">
          @foreach($guests as $guestGroup)
-         <div class="row col-12 mt-2 border">
+         <div class="row col-12 mt-2 groupList p-2 mb-4">
             <div style="height:50px; width:100%; padding-top:5px; font-size:20px;">
-               <div class="color-group" style="background-color: {{$guestGroup->color}}; width:20px; height:20px; float:left;"></div>
-               {{$guestGroup->name}} ({{ count($guestGroup->guests->where('status', 1)) }}/{{ count($guestGroup->guests) }})
+               <div class="float-left pl-3">{{$guestGroup->name}} ({{ count($guestGroup->guests->where('confirmation', 1)) }}/{{ count($guestGroup->guests) }})</div>
                <div class="float-right"> 
-                  <a class="btn btn-primary dataGroup" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$guestGroup->id}}" data-name="{{$guestGroup->name}}" data-color="{{$guestGroup->color}}">E</a>
-                  <a class="btn btn-danger deleteGroup" data-toggle="modal" data-target="#exampleModalGroupDelete" data-id="{{$guestGroup->id}}">X</a>
-                  <a class="btn btn-info showGroup" data-name="groupModal{{$guestGroup->id}}">></a>
+                  <a class="dataGroup mr-3" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$guestGroup->id}}" data-name="{{$guestGroup->name}}" data-color="{{$guestGroup->color}}"><i class="fas fa-pen"></i> </a>
+                  <a class="deleteGroup mr-2" data-toggle="modal" data-target="#exampleModalGroupDelete" data-id="{{$guestGroup->id}}"><i class="fas fa-trash-alt"></i></a>
+                  <a class="showGroup mr-3" data-name="groupModal{{$guestGroup->id}}"><i class="fas fa-compress-alt"></i></a>
                </div>
             </div>
-            <table id="groupModal{{$guestGroup->id}}" class="table table-striped">
-               <thead>
+            <table id="groupModal{{$guestGroup->id}}" class="table table-hover mb-0">
+               <thead style="background: #8399af; color:#fff;">
                   <tr>
-                     <th scope="col">status</th>
                      <th scope="col">Imię i nazwisko</th>
                      <th scope="col">Potwierdzenie</th>
                      <th scope="col">Zaproszenie</th>
                      <th scope="col">Nocleg</th>
                      <th scope="col">Dieta</th>
                      <th scope="col">Transport</th>
-                     <th scope="col">Rodzaj</th>
+                     <th scope="col">Wiek</th>
                      <th scope="col">Notatka</th>
-                     <th scope="col">Akcje</th>
+                     <th scope="col"></th>
                   </tr>
                </thead>
                <tbody>
                   @foreach($guestGroup->guests as $guest) 
                   <tr>
-                     <td>
-                        <form method="POST" action="{{ route('statusFinance') }}" class="d-inline">
-                           @csrf
-                           <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{$guest->id}}" required>
-                           <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="status" value="1" required>
-                           <button class="btn btn-warning mr-2">R</button>
-                        </form>
-                     </td>
                      <td>{{$guest->name}} {{$guest->surname}}</td>
-                     <td>{{$guest->confirmation}}</td>
-                     <td>{{$guest->invitation}}</td>
-                     <td>{{$guest->accommodation}}</td>
-                     <td>{{$guest->diet}}</td>
-                     <td>{{$guest->transport}}</td>
-                     <td>{{$guest->type}}</td>
-                     <td>{{$guest->note}}</td>
+                     <td style="text-align: center; ">
+                        @if($guest->confirmation)
+                           <form method="POST" action="{{ route('statusGuest') }}" class="d-inline">
+                              @csrf
+                              <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{$guest->id}}" required>
+                              <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="status" value="0" required>
+                              <button class="guestConfirm"><i class="far fa-check-circle iconGuest" style="cursor: pointer;"></i></button>
+                           </form>
+                        @else
+                           <form method="POST" action="{{ route('statusGuest') }}" class="d-inline">
+                              @csrf
+                              <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{$guest->id}}" required>
+                              <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="status" value="1" required>
+                              <button class="guestConfirm"><i class="far fa-check-circle iconGuest" style="color:#ddd; cursor: pointer;"></i></button> 
+                           </form>        
+                        @endif
+                     </td>
                      <td>
-                        <a class="btn btn-primary data" data-toggle="modal" data-target="#exampleModal" data-groupId="{{$guestGroup->id}}" data-id="{{$guest->id}}" data-name="{{$guest->name}}" data-surname="{{$guest->surname}}" data-invitation="{{$guest->invitation}}" data-confirmation="{{$guest->confirmation}}" data-accommodation="{{$guest->accommodation}}" data-diet="{{$guest->diet}}" data-type="{{$guest->type}}" data-advance="{{$guest->advance}}" data-transport="{{$guest->transport}}" data-note="{{$guest->note}}">E</a>
-                        <a class="btn btn-danger delete" data-toggle="modal" data-target="#exampleModalDelete" data-id="{{$guest->id}}">X</a>
+                        @if($guest->invitation)
+                           <i class="far fa-envelope iconGuest"></i>
+                        @else
+                           <i class="far fa-envelope iconGuest" style="color:#ddd;"></i>
+                        @endif
+                     </td>
+                     <td>
+                        @if($guest->accommodation)
+                        <i class="fas fa-bed iconGuest"></i>
+                        @else
+                        <i class="fas fa-bed iconGuest" style="color:#ddd;"></i>
+                        @endif
+                     </td> 
+                     <td>
+                        @if($guest->diet)
+                           <i class="fas fa-utensils iconGuest"></i>
+                        @else
+                           <i class="fas fa-utensils iconGuest" style="color:#ddd;"></i>
+                        @endif
+                     </td>
+                     <td>
+                        @if($guest->transport)
+                           <i class="fas fa-bus-alt iconGuest"></i>
+                        @else
+                           <i class="fas fa-bus-alt iconGuest" style="color:#ddd;"></i>
+                        @endif
+                     </td>
+                     <td>
+                        {{$guest->type}}
+                     </td>
+                     <td>{{str_limit($guest->note,20)}}</td>
+                     <td>
+                        <a class="data" data-toggle="modal" data-target="#exampleModal" data-groupId="{{$guestGroup->id}}" data-id="{{$guest->id}}" data-name="{{$guest->name}}" data-surname="{{$guest->surname}}" data-invitation="{{$guest->invitation}}" data-confirmation="{{$guest->confirmation}}" data-accommodation="{{$guest->accommodation}}" data-diet="{{$guest->diet}}" data-type="{{$guest->type}}" data-advance="{{$guest->advance}}" data-transport="{{$guest->transport}}" data-note="{{$guest->note}}"><i class="fas fa-pen"></i> </a>
+                        <a class="delete ml-4 mr-4" data-toggle="modal" data-target="#exampleModalDelete" data-id="{{$guest->id}}"><i class="fas fa-trash-alt"></i></a>
                      </td>
                   </tr>
                   @endforeach
-                  <tr>
-                     <td>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTask{{$guestGroup->id}}">Dodaj gościa</button>
-                     </td>
+                  <tr class="border-top">
+                     <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTask{{$guestGroup->id}}">Dodaj gościa</button></td>
                   </tr>
                </tbody>
             </table>
@@ -103,8 +133,8 @@
                         <div class="col-md-12">
                            <!-- Default switch -->
                            <div class="custom-control custom-switch">
-                              <input type="checkbox" class="custom-control-input" id="invitation" name="invitation">
-                              <label class="custom-control-label" for="invitation">Wysłane zaproszenie</label>
+                              <input type="checkbox" class="custom-control-input" id="invitation{{$guestGroup->id}}" name="invitation">
+                              <label class="custom-control-label" for="invitation{{$guestGroup->id}}">Wysłane zaproszenie</label>
                            </div>
                         </div>
                      </div>
@@ -112,8 +142,8 @@
                         <div class="col-md-12">
                            <!-- Default switch -->
                            <div class="custom-control custom-switch">
-                              <input type="checkbox" class="custom-control-input" id="confirmation" name="confirmation">
-                              <label class="custom-control-label" for="confirmation">Potwierdzenie przybycia</label>
+                              <input type="checkbox" class="custom-control-input" id="confirmation{{$guestGroup->id}}" name="confirmation">
+                              <label class="custom-control-label" for="confirmation{{$guestGroup->id}}">Potwierdzenie przybycia</label>
                            </div>
                         </div>
                      </div>
@@ -121,8 +151,8 @@
                         <div class="col-md-12">
                            <!-- Default switch -->
                            <div class="custom-control custom-switch">
-                              <input type="checkbox" class="custom-control-input" id="accommodation" name="accommodation">
-                              <label class="custom-control-label" for="accommodation">Nocleg</label>
+                              <input type="checkbox" class="custom-control-input" id="accommodation{{$guestGroup->id}}" name="accommodation">
+                              <label class="custom-control-label" for="accommodation{{$guestGroup->id}}">Nocleg</label>
                            </div>
                         </div>
                      </div>
@@ -130,8 +160,8 @@
                         <div class="col-md-12">
                            <!-- Default switch -->
                            <div class="custom-control custom-switch">
-                              <input type="checkbox" class="custom-control-input" id="diet" name="diet">
-                              <label class="custom-control-label" for="diet">Specjalna dieta</label>
+                              <input type="checkbox" class="custom-control-input" id="diet{{$guestGroup->id}}" name="diet">
+                              <label class="custom-control-label" for="diet{{$guestGroup->id}}">Specjalna dieta</label>
                            </div>
                         </div>
                      </div>
@@ -139,8 +169,8 @@
                         <div class="col-md-12">
                            <!-- Default switch -->
                            <div class="custom-control custom-switch">
-                              <input type="checkbox" class="custom-control-input" id="transport" name="transport">
-                              <label class="custom-control-label" for="transport">Transport</label>
+                              <input type="checkbox" class="custom-control-input" id="transport{{$guestGroup->id}}" name="transport">
+                              <label class="custom-control-label" for="transport{{$guestGroup->id}}">Transport</label>
                            </div>
                         </div>
                      </div>
@@ -223,16 +253,52 @@
          </div>
       </div>
    </div>
-   <div class="row col-12 mt-3">
-      <button class="btn btn-danger mr-4">Pobierz pdf</button><br>
-      Wysłanych zaproszeń: {{$guestsDetails['invitation']}}<br>
-      Potwierdzenie przybycia: {{$guestsDetails['confirmation']}}<br>
-      Nocleg: {{$guestsDetails['accommodation']}}<br>
-      Specjalna dieta: {{$guestsDetails['diet']}}<br>
-      Transport: {{$guestsDetails['transport']}}<br>
-      Dorosłych: {{$guestsDetails['adults']}}<br>
-      Dzieci: {{$guestsDetails['children']}}<br>
-      <a class="btn btn-danger mr-4" data-toggle="modal" data-target="#pdfModal">Pobierz pdf</a>
+   <div class="row col-12 mt-3 groupList p-2">
+      <div class="col-4 stasGuestsBox">
+         <div class="text">Podsumowanie</div>
+         <div class="allGuests">
+            <div class="numberAllGuests">{{$guestsDetails['adults'] + $guestsDetails['children']}}</div>
+            <div class="textAllGuests">Liczba gości na przyjęciu</div>
+         </div>
+         <div class="statsText">
+            <div class="numberConfirmText">Potwierdzenia</div>
+            <div class="numberConfirm">{{$guestsDetails['confirmation']}}</div>
+         </div>
+      </div>
+      <div class="col-4 stasGuestsBox border-left border-right">  
+         <div class="statsText">
+            <div class="numberConfirmText">Wysłanych zaproszeń</div>
+            <div class="numberConfirm">{{$guestsDetails['invitation']}}</div>
+         </div>
+         <div class="statsText">
+            <div class="numberConfirmText">Dorosłych</div>
+            <div class="numberConfirm">{{$guestsDetails['adults']}}</div>
+         </div>
+         <div class="statsText">
+            <div class="numberConfirmText">Dzieci</div>
+            <div class="numberConfirm">{{$guestsDetails['children']}}</div>
+         </div>
+      </div>
+      
+      <div class="col-4 stasGuestsBox">  
+         <div class="statsText">
+            <div class="numberConfirmText">Nocleg</div>
+            <div class="numberConfirm">{{$guestsDetails['accommodation']}}</div>
+         </div>
+         <div class="statsText">
+            <div class="numberConfirmText">Specjalna dieta</div>
+            <div class="numberConfirm">{{$guestsDetails['diet']}}</div>
+         </div>
+         <div class="statsText">
+            <div class="numberConfirmText">Transport</div>
+            <div class="numberConfirm">{{$guestsDetails['transport']}}</div>
+         </div>
+      </div>
+      
+   </div>
+   <div class="row col-12 mt-4 groupList">
+      <div class="col-12 mt-2">Pobierz plik z listą gości</div>
+      <a class="btn btn-danger ml-2 mt-2 mb-2" data-toggle="modal" data-target="#pdfModal">Pobierz pdf</a>
    </div>
 </div>
 <!-- PDF task modal -->
@@ -240,7 +306,7 @@
    <div class="modal-dialog" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title edit" id="exampleModalLabel">Export do PDF</h5>
+            <h5 class="modal-title edit" id="exampleModalLabel">Pobieranie listy gości</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -251,7 +317,7 @@
                <div class="form-group">
                   <label for="name-pdf" class="col-md-12 col-form-label">Nazwa pliku</label>
                   <div class="col-md-12">
-                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="goście" required autocomplete="name">
+                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="Goście" required autocomplete="name">
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -261,7 +327,7 @@
                </div>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                  <button type="submit" class="btn btn-primary">Exportuj</button>
+                  <button type="submit" class="btn btn-primary">Pobierz pdf</button>
                </div>
             </form>
          </div>
@@ -437,17 +503,6 @@
                      @enderror
                   </div>
                </div>
-               <div class="form-group">
-                  <label for="color-group-edit" class="col-md-12 col-form-label">Kolor grupy</label>
-                  <div class="col-md-12">
-                     <input id="color-group-edit" type="color" class="form-control @error('color') is-invalid @enderror" name="color" value="{{ old('color') }}" required autocomplete="color">
-                     @error('color')
-                     <span class="invalid-feedback" role="alert">
-                     <strong>{{ $message }}</strong>
-                     </span>
-                     @enderror
-                  </div>
-               </div>
                <input id="id-group-edit" type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{ old('id') }}" required>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
@@ -598,11 +653,11 @@
    console.log($(name).is(":visible"))
       if($(name).is(":visible"))
       {
-         $( name  ).slideUp(800);
+         $(name).slideUp(100);
       }
       else
       {
-         $( name  ).slideDown(800);
+         $(name).slideDown(100);
       }
    
    });

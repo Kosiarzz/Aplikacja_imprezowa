@@ -21,6 +21,7 @@ class Notification extends Model
         'content_type',
         'status',
         'shown',
+        'created_at',
         'notification_type',
         'notification_id',
     ];

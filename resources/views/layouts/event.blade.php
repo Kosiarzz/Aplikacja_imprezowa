@@ -27,40 +27,44 @@
             <div class="position-sticky">
                <div class="list-group list-group-flush mx-3 mt-4">
                   <a id="dashboard" href="{{ route('event.dashboardView') }}" class="list-group-item list-group-item-action py-2 ripple">
-                  <i class="fas fa-chart-area fa-fw me-3"></i><span>Panel główny</span>
+                  <i class="fas fa-columns fa-fw me-3 mr-2"></i><span>Panel główny</span>
                   </a>
                   <a id="date" href="{{ route('event.date') }}" class="list-group-item list-group-item-action py-2 ripple"
-                     ><i class="fas fa-lock fa-fw me-3"></i><span>Kalendarz</span></a
+                     ><i class="fas fa-calendar fa-fw me-3 mr-2"></i><span>Kalendarz</span></a
                      >
                   <a id="finance" href="{{ route('event.finances') }}" class="list-group-item list-group-item-action py-2 ripple"
-                     ><i class="fas fa-chart-line fa-fw me-3"></i><span>Finanse</span></a
+                     ><i class="fas fa-wallet fa-fw me-3 mr-2"></i><span>Finanse</span></a
                      >
                   <a id="guest" href="{{ route('event.guest') }}" class="list-group-item list-group-item-action py-2 ripple">
-                  <i class="fas fa-chart-pie fa-fw me-3"></i><span>Goście</span>
+                  <i class="fas fa-users fa-fw me-3 mr-2"></i><span>Goście</span>
                   </a>
-                  <a id="service" href="{{ route('event.services') }}" class="list-group-item list-group-item-action py-2 ripple"
-                     ><i class="fas fa-chart-bar fa-fw me-3"></i><span>Usługi</span></a
-                     >
                   <a id="task" href="{{ route('event.tasks') }}" class="list-group-item list-group-item-action py-2 ripple"
-                     ><i class="fas fa-globe fa-fw me-3"></i><span>Zadania</span></a
+                     ><i class="fas fa-clipboard-list fa-fw me-3 mr-2"></i><span>Zadania</span></a
                      >
+                  <a id="service" href="{{ route('event.services') }}" class="list-group-item list-group-item-action py-2 ripple"
+                     ><i class="fas fa-briefcase fa-fw me-3 mr-2"></i><span>Usługi</span></a
+                     >
+                  
                   <a id="notification" href="{{ route('event.notifications') }}" class="list-group-item list-group-item-action py-2 ripple"
-                     ><i class="fas fa-building fa-fw me-3"></i><span>
+                     ><i class="fas fa-bell fa-fw me-3 mr-1"></i><span>
                   @if(!empty($notifications) && count($notifications) != 0)
                     Powiadomienia 
-                    <i class="fas fa-bell"></i>
-                     <span class="badge rounded-pill badge-notification bg-danger">{{count($notifications)}}</span>
+                     <span class="badge rounded-pill badge-notification bg-danger text-white">{{count($notifications)}}</span>
                      </a>
                   @else
                     Powiadomienia
                   @endif
                </span></a>
                   <a id="reservation" href="{{ route('event.reservations') }}" class="list-group-item list-group-item-action py-2 ripple"
-                     ><i class="fas fa-calendar fa-fw me-3"></i><span>Rezerwacje</span></a
+                     ><i class="fas fa-calendar-check fa-fw me-3 mr-2"></i><span>Rezerwacje</span></a
                      >
                   <a id="events" href="{{ route('user.events') }}" class="list-group-item list-group-item-action py-2 ripple active">
-                  <i class="fas fa-chart-area fa-fw me-3"></i><span>Wszystkie wydarzenia</span>
+                  <i class="fas fa-th-list fa-fw me-3 mr-2"></i><span style="font-size:16px;">Wydarzenia</span>
                   </a>
+                  <a class="list-group-item py-2 ripple deleteEvent" data-toggle="modal" data-target="#deleteModal">
+                  <i class="fas fa-times fa-fw me-3 mr-2"></i><span>Usuń wydarzenie</span>
+                  </a>
+
                </div>
             </div>
          </nav>
@@ -133,6 +137,28 @@
       <main class="py-4 mb-5">
          @yield('content')
       </main>
+      
+<!-- delete event modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title edit" id="exampleModalLabel">Usuwanie wydarzenia</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body pt-3">
+               Czy na pewno chcesz usunąć wydarzenie?
+               <div class="modal-footer mt-3">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                  <a href="{{ route('event.delete') }}" class="btn btn-danger">Usuń wydarzenie</a>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
       </div>
       <!-- Scripts -->
       <script src="{{ asset('js/app.js') }}"></script>

@@ -1,25 +1,26 @@
 @extends('layouts.event')
 @section('content')
 <div class="container mt-5">
+   <div class="titlePage mb-4">
+      Zarządzanie finansami
+   </div>
    <div class="row justify-content-center">
-      <div class="titlePage">
-         Finanse
-      </div>
-      <div class="row col-12">
+      <div class="row col-12 mb-4 p-0">
          <div class="indexBoxFinances">
+            <i class="fas fa-pen" style="position: absolute; left:29%; top:8%;"></i> 
             <div class="indexBoxFinancesName">
                Budżet
             </div>
             <div class="indexBoxFinancesNumber">
-               {{ $budgetDetails['budget'] }} zł
+               <span id="budget" class="money">{{ $budgetDetails['budget'] }}</span> <span class="pln">zł</span>
             </div>
          </div>
-         <div class="indexBoxFinances">
+         <div class="indexBoxFinances ml-2 mr-2">
             <div class="indexBoxFinancesName">
                Zaplanowane wydatki
             </div>
             <div class="indexBoxFinancesNumber">
-               {{ $budgetDetails['sumExpenses'] }} zł
+               <span id="sumExpenses" class="money">{{ $budgetDetails['sumExpenses'] }}</span> <span class="pln">zł</span>
             </div>
          </div>
          <div class="indexBoxFinances">
@@ -27,43 +28,29 @@
                Pozostało do wydania
             </div>
             <div class="indexBoxFinancesNumber">
-               {{$budgetDetails['budget'] - $budgetDetails['sumExpenses'] }} zł
-            </div>
-         </div>
-         <div class="indexBoxFinances">
-            <div class="indexBoxFinancesName">
-               Opłacone zaliczki
-            </div>
-            <div class="indexBoxFinancesNumber">
-               {{ $budgetDetails['advancePayments'] }}
-            </div>
-         </div>
-         <div class="indexBoxFinances">
-            <div class="indexBoxFinancesName">
-               Pozostało do zapłaty
-            </div>
-            <div class="indexBoxFinancesNumber">
-               {{ $budgetDetails['sumExpenses'] - $budgetDetails['advancePayments'] }}
+               <span id="sumExpensesBudget" class="money">{{$budgetDetails['budget'] - $budgetDetails['sumExpenses'] }}</span> <span class="pln">zł</span>
             </div>
          </div>
       </div>
-      <a class="btn btn-danger mr-4" data-toggle="modal" data-target="#pdfModal">Pobierz pdf</a>
-      
       <div class="row col-12">
          @foreach($finances as $finance)
-         <div class="row col-12 mt-2 border">
+         <div class="row col-12 mt-4 groupList p-2">
             <div style="height:50px; width:100%; padding-top:5px; font-size:20px;">
-               <div class="color-group" style="background-color: {{$finance->color}}; width:20px; height:20px; float:left;"></div>
                {{$finance->name}} ({{ count($finance->costs->where('status', 1)) }}/{{ count($finance->costs) }})
                <div style="float:right;">
-                  <a class="btn btn-primary dataGroup" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$finance->id}}" data-name="{{$finance->name}}" data-color="{{$finance->color}}">E</a>
-                  <a class="btn btn-danger deleteGroup" data-toggle="modal" data-target="#exampleModalGroupDelete" data-id="{{$finance->id}}">X</a>
-                  <a class="btn btn-info showGroup" data-name="groupModal{{$finance->id}}">></a>
+                  <a class="dataGroup mr-3" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$finance->id}}" data-name="{{$finance->name}}" data-color="{{$finance->color}}">
+                     <i class="fas fa-pen"></i> 
+                  </a>
+                  <a class="deleteGroup mr-3" data-toggle="modal" data-target="#exampleModalGroupDelete" data-id="{{$finance->id}}">
+                     <i class="fas fa-trash-alt"></i>
+                  </a>
+                  <a class="showGroup mr-1" style="padding: 6px 0;" data-name="groupModal{{$finance->id}}">
+                     <i class="fas fa-compress-alt"></i>
+                  </a>
                </div>
             </div>
-         
-            <table id="groupModal{{$finance->id}}" class="table table-striped">
-               <thead>
+            <table id="groupModal{{$finance->id}}" class="table table-hover mb-0">
+               <thead style="background: #8399af; color:#fff;">
                   <tr>
                      <th scope="col">Status</th>
                      <th scope="col">Nazwa</th>
@@ -71,135 +58,144 @@
                      <th scope="col">Zaliczka</th>
                      <th scope="col">Data płatności</th>
                      <th scope="col">Notatka</th>
-                     <th scope="col">Akcje</th>
+                     <th scope="col"></th>
                   </tr>
                </thead>
                <tbody>
                   @foreach($finance->costs as $cost)
                   <tr>
-                     <td>
-                        <!-- STATUS -->
+                     <td style="width:30px;">
+                        @if($cost->status == 1)
+                        <form method="POST" action="{{ route('statusFinance') }}" class="d-inline">
+                           @csrf
+                           <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{$cost->id}}" required>
+                           <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="status" value="0" required>
+                           <button class="taskComplete">
+                           <i class="far fa-check-circle iconGuest" style="cursor: pointer;"></i>
+                           </button>
+                        </form>
+                        @else
                         <form method="POST" action="{{ route('statusFinance') }}" class="d-inline">
                            @csrf
                            <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="id" value="{{$cost->id}}" required>
                            <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="status" value="1" required>
-                           <button class="btn btn-warning mr-2">R</button>
+                           <button class="taskComplete">
+                           <i class="far fa-check-circle iconGuest" style="color:#ddd; cursor: pointer;"></i>
+                           </button>
                         </form>
+                        @endif
                      </td>
                      <td>{{$cost->name}}</td>
-                     <td>{{$cost->cost}} zł</td>
-                     <td>{{$cost->advance}} zł</td>
+                     <td class="money">{{$cost->cost * $cost->quantity}} zł</td>
+                     <td class="money">{{$cost->advance}} zł</td>
                      <td>{{$cost->date_payment}}</td>
-                     <td>{{$cost->note}}</td>
+                     <td>{{str_limit($cost->note, 15)}}</td>
                      <td>
-                        <a class="btn btn-primary data" data-toggle="modal" data-target="#exampleModal" data-groupId="{{$finance->id}}" data-groupName="{{$finance->name}}" data-id="{{$cost->id}}" data-name="{{$cost->name}}" data-date="{{$cost->date_payment}}" data-note="{{$cost->note}}" data-cost="{{$cost->cost}}" data-count="{{$cost->quantity}}" data-advance="{{$cost->advance}}">E</a>
-                        <a class="btn btn-danger delete" data-toggle="modal" data-target="#exampleModalDelete" data-id="{{$cost->id}}">X</a>
+                        <a class="data" data-toggle="modal" data-target="#exampleModal" data-groupId="{{$finance->id}}" data-groupName="{{$finance->name}}" data-id="{{$cost->id}}" data-name="{{$cost->name}}" data-date="{{$cost->date_payment}}" data-note="{{$cost->note}}" data-cost="{{$cost->cost}}" data-count="{{$cost->quantity}}" data-advance="{{$cost->advance}}">
+                        <i class="fas fa-pen"></i> 
+                        </a>
+                        <a class="delete ml-4" data-toggle="modal" data-target="#exampleModalDelete" data-id="{{$cost->id}}">
+                        <i class="fas fa-trash-alt"></i>
+                        </a>
                      </td>
                   </tr>
                   @endforeach
-         
-                  <tr>
-                     <td>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTask{{$finance->id}}">Dodaj koszty</button>
-                     </td>
+                  <tr class="border-top">
+                     <td colspan="2" style="text-align:left;"><button type="button" class="btn btn-primary mt-1 mb-1" data-toggle="modal" data-target="#addTask{{$finance->id}}">Dodaj koszty</button></td>
                   </tr>
                </tbody>
             </table>
-            </div>
-            
-         
-      </div>
-
-
-         <div class="modal fade" id="addTask{{$finance->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <h5 class="modal-title" id="exampleModalCenterTitle">Nowe koszty</h5>
-                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                     </button>
-                  </div>
-                  <form method="POST" action="{{ route('addFinance') }}">
-                     @csrf
-                     <div class="form-group">
-                        <label for="name" class="col-md-12 col-form-label">Nazwa kosztów</label>
-                        <div class="col-md-12">
-                           <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
-                           @error('name')
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $message }}</strong>
-                           </span>
-                           @enderror
-                        </div>
-                     </div>
-                     <div class="form-group">
-                        <label for="cost" class="col-md-12 col-form-label">Koszt</label>
-                        <div class="col-md-12">
-                           <input id="cost" type="number" class="form-control @error('cost') is-invalid @enderror" name="cost" value="{{ old('cost') }}">
-                           @error('cost')
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $message }}</strong>
-                           </span>
-                           @enderror
-                        </div>
-                     </div>
-                     <div class="form-group">
-                        <label for="count" class="col-md-12 col-form-label">Ilość</label>
-                        <div class="col-md-12">
-                           <input id="count" type="number" class="form-control @error('count') is-invalid @enderror" name="count" value="{{ old('count') }}">
-                           @error('count')
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $message }}</strong>
-                           </span>
-                           @enderror
-                        </div>
-                     </div>
-                     <div class="form-group">
-                        <label for="advance" class="col-md-12 col-form-label">Zaliczka</label>
-                        <div class="col-md-12">
-                           <input id="advance" type="number" class="form-control @error('advance') is-invalid @enderror" name="advance" value="{{ old('advance') }}">
-                           @error('advance')
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $message }}</strong>
-                           </span>
-                           @enderror
-                        </div>
-                     </div>
-                     <div class="form-group">
-                        <label for="note" class="col-md-12 col-form-label">Notatka</label>
-                        <div class="col-md-12">
-                           <textarea id="note" type="text" class="form-control @error('note') is-invalid @enderror" name="note" value="{{ old('note') }}"></textarea>
-                           @error('note')
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $message }}</strong>
-                           </span>
-                           @enderror
-                        </div>
-                     </div>
-                     <div class="form-group">
-                        <label for="date" class="col-md-12 col-form-label">Data zapłaty</label>
-                        <div class="col-md-12">
-                           <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') }}">
-                           @error('date')
-                           <span class="invalid-feedback" role="alert">
-                           <strong>{{ $message }}</strong>
-                           </span>
-                           @enderror
-                        </div>
-                     </div>
-                     <div class="modal-body">
-                        <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="group" value="{{$finance->id}}" required>
-                     </div>
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                        <button type="submit" class="btn btn-primary">Dodaj koszty</button>
-                     </div>
-                  </form>
+         </div>
+      <div class="modal fade" id="addTask{{$finance->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalCenterTitle">Nowe koszty</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
                </div>
+               <form method="POST" action="{{ route('addFinance') }}">
+                  @csrf
+                  <div class="form-group">
+                     <label for="name" class="col-md-12 col-form-label">Nazwa kosztów</label>
+                     <div class="col-md-12">
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
+                        @error('name')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="cost" class="col-md-12 col-form-label">Koszt</label>
+                     <div class="col-md-12">
+                        <input id="cost" type="number" class="form-control @error('cost') is-invalid @enderror" name="cost" value="{{ old('cost') }}">
+                        @error('cost')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="count" class="col-md-12 col-form-label">Ilość</label>
+                     <div class="col-md-12">
+                        <input id="count" type="number" class="form-control @error('count') is-invalid @enderror" name="count" value="{{ old('count') }}">
+                        @error('count')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="advance" class="col-md-12 col-form-label">Zaliczka</label>
+                     <div class="col-md-12">
+                        <input id="advance" type="number" class="form-control @error('advance') is-invalid @enderror" name="advance" value="{{ old('advance') }}">
+                        @error('advance')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="note" class="col-md-12 col-form-label">Notatka</label>
+                     <div class="col-md-12">
+                        <textarea id="note" type="text" class="form-control @error('note') is-invalid @enderror" name="note" value="{{ old('note') }}"></textarea>
+                        @error('note')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="date" class="col-md-12 col-form-label">Data zapłaty</label>
+                     <div class="col-md-12">
+                        <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') }}">
+                        @error('date')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="modal-body">
+                     <input type="hidden" class="form-control @error('type') is-invalid @enderror" name="group" value="{{$finance->id}}" required>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+                     <button type="submit" class="btn btn-primary">Dodaj koszty</button>
+                  </div>
+               </form>
             </div>
          </div>
-         @endforeach
+      </div>
+      @endforeach
+      </div>
    </div>
    <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#addGroup">
    Dodaj grupę
@@ -248,25 +244,46 @@
          </div>
       </div>
    </div>
-   
+   <div class="row col-12 mt-4 groupList">
+      <div class="col-12 mt-2">Pobierz plik z zaplanowanymi finansami</div>
+      <a class="btn btn-danger ml-2 mt-2 mb-2" data-toggle="modal" data-target="#pdfModal">Pobierz pdf</a>
    </div>
+   <div class="row col-12 mt-4">
+      <div class="indexBoxFinances">
+         <div class="indexBoxFinancesName">
+            Opłacone zaliczki
+         </div>
+         <div class="indexBoxFinancesNumber money">
+            {{ $budgetDetails['advancePayments'] }} <span class="pln">zł</span>
+         </div>
+      </div>
+      <div class="indexBoxFinances">
+         <div class="indexBoxFinancesName">
+            Pozostało do zapłaty
+         </div>
+         <div class="indexBoxFinancesNumber money">
+            {{ $budgetDetails['sumExpenses'] - $budgetDetails['advancePayments'] }} <span class="pln">zł</span>
+         </div>
+      </div>
+   </div>
+</div>
 <!-- PDF task modal -->
 <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title edit" id="exampleModalLabel">Export do PDF</h5>
+            <h5 class="modal-title edit" id="exampleModalLabel">Pobieranie budżetu</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
          </div>
          <div class="modal-body">
-            <form method="POST" action="{{ route('event.pdfFinances') }}"> 
+            <form method="POST" action="{{ route('event.pdfFinances') }}">
                @csrf
                <div class="form-group">
                   <label for="name-pdf" class="col-md-12 col-form-label">Nazwa pliku</label>
                   <div class="col-md-12">
-                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="finanse" required autocomplete="name">
+                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="Finanse" required autocomplete="name">
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -276,14 +293,12 @@
                </div>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                  <button type="submit" class="btn btn-primary">Exportuj</button>
+                  <button type="submit" class="btn btn-primary">Pobierz pdf</button>
                </div>
             </form>
          </div>
       </div>
    </div>
-</div>
-</div>
 </div>
 <!-- Edit cost modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -549,8 +564,18 @@
       }
    
    });
+
+   var money = document.getElementsByClassName("money");
    
+   for(var i = 0; i < money.length; i++) {
    
+      result = numberWithSpaces(money[i].innerText);
+      document.getElementsByClassName("money")[i].innerText = result;
+   }
+
+   function numberWithSpaces(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+   }
+
 </script>
 @endpush
-COPY TO CLIPBOARD SELECT ALL

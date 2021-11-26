@@ -204,6 +204,13 @@ class EventController extends Controller
         return redirect()->back();
     }
 
+    public function statusGuest(Request $request)
+    {
+        $events = $this->eRepository->statusGuest($request);
+
+        return redirect()->back();
+    }
+
     public function editGuest(Request $request)
     {
         $events = $this->eRepository->editGuest($request);
@@ -246,7 +253,7 @@ class EventController extends Controller
     {
         $notifications = $this->eRepository->getNotifications();
         
-        $this->eRepository->setReadNotifications($notifications);
+        $this->eRepository->setReadNotifications();
 
         return view('event.notifications', ['notificationsList' => $notifications]);
     }

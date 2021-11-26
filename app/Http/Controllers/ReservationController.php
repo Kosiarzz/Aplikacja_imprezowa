@@ -29,9 +29,9 @@ class ReservationController extends Controller
     {
         $this->rRepository->addReservation($service_id, $service_name, $city_id,  $request);
         $business = $this->bRepository->getServiceBusiness($service_id);
-       
-        $this->nRepository->addNotificationBusiness($business->business_id, 'Nowa rezerwacja oferty '.$service_name, 'success');
-        $this->nRepository->addNotificationEvent(session('event'), 'Wysłano proźbę o rezerwację oferty '.$service_name , 'success');
+        
+        $this->nRepository->addNotificationBusiness($business->business_id, 'Nowa rezerwacja oferty '.$service_name, 'blueNotification');
+        $this->nRepository->addNotificationEvent(session('event'), '['.$business->business->mainCategory->name.'] Wysłano prośbę o rezerwację oferty '.$service_name.'.' , 'blueNotification');
 
         $this->eRepository->addTaskReservation($service_name, session('event'));
         $this->eRepository->addFinanceReservation($service_name, session('event'));
@@ -57,8 +57,10 @@ class ReservationController extends Controller
 
         $this->rRepository->confirmReservation($reservation);
 
-        $this->nRepository->addNotificationBusiness(session('service'), 'Potwierdziłeś rezerwację oferty '.$reservationService->service->title, 'success');
-        $this->nRepository->addNotificationEvent($reservationService->event_id, 'Rezerwacja oferty '.$reservationService->service->title.' została zaakceptowana.' , 'success');
+        $service = $this->bRepository->getServiceBusiness($reservationService->service->id);
+
+        $this->nRepository->addNotificationBusiness(session('service'), 'Potwierdziłeś rezerwację oferty '.$reservationService->service->title, 'greenNotification');
+        $this->nRepository->addNotificationEvent($reservationService->event_id, '['.$service->business->mainCategory->name.'] Rezerwacja oferty '.$reservationService->service->title.' została zaakceptowana.' , 'greenNotification');
 
 
         return redirect()->back();
@@ -74,8 +76,8 @@ class ReservationController extends Controller
 
         $service = $this->bRepository->getServiceBusiness($reservationService->service->id);
         
-        $this->nRepository->addNotificationBusiness($service->business->id, 'Rezerwacja oferty '.$reservationService->service->title.' została anulowana', 'danger');
-        $this->nRepository->addNotificationEvent($reservationService->event_id, 'Rezerwacja oferty '.$reservationService->service->title.' została anulowana' , 'danger');
+        $this->nRepository->addNotificationBusiness($service->business->id, 'Rezerwacja oferty '.$reservationService->service->title.' została anulowana', 'redNotification');
+        $this->nRepository->addNotificationEvent($reservationService->event_id, '['.$service->business->mainCategory->name.'] Rezerwacja oferty '.$reservationService->service->title.' została anulowana.' , 'redNotification');
 
         return redirect()->back();
     }

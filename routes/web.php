@@ -160,6 +160,7 @@ Route::middleware(['auth','verified'])->group(function()
         Route::post('/uzytkownik/edycja/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'editFinance'])->name('editFinance');
         Route::post('/uzytkownik/usuwanie/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'deleteFinance'])->name('deleteFinance');
         
+        Route::post('/uzytkownik/status/wydarzenie/gość', [App\Http\Controllers\EventController::class, 'statusGuest'])->name('statusGuest');
         Route::post('/uzytkownik/nowe/wydarzenie/gość', [App\Http\Controllers\EventController::class, 'addGuest'])->name('addGuest');
         Route::post('/uzytkownik/edycja/wydarzenie/goście', [App\Http\Controllers\EventController::class, 'editGuest'])->name('editGuest');
         Route::post('/uzytkownik/usuwanie/wydarzenie/goście', [App\Http\Controllers\EventController::class, 'deleteGuest'])->name('deleteGuest');
@@ -172,4 +173,6 @@ Route::middleware(['auth','verified'])->group(function()
     
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
+
+//middleware(['auth','verified'])

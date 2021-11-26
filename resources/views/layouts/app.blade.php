@@ -19,7 +19,7 @@
 </head>
 <body>
     <div id="app">
-    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-secondary fixed-top">
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white border-secondary fixed-top">
             <!-- Container wrapper -->
             <div class="container-fluid">
                <!-- Toggle button -->
@@ -60,7 +60,7 @@
                     @else
                     @can('isUser')
                     @if(session('event'))
-                        <li class="nav-item bg-primary"><a class="dropdown-item" href="{{route('event.index', ['id' => session('event')])}}" class="mr-3">{{$eventSession[0]->name}}</a></li>
+                        <li class="nav-item"><a class="dropdown-item" href="{{route('event.index', ['id' => session('event')])}}" class="mr-3">{{$eventSession[0]->name}}</a></li>
                     @endif
                     <li class="nav-item">
                                 <a class="dropdown-item" href="{{ route('user.like') }}" class="mr-3">Polubione</a></li><li class="nav-item">
