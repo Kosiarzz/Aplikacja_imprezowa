@@ -108,9 +108,10 @@ input[type=file]{
 
 .businessBoxTitle{
     color:black;
-    font-size: 25px;
-    text-align: center;
-    padding:5px 0;
+    font-size: 22px;
+    text-align: left;
+    padding:5px 0 0 15px;;
+
 }
 
 .businessBoxNotifications{
@@ -134,6 +135,39 @@ input[type=file]{
     color:black;
 }
 
+.businessBox{
+    width:300px;
+    height: 80px;
+    background-color: #fff;
+    padding:5px 0;
+    margin-right:10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 9px -5px rgba(66, 68, 90, 1);
+}
+
+.businessBoxIcon{
+    float:left;
+    padding:15px 0 0 15px;
+}
+
+.businessBoxIcon i{
+    font-size:35px;
+}
+
+.businessBoxRight{
+    float:right;
+    text-align:right;
+    padding:5px 10px 0 0;
+}
+
+.businessBoxNubmer{
+    font-size:22px;
+}
+
+.businessBoxText{
+
+}
+
 .nameGroupTask{
     color: #000;
     font-size: 20px;
@@ -141,9 +175,6 @@ input[type=file]{
     margin-bottom: -60px;
 }
 
-.task{
-    
-}
 
 .task:hover{
     background-color: #ececec;
@@ -151,7 +182,7 @@ input[type=file]{
 
 .titlePage{
     font-size: 24px;
-    color:#878d97;
+    color:#656d79;
 }
 
 .taskChecked{
@@ -194,9 +225,9 @@ input[type=file]{
 
 .serviceBoxButton{
     background-color: #fff;
-    width: 300px;
-    height: 160px;
-    border-radius: 10px;
+    width: 31%;
+    height: 170px;
+    border-radius: 5px;
     border:1px solid rgba(0, 0, 0, 0.13);
     margin-right: 15px;
     margin-bottom: 15px;
@@ -204,7 +235,11 @@ input[type=file]{
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align:center;
+    padding:3px;
+    text-decoration:none!important;
 }
+
 
 .serviceBoxButton:hover{
     background-color: #3490dc;
@@ -212,22 +247,21 @@ input[type=file]{
 }
 
 .serviceBoxTitle{
-    font-size: 26px;
-    
+    font-size: 23px;
 }
 
 .indexBoxName{
     background: #fff;
     width: 300px;
     height: 240px;
-    border-radius: 10px;
-    border:1px solid rgba(0, 0, 0, 0.13);
+    border-radius: 4px;
+    border:1px solid #fefefe;
     margin-right: 15px;
     margin-bottom: 15px;
     color:#000;
     display: flex;
     flex-direction: column;
-    box-shadow: 9px 7px 26px -10px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 9px -5px rgba(66, 68, 90, 1);
 }
 
 .indexBoxNameCategory{
@@ -262,7 +296,7 @@ input[type=file]{
 .indexBoxEvent{
     width: 32%;
     height: 150px;
-    border-radius: 10px;
+    border-radius: 4px;
     margin-right: 15px;
     margin-bottom: 15px;
     color:black;
@@ -270,7 +304,8 @@ input[type=file]{
     justify-content: center;
     flex-direction: column;
     text-decoration: none!important;
-    box-shadow: 9px 7px 26px -10px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 9px -5px rgba(66, 68, 90, 1);
+    background-color: #fff;
 }
 
 .indexBoxEventNumber{
@@ -296,24 +331,62 @@ input[type=file]{
     color:#000;
 }
 
+.indexBoxReservation{
+    width: 32%;
+    height: 100px;
+    border-radius: 4px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    color:black;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none!important;
+    box-shadow: 0px 0px 9px -5px rgba(66, 68, 90, 1);
+    background-color: #fff;
+}
+
+
+.indexBoxReservationName{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size:25px;
+    color:#000;
+    padding-top:10px;
+}
+
+.indexBoxReservationNumber{
+    width: 100%;
+    font-size:16px!important;
+    display: flex;
+    justify-content: left;
+    font-size:25px;
+    color:#000;
+}
+
 .progress-bar{
  
+}
+
+.calendar{
+    background-color: #fff;
+    padding:20px;
+    box-shadow: 0px 0px 9px -5px rgba(66, 68, 90, 1);
 }
 
 .indexBoxFinances{
     height: 130px;
     width: 32%;
-    border-radius: 10px;
+    border-radius: 4px;
     margin-bottom: 15px;
     color:#000;
     display: flex;
     justify-content: center;
     flex-direction: column;
     text-decoration: none!important;
-    -webkit-box-shadow: 2px 2px 13px -8px rgba(66, 68, 90, 1);
-    -moz-box-shadow: 2px 2px 13px -8px rgba(66, 68, 90, 1);
-    box-shadow: 2px 2px 13px -8px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 9px -5px rgba(66, 68, 90, 1);
     padding-left:15px;
+    background-color: #fff;
 }
 
 .indexBoxFinancesName{
@@ -349,8 +422,8 @@ input[type=file]{
 
 
 body {
-    font-family: 'Roboto', sans-serif!important;
-    background-color: #f5f6fa;
+    font-family: inherit!important;
+    background-color: #eff3f6!important;
     }
     @media (min-width: 991.98px) {
     main {
@@ -394,16 +467,16 @@ body {
 
 .businessBoxButton{
     background-color: #fff;
-    width: 300px;
-    height: 160px;
+    width: 100%;
+    height: 100px;
     border-radius: 10px;
     border:1px solid rgba(0, 0, 0, 0.13);
     margin-right: 15px;
     margin-bottom: 15px;
+    font-size:25px;
     color:black;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: left;
     flex-direction: column;
 }
 
@@ -427,15 +500,20 @@ body {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
-    border: 1px solid black;
     padding:20px;
     width:800px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 9px -5px rgba(66, 68, 90, 1);
+    background-color: #fff;
 }
 
 .sectionTittle{
     font-size: 20px;
-    border-bottom: 1px solid black;
 }   
+
+.sectionBorder{
+    border-top:1px solid #000;
+}
 
 .textTittle{
     display:flex;
@@ -445,6 +523,11 @@ body {
 .showSectionButton{
     float:right;
 }
+
+.showSectionButton a{
+    color:#000;
+}
+
 
 .space{
     width:100%;
@@ -457,7 +540,7 @@ body {
 }
 
 .navbar{
-    box-shadow: 3px 4px 34px -20px rgba(66, 68, 90, 1);
+    box-shadow: 0px 1px 9px -5px rgba(66, 68, 90, 1);
 }
 
 .myButton{
@@ -466,10 +549,9 @@ body {
 
 .groupList{
     border-radius: 5px;
-    -webkit-box-shadow: 0px 0px 13px -6px rgba(66, 68, 90, 1);
--moz-box-shadow: 0px 0px 13px -6px rgba(66, 68, 90, 1);
-box-shadow: 0px 0px 13px -6px rgba(66, 68, 90, 1);
-}
+    box-shadow: 0px 0px 9px -5px rgba(66, 68, 90, 1);
+    background-color: #fff;
+} 
 
 .taskComplete{
     padding:0 0 0 1px;
@@ -596,76 +678,101 @@ tr td {
     position: relative;
 
     label {
-      padding: 12px 30px;
-      width: 100%;
-      display: block;
-      text-align: left;
-      color: #3C454C;
-      cursor: pointer;
-      position: relative;
-      z-index: 2;
-      transition: color 200ms ease-in;
-      overflow: hidden;
-
-      &:before {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        content: '';
-        background-color: #5562eb;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%) scale3d(1, 1, 1);
-        transition: all 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
-        opacity: 0;
-        z-index: -1;
-      }
-
-      &:after {
-        width: 32px;
-        height: 32px;
-        content: '';
-        background-color: #fff;
-        background-position: 2px 3px;
-        border-radius: 50%;
-        z-index: 2;
-        position: absolute;
-        right: 30px;
-        top: 50%;
-        transform: translateY(-50%);
+        padding: 12px 30px;
+        width: 100%;
+        display: block;
+        text-align: left;
+        color: #3C454C;
         cursor: pointer;
-        transition: all 200ms ease-in;
-        visibility: hidden;
-      }
+        position: relative;
+        z-index: 2;
+        transition: color 200ms ease-in;
+        overflow: hidden;
+        border:1px solid #ddd;
+
+        &:before {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            content: '';
+            background-color: #5562eb;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale3d(1, 1, 1);
+            transition: all 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+            opacity: 0;
+            z-index: -1;
+        }
+
+        &:after {
+            width: 32px;
+            height: 32px;
+            content: '';
+            background-color: #fff;
+            background-position: 2px 3px;
+            border-radius: 50%;
+            z-index: 2;
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            transition: all 200ms ease-in;
+            visibility: hidden;
+        }
     }
 
     input:checked ~ label {
-      color: #fff;
+        color: #fff;
 
-      &:before {
-        transform: translate(-50%, -50%) scale3d(56, 56, 1);
-        opacity: 1;
-      }
+        &:before {
+            transform: translate(-50%, -50%) scale3d(56, 56, 1);
+            opacity: 1;
+        }
 
-      &:after {
-        background-color: #54E0C7;
-        border-color: #54E0C7;
-      }
+        &:after {
+            background-color: #54E0C7;
+            border-color: #54E0C7;
+        }
     }
 
     input {
-      width: 32px;
-      height: 32px;
-      order: 1;
-      z-index: 2;
-      position: absolute;
-      top: 50%;
-      right:0;
-      transform: translateY(-50%);
-      cursor: pointer;
-      visibility: hidden;
-      opacity: 0;
+        width: 32px;
+        height: 32px;
+        order: 1;
+        z-index: 2;
+        position: absolute;
+        top: 50%;
+        right:0;
+        transform: translateY(-50%);
+        cursor: pointer;
+        visibility: hidden;
+        opacity: 0;
     }
-  }
+}
+
+.inputGroupAdditional{
+    label {
+        &:before {
+            background-color: #5562eb!important; 
+        }
+    }
+}
+
+.inputGroupPopular{
+    label {
+        &:before {
+            background-color: #5562eb!important; 
+        }
+    }
+}
+
+.inputGroupUser{
+    label {
+        &:before {
+            background-color: #5562eb!important; 
+        }
+    }
+}
 //############################

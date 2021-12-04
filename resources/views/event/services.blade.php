@@ -1,10 +1,10 @@
 @extends('layouts.event')
 @section('content')
 <div class="container mt-5">
-   <div class="row justify-content-center">
-      <div class="titlePage mb-3">
+   <div class="titlePage mb-4">
          Wybrane usługi
       </div>
+   <div class="row justify-content-center">
    </div>
    <div class="row col-md-12">
       @foreach($services as $service)
@@ -54,7 +54,7 @@
          </div>
       </div>
    </div>
-   <div class="col-12 titlePage text-center mb-3 mt-5">
+   <div class="col-12 titlePage text-center mb-3 mt-5 border-top pt-2">
       Inni użytkownicy wybrali również 
    </div>
    <div class="row col-md-12">

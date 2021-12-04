@@ -26,7 +26,9 @@ class ServiceController extends Controller
         $data = $this->sRepository->getBusinessDetails($id);
 
         session(['service' => $data->id]);
-        return view('service.index');
+        return view('service.preview',[
+            'data' => $data,
+        ]);
     }
 
     public function dashboard()
@@ -47,9 +49,22 @@ class ServiceController extends Controller
 
     public function reservations()
     {     
-        $reservations = $this->sRepository->getBusinessReservations();
+        $services = $this->sRepository->getServices();
+        return view('service.reservations', ['services' => $services]);
+    }
 
-        return view('service.reservations', ['business' => $reservations]);
+    public function reservationsDetails($id, $title)
+    {     
+        $reservations = $this->sRepository->getDetailsReservations($id);
+
+        return view('service.reservationsDetails', ['reservations' => $reservations, 'id' => $id,'title' => $title]);
+    }
+
+    public function reservationDetailsFilters(Request $request)
+    {     
+        $reservations = $this->sRepository->getDetailsReservationsFilters($request);
+        
+        return view('service.reservationsDetails', ['reservations' => $reservations, 'id' => $request->serviceId, 'title' => $request->serviceTitle]);
     }
 
     public function preview()

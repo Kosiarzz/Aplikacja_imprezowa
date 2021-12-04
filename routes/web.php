@@ -58,6 +58,7 @@ Route::get('/ajaxGetServiceReservations/{id}', [App\Http\Controllers\Reservation
 Route::post('/addReservation/{service_id}/{city_id}/{service_name}', [App\Http\Controllers\ReservationController::class, 'addReservation'])->name('reservation.addReservation');
 Route::get('/confirmReservation/{id}', [App\Http\Controllers\ReservationController::class, 'confirmReservation'])->name('reservation.confirmReservation');
 Route::get('/deleteReservation/{id}', [App\Http\Controllers\ReservationController::class, 'deleteReservation'])->name('reservation.deleteReservation');
+Route::get('/cancelReservation/{id}', [App\Http\Controllers\ReservationController::class, 'cancelReservation'])->name('reservation.cancelReservation');
 
 Route::get('/wyszukiwanie/uzytkownik/profil/{id}', [App\Http\Controllers\UserController::class, 'findUserProfile'])->name('findUserProfile');
 
@@ -99,6 +100,8 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/firma/usługa/daty/kalendarz', [App\Http\Controllers\FullCalenderController::class, 'dateService']);
         Route::post('/firma/usługa/daty/kalendarz/akcja', [App\Http\Controllers\FullCalenderController::class, 'actionService']);
         Route::get('/firma/usługa/rezerwacje', [App\Http\Controllers\ServiceController::class, 'reservations'])->name('service.reservations');
+        Route::get('/firma/usługa/rezerwacje/{id}/{title}', [App\Http\Controllers\ServiceController::class, 'reservationsDetails'])->name('service.reservationsDetails');
+        Route::post('/firma/usługa/rezerwacje/filtry', [App\Http\Controllers\ServiceController::class, 'reservationDetailsFilters'])->name('service.reservationDetailsFilters');
         Route::get('/firma/usługa/powiadomienia', [App\Http\Controllers\ServiceController::class, 'notifications'])->name('service.notifications');
         Route::get('/firma/usługa/statystyki', [App\Http\Controllers\ServiceController::class, 'stats'])->name('service.stats');
         Route::get('/firma/usługa/podgląd', [App\Http\Controllers\ServiceController::class, 'preview'])->name('service.preview');
@@ -159,7 +162,8 @@ Route::middleware(['auth','verified'])->group(function()
         Route::post('/uzytkownik/status/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'statusFinance'])->name('statusFinance');
         Route::post('/uzytkownik/edycja/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'editFinance'])->name('editFinance');
         Route::post('/uzytkownik/usuwanie/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'deleteFinance'])->name('deleteFinance');
-        
+        Route::post('/uzytkownik/edycja/wydarzenie/budżet', [App\Http\Controllers\EventController::class, 'editBudgetFinances'])->name('editBudgetFinances');
+
         Route::post('/uzytkownik/status/wydarzenie/gość', [App\Http\Controllers\EventController::class, 'statusGuest'])->name('statusGuest');
         Route::post('/uzytkownik/nowe/wydarzenie/gość', [App\Http\Controllers\EventController::class, 'addGuest'])->name('addGuest');
         Route::post('/uzytkownik/edycja/wydarzenie/goście', [App\Http\Controllers\EventController::class, 'editGuest'])->name('editGuest');

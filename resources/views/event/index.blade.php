@@ -3,21 +3,29 @@
 <div class="container mt-5">
    <div class="row justify-content-center">
       <div class="space40"></div>
-      <div class="indexBoxName col-md-12">
+      <div class="indexBoxName col-md-12 p-0">
          <div class="indexBoxNameTitle">
             {{$event->name}}     
          </div>
          <div class="indexBoxNameDays">
-            <span class="indexBoxNameDaysNumber">{{date_diff(date_create(date("Y-m-d")), date_create($event->date_event))->format('%a')}}</span>
+            <span class="indexBoxNameDaysNumber">
+            @if(($days = date_diff(date_create(date("Y-m-d")), date_create($event->date_event))->format('%a')) == 0)
+               To już dzisiaj!
+            @else
+               {{$days}}
+            @endif
+            </span>
          </div>
          <div class="indexBoxNameCategory">
-            dni do 
-            @if($event->category->name == 'Wesele')
-                Wesela
-            @elseif($event->category->name == 'Urodziny')
-                Urodzin
-            @elseif($event->category->name == 'Komunia')
-                Komuni
+            @if($days > 0)
+               dni do 
+               @if($event->category->name == 'Wesele')
+                  Wesela
+               @elseif($event->category->name == 'Urodziny')
+                  Urodzin
+               @elseif($event->category->name == 'Komunia')
+                  Komuni
+               @endif
             @endif
          </div>
          <div class="indexBoxNameDate">

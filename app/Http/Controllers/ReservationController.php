@@ -65,6 +65,22 @@ class ReservationController extends Controller
 
         return redirect()->back();
     }
+
+    public function cancelReservation($id)
+    {
+        $reservation = $this->rRepository->getReservation($id);
+        $reservationService =  $this->rRepository->getReservationWithService($id);
+
+        $this->rRepository->cancelReservation($reservation);
+
+        $service = $this->bRepository->getServiceBusiness($reservationService->service->id);
+        
+        $this->nRepository->addNotificationBusiness($service->business->id, 'Rezerwacja oferty '.$reservationService->service->title.' została anulowana', 'redNotification');
+        $this->nRepository->addNotificationEvent($reservationService->event_id, '['.$service->business->mainCategory->name.'] Rezerwacja oferty '.$reservationService->service->title.' została anulowana.' , 'redNotification');
+
+
+        return redirect()->back();
+    }
     
     public function deleteReservation($id)
     {
@@ -76,8 +92,8 @@ class ReservationController extends Controller
 
         $service = $this->bRepository->getServiceBusiness($reservationService->service->id);
         
-        $this->nRepository->addNotificationBusiness($service->business->id, 'Rezerwacja oferty '.$reservationService->service->title.' została anulowana', 'redNotification');
-        $this->nRepository->addNotificationEvent($reservationService->event_id, '['.$service->business->mainCategory->name.'] Rezerwacja oferty '.$reservationService->service->title.' została anulowana.' , 'redNotification');
+        $this->nRepository->addNotificationBusiness($service->business->id, 'Rezerwacja oferty '.$reservationService->service->title.' została odrzucona', 'redNotification');
+        $this->nRepository->addNotificationEvent($reservationService->event_id, '['.$service->business->mainCategory->name.'] Rezerwacja oferty '.$reservationService->service->title.' została odrzucona.' , 'redNotification');
 
         return redirect()->back();
     }

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        {{dd($data)}}
+        podgląd
     </div>
 </div>
 @endsection

@@ -2,10 +2,13 @@
 @section('content')
 <div class="container">
    <div class="row justify-content-center">
+   <div class="titlePage">
+      Wybierz rodzaj usługi
+   </div>
       <div class="row mt-5">
          <a href="{{route('business.register', 'room')}}" class="text-decoration-none businessBoxButton">
             <div class="businessBoxButtonTitle">
-               Lokal
+               Budynek
             </div>
             <div class="businessBoxButtonDescription">
                Lokal, dworek, sala

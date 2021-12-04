@@ -27,8 +27,8 @@
                   </div>
                </div>
                <div class="col-md-4 ">
-                  <div class="card-body ">
-                  <a href="{{ route('unlike', ['likeable_id' => $business->id, 'type' => 'App\Models\Business']) }}" style="margin-left:320px;"><i class="fas fa-heart" style="font-size:25px;"></i></a>
+                  <div class="card-body">
+                  <a href="{{ route('unlike', ['likeable_id' => $business->id, 'type' => 'App\Models\Business']) }}" style="margin-left:320px;"><i class="fas fa-heart" style="font-size:25px;" ></i></a>
                      <h6 class="card-title">
                         {{$business->short_description}}
                      </h6>
@@ -53,6 +53,6 @@
    function numberWithSpaces(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
    }
-   
+
 </script>
 @endpush

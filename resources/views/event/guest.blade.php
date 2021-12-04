@@ -1,10 +1,11 @@
 @extends('layouts.event')
 @section('content')
 <div class="container mt-5">
+   <div class="titlePage mb-3">
+      Lista gości
+   </div>
    <div class="row justify-content-center">
-      <div class="titlePage">
-         Goście
-      </div>
+      
       <div class="row col-12">
          @foreach($guests as $guestGroup)
          <div class="row col-12 mt-2 groupList p-2 mb-4">

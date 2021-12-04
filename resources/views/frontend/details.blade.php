@@ -43,7 +43,7 @@
                 <p class="description" itemprop="description">{{$business->description}}</p>					
         </section>
     </div>
-        {{$business->photos->first()->path}}
+       
     <div class="row justify-content-center">
         <h2>Galeria zdjęć</h2>
         <div class="mb-2" style="width:100%;">

@@ -1,10 +1,8 @@
 @extends('layouts.event')
 @section('content')
 <div class="container mt-5">
-   <div class="row justify-content-center">
-      <div class="titlePage mb-3">
-         Rezerwacje
-      </div>
+   <div class="titlePage mb-3">
+      Rezerwacje
    </div>
    <div class="container-fluid">
       @foreach($reservations as $reservation)

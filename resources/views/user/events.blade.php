@@ -9,7 +9,7 @@
         
         <div class="row col-md-12 text-center">
             @foreach($events as $event)
-                <a href="{{route('event.index', ['id' => $event->id])}}" class="serviceBoxButton mr-3">
+                <a href="{{route('event.index', ['id' => $event->id])}}" class="serviceBoxButton mr-3 ">
                     <div class="serviceBoxTitle p-0">
                         <div class="p-0 m-0" style="padding-top:5px;">{{$event->name}}</div>
                         <div class="p-0 m-0" style="font-size:22px;">za <span style="font-size:26px">{{date_diff(date_create(date("Y-m-d")), date_create($event->date_event))->format('%a')}}</span> dni</div>
@@ -34,3 +34,11 @@
     </div>
 </div>
 @endsection
+
+@push('script')
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+@endpush

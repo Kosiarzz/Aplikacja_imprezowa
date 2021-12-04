@@ -1,13 +1,15 @@
 @extends('layouts.event')
 @section('content')
 <div class="container mt-5">
-   <div class="titlePage mb-4">
+   <div class="titlePage mb-4 ml-0 p-0">
       Zarządzanie finansami
    </div>
    <div class="row justify-content-center">
       <div class="row col-12 mb-4 p-0">
          <div class="indexBoxFinances">
-            <i class="fas fa-pen" style="position: absolute; left:29%; top:8%;"></i> 
+            <a id="budget-box-edit" style="position: absolute; left:29%; top:8%;" data-toggle="modal" data-target="#budgetModal" data-budget="{{ $budgetDetails['budget'] }}">
+               <i class="fas fa-pen"></i> 
+            </a>
             <div class="indexBoxFinancesName">
                Budżet
             </div>
@@ -35,8 +37,8 @@
       <div class="row col-12">
          @foreach($finances as $finance)
          <div class="row col-12 mt-4 groupList p-2">
-            <div style="height:50px; width:100%; padding-top:5px; font-size:20px;">
-               {{$finance->name}} ({{ count($finance->costs->where('status', 1)) }}/{{ count($finance->costs) }})
+            <div style="height:50px; width:100%; padding-top:7px; font-size:20px;">
+               <span style="padding-left:10px;">{{$finance->name}} ({{ count($finance->costs->where('status', 1)) }} / {{ count($finance->costs) }})</span>
                <div style="float:right;">
                   <a class="dataGroup mr-3" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$finance->id}}" data-name="{{$finance->name}}" data-color="{{$finance->color}}">
                      <i class="fas fa-pen"></i> 
@@ -44,7 +46,7 @@
                   <a class="deleteGroup mr-3" data-toggle="modal" data-target="#exampleModalGroupDelete" data-id="{{$finance->id}}">
                      <i class="fas fa-trash-alt"></i>
                   </a>
-                  <a class="showGroup mr-1" style="padding: 6px 0;" data-name="groupModal{{$finance->id}}">
+                  <a class="showGroup mr-2" style="padding: 6px 0;" data-name="groupModal{{$finance->id}}">
                      <i class="fas fa-compress-alt"></i>
                   </a>
                </div>
@@ -300,6 +302,39 @@
       </div>
    </div>
 </div>
+<!-- edit budget modal -->
+<div class="modal fade" id="budgetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title edit" id="exampleModalLabel">Zmiana budżetu</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form method="POST" action="{{ route('editBudgetFinances') }}">
+               @csrf
+               <div class="form-group">
+                  <label for="budget-edit" class="col-md-12 col-form-label">Budżet</label>
+                  <div class="col-md-12">
+                     <input id="budget-edit" type="number" min=0 class="form-control @error('budget') is-invalid @enderror" name="budget">
+                     @error('budget')
+                     <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                  <button type="submit" class="btn btn-primary">Zmień budżet</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
 <!-- Edit cost modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">
@@ -500,60 +535,60 @@
    
    $('.data').on('click', function () {
    
-   var id = $(this).attr("data-id");
-   var name = $(this).attr("data-name");
-   var date = $(this).attr("data-date");
-   var note = $(this).attr("data-note");
-   var cost = $(this).attr("data-cost");
-   var count = $(this).attr("data-count");
-   var advance = $(this).attr("data-advance");
-    
-   var groupId = $(this).attr("data-groupId");
-   var groupName = $(this).attr("data-groupName");
-   
-   $("#id-edit").val(id);
-   $("#name-edit").val(name);
-   $("#date-edit").val(date);
-   $("#note-edit").val(note);
-   $("#cost-edit").val(cost);
-   $("#count-edit").val(count);
-   $("#advance-edit").val(advance);
-   
-   $("#edit-group option[value=" + groupId + "]").prop("selected", true);
+      var id = $(this).attr("data-id");
+      var name = $(this).attr("data-name");
+      var date = $(this).attr("data-date");
+      var note = $(this).attr("data-note");
+      var cost = $(this).attr("data-cost");
+      var count = $(this).attr("data-count");
+      var advance = $(this).attr("data-advance");
+      
+      var groupId = $(this).attr("data-groupId");
+      var groupName = $(this).attr("data-groupName");
+      
+      $("#id-edit").val(id);
+      $("#name-edit").val(name);
+      $("#date-edit").val(date);
+      $("#note-edit").val(note);
+      $("#cost-edit").val(cost);
+      $("#count-edit").val(count);
+      $("#advance-edit").val(advance);
+      
+      $("#edit-group option[value=" + groupId + "]").prop("selected", true);
    });
    
    $('.delete').on('click', function () {
    
-   var id = $(this).attr("data-id");
-   
-   $("#id-delete").val(id);
+      var id = $(this).attr("data-id");
+      
+      $("#id-delete").val(id);
    });
    
    $('.dataGroup').on('click', function () {
    
-   var id = $(this).attr("data-id");
-   var name = $(this).attr("data-name");
-   var color = $(this).attr("data-color");
-   
-   console.log(id + " | " + name);
-   $("#id-group-edit").val(id);
-   $("#name-group-edit").val(name);
-   $("#group-color-edit").val(color);
-   
+      var id = $(this).attr("data-id");
+      var name = $(this).attr("data-name");
+      var color = $(this).attr("data-color");
+      
+      console.log(id + " | " + name);
+      $("#id-group-edit").val(id);
+      $("#name-group-edit").val(name);
+      $("#group-color-edit").val(color);
+      
    });
    
    $('.deleteGroup').on('click', function () {
    
-   var id = $(this).attr("data-id");
-   
-   $("#id-group-delete").val(id);
-   
+      var id = $(this).attr("data-id");
+      
+      $("#id-group-delete").val(id);
+      
    });
    
    $('.showGroup').on('click', function () {
    
-   var name = "#" + $(this).attr("data-name");
-   console.log($(name).is(":visible"))
+      var name = "#" + $(this).attr("data-name");
+
       if($(name).is(":visible"))
       {
          $( name  ).slideUp(100);
@@ -563,6 +598,13 @@
          $( name  ).slideDown(100);
       }
    
+   });
+
+   $('#budget-box-edit').on('click', function () {
+   
+      var budget = $(this).attr("data-budget");
+      console.log(budget);
+      $("#budget-edit").val(budget);
    });
 
    var money = document.getElementsByClassName("money");

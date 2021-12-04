@@ -18,6 +18,7 @@ use App\Models\BusinessCategory;
 use App\Models\Notification;
 use App\Models\QuestionAndAnswer;
 use App\Models\StatisticsCategory;
+use App\Models\OpeningHours;
 use App\Interfaces\BusinessRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 
@@ -94,7 +95,7 @@ class BusinessRepository implements BusinessRepositoryInterface
 
     public function addBusiness($request)
     {
-        
+
         $city = City::firstOrCreate([
             "name" => $request->city,
         ]);
@@ -109,17 +110,19 @@ class BusinessRepository implements BusinessRepositoryInterface
         $business->short_description = $request->shortDescription;
         $business->main_category_id = $request->mainCategory;
         $business->name_category = $request->type;
-        //$business->nip = $request->nip;
         //$business->beds = $request->beds;
         $business->save();
         
-        foreach($request->image as $image)
+        if($request->image != null)
         {
-            $photo = new Photo();
-            $photo->path = $image->store('photos');
-            $photo->photoable_type = 'App\Models\Business';
-            $photo->photoable_id = $business->id;
-            $photo->save();
+            foreach($request->image as $image)
+            {
+                $photo = new Photo();
+                $photo->path = $image->store('photos');
+                $photo->photoable_type = 'App\Models\Business';
+                $photo->photoable_id = $business->id;
+                $photo->save();
+            }
         }
 
         $social = new Social;
@@ -136,18 +139,24 @@ class BusinessRepository implements BusinessRepositoryInterface
         $business->address()->save($address);
 
 
-        foreach($request->party as $categoryId)
+        if($request->party != null)
         {
-            $category = new BusinessCategory;
-            $category->category_id = $categoryId;
-            $business->categories()->save($category);
+            foreach($request->party as $categoryId)
+            {
+                $category = new BusinessCategory;
+                $category->category_id = $categoryId;
+                $business->categories()->save($category);
+            }
         }
 
-        foreach($request->additional as $categoryId)
+        if($request->additional != null)
         {
-            $category = new BusinessCategory;
-            $category->category_id = $categoryId;
-            $business->categories()->save($category);
+            foreach($request->additional as $categoryId)
+            {
+                $category = new BusinessCategory;
+                $category->category_id = $categoryId;
+                $business->categories()->save($category);
+            }
         }
 
         if($request->user != null){
@@ -189,7 +198,7 @@ class BusinessRepository implements BusinessRepositoryInterface
         $business->categories()->save($category);
 
         $i = 0;
-        foreach($request->priceFrom as $categoryId)
+        foreach($request->titleService as $categoryId)
         {
             $service = new Service;
             $service->title = $request->titleService[$i];
@@ -202,13 +211,15 @@ class BusinessRepository implements BusinessRepositoryInterface
             $service->unit = $request->unit[$i];
             $business->services()->save($service);
             
-            foreach($request->imageService as $image)
-            {
-                $photo = new Photo();
-                $photo->path = $image->store('photos');
-                $photo->photoable_type = 'App\Models\Service';
-                $photo->photoable_id = $service->id;
-                $photo->save();
+            if($request->imageService != null){
+                foreach($request->imageService as $image)
+                {
+                    $photo = new Photo();
+                    $photo->path = $image->store('photos');
+                    $photo->photoable_type = 'App\Models\Service';
+                    $photo->photoable_id = $service->id;
+                    $photo->save();
+                }
             }
 
             $i++;
@@ -220,17 +231,87 @@ class BusinessRepository implements BusinessRepositoryInterface
         $contact->phone = $request->phone;
         $business->contactable()->save($contact);
 
-        $i=0;
+        if($request->question[0] != null && $request->answer[0] != null )
+        {
+            $i=0;
+            foreach($request->question as $question)
+            {   
+                $QuestionAndAnswer = new QuestionAndAnswer;
+                $QuestionAndAnswer->question = $request->question[$i];
+                $QuestionAndAnswer->answer = $request->answer[$i];
+                $business->questionsAndAnswers()->save($QuestionAndAnswer);
 
-        foreach($request->question as $question)
-        {   
-            $QuestionAndAnswer = new QuestionAndAnswer;
-            $QuestionAndAnswer->question = $request->question[$i];
-            $QuestionAndAnswer->answer = $request->answer[$i];
-            $business->questionsAndAnswers()->save($QuestionAndAnswer);
-
-            $i++;
+                $i++;
+            }
         }
+
+        $openingHours = new OpeningHours;
+
+        if($request->closeMonday == "on")
+        {
+            $openingHours->monday = "Zamknięte";
+        }
+        else
+        {
+            $openingHours->monday = $request->monday;
+        }
+
+        if($request->closeTuesday == "on")
+        {
+            $openingHours->tuesday = "Zamknięte";
+        }
+        else
+        {
+            $openingHours->tuesday = $request->tuesday;
+        }
+
+        if($request->closeWednesday == "on")
+        {
+            $openingHours->wednesday = "Zamknięte";
+        }
+        else
+        {
+            $openingHours->wednesday = $request->wednesday;
+        }
+
+        if($request->closeThursday == "on")
+        {
+            $openingHours->thursday = "Zamknięte";
+        }
+        else
+        {
+            $openingHours->thursday = $request->thursday;
+        }
+
+        if($request->closeFriday == "on")
+        {
+            $openingHours->friday = "Zamknięte";
+        }
+        else
+        {
+            $openingHours->friday = $request->friday;
+        }
+
+        if($request->closeSaturday == "on")
+        {
+            $openingHours->saturday = "Zamknięte";
+        }
+        else
+        {
+            $openingHours->saturday = $request->saturday;
+        }
+
+        if($request->closeSunday == "on")
+        {
+            $openingHours->sunday = "Zamknięte";
+        }
+        else
+        {
+            $openingHours->sunday = $request->sunday;
+        }
+
+
+        $business->openingHours()->save($openingHours);
 
         
     }

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="space"></div>
-    <div id="calendar"></div>
+    <div id="calendar" class="calendar"></div>
 </div>
 @endsection
 
@@ -21,15 +21,15 @@
         var calendar = $('#calendar').fullCalendar({
             monthNames: ['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'],
             dayNamesShort: ['Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota','Niedziela'],
-            editable:true,
+            editable:false,
             header:{
                 left:'prev, today',
                 center:'title',
                 right:'next'
             },
             events:'{{url("/")}}/uzytkownik/wydarzenie/daty/kalendarz',
-            selectable:true,
-            selectHelper: true,
+            selectable:false,
+            selectHelper: false,
             select:function(start, end, allDay)
             {
                 var title = prompt('Event Title:');

@@ -2,18 +2,24 @@
 
 @section('content')
 <div class="container mt-5">
+    <div class="titlePage mb-3 col-12" style="text-align:center;">
+         Twoje usługi<span style="position:absolute; right:0;"><a href="{{ route('business.category') }}" class="btn btn-primary">Dodaj usługę</a></span>
+    </div>
+    
     <div class="row">
         @foreach($businesses as $business) 
-            <a href="{{route('service.index', ['id' => $business->id])}}" class="col-4 businessBoxButton">
+            <a href="{{route('service.index', ['id' => $business->id])}}" class="businessBoxButton">
                 <div class="businessBoxTitle">
+                    <div class=""
                     {{$business->title}}
-                </div>
-                <div class="businessBoxNotifications">
+                    <div class="businessBoxNotifications">
                     {{ count($business->notification->where('status', 0)) }}
+                    </div>
                 </div>
+                
             </a>
         @endforeach
-        <a href="{{ route('business.category') }}" class="col-4 businessBoxButton">Dodaj usługę</a>
+        
     </div>
 </div>
 @endsection

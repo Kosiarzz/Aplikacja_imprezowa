@@ -6,6 +6,8 @@ use App\Models\Statistic;
 use App\Models\Service;
 use App\Models\Category;
 
+use Illuminate\Support\Carbon;
+
 class ReservationRepository
 {
    
@@ -15,6 +17,7 @@ class ReservationRepository
         $category = Category::where('id', $service->business->main_category_id)->get();
 
         Statistic::firstOrCreate([
+            "date" => Carbon::now()->format('Y-m-d'),
             "business_id" => $service->business->id,
         ])->increment('reservations', 1);
             
@@ -77,7 +80,12 @@ class ReservationRepository
 
     public function deleteReservation(Reservation $reservation)
     {
-        return $reservation->delete();
+        return $reservation->update(['status' => 'Rezerwacja odrzucona']);
+    }
+
+    public function cancelReservation(Reservation $reservation)
+    {
+        return $reservation->update(['status' => 'Rezerwacja anulowana']);
     }
 
     public function confirmReservation(Reservation $reservation)

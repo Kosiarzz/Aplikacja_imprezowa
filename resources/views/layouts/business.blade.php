@@ -19,7 +19,7 @@
 </head>
 <body>
 <div id="app">
-    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-secondary fixed-top">
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
             <!-- Container wrapper -->
             <div class="container-fluid">
                <!-- Toggle button -->
@@ -61,7 +61,6 @@
                         @can('isBusiness')
                         <li class="nav-item"><a class="dropdown-item" href="{{ route('business.index') }}" class="mr-3">Usługi</a></li>
                         <li class="nav-item"><a class="dropdown-item" href="{{ route('business.notifications') }}" class="mr-3">Powiadomienia</a></li>
-                        <li class="nav-item"><a class="dropdown-item" href="{{ route('business.notifications') }}" class="mr-3">Ustawienia</a></li>
                         @endcan
 
                   <li class="nav-item">

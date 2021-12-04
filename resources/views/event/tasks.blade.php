@@ -1,19 +1,20 @@
 @extends('layouts.event')
 @section('content')
 <div class="container mt-5">
-<div class="row justify-content-center">
    <div class="titlePage">
-      Lista zadań   
+         Lista zadań   
    </div>
+   <div class="row justify-content-center">
+
    <div class="row col-12">
       @foreach($tasks as $groupTask)
       <div class="list-group col-12 groupList mt-4 mb-4 p-2">
-         <div style="height:50px; width:100%; padding-top:5px; font-size:20px;">
+         <div style="height:50px; width:100%; padding-top:7px; padding-left:7px; font-size:20px;">
             {{$groupTask->name}} ({{ count($groupTask->tasks->where('status', 1)) }}/{{ count($groupTask->tasks) }})
             <div class="float-right"> 
                <a class="dataGroup mr-3" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$groupTask->id}}" data-name="{{$groupTask->name}}" data-color="{{$groupTask->color}}"><i class="fas fa-pen"></i></a>
                <a class="deleteGroup mr-4" data-toggle="modal" data-target="#exampleModalGroupDelete" data-id="{{$groupTask->id}}"><i class="fas fa-trash-alt"></i></a>
-               <a class="showGroup mr-1" data-name="groupModal{{$groupTask->id}}"><i class="fas fa-compress-alt"></i></a>
+               <a class="showGroup mr-3" data-name="groupModal{{$groupTask->id}}"><i class="fas fa-compress-alt"></i></a>
             </div>
          </div>
          <table id="groupModal{{$groupTask->id}}" class="table table-hover mb-0">
@@ -402,11 +403,11 @@
    console.log($(name).is(":visible"))
       if($(name).is(":visible"))
       {
-         $( name  ).slideUp(800);
+         $( name  ).slideUp(10);
       }
       else
       {
-         $( name  ).slideDown(800);
+         $( name  ).slideDown(10);
       }
    
    });

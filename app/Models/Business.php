@@ -69,6 +69,11 @@ class Business extends Model
         return $this->hasOne(Social::class);
     }
 
+    public function openingHours()
+    {
+        return $this->hasOne(OpeningHours::class);
+    }
+
     public function services()
     {
         return $this->hasMany(Service::class);

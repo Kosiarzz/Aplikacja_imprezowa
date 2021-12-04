@@ -58,6 +58,7 @@
                   <a id="reservation" href="{{ route('event.reservations') }}" class="list-group-item list-group-item-action py-2 ripple"
                      ><i class="fas fa-calendar-check fa-fw me-3 mr-2"></i><span>Rezerwacje</span></a
                      >
+
                   <a id="events" href="{{ route('user.events') }}" class="list-group-item list-group-item-action py-2 ripple active">
                   <i class="fas fa-th-list fa-fw me-3 mr-2"></i><span style="font-size:16px;">Wydarzenia</span>
                   </a>
@@ -70,7 +71,7 @@
          </nav>
          <!-- Sidebar -->
          <!-- Navbar -->
-         <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white border-secondary fixed-top">
+         <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
             <!-- Container wrapper -->
             <div class="container-fluid">
                <!-- Toggle button -->

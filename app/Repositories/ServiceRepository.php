@@ -6,6 +6,7 @@ use App\Models\Service;
 use App\Models\Photo;
 use App\Models\Notification;
 use App\Models\Statistic;
+use App\Models\Reservation;
 
 use App\Interfaces\ServiceRepositoryInterface;
 
@@ -16,7 +17,7 @@ class ServiceRepository implements ServiceRepositoryInterface
 {
     public function getNotifications()
     { 
-        return Business::with(['notification'])->find(session('service'));
+        return Notification::where('notification_type', 'App\Models\Business')->where('notification_id', session('service'))->orderBy('created_at','desc')->paginate(10);
     }
 
     public function getBusinessDetails($id)
@@ -86,6 +87,11 @@ class ServiceRepository implements ServiceRepositoryInterface
         return Service::where('id', $id)->delete();  
     }
     
+    public function getServices()
+    {
+        return Service::where('business_id', session('service'))->get();  
+    }
+
     public function getServiceDetails($id)
     {
         return Service::with(['photos', 'reservations'])->find($id);  
@@ -99,12 +105,49 @@ class ServiceRepository implements ServiceRepositoryInterface
             },
         ])->find(session('service'));  
     }
+
+    public function getDetailsReservations($id)
+    {
+        return Reservation::with(['service', 'event.user.contactable'])->where('service_id', $id)->where('status', 'Oczekiwanie na akceptację')->get();
+    }
+
+    public function getDetailsReservationsFilters($request)
+    {
+        $reservations = Reservation::with(['service', 'event.user.contactable'])->where('service_id', $request->serviceId);
+                                
+        if(!is_null($request->date_from) && !is_null($request->date_to))
+        {
+            $reservations->whereBetween('date_from', [$request->date_from, $request->date_to])
+                        ->orWhere(function($query) use($request) {
+                            $query->whereBetween('date_to', [$request->date_from, $request->date_to])->where('service_id', $request->serviceId);
+                        });
+        }
+
+        if(!is_null($request->date_from)){
+            $reservations->where('date_from', '>=', $request->date_from);
+        }
+
+        if(!is_null($request->date_to)){
+            $reservations->where('date_to', '<=', $request->date_to);
+        }
+
+        if(!is_null($request->status))
+        {
+            $reservations->where('status', $request->status);
+        }
+                                    
+        return $reservations->get();
+    }
     
     public function setReadNotifications($notifications)
     {
-        foreach($notifications->notification as $notification)
-        {
-            Notification::where('id', $notification->id)->update(['status' => 1]);
+        if($notifications != null){
+            foreach($notifications as $notification)
+            {
+                if($notification->status != 1){
+                    Notification::where('id', $notification->id)->update(['status' => 1]);
+                }
+            }
         }
     }
 

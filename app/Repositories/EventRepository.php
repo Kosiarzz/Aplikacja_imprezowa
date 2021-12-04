@@ -27,7 +27,7 @@ class EventRepository
 
     public function getServiceCategories()
     {
-        return Group::with(['groupCategory.category'])->where('type','mainCategory')->where('name', 'mainCategory')->orderBy('name','asc')->get();
+        return Group::with(['groupCategory.category'])->where('type','mainCategory')->where('name', 'mainCategory')->get();
     }
 
     public function getStatisticCategories($categoryName)
@@ -495,6 +495,11 @@ class EventRepository
     public function statusFinance($request)
     {
         Cost::where('id', $request->id)->update(['status' => $request->status]);
+    }
+
+    public function editBudgetFinances($request)
+    {
+        Event::where('id', session('event'))->update(['budget' => $request->budget]);
     }
 
     public function statusGuest($request)

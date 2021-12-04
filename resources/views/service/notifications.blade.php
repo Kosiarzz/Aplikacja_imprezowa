@@ -6,16 +6,20 @@
          Powiadomienia
       </div>
       <div class="col-12 mb-3 p-0">
-         @foreach($notificationsList->notification as $notification)
-         <div class=" text-white {{$notification->content_type}} mb-3 col-md-10">
-            <div class="card-header">{{$notification->created_at}}</div>
-            <div class="card-body">
-               <h4 class="card-title">{{$notification->content}}</h4>
-               <p class="card-text"></p>
+         @if(!is_null($notificationsList))
+            @foreach($notificationsList as $notification)
+            <div class="card {{$notification->content_type}} mb-3 col-md-10 notificationCard">
+               <div class="notificationHeader">{{$notification->created_at}}</div>
+               <div class="card-body p-0 m-0">
+                  <div class="card-title notificationTitle">{{$notification->content}}</div>
+               </div>
             </div>
-         </div>
-         @endforeach
+            @endforeach
+         @else
+            Brak powiadomień
+         @endif
       </div>
+      {{$notificationsList->links("pagination::bootstrap-4")}}
    </div>
 </div>
 @endsection

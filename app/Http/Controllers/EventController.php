@@ -204,6 +204,13 @@ class EventController extends Controller
         return redirect()->back();
     }
 
+    public function editBudgetFinances(Request $request)
+    {
+        $events = $this->eRepository->editBudgetFinances($request);
+
+        return redirect()->back();
+    }
+
     public function statusGuest(Request $request)
     {
         $events = $this->eRepository->statusGuest($request);

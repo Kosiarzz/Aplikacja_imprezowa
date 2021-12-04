@@ -25,43 +25,41 @@
          <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
             <div class="position-sticky">
                <div class="list-group list-group-flush mx-3 mt-4">
-                  <a id="dashboard" href="{{ route('service.dashboard') }}" class="list-group-item list-group-item-action py-2 ripple">
-                  <i class="fas fa-chart-area fa-fw me-3"></i><span>Panel główny</span>
-                  </a>
+                  <!--<a id="dashboard" href="{{ route('service.dashboard') }}" class="list-group-item list-group-item-action py-2 ripple">
+                  <i class="fas fa-table fa-fw mr-2"></i><span>Panel główny</span>
+                  </a>-->
+                  <a id="preview" href="{{ route('service.preview') }}" class="list-group-item list-group-item-action py-2 ripple"
+                     ><i class="fas fa-globe fa-fw mr-2"></i><span>Podgląd</span></a
+                     >
                   <a id="calendarMenu" href="{{ route('service.calendar') }}" class="list-group-item list-group-item-action py-2 ripple">
-                     <i class="fas fa-chart-line fa-fw me-3"></i><span>Kalendarz</span></a>
-                  <a id="notifications" href="{{ route('service.notifications') }}" class="list-group-item list-group-item-action py-2 ripple"
-                     ><i class="fas fa-building fa-fw me-3"></i><span>
+                     <i class="fas fa-calendar-alt fa-fw mr-2"></i><span>Kalendarz</span></a>
+                  <a id="notifications" href="{{ route('service.notifications') }}" class="list-group-item list-group-item-action py-2 ripple" style="padding-right:0!important;"
+                     ><i class="fas fa-bell fa-fw mr-1"></i>
                   @if(!empty($notifications) && count($notifications) != 0)
-                    Powiadomienia 
-                    <i class="fas fa-bell"></i>
-                     <span class="badge rounded-pill badge-notification bg-danger">{{count($notifications)}}</span>
-                     </a>
+                    Powiadomienia <span class="badge rounded-pill badge-notification bg-danger">{{count($notifications)}}</span>
                   @else
                     Powiadomienia
                   @endif
-               </span></a>
+               </a>
                   <a id="reservations" href="{{ route('service.reservations') }}" class="list-group-item list-group-item-action py-2 ripple">
-                     <i class="fas fa-chart-line fa-fw me-3"></i><span>Rezerwacje</span></a>
+                     <i class="fas fa-clipboard-list fa-fw mr-2"></i><span>Rezerwacje</span></a>
                   <a id="stats" href="{{ route('service.stats') }}" class="list-group-item list-group-item-action py-2 ripple">
-                  <i class="fas fa-chart-pie fa-fw me-3"></i><span>Statystyki</span>
+                  <i class="fas fa-chart-bar fa-fw mr-2"></i><span>Statystyki</span>
                   </a>
-                  <a id="preview" href="{{ route('service.preview') }}" class="list-group-item list-group-item-action py-2 ripple"
-                     ><i class="fas fa-chart-bar fa-fw me-3"></i><span>Podgląd</span></a
-                     >
+                  
                   <a id="servicePreview" href="{{ route('service.previewService') }}" class="list-group-item list-group-item-action py-2 ripple"
-                     ><i class="fas fa-chart-bar fa-fw me-3"></i><span>Oferty</span></a
+                     ><i class="fas fa-shopping-cart fa-fw mr-2"></i><span>Oferty</span></a
                      >
                   
                   <a id="services" href="{{ route('business.index') }}" class="list-group-item list-group-item-action py-2 ripple active">
-                  <i class="fas fa-chart-area fa-fw me-3"></i><span>Wszystkie usługi</span>
+                  <i class="fas fa-list fa-fw mr-2"></i><span>Wszystkie usługi</span>
                   </a>
                </div>
             </div>
          </nav>
          <!-- Sidebar -->
          <!-- Navbar -->
-         <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-secondary fixed-top">
+         <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
             <!-- Container wrapper -->
             <div class="container-fluid">
                <!-- Toggle button -->
