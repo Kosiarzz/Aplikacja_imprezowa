@@ -70,7 +70,5 @@ class ServiceChart extends BaseChart
         ->dataset('Wyświetlenia', $views)
         ->dataset('Rezerwacje', $reservations)
         ->dataset('Ulubione', $likes);
-
-
     }
 }
