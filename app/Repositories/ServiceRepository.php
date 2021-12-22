@@ -7,6 +7,13 @@ use App\Models\Photo;
 use App\Models\Notification;
 use App\Models\Statistic;
 use App\Models\Reservation;
+use App\Models\City;
+use App\Models\Address;
+use App\Models\Social;
+use App\Models\QuestionAndAnswer;
+use App\Models\Contact;
+use App\Models\OpeningHours;
+use App\Models\GroupBusiness;
 
 use App\Interfaces\ServiceRepositoryInterface;
 
@@ -22,12 +29,26 @@ class ServiceRepository implements ServiceRepositoryInterface
 
     public function getBusinessDetails($id)
     {
-        return Business::with(['city','photos','comments.user','questionsAndAnswers','address','users.photos','services.photos','contactable','categories.category'])->find($id);
+        return Business::with(['city','photos','openingHours','comments.user.photos','comments.user.contactable','questionsAndAnswers','address','users.photos','services.photos','contactable','categories.category', 'groupBusiness.groupCategory.category'])->find($id);
+    }
+
+    public function getRate($business)
+    {
+        $rate = 0;
+
+        foreach($business->comments as $comment)
+        {
+            $rate += $comment->rating['value'];
+        }
+
+        $rate = $rate/count($business->comments);
+        
+        return $rate;
     }
 
     public function getDashboard()
     {
-        return Business::with(['city','photos','comments.user','questionsAndAnswers','address','users.photos','services.photos','contactable','categories.category'])->find(session('service'));
+        return Business::with(['city','photos','openingHours','comments.user.photos', 'comments.user.contactable','questionsAndAnswers','address','users.photos','services.photos','contactable','categories.category' ,'groupBusiness.groupCategory.category'])->find(session('service'));
     }
 
     public function getBusinessReservations()
@@ -55,6 +76,146 @@ class ServiceRepository implements ServiceRepositoryInterface
     {
         return Business::with(['mainCategory'])->find(session('service'));
     }
+
+    public function businessEditSave($request)
+    {
+        $city = City::firstOrCreate([
+            "name" => $request->city,
+        ]);
+
+        Business::where('id', session('service'))->update([
+            'name' => $request->businessName,
+            'title' => $request->title,
+            'description' => $request->description,
+            'short_description' => $request->shortDescription,
+            'city_id' => $city->id,
+            'main_category_id' => $request->mainCategory,
+            'name_category' => $request->type,
+            //'beds' => $request->beds,
+        ]);
+
+        /*
+            if($request->image != null)
+            {
+                foreach($request->image as $image)
+                {
+                    $photo = new Photo();
+                    $photo->path = $image->store('photos');
+                    $photo->photoable_type = 'App\Models\Business';
+                    $photo->photoable_id = $business->id;
+                    $photo->save();
+                }
+            }
+        */
+
+        Social::where('business_id', session('service'))->update([
+            'facebook' => $request->facebook,
+            'www' => $request->www,
+            'instagram' => $request->instagram,
+            'youtube' => $request->youtube,
+            'movie_youtube' => $city->youtubeMovie,
+        ]);
+
+        Address::where('business_id', session('service'))->update([
+            'street' => $request->street,
+            'post_code' => $request->postCode,
+        ]);
+
+        Contact::where('contactable_id', session('service'))->where('contactable_type', 'App\Models\Business')->update([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'phone' => $request->phone,
+        ]);
+
+        QuestionAndAnswer::where('business_id', session('service'))->delete();
+
+        if($request->question[0] != null && $request->answer[0] != null )
+        {
+            $i=0;
+            foreach($request->question as $question)
+            {   
+                $QuestionAndAnswer = new QuestionAndAnswer;
+                $QuestionAndAnswer->question = $request->question[$i];
+                $QuestionAndAnswer->answer = $request->answer[$i];
+                $QuestionAndAnswer->business_id = session('service');
+                $QuestionAndAnswer->save();
+                $i++;
+            }
+        }
+
+        $openingHours = new OpeningHours;
+
+        if($request->closeMonday == "on")
+        {
+            $openingHours->monday = "Zamknięte";
+        }
+        else
+        {
+            $openingHours->monday = $request->monday;
+        }
+
+        if($request->closeTuesday == "on")
+        {
+            $openingHours->tuesday = "Zamknięte";
+        }
+        else
+        {
+            $openingHours->tuesday = $request->tuesday;
+        }
+
+        if($request->closeWednesday == "on")
+        {
+            $openingHours->wednesday = "Zamknięte";
+        }
+        else
+        {
+            $openingHours->wednesday = $request->wednesday;
+        }
+
+        if($request->closeThursday == "on")
+        {
+            $openingHours->thursday = "Zamknięte";
+        }
+        else
+        {
+            $openingHours->thursday = $request->thursday;
+        }
+
+        if($request->closeFriday == "on" || $request->friday == null)
+        {
+            $openingHours->friday = "Zamknięte";
+        }
+        else
+        {
+            $openingHours->friday = $request->friday;
+        }
+
+        if($request->closeSaturday == "on")
+        {
+            $openingHours->saturday = "Zamknięte";
+        }
+        else
+        {
+            $openingHours->saturday = $request->saturday;
+        }
+
+        if($request->closeSunday == "on")
+        {
+            $openingHours->sunday = "Zamknięte";
+        }
+        else
+        {
+            $openingHours->sunday = $request->sunday;
+        }
+
+        $openingHours->business_id = session('service');
+        $openingHours->save();
+
+
+
+
+        
+    }
     
     public function addService($request)
     {
@@ -70,21 +231,86 @@ class ServiceRepository implements ServiceRepositoryInterface
         $service->business_id = session('service');
         $service->save();
         
-        foreach($request->image as $image)
+        if($request->image != null)
         {
-            $photo = new Photo();
-            $photo->path = $image->store('photos');
-            $photo->photoable_type = 'App\Models\Service';
-            $photo->photoable_id = $service->id;
-            $photo->save();
+            foreach($request->image as $image)
+            {
+                $photo = new Photo();
+                $photo->path = $image->store('photos');
+                $photo->photoable_type = 'App\Models\Service';
+                $photo->photoable_id = $service->id;
+                $photo->save();
+            }
         }
 
         return $service;
     }
 
+    public function editService($request)
+    {
+        Service::where('id', $request->idService)->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'people_from' => $request->minPeople,
+            'people_to' => $request->maxPeople,
+            'price_from' => $request->priceFrom,
+            'price_to' => $request->priceTo,
+            'unit' => $request->unit,
+            'size' => $request->size,
+        ]);
+        
+        if($request->image != null)
+        {
+            foreach($request->image as $image)
+            {
+                $photo = new Photo();
+                $photo->path = $image->store('photos');
+                $photo->photoable_type = 'App\Models\Service';
+                $photo->photoable_id = $request->idService;
+                $photo->save();
+            }
+        }
+
+        return Service::with(['photos', 'business', 'reservations'])->find($request->idService);
+    }
+
+    public function getPartyCategory()
+    {
+        return GroupBusiness::with(['groupCategory' => function($q){ 
+            $q->where('type', 'business')->with('category');
+            } 
+        ])->where('business_id', session('service'))->where('name', 'party')->get();
+    }
+
+    public function getAdditionalCategory()
+    {
+        return GroupBusiness::with(['groupCategory' => function($q){ 
+            $q->where('type', 'business')->with('category');
+            } 
+        ])->where('business_id', session('service'))->where('name', 'additional')->get();
+    }
+
+    public function getUserCategory()
+    {
+        return GroupBusiness::with(['groupCategory' => function($q){ 
+            $q->where('type', 'business')->with('category');
+            } 
+        ])->where('business_id', session('service'))->where('name', 'user')->get();
+    }
+
+    public function editBusiness($id)
+    {
+        return Business::with(['city', 'mainCategory', 'social', 'openingHours', 'photos','comments.user.photos','comments.user.contactable','questionsAndAnswers','address','users.photos','services.photos','contactable','categories.category'])->find($id);
+    }
+
     public function deleteService($id)
     {
         return Service::where('id', $id)->delete();  
+    }
+
+    public function deleteBusiness($id)
+    {
+        return Business::where('id', $id)->delete();  
     }
     
     public function getServices()
@@ -94,7 +320,7 @@ class ServiceRepository implements ServiceRepositoryInterface
 
     public function getServiceDetails($id)
     {
-        return Service::with(['photos', 'reservations'])->find($id);  
+        return Service::with(['photos', 'business', 'reservations'])->find($id);  
     }
 
     public function getEditServiceDetails($id)
@@ -108,7 +334,7 @@ class ServiceRepository implements ServiceRepositoryInterface
 
     public function getDetailsReservations($id)
     {
-        return Reservation::with(['service', 'event.user.contactable'])->where('service_id', $id)->where('status', 'Oczekiwanie na akceptację')->get();
+        return Reservation::with(['service', 'event.user.contactable'])->where('service_id', $id)->where('status', 'Oczekiwanie na akceptację')->paginate(2);
     }
 
     public function getDetailsReservationsFilters($request)
@@ -136,7 +362,7 @@ class ServiceRepository implements ServiceRepositoryInterface
             $reservations->where('status', $request->status);
         }
                                     
-        return $reservations->get();
+        return $reservations->paginate(2);
     }
     
     public function setReadNotifications($notifications)

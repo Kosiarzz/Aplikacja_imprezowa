@@ -168,6 +168,42 @@ input[type=file]{
 
 }
 
+
+.guestBox{
+    width:330px;
+    height: 70px;
+    background-color: #fff;
+    padding:5px 0;
+    margin-right:10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 9px -5px rgba(66, 68, 90, 1);
+}
+
+.guestBoxIcon{
+    float:left;
+    padding:15px 0 0 15px;
+}
+
+.guestBoxIcon i{
+    font-size:30px;
+    cursor:default;
+}
+
+.guestBoxRight{
+    float:right;
+    text-align:right;
+    padding:0 10px 0 0;
+}
+
+.guestBoxNubmer{
+    font-size:24px;
+}
+
+.guestBoxText{
+    font-size:17px;
+}
+
+
 .nameGroupTask{
     color: #000;
     font-size: 20px;
@@ -294,10 +330,9 @@ input[type=file]{
 }   
 
 .indexBoxEvent{
-    width: 32%;
+    width: 370px;
     height: 150px;
     border-radius: 4px;
-    margin-right: 15px;
     margin-bottom: 15px;
     color:black;
     display: flex;
@@ -308,35 +343,62 @@ input[type=file]{
     background-color: #fff;
 }
 
+.indexBoxEventText{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    padding-bottom:5px;
+}
+
+.indexBoxEventNumberText{
+    padding-left:15px;
+    color:#656d79;
+}
+
 .indexBoxEventNumber{
-    width: 90%;
-    height: 110px;
-    display: flex;
-    justify-content: left;
     align-items: center;
     margin-left: 20px;
     padding-right: 20px;
     font-size:20px;
-    color:#000 ;
+    color:#000;
+}
+
+.indexBoxEventNumberGreen{
+    color:#91cc75;
+}
+
+.indexBoxEventNumberBlue{
+    color:#5c7bd9;
+}
+
+.indexBoxEventNumberGold{
+    color:#fac858;
+}
+
+.percentageEvent{
+    padding-left:15px;
+    padding-bottom:10px;
+    color:#656d79;
 }
 
 .indexBoxEventName{
     width: 100%;
-    height: 40px;
     display: flex;
     justify-content: left;
-    padding-left: 20px;
-    padding-top: 20px;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom:10px;
     font-size:25px;
     color:#000;
 }
 
 .indexBoxReservation{
-    width: 32%;
-    height: 100px;
+    width: 30%;
+    min-height: 100px;
     border-radius: 4px;
     margin-right: 15px;
     margin-bottom: 15px;
+    padding:5px;
     color:black;
     display: flex;
     flex-direction: column;
@@ -364,8 +426,66 @@ input[type=file]{
     color:#000;
 }
 
-.progress-bar{
- 
+.timeName{
+    color:#000;
+    font-weight:400;
+}
+
+.fc-today-button{
+    background:#2c3c50!important;
+    color:#fff!important;
+    border:0!important;
+    margin-right:15px!important;
+    width:60px!important;
+    font-weight: 300!important;
+}
+
+.fc-prev-button{
+    background:#2c3c50!important;
+    color:#fff!important;
+    border:0!important;
+    border-radius: 5px 0 0 5px!important;
+    margin:0!important;
+    padding:0!important;
+    width:50px!important;
+}
+
+.fc-next-button{
+    background:#2c3c50!important;
+    color:#fff!important;
+    border:0!important;
+    margin:0!important;
+    padding:0!important;
+    width:50px!important;
+    border-radius:0 5px 5px 0!important; 
+}
+
+.fc-next-button:hover, .fc-prev-button:hover{
+    background-color: #496180!important;
+}
+
+.progressSize{
+    width:100%;
+}
+
+.progress{
+    margin-bottom:10px; 
+    margin-left:15px; 
+    margin-right:15px; 
+    height:10px!important;
+    background-color: #f8f8f7;
+}
+
+.progress-bar-green{
+    background-color: #91cc75!important;
+}
+
+.progress-bar-blue{
+    background-color: #5c7bd9!important;
+}
+
+.progress-bar-gold{
+    background-color: #fac858!important;
 }
 
 .calendar{
@@ -401,6 +521,14 @@ input[type=file]{
     font-size:22px;
 }
 
+.table-button{
+    text-align:left;
+}   
+
+.table-button:hover{
+    background:#fff;
+}
+
 .serviceBoxBusiness{
     background-color: #fff;
     width: 500px;
@@ -420,10 +548,14 @@ input[type=file]{
     color:#fff;
 }
 
+html{
+    min-height: 100%;
+}
 
 body {
     font-family: inherit!important;
-    background-color: #eff3f6!important;
+    background: #f4f7fa!important;
+    height: 100%;
     }
     @media (min-width: 991.98px) {
     main {
@@ -464,10 +596,26 @@ body {
 
 
 //BUSINESS
+.businessBoxButtonCategory{
+    background-color: #fff;
+    width: 300px;
+    height: 100px;
+    border-radius: 10px;
+    border:1px solid rgba(0, 0, 0, 0.13);
+    margin-right: 15px;
+    margin-bottom: 15px;
+    font-size:25px;
+    color:black;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    text-decoration: none;
+}
 
 .businessBoxButton{
     background-color: #fff;
-    width: 100%;
+    width: 300px;
     height: 100px;
     border-radius: 10px;
     border:1px solid rgba(0, 0, 0, 0.13);

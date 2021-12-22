@@ -13,6 +13,8 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\FullCalenderController;
 use App\Http\Controllers\PdfController;
+
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -101,20 +103,24 @@ Route::middleware(['auth','verified'])->group(function()
         Route::post('/firma/usługa/daty/kalendarz/akcja', [App\Http\Controllers\FullCalenderController::class, 'actionService']);
         Route::get('/firma/usługa/rezerwacje', [App\Http\Controllers\ServiceController::class, 'reservations'])->name('service.reservations');
         Route::get('/firma/usługa/rezerwacje/{id}/{title}', [App\Http\Controllers\ServiceController::class, 'reservationsDetails'])->name('service.reservationsDetails');
-        Route::post('/firma/usługa/rezerwacje/filtry', [App\Http\Controllers\ServiceController::class, 'reservationDetailsFilters'])->name('service.reservationDetailsFilters');
+        Route::get('/firma/usługa/rezerwacje/filtry', [App\Http\Controllers\ServiceController::class, 'reservationDetailsFilters'])->name('service.reservationDetailsFilters');
         Route::get('/firma/usługa/powiadomienia', [App\Http\Controllers\ServiceController::class, 'notifications'])->name('service.notifications');
         Route::get('/firma/usługa/statystyki', [App\Http\Controllers\ServiceController::class, 'stats'])->name('service.stats');
         Route::get('/firma/usługa/podgląd', [App\Http\Controllers\ServiceController::class, 'preview'])->name('service.preview');
         Route::get('/firma/usługa/podgląd-usługi', [App\Http\Controllers\ServiceController::class, 'previewService'])->name('service.previewService');
 
-        Route::get('/firma/usługa/edycja/{id}', [App\Http\Controllers\ServiceController::class, 'serviceEdit'])->name('service.serviceEdit');
+        Route::get('/firma/usługa/usuwanie/{id}', [App\Http\Controllers\ServiceController::class, 'businessDelete'])->name('service.businessDelete');
+        Route::get('/firma/usługa/edycja/{id}', [App\Http\Controllers\ServiceController::class, 'businessEdit'])->name('service.businessEdit');
+        Route::post('/firma/usługa/edycja/zapisz', [App\Http\Controllers\ServiceController::class, 'businessEditSave'])->name('service.businessEditSave');
+
+        Route::get('/firma/usługa/oferta/edycja/{id}', [App\Http\Controllers\ServiceController::class, 'serviceEdit'])->name('service.serviceEdit');
         Route::get('/firma/usługa/usuń/{id}', [App\Http\Controllers\ServiceController::class, 'serviceDelete'])->name('service.serviceDelete');
         Route::get('/firma/usługa/nowa', [App\Http\Controllers\ServiceController::class, 'serviceAdd'])->name('service.serviceAdd');
         Route::get('/firma/usługa/podgląd-usługi/{id}', [App\Http\Controllers\ServiceController::class, 'serviceDetails'])->name('service.serviceDetails');
 
         Route::post('/firma/usługa/nowa/dodawanie', [App\Http\Controllers\ServiceController::class, 'addService'])->name('addService');
-
-   });
+        Route::post('/firma/usługa/nowa/edycja', [App\Http\Controllers\ServiceController::class, 'editService'])->name('editService');
+    });
 
     Route::middleware(['can:isUser'])->group(function()
     {

@@ -4,23 +4,51 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="row section">
-        <form method="POST" action="{{ route('addService') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('editService') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="sectionTittle">
                     <div class="textTittle">
                         
                         @if($business->name_category == "lokal")
-                            Wynajmowana przestrzeń
+                            Edycja wynajmowanej przestrzeni
                         @elseif($business->name_category == "music" || $business->name_category == "photo")
-                            Oferowana usługa
+                            Edycja oferty
                         @endif
                     </div>
-                    <div class="showSectionButton"><a class="btn btn-info showSection" data-name="serviceSection">></a></div>
-                
                 </div> 
                 <div id="serviceSection">
             
-            <div class="form-group row mt-4">
+
+                <div class="form-group row mt-4">
+                <label for="titleService" class="col-md-4 col-form-label text-md-right">Tytuł</label>
+
+                <div class="col-md-6">
+                    <input id="titleService" type="text" class="form-control @error('titleService') is-invalid @enderror" name="title" value="{{ $business->services[0]->title }}">
+
+                    @error('titleService')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="descriptionService" class="col-md-4 col-form-label text-md-right">Opis</label>
+
+                <div class="col-md-6">
+                    <textarea id="descriptionService" class="form-control @error('descriptionService') is-invalid @enderror" style="height:120px;" name="description">{{ $business->services[0]->description }}</textarea>
+
+                    @error('descriptionService')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+
+            <div class="form-group row">
                 <label for="priceFrom" class="col-md-4 col-form-label text-md-right">Cena od</label>
 
                 <div class="col-md-6">
@@ -62,41 +90,12 @@
                 </div>
             </div>
 
-
-            <div class="form-group row">
-                <label for="titleService" class="col-md-4 col-form-label text-md-right">Tytuł</label>
-
-                <div class="col-md-6">
-                    <input id="titleService" type="text" class="form-control @error('titleService') is-invalid @enderror" name="title" value="{{ $business->services[0]->title }}">
-
-                    @error('titleService')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="descriptionService" class="col-md-4 col-form-label text-md-right">Opis</label>
-
-                <div class="col-md-6">
-                    <input id="descriptionService" type="text" class="form-control @error('descriptionService') is-invalid @enderror" name="description" value="{{ $business->services[0]->description }}">
-
-                    @error('descriptionService')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
-            
             <div class="form-group row">
                 <label for="minPeople" class="col-md-4 col-form-label text-md-right">
                 @if($business->name_category == "lokal")
                     Minimalna ilość osób
                 @elseif($business->name_category == "music" || $business->name_category == "photo")
-                    Ilość osób w zespole
+                   Osób w zespole od
                 @endif
                 </label>
 
@@ -110,9 +109,14 @@
                     @enderror
                 </div>
             </div>
-            @if($business->name_category == "lokal")
             <div class="form-group row">
-                <label for="maxPeople" class="col-md-4 col-form-label text-md-right">Maksymalna ilość osób</label>
+                <label for="maxPeople" class="col-md-4 col-form-label text-md-right">
+                    @if($business->name_category == "lokal")
+                        Maksymalna ilość osób
+                    @elseif($business->name_category == "music" || $business->name_category == "photo")
+                        Osób w zespole do
+                    @endif
+                </label>
 
                 <div class="col-md-6">
                     <input id="maxPeople" type="number" min="0" class="form-control @error('maxPeople') is-invalid @enderror" name="maxPeople" value="{{ $business->services[0]->people_to }}">
@@ -124,7 +128,7 @@
                     @enderror
                 </div>
             </div>
-            
+            @if($business->name_category == "room")
             <div class="form-group row">
                 <label for="sizeService" class="col-md-4 col-form-label text-md-right">Wielkość [m^2]</label>
 
@@ -141,7 +145,7 @@
             @endif
             <div class="form-group row">
                 <label for="image" class="col-md-4 col-form-label text-md-right">
-                    @if($business->name_category == "local")
+                    @if($business->name_category == "room")
                         Zdjęcia sali
                     @elseif($business->name_category == "music" || $business->name_category == "photo")
                         Zdjęcia związane z usługą
@@ -157,8 +161,9 @@
                     </span>
                     @enderror
                 </div>
+                <input type="hidden" name="idService" value="{{$business->services[0]->id}}">
             </div>
-            <button>Dodaj usługę</button>
+            <button class="btn btn-primary">Zapisz zmiany</button>
 </form>
     </div>
 </div>

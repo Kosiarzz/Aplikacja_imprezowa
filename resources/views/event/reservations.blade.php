@@ -8,7 +8,11 @@
       @foreach($reservations as $reservation)
       <div class="row groupList p-1 mb-3">
          <div class="col-md-4 p-0">
+            @if($reservation->service->business->photos->isEmpty())
+            <img src="{{asset('storage/photos/test.png')}}" class="card-img" alt="zdjęcie">
+            @else
             <img src="{{asset('storage/'.$reservation->service->business->photos->first()->path)}}" class="card-img" alt="zdjęcie">
+            @endif
          </div>
          <div class="col-md-8">
             <div class="row">

@@ -17,6 +17,7 @@ use App\Models\StatisticsCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class EventRepository
 {
@@ -33,6 +34,26 @@ class EventRepository
     public function getStatisticCategories($categoryName)
     {
         return StatisticsCategory::where('type', $categoryName)->with(['category'])->orderBy('stats','desc')->get();
+    }
+
+    public function statusTask($request)
+    {
+        Task::where('id', $request->id)->update(['status' => $request->status]);
+    }
+
+    public function statusFinance($request)
+    {
+        Cost::where('id', $request->id)->update(['status' => $request->status]);
+    }
+
+    public function editBudgetFinances($request)
+    {
+        Event::where('id', session('event'))->update(['budget' => $request->budget]);
+    }
+
+    public function statusGuest($request)
+    {
+        Guest::where('id', $request->id)->update(['confirmation' => $request->status]);
     }
 
     public function createEvent($request)
@@ -331,6 +352,42 @@ class EventRepository
         ];
     }
 
+    public function getTodayTasks()
+    {
+        $today = Carbon::now();
+        $today = Carbon::createFromFormat('Y-m-d', $today->toDateString()); 
+        
+        return GroupEvent::with(['costs' => function($q) use($today){
+                    $q->whereDate('date_payment', '=', $today->toDateString());
+                }, 
+                
+                'tasks' => function($q) use ($today){
+                    $q->whereDate('end_task', '=', $today->toDateString());
+                }])
+                ->where( function($query){
+                    $query->where('type', '=', 'task')
+                            ->orWhere('type', '=', 'cost');
+                })->where('event_id', session('event'))->get();
+    }
+
+    public function getTommorowTasks()
+    {
+        $tomorrow = Carbon::now();
+        $tomorrow->addDay(1);
+        $tomorrow = Carbon::createFromFormat('Y-m-d', $tomorrow->toDateString()); 
+
+        return GroupEvent::with(['costs' => function($q) use($tomorrow){
+                    $q->whereDate('date_payment', '=', $tomorrow->toDateString());
+                }, 
+                'tasks' => function($q) use ($tomorrow){
+                    $q->whereDate('end_task', '=', $tomorrow->toDateString());
+                }])
+                ->where( function($query){
+                    $query->where('type', '=', 'task')
+                            ->orWhere('type', '=', 'cost');
+                })->where('event_id', session('event'))->get();
+    }
+
     public function getGuests()
     {
         return GroupEvent::with(['guests'])->where('type','guest')->where('event_id', session('event'))->get();
@@ -485,27 +542,7 @@ class EventRepository
     {
         $task = Task::find($request->id);
         $task->delete();
-    }
-
-    public function statusTask($request)
-    {
-        Task::where('id', $request->id)->update(['status' => $request->status]);
-    }
-
-    public function statusFinance($request)
-    {
-        Cost::where('id', $request->id)->update(['status' => $request->status]);
-    }
-
-    public function editBudgetFinances($request)
-    {
-        Event::where('id', session('event'))->update(['budget' => $request->budget]);
-    }
-
-    public function statusGuest($request)
-    {
-        Guest::where('id', $request->id)->update(['confirmation' => $request->status]);
-    }
+    }   
 
     public function editFinance($request)
     {

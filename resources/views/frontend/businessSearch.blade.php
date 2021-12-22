@@ -31,7 +31,11 @@
       <a href="{{route('businessDetails',['id' => $object->id])}}" class="row col-12 groupList p-2 mb-3" style="height:215px;">
                 
             <div class="col-md-4 p-0 searchPage">
+               @if($object->photos->isEmpty())
+               <img src="{{asset('storage/photos/test.png')}}" class="card-img" alt="zdjęcie">
+               @else
                <img src="{{asset('storage/'.$object->photos->first()->path)}}" class="card-img" alt="zdjęcie">
+               @endif
             </div>
             <div class="col-md-8">
                 <div class="row">

@@ -20,6 +20,8 @@ use App\Models\QuestionAndAnswer;
 use App\Models\StatisticsCategory;
 use App\Models\OpeningHours;
 use App\Interfaces\BusinessRepositoryInterface;
+use App\Models\GroupCategory;
+use App\Models\GroupBusiness;
 use Illuminate\Support\Facades\Auth;
 
 class BusinessRepository implements BusinessRepositoryInterface
@@ -141,23 +143,44 @@ class BusinessRepository implements BusinessRepositoryInterface
 
         if($request->party != null)
         {
+            $groupBusiness = new GroupBusiness;
+            $groupBusiness->name = 'party';
+            $groupBusiness->type = 'party';
+            $groupBusiness->business_id = $business->id;
+            $groupBusiness->save();
             foreach($request->party as $categoryId)
             {
-                $category = new BusinessCategory;
-                $category->category_id = $categoryId;
-                $business->categories()->save($category);
+                $groupCategory = new GroupCategory;
+                $groupCategory->type = 'business';
+                $groupCategory->group_id = $groupBusiness->id;
+                $groupCategory->category_id = $categoryId;
+                $groupCategory->save();
             }
         }
 
         if($request->additional != null)
         {
+            $groupBusiness = new GroupBusiness;
+            $groupBusiness->name = 'additional';
+            $groupBusiness->type = 'additional';
+            $groupBusiness->business_id = $business->id;
+            $groupBusiness->save();
+
             foreach($request->additional as $categoryId)
             {
-                $category = new BusinessCategory;
-                $category->category_id = $categoryId;
-                $business->categories()->save($category);
+                $groupCategory = new GroupCategory;
+                $groupCategory->type = 'business';
+                $groupCategory->group_id = $groupBusiness->id;
+                $groupCategory->category_id = $categoryId;
+                $groupCategory->save();
             }
         }
+
+        $groupBusiness = new GroupBusiness;
+        $groupBusiness->name = 'user';
+        $groupBusiness->type = 'user';
+        $groupBusiness->business_id = $business->id;
+        $groupBusiness->save();
 
         if($request->user != null){
             foreach($request->user as $categoryName)
@@ -166,14 +189,16 @@ class BusinessRepository implements BusinessRepositoryInterface
                     "name" => $categoryName,
                 ]);
 
-                $statisticCategory = StatisticsCategory::firstOrCreate([
+                StatisticsCategory::firstOrCreate([
                     "category_id" => $category->id,
                     "type" => $request->type,
                 ])->increment('stats', 1);
 
-                $BusinessCategory = new BusinessCategory;
-                $BusinessCategory->category_id = $category->id;
-                $business->categories()->save($BusinessCategory);
+                $groupCategory = new GroupCategory;
+                $groupCategory->type = 'business';
+                $groupCategory->group_id = $groupBusiness->id;
+                $groupCategory->category_id = $categoryId;
+                $groupCategory->save();
             }
         }
 
@@ -181,15 +206,17 @@ class BusinessRepository implements BusinessRepositoryInterface
         {
             foreach($request->popular as $categoryId)
             {
-                $BusinessCategory = new BusinessCategory;
-                $BusinessCategory->category_id = $categoryId;
+                $groupCategory = new GroupCategory;
+                $groupCategory->type = 'business';
+                $groupCategory->group_id = $groupBusiness->id;
+                $groupCategory->category_id = $categoryId;
+                $groupCategory->save();
 
-                $statisticCategory = StatisticsCategory::firstOrCreate([
+                StatisticsCategory::firstOrCreate([
                     "category_id" => $categoryId,
                     "type" => $request->type,
                 ])->increment('stats', 1);
 
-                $business->categories()->save($BusinessCategory);
             }
         }
 

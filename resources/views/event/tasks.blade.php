@@ -4,12 +4,17 @@
    <div class="titlePage">
          Lista zadań   
    </div>
+   
+   <div class="row col-12 mt-4 groupList p-0 m-0" id="dasdsa">
+         <div class="col-12 mt-2">Pobierz plik z zadaniami</div>
+         <a class="btn btn-danger ml-2 mt-2 mb-2" data-toggle="modal" data-target="#pdfModal">Pobierz pdf</a>
+      </div>
    <div class="row justify-content-center">
 
    <div class="row col-12">
       @foreach($tasks as $groupTask)
-      <div class="list-group col-12 groupList mt-4 mb-4 p-2">
-         <div style="height:50px; width:100%; padding-top:7px; padding-left:7px; font-size:20px;">
+      <div class="list-group col-12 groupList mt-3 mb-3 p-2">
+         <div style="height:50px; width:100%; padding-top:10px; padding-left:7px; font-size:20px;">
             {{$groupTask->name}} ({{ count($groupTask->tasks->where('status', 1)) }}/{{ count($groupTask->tasks) }})
             <div class="float-right"> 
                <a class="dataGroup mr-3" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$groupTask->id}}" data-name="{{$groupTask->name}}" data-color="{{$groupTask->color}}"><i class="fas fa-pen"></i></a>
@@ -61,7 +66,7 @@
                </tr>
                @endforeach
                <tr class="border-top">
-                  <td colspan="2" style="text-align:left;"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTask{{$groupTask->id}}">Dodaj zadanie</button></td>
+                  <td colspan="2" class="table-button"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTask{{$groupTask->id}}">Dodaj zadanie</button></td>
                </tr>
             </tbody>
          </table>
@@ -162,14 +167,10 @@
          </div>
       </div>
 
-      <div class="row col-12 mt-4 groupList">
-         <div class="col-12 mt-2">Pobierz plik z zadaniami</div>
-         <a class="btn btn-danger ml-2 mt-2 mb-2" data-toggle="modal" data-target="#pdfModal">Pobierz pdf</a>
-      </div>
    </div>
 </div>
 <!-- PDF task modal -->
-<div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">
       <div class="modal-content">
          <div class="modal-header">
@@ -194,7 +195,7 @@
                </div>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                  <button type="submit" class="btn btn-primary">Pobierz pdf</button>
+                  <button type="submit" class="btn btn-primary" id="pdfexport">Pobierz pdf</button>
                </div>
             </form>
          </div>
@@ -413,8 +414,8 @@
    });
    
    
-   $('#pdfExport').on('click', function () {
-      $('#pdfModal').hide();
+   $('#pdfexport').on('click', function () {
+
    });
    
 </script>

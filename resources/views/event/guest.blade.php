@@ -4,17 +4,160 @@
    <div class="titlePage mb-3">
       Lista gości
    </div>
+   <div class="row col-12 mt-3 p-2 mb-5">
+      <div class="col-4 stasGuestsBox">
+         <div class="guestBox mb-2">
+            <div class="guestBoxIcon">
+               <i class="fas fa-users"></i>
+            </div>
+            <div class="guestBoxRight">
+                <div class="guestBoxNubmer">
+                {{$guestsDetails['adults'] + $guestsDetails['children']}}
+                </div>
+                <div class="guestBoxText">
+                Liczba gości na przyjęciu
+                </div>
+            </div>
+        </div>
+
+        <div class="guestBox mb-2">
+            <div class="guestBoxIcon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <div class="guestBoxRight">
+                <div class="guestBoxNubmer">
+                {{$guestsDetails['adults']}}
+                </div>
+                <div class="guestBoxText">
+                  Dorosłych
+                </div>
+            </div>
+        </div>
+
+        <div class="guestBox">
+            <div class="guestBoxIcon">
+               <i class="fas fa-baby"></i>
+            </div>
+            <div class="guestBoxRight">
+                <div class="guestBoxNubmer">
+                {{$guestsDetails['children']}}
+                </div>
+                <div class="guestBoxText">
+                Dzieci
+                </div>
+            </div>
+        </div>
+         
+
+      </div>
+      <div class="col-4 stasGuestsBox">  
+
+         <div class="guestBox mb-2">
+            <div class="guestBoxIcon">
+                <i class="far fa-check-circle"></i>
+            </div>
+            <div class="guestBoxRight">
+                <div class="guestBoxNubmer">
+                {{$guestsDetails['confirmation']}}
+                </div>
+                <div class="guestBoxText">
+                Potwierdzenia
+                </div>
+            </div>
+        </div>
+
+         <div class="guestBox mb-2">
+            <div class="guestBoxIcon">
+                <i class="far fa-envelope"></i>
+            </div>
+            <div class="guestBoxRight">
+                <div class="guestBoxNubmer">
+                {{$guestsDetails['invitation']}}
+                </div>
+                <div class="guestBoxText">
+                Wysłanych zaproszeń
+                </div>
+            </div>
+        </div>
+
+        <div class="guestBox mb-2">
+            <div class="guestBoxIcon">
+                <i class="far fa-check-circle" style="color:#ddd;"></i>
+            </div>
+            <div class="guestBoxRight">
+                <div class="guestBoxNubmer">
+                {{$guestsDetails['nonConfirmation']}}
+                </div>
+                <div class="guestBoxText">
+                Niepotwierdzonych
+                </div>
+            </div>
+        </div>
+
+      </div>
+      
+      <div class="col-4 stasGuestsBox">  
+
+         <div class="guestBox mb-2">
+            <div class="guestBoxIcon">
+                <i class="fas fa-bed"></i>
+            </div>
+            <div class="guestBoxRight">
+                <div class="guestBoxNubmer">
+                {{$guestsDetails['accommodation']}}
+                </div>
+                <div class="guestBoxText">
+                Nocleg
+                </div>
+            </div>
+        </div>
+
+        <div class="guestBox mb-2">
+            <div class="guestBoxIcon">
+                <i class="fas fa-utensils"></i>
+            </div>
+            <div class="guestBoxRight">
+                <div class="guestBoxNubmer">
+                {{$guestsDetails['diet']}}
+                </div>
+                <div class="guestBoxText">
+                Specjalna dieta
+                </div>
+            </div>
+        </div>
+
+        <div class="guestBox mb-2">
+            <div class="guestBoxIcon">
+                <i class="fas fa-bus-alt"></i>
+            </div>
+            <div class="guestBoxRight">
+                <div class="guestBoxNubmer">
+                {{$guestsDetails['transport']}}
+                </div>
+                <div class="guestBoxText">
+                Transport
+                </div>
+            </div>
+        </div>
+
+      </div>
+      
+   </div>
+   <div class="row col-12 mt-4 mb-4 groupList">
+      <div class="col-12 mt-2">Pobierz plik z listą gości</div>
+      <a class="btn btn-danger ml-2 mt-2 mb-2" data-toggle="modal" data-target="#pdfModal">Pobierz pdf</a>
+   </div>
    <div class="row justify-content-center">
       
       <div class="row col-12">
          @foreach($guests as $guestGroup)
          <div class="row col-12 mt-2 groupList p-2 mb-4">
-            <div style="height:50px; width:100%; padding-top:5px; font-size:20px;">
+            <div style="height:50px; width:100%; padding-top:10px; font-size:20px;">
                <div class="float-left pl-3">{{$guestGroup->name}} ({{ count($guestGroup->guests->where('confirmation', 1)) }}/{{ count($guestGroup->guests) }})</div>
                <div class="float-right"> 
                   <a class="dataGroup mr-3" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$guestGroup->id}}" data-name="{{$guestGroup->name}}" data-color="{{$guestGroup->color}}"><i class="fas fa-pen"></i> </a>
                   <a class="deleteGroup mr-2" data-toggle="modal" data-target="#exampleModalGroupDelete" data-id="{{$guestGroup->id}}"><i class="fas fa-trash-alt"></i></a>
-                  <a class="showGroup mr-3" data-name="groupModal{{$guestGroup->id}}"><i class="fas fa-compress-alt"></i></a>
+                  <a class="showGroup mr-3 ml-1" data-name="groupModal{{$guestGroup->id}}"><i class="fas fa-compress-alt"></i></a>
                </div>
             </div>
             <table id="groupModal{{$guestGroup->id}}" class="table table-hover mb-0">
@@ -83,7 +226,7 @@
                      <td>
                         {{$guest->type}}
                      </td>
-                     <td>{{str_limit($guest->note,20)}}</td>
+                     <td>{{str_limit($guest->note,0)}}</td>
                      <td>
                         <a class="data" data-toggle="modal" data-target="#exampleModal" data-groupId="{{$guestGroup->id}}" data-id="{{$guest->id}}" data-name="{{$guest->name}}" data-surname="{{$guest->surname}}" data-invitation="{{$guest->invitation}}" data-confirmation="{{$guest->confirmation}}" data-accommodation="{{$guest->accommodation}}" data-diet="{{$guest->diet}}" data-type="{{$guest->type}}" data-advance="{{$guest->advance}}" data-transport="{{$guest->transport}}" data-note="{{$guest->note}}"><i class="fas fa-pen"></i> </a>
                         <a class="delete ml-4 mr-4" data-toggle="modal" data-target="#exampleModalDelete" data-id="{{$guest->id}}"><i class="fas fa-trash-alt"></i></a>
@@ -91,7 +234,7 @@
                   </tr>
                   @endforeach
                   <tr class="border-top">
-                     <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTask{{$guestGroup->id}}">Dodaj gościa</button></td>
+                     <td class="table-button"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTask{{$guestGroup->id}}">Dodaj gościa</button></td>
                   </tr>
                </tbody>
             </table>
@@ -254,53 +397,7 @@
          </div>
       </div>
    </div>
-   <div class="row col-12 mt-3 groupList p-2">
-      <div class="col-4 stasGuestsBox">
-         <div class="text">Podsumowanie</div>
-         <div class="allGuests">
-            <div class="numberAllGuests">{{$guestsDetails['adults'] + $guestsDetails['children']}}</div>
-            <div class="textAllGuests">Liczba gości na przyjęciu</div>
-         </div>
-         <div class="statsText">
-            <div class="numberConfirmText">Potwierdzenia</div>
-            <div class="numberConfirm">{{$guestsDetails['confirmation']}}</div>
-         </div>
-      </div>
-      <div class="col-4 stasGuestsBox border-left border-right">  
-         <div class="statsText">
-            <div class="numberConfirmText">Wysłanych zaproszeń</div>
-            <div class="numberConfirm">{{$guestsDetails['invitation']}}</div>
-         </div>
-         <div class="statsText">
-            <div class="numberConfirmText">Dorosłych</div>
-            <div class="numberConfirm">{{$guestsDetails['adults']}}</div>
-         </div>
-         <div class="statsText">
-            <div class="numberConfirmText">Dzieci</div>
-            <div class="numberConfirm">{{$guestsDetails['children']}}</div>
-         </div>
-      </div>
-      
-      <div class="col-4 stasGuestsBox">  
-         <div class="statsText">
-            <div class="numberConfirmText">Nocleg</div>
-            <div class="numberConfirm">{{$guestsDetails['accommodation']}}</div>
-         </div>
-         <div class="statsText">
-            <div class="numberConfirmText">Specjalna dieta</div>
-            <div class="numberConfirm">{{$guestsDetails['diet']}}</div>
-         </div>
-         <div class="statsText">
-            <div class="numberConfirmText">Transport</div>
-            <div class="numberConfirm">{{$guestsDetails['transport']}}</div>
-         </div>
-      </div>
-      
-   </div>
-   <div class="row col-12 mt-4 groupList">
-      <div class="col-12 mt-2">Pobierz plik z listą gości</div>
-      <a class="btn btn-danger ml-2 mt-2 mb-2" data-toggle="modal" data-target="#pdfModal">Pobierz pdf</a>
-   </div>
+
 </div>
 <!-- PDF task modal -->
 <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

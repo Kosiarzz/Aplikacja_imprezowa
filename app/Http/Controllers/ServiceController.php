@@ -16,18 +16,27 @@ use Illuminate\Support\Carbon;
 
 class ServiceController extends Controller
 {
-    public function __construct(ServiceRepositoryInterface $sRepository)
+    public function __construct(ServiceRepositoryInterface $sRepository, BusinessRepositoryInterface $bRepository)
     {
         $this->sRepository = $sRepository;
+        $this->bRepository = $bRepository;
     }
     
     public function index($id)
     {     
         $data = $this->sRepository->getBusinessDetails($id);
+        $rate = $this->sRepository->getRate($data);
+        $partyCategory = $this->sRepository->getPartyCategory();
+        $additionalCategory = $this->sRepository->getAdditionalCategory();
+        $userCategory = $this->sRepository->getUserCategory();
 
         session(['service' => $data->id]);
         return view('service.preview',[
-            'data' => $data,
+            'business' => $data,
+            'rate' => $rate,
+            'partyCategory' => $partyCategory,
+            'additionalCategory' => $additionalCategory,
+            'userCategory' => $userCategory,
         ]);
     }
 
@@ -57,22 +66,41 @@ class ServiceController extends Controller
     {     
         $reservations = $this->sRepository->getDetailsReservations($id);
 
-        return view('service.reservationsDetails', ['reservations' => $reservations, 'id' => $id,'title' => $title]);
+        return view('service.reservationsDetails', [
+            'reservations' => $reservations, 
+            'id' => $id,
+            'title' => $title,
+            'request' => null,
+        ]);
     }
 
     public function reservationDetailsFilters(Request $request)
     {     
+        //dd($request);
         $reservations = $this->sRepository->getDetailsReservationsFilters($request);
         
-        return view('service.reservationsDetails', ['reservations' => $reservations, 'id' => $request->serviceId, 'title' => $request->serviceTitle]);
+        return view('service.reservationsDetails', [
+            'reservations' => $reservations, 
+            'id' => $request->serviceId,
+            'title' => $request->serviceTitle,
+            'request' => $request
+        ]);
     }
 
     public function preview()
     {     
         $data = $this->sRepository->getDashboard();
+        $rate = $this->sRepository->getRate($data);
+        $partyCategory = $this->sRepository->getPartyCategory();
+        $additionalCategory = $this->sRepository->getAdditionalCategory();
+        $userCategory = $this->sRepository->getUserCategory();
 
         return view('service.preview',[
-            'data' => $data,
+            'business' => $data,
+            'rate' => $rate,
+            'partyCategory' => $partyCategory,
+            'additionalCategory' => $additionalCategory,
+            'userCategory' => $userCategory,
         ]);
     }
 
@@ -111,6 +139,51 @@ class ServiceController extends Controller
         return view('service.previewService', ['services' => $services]);
     }
 
+    public function businessDelete($id)
+    {     
+        $this->sRepository->deleteBusiness($id);
+        
+        $businesses = $this->bRepository->getAllBusiness();
+
+        return redirect()->route('business.index', ['businesses' => $businesses]);
+    }
+
+    public function businessEdit($id)
+    {     
+        $business = $this->sRepository->editBusiness($id);
+        $category = $this->bRepository->getCategory($business->name_category);
+        $categoryStats = $this->bRepository->getStatsCategory($business->name_category);
+        $categoryAdditional = $this->bRepository->getAdditionalCategory($business->name_category);
+        $categoryParty = $this->bRepository->getPartyCategory();
+        
+        return view('service.editBusiness', [
+            'business' => $business,
+            'category' => $category, 
+            'categoryStats' => $categoryStats,
+            'categoryAdditional' => $categoryAdditional,
+            'categoryParty' => $categoryParty,
+        ]);
+    }
+
+    public function businessEditSave(Request $request)
+    {     
+        $this->sRepository->businessEditSave($request);
+
+        $data = $this->sRepository->getDashboard();
+        $rate = $this->sRepository->getRate($data);
+        $partyCategory = $this->sRepository->getPartyCategory();
+        $additionalCategory = $this->sRepository->getAdditionalCategory();
+        $userCategory = $this->sRepository->getUserCategory();
+
+        return view('service.preview',[
+            'business' => $data,
+            'rate' => $rate,
+            'partyCategory' => $partyCategory,
+            'additionalCategory' => $additionalCategory,
+            'userCategory' => $userCategory,
+        ]);
+    }
+
     public function serviceAdd()
     {     
         $business = $this->sRepository->getMainCategory();
@@ -125,14 +198,17 @@ class ServiceController extends Controller
         return view('service.serviceDetails', ['service' => $service]);
     }
 
+    public function editService(Request $request)
+    {     
+        $service = $this->sRepository->editService($request);
+
+        return view('service.serviceDetails', ['service' => $service]);
+    }
+
     public function serviceDetails($id)
     {     
         $service = $this->sRepository->getServiceDetails($id);
 
         return view('service.serviceDetails', ['service' => $service]);
     }
-
-
-    
-
 }

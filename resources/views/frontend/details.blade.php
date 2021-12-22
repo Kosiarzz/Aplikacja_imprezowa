@@ -86,7 +86,7 @@
                     <img src="" width="250" height="121" class="mr-3" alt="SALA"><br>
                     {{$comment->user->name}} {{$comment->user->surname}}<br>
                     {{str_limit($comment->content,100)}}<br>
-                    rating: {{ $comment->rating }}<br>
+                    rating: {{ $comment->rating['value'] }}<br>
                 </div>
             </a>
         @endforeach

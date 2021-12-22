@@ -8,10 +8,11 @@
     
     <div class="row">
         @foreach($businesses as $business) 
-            <a href="{{route('service.index', ['id' => $business->id])}}" class="businessBoxButton">
+            <a href="{{route('service.index', ['id' => $business->id])}}" class="businessBoxButtonCategory">
                 <div class="businessBoxTitle">
-                    <div class=""
+                    <div class="">
                     {{$business->title}}
+                    </div>
                     <div class="businessBoxNotifications">
                     {{ count($business->notification->where('status', 0)) }}
                     </div>
@@ -19,7 +20,6 @@
                 
             </a>
         @endforeach
-        
     </div>
 </div>
 @endsection

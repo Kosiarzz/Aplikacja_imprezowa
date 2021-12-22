@@ -34,7 +34,11 @@ class EventController extends Controller
         $tasks = $this->dashboard->getTasksProgress();
         $guests = $this->dashboard->getGuestsProgress();
         $finances = $this->dashboard->getFinancesProgress();
+
+        $today = $this->eRepository->getTodayTasks();
+        $tomorrow = $this->eRepository->getTommorowTasks();
         
+
         if(!session('event')){
             $events = $this->eRepository->getEvents(Auth::user()->id);
             return view('user.events', ['events' => $events]);
@@ -45,6 +49,8 @@ class EventController extends Controller
             'tasks' => $tasks,
             'guests' => $guests,
             'finances' => $finances,
+            'today' => $today,
+            'tomorrow' => $tomorrow,
         ]);
     }
 
@@ -54,12 +60,17 @@ class EventController extends Controller
         $tasks = $this->dashboard->getTasksProgress();
         $guests = $this->dashboard->getGuestsProgress();
         $finances = $this->dashboard->getFinancesProgress();
+
+        $today = $this->eRepository->getTodayTasks();
+        $tomorrow = $this->eRepository->getTommorowTasks();
         
         return view('event.index', [
             'event' => $event,
             'tasks' => $tasks,
             'guests' => $guests,
             'finances' => $finances,
+            'today' => $today,
+            'tomorrow' => $tomorrow,
         ]);
     }
     
@@ -84,12 +95,17 @@ class EventController extends Controller
         $tasks = $this->dashboard->getTasksProgress();
         $guests = $this->dashboard->getGuestsProgress();
         $finances = $this->dashboard->getFinancesProgress();
+
+        $today = $this->eRepository->getTodayTasks();
+        $tomorrow = $this->eRepository->getTommorowTasks();
         
         return view('event.index', [
             'event' => $event,
             'tasks' => $tasks,
             'guests' => $guests,
             'finances' => $finances,
+            'today' => $today,
+            'tomorrow' => $tomorrow,
         ]);
     }
 

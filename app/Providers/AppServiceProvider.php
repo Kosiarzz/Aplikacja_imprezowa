@@ -62,7 +62,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $charts->register([
-            \App\Charts\ServiceChart::class
+            \App\Charts\ServiceChart::class,
+            \App\Charts\EventChart::class,
+            \App\Charts\CostChart::class,
         ]);
     }
 }

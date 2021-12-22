@@ -29,6 +29,11 @@ class Business extends Model
         'city_id',
     ];
 
+    public function groupBusiness()
+    {
+        return $this->hasMany(GroupBusiness::class, 'business_id');
+    }
+
     public function city()
     {
         return $this->belongsTo(City::class);

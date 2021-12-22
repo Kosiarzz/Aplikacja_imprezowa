@@ -6,7 +6,7 @@
       Wybierz rodzaj usługi
    </div>
       <div class="row mt-5">
-         <a href="{{route('business.register', 'room')}}" class="text-decoration-none businessBoxButton">
+         <a href="{{route('business.register', 'room')}}" class="text-decoration-none businessBoxButtonCategory">
             <div class="businessBoxButtonTitle">
                Budynek
             </div>
@@ -14,7 +14,7 @@
                Lokal, dworek, sala
             </div>
          </a>
-         <a href="{{route('business.register', 'music')}}" class="text-decoration-none businessBoxButton">
+         <a href="{{route('business.register', 'music')}}" class="text-decoration-none businessBoxButtonCategory">
             <div class="businessBoxButtonTitle">
                Muzyka
             </div>
@@ -22,7 +22,7 @@
                Zespół muzyczny, DJ
             </div>
          </a>
-         <a href="{{route('business.register', 'photo')}}" class="text-decoration-none businessBoxButton">
+         <a href="{{route('business.register', 'photo')}}" class="text-decoration-none businessBoxButtonCategory">
             <div class="businessBoxButtonTitle">
                Fotograf
             </div>
@@ -30,7 +30,7 @@
                Kamerzysta, fotograf, dron
             </div>
          </a>
-         <a href="{{route('business.register', 'decoration')}}" class="text-decoration-none businessBoxButton">
+         <a href="{{route('business.register', 'decoration')}}" class="text-decoration-none businessBoxButtonCategory">
             <div class="businessBoxButtonTitle">
                Dekoracje
             </div>
@@ -38,7 +38,7 @@
                Sale, samochody, napisy
             </div>
          </a>
-         <a href="{{route('business.register', 'attraction')}}" class="text-decoration-none businessBoxButton">
+         <a href="{{route('business.register', 'attraction')}}" class="text-decoration-none businessBoxButtonCategory">
             <div class="businessBoxButtonTitle">
                Atrakcje
             </div>

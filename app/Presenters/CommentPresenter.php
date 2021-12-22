@@ -12,15 +12,19 @@ trait CommentPresenter
         for($i=1; $i<=5; $i++)
         {
             if($value >= $i){
-                $str.='🞳';
+                $str.='<i class="fas fa-star" style="color:gold;"></i>';
             }
             else
             {
-                $str.='';
+                $str.='<i class="fas fa-star" style="color:gray;"></i>';
             }
         }
+        $data = [
+            'str' => $str,
+            'value' => $value,
+        ];
 
-        return $str;
+        return $data;
     }
 
 }

@@ -23,9 +23,8 @@
             dayNamesShort: ['Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota','Niedziela'],
             editable:false,
             header:{
-                left:'prev, today',
-                center:'title',
-                right:'next'
+                left:'title',
+                right:'today, prev, next'
             },
             events:'{{url("/")}}/uzytkownik/wydarzenie/daty/kalendarz',
             selectable:false,

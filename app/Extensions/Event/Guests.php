@@ -17,6 +17,7 @@ class Guests{
 
         $invitation = 0;
         $confirmation = 0;
+        $nonConfirmation = 0;
         $accommodation = 0;
         $transport = 0;
         $diet = 0;
@@ -34,6 +35,10 @@ class Guests{
                 if($guest->confirmation)
                 {
                     $confirmation++;
+                }
+                else
+                {
+                    $nonConfirmation++;
                 }
                 if($guest->accommodation)
                 {
@@ -62,6 +67,7 @@ class Guests{
         return [
             'invitation' => $invitation,
             'confirmation' => $confirmation,
+            'nonConfirmation' => $nonConfirmation,
             'accommodation' => $accommodation,
             'diet' => $diet,
             'transport' => $transport,

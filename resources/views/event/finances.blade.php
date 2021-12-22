@@ -5,7 +5,7 @@
       Zarządzanie finansami
    </div>
    <div class="row justify-content-center">
-      <div class="row col-12 mb-4 p-0">
+      <div class="row col-12 mb-1 p-0">
          <div class="indexBoxFinances">
             <a id="budget-box-edit" style="position: absolute; left:29%; top:8%;" data-toggle="modal" data-target="#budgetModal" data-budget="{{ $budgetDetails['budget'] }}">
                <i class="fas fa-pen"></i> 
@@ -30,14 +30,46 @@
                Pozostało do wydania
             </div>
             <div class="indexBoxFinancesNumber">
-               <span id="sumExpensesBudget" class="money">{{$budgetDetails['budget'] - $budgetDetails['sumExpenses'] }}</span> <span class="pln">zł</span>
+               @if(($sum = $budgetDetails['budget'] - $budgetDetails['sumExpenses']) < 0)
+                  <span id="sumExpensesBudget" class="money" style="color:red;">{{$budgetDetails['budget'] - $budgetDetails['sumExpenses'] }}</span>
+               @else
+                  <span id="sumExpensesBudget" class="money">{{$budgetDetails['budget'] - $budgetDetails['sumExpenses'] }}</span>
+               @endif
+               <span class="pln">zł</span>
             </div>
          </div>
       </div>
+
+
+      <div class="row col-12 mt-1 p-0">
+         <div class="indexBoxFinances">
+            <div class="indexBoxFinancesName">
+               Pobierz plik z finansami
+            </div>
+            <a class="btn btn-danger ml-2 mt-2 mb-2" data-toggle="modal" data-target="#pdfModal" style="width:150px;">Pobierz pdf</a>
+         </div>
+         <div class="indexBoxFinances ml-2 mr-2">
+            <div class="indexBoxFinancesName">
+               Opłacone zaliczki
+            </div>
+            <div class="indexBoxFinancesNumber">
+            <span class="money">{{ $budgetDetails['advancePayments'] }}</span> <span class="pln">zł</span>
+            </div>
+         </div>
+         <div class="indexBoxFinances">
+            <div class="indexBoxFinancesName">
+               Pozostało do zapłaty
+            </div>
+            <div class="indexBoxFinancesNumber">
+            <span class="money">{{ $budgetDetails['sumExpenses'] - $budgetDetails['advancePayments'] }}</span> <span class="pln">zł</span>
+            </div>
+         </div>
+      </div>
+
       <div class="row col-12">
          @foreach($finances as $finance)
          <div class="row col-12 mt-4 groupList p-2">
-            <div style="height:50px; width:100%; padding-top:7px; font-size:20px;">
+            <div style="height:50px; width:100%; padding-top:10px; font-size:20px;">
                <span style="padding-left:10px;">{{$finance->name}} ({{ count($finance->costs->where('status', 1)) }} / {{ count($finance->costs) }})</span>
                <div style="float:right;">
                   <a class="dataGroup mr-3" data-toggle="modal" data-target="#exampleModalGroup" data-id="{{$finance->id}}" data-name="{{$finance->name}}" data-color="{{$finance->color}}">
@@ -103,7 +135,7 @@
                   </tr>
                   @endforeach
                   <tr class="border-top">
-                     <td colspan="2" style="text-align:left;"><button type="button" class="btn btn-primary mt-1 mb-1" data-toggle="modal" data-target="#addTask{{$finance->id}}">Dodaj koszty</button></td>
+                     <td colspan="2" class="table-button"><button type="button" class="btn btn-primary mt-1 mb-1" data-toggle="modal" data-target="#addTask{{$finance->id}}">Dodaj koszty</button></td>
                   </tr>
                </tbody>
             </table>
@@ -246,28 +278,7 @@
          </div>
       </div>
    </div>
-   <div class="row col-12 mt-4 groupList">
-      <div class="col-12 mt-2">Pobierz plik z zaplanowanymi finansami</div>
-      <a class="btn btn-danger ml-2 mt-2 mb-2" data-toggle="modal" data-target="#pdfModal">Pobierz pdf</a>
-   </div>
-   <div class="row col-12 mt-4">
-      <div class="indexBoxFinances">
-         <div class="indexBoxFinancesName">
-            Opłacone zaliczki
-         </div>
-         <div class="indexBoxFinancesNumber money">
-            {{ $budgetDetails['advancePayments'] }} <span class="pln">zł</span>
-         </div>
-      </div>
-      <div class="indexBoxFinances">
-         <div class="indexBoxFinancesName">
-            Pozostało do zapłaty
-         </div>
-         <div class="indexBoxFinancesNumber money">
-            {{ $budgetDetails['sumExpenses'] - $budgetDetails['advancePayments'] }} <span class="pln">zł</span>
-         </div>
-      </div>
-   </div>
+   
 </div>
 <!-- PDF task modal -->
 <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
