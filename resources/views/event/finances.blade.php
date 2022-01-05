@@ -46,8 +46,9 @@
             <div class="indexBoxFinancesName">
                Pobierz plik z finansami
             </div>
-            <a class="btn btn-danger ml-2 mt-2 mb-2" data-toggle="modal" data-target="#pdfModal" style="width:150px;">Pobierz pdf</a>
+            <a class="btn btn-danger mt-2 mb-2" data-toggle="modal" data-target="#pdfModal" style="width:150px; color:#fff;">Pobierz pdf</a>
          </div>
+         
          <div class="indexBoxFinances ml-2 mr-2">
             <div class="indexBoxFinancesName">
                Opłacone zaliczki
@@ -84,7 +85,7 @@
                </div>
             </div>
             <table id="groupModal{{$finance->id}}" class="table table-hover mb-0">
-               <thead style="background: #8399af; color:#fff;">
+               <thead style="background: #558ACA; color:#fff;">
                   <tr>
                      <th scope="col">Status</th>
                      <th scope="col">Nazwa</th>
@@ -123,7 +124,7 @@
                      <td class="money">{{$cost->cost * $cost->quantity}} zł</td>
                      <td class="money">{{$cost->advance}} zł</td>
                      <td>{{$cost->date_payment}}</td>
-                     <td>{{str_limit($cost->note, 15)}}</td>
+                     <td style="font-weight:600;">{{str_limit($cost->note, 0)}}</td>
                      <td>
                         <a class="data" data-toggle="modal" data-target="#exampleModal" data-groupId="{{$finance->id}}" data-groupName="{{$finance->name}}" data-id="{{$cost->id}}" data-name="{{$cost->name}}" data-date="{{$cost->date_payment}}" data-note="{{$cost->note}}" data-cost="{{$cost->cost}}" data-count="{{$cost->quantity}}" data-advance="{{$cost->advance}}">
                         <i class="fas fa-pen"></i> 
@@ -306,7 +307,7 @@
                </div>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                  <button type="submit" class="btn btn-primary">Pobierz pdf</button>
+                  <button type="submit" class="btn btn-danger">Pobierz pdf</button>
                </div>
             </form>
          </div>

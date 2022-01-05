@@ -43,6 +43,7 @@ class LoginController extends Controller
     {
         if(auth()->user()->role == 'user')
         {
+            session(['avatar' => auth()->user()->photos->path]);
             return RouteServiceProvider::USER;
         }
         else if(auth()->user()->role == 'business')

@@ -13,6 +13,7 @@ use App\Models\Task;
 use App\Models\Notification;
 use App\Models\GroupCategory;
 use App\Models\StatisticsCategory;
+use App\Models\Reservation;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
@@ -54,6 +55,67 @@ class EventRepository
     public function statusGuest($request)
     {
         Guest::where('id', $request->id)->update(['confirmation' => $request->status]);
+    }
+
+    public function editEventName($request)
+    {
+        Event::where('id', session('event'))->update(['name' => $request->name, 'date_event' => $request->date]);
+    }
+
+    public function reservationFilter($request)
+    {
+
+        $reservations = Reservation::with(['service.business.photos', 'service.business.contactable', 'service.business.address'])->where('event_id', session('event'))->get();
+
+        if(!is_null($request->dateFrom))
+        {
+            $reservations = $reservations->where('date_from', '>=', $request->dateFrom);
+        }
+
+        if(!is_null($request->dateTo))
+        {
+            $reservations = $reservations->where('date_to', '<=', $request->dateTo);
+        }
+
+        if(!is_null($request->status))
+        {
+            $reservations = $reservations->where('status', $request->status);
+        }
+
+        if(!is_null($request->business))
+        {
+            foreach($reservations as $key => $reservation)
+            {
+                if($reservation->service->business->name != $request->business)
+                {
+                    $reservations->forget($key);
+                }
+            }
+        }
+
+        if(!is_null($request->city))
+        {
+            foreach($reservations as $key => $reservation)
+            {
+                if($reservation->service->business->city->name != $request->city)
+                {
+                    $reservations->forget($key);
+                }
+            }
+        }
+        
+        if(!is_null($request->service))
+        {
+            foreach($reservations as $key => $reservation)
+            {
+                if($reservation->service->business->mainCategory->name != $request->service)
+                {
+                    $reservations->forget($key);
+                }
+            }
+        }
+
+        return $reservations;
     }
 
     public function createEvent($request)

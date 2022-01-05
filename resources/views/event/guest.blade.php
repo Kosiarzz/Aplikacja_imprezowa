@@ -143,10 +143,7 @@
       </div>
       
    </div>
-   <div class="row col-12 mt-4 mb-4 groupList">
-      <div class="col-12 mt-2">Pobierz plik z listą gości</div>
-      <a class="btn btn-danger ml-2 mt-2 mb-2" data-toggle="modal" data-target="#pdfModal">Pobierz pdf</a>
-   </div>
+
    <div class="row justify-content-center">
       
       <div class="row col-12">
@@ -161,7 +158,7 @@
                </div>
             </div>
             <table id="groupModal{{$guestGroup->id}}" class="table table-hover mb-0">
-               <thead style="background: #8399af; color:#fff;">
+               <thead style="background: #558ACA; color:#fff;">
                   <tr>
                      <th scope="col">Imię i nazwisko</th>
                      <th scope="col">Potwierdzenie</th>
@@ -226,7 +223,7 @@
                      <td>
                         {{$guest->type}}
                      </td>
-                     <td>{{str_limit($guest->note,0)}}</td>
+                     <td style="font-weight:600;">{{str_limit($guest->note,0)}}</td>
                      <td>
                         <a class="data" data-toggle="modal" data-target="#exampleModal" data-groupId="{{$guestGroup->id}}" data-id="{{$guest->id}}" data-name="{{$guest->name}}" data-surname="{{$guest->surname}}" data-invitation="{{$guest->invitation}}" data-confirmation="{{$guest->confirmation}}" data-accommodation="{{$guest->accommodation}}" data-diet="{{$guest->diet}}" data-type="{{$guest->type}}" data-advance="{{$guest->advance}}" data-transport="{{$guest->transport}}" data-note="{{$guest->note}}"><i class="fas fa-pen"></i> </a>
                         <a class="delete ml-4 mr-4" data-toggle="modal" data-target="#exampleModalDelete" data-id="{{$guest->id}}"><i class="fas fa-trash-alt"></i></a>
@@ -239,6 +236,7 @@
                </tbody>
             </table>
          </div>
+         
          
          <div class="modal fade" id="addTask{{$guestGroup->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -398,6 +396,12 @@
       </div>
    </div>
 
+   <div class="indexBoxFinances">
+       <div class="indexBoxFinancesName">
+         Pobierz plik z finansami
+      </div>
+      <a class="btn btn-danger mt-2 mb-2" data-toggle="modal" data-target="#pdfModal" style="width:150px; color:#fff;">Pobierz pdf</a>
+   </div>
 </div>
 <!-- PDF task modal -->
 <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -425,7 +429,7 @@
                </div>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                  <button type="submit" class="btn btn-primary">Pobierz pdf</button>
+                  <button type="submit" class="btn btn-danger">Pobierz pdf</button>
                </div>
             </form>
          </div>

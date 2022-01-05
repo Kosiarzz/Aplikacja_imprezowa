@@ -31,12 +31,12 @@
                   <div class="col-md-8 pl-3">
                      <h5 class="card-title">{{$business->mainCategory->name}}, {{$business->city->name}} 
                      @for($i=1; $i<=5; $i++)
-                @if($rate >= $i)
-                    <i class="fas fa-star" style="color:gold; font-size:16px;"></i>
-                @else
-                    <i class="fas fa-star" style="color:gray; font-size:16px;"></i>
-                @endif
-            @endfor
+                        @if($rate >= $i)
+                            <i class="fas fa-star" style="color:gold; font-size:16px;"></i>
+                        @else
+                            <i class="fas fa-star" style="color:gray; font-size:16px;"></i>
+                        @endif
+                    @endfor
             <span style="color:#000; font-size:16px;">({{count($business->comments)}})</span>
                      </h5>
                      <h6 class="card-title"  style="height:90px;">{{$business->short_description}}</h6>

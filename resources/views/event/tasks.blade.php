@@ -23,7 +23,7 @@
             </div>
          </div>
          <table id="groupModal{{$groupTask->id}}" class="table table-hover mb-0">
-            <thead style="background: #8399af; color:#fff;">
+            <thead style="background: #558ACA; color:#fff;">
                <tr>
                   <th scope="col" style="width:110px;">Status</th>
                   <th scope="col" style="text-align:left;">Nazwa zadania</th>

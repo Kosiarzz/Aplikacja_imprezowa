@@ -133,6 +133,7 @@ Route::middleware(['auth','verified'])->group(function()
 
         Route::get('/uzytkownik/wydarzenie/główna/{id}', [App\Http\Controllers\EventController::class, 'index'])->name('event.index');
         Route::get('/uzytkownik/nowe/wydarzenie', [App\Http\Controllers\EventController::class, 'createEventView'])->name('event.createEvent');
+        
 
         Route::get('/uzytkownik/wydarzenie/główna', [App\Http\Controllers\EventController::class, 'dashboardView'])->name('event.dashboardView');
         Route::get('/uzytkownik/wydarzenie/daty', [App\Http\Controllers\EventController::class, 'dateView'])->name('event.date');
@@ -144,6 +145,8 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/uzytkownik/wydarzenie/powiadomienia', [App\Http\Controllers\EventController::class, 'notificationsView'])->name('event.notifications');
         Route::get('/uzytkownik/wydarzenie/zadania', [App\Http\Controllers\EventController::class, 'tasksView'])->name('event.tasks');
         Route::get('/uzytkownik/wydarzenie/rezerwacje', [App\Http\Controllers\EventController::class, 'reservationsView'])->name('event.reservations');
+
+        Route::post('/uzytkownik/wydarzenie/edycja', [App\Http\Controllers\EventController::class, 'editEventName'])->name('editEventName');
 
         Route::get('/uzytkownik/wydarzenie/usunięcie', [App\Http\Controllers\EventController::class, 'deleteEvent'])->name('event.delete');
 
@@ -157,7 +160,8 @@ Route::middleware(['auth','verified'])->group(function()
         Route::post('/uzytkownik/edycja/wydarzenie/grupa', [App\Http\Controllers\EventController::class, 'editGroup'])->name('editGroup');
         Route::post('/uzytkownik/usuwanie/wydarzenie/grupa', [App\Http\Controllers\EventController::class, 'deleteGroup'])->name('deleteGroup');
 
-        
+        Route::get('/uzytkownik/wydarzenie/rezerwacje/filtry', [App\Http\Controllers\EventController::class, 'reservationFilter'])->name('event.reservation.filter');
+
         Route::post('/uzytkownik/nowe/wydarzenie/finanse', [App\Http\Controllers\EventController::class, 'addFinance'])->name('addFinance');
 
         Route::post('/uzytkownik/nowe/wydarzenie/zadanie', [App\Http\Controllers\EventController::class, 'addTask'])->name('addTask');

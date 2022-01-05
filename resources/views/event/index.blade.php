@@ -3,12 +3,15 @@
 <div class="container mt-5">
    <div class="row">
       <div class="space40"></div>
-      <div class="indexBoxName col-md-12 p-0">
+      <div class="indexBoxName col-md-12 p-0" style="color:#558ACA;">
+         <a id="budget-box-edit" style="position: absolute; right:1%; top:5%;" data-toggle="modal" data-target="#eventModal">
+               <i class="fas fa-pen" style="color:#000;"></i> 
+            </a>
          <div class="indexBoxNameTitle">
             {{$event->name}}     
          </div>
          <div class="indexBoxNameDays">
-            <span class="indexBoxNameDaysNumber">
+            <span class="indexBoxNameDaysNumber" style="color:#DCA11D;">
             @if(($days = date_diff(date_create(date("Y-m-d")), date_create($event->date_event))->format('%a')) == 0)
                To już dzisiaj!
             @else
@@ -111,6 +114,21 @@
       </div>
 
       <div class="row col-12 p-0 m-0">
+         <div class="indexBoxEventPdf">
+            <div class="text-pdf" >Pobierz listę zadań </div>
+            <div class="btn-pdf" data-toggle="modal" data-target="#pdf-task"><i class="fas fa-file-download"></i>Pobierz pdf</div>
+         </div>
+         <div class="indexBoxEventPdf" style="margin-left:15px; margin-right:15px;">
+            <div class="text-pdf">Pobierz listę gości </div>
+            <div class="btn-pdf" data-toggle="modal" data-target="#pdf-guest"><i class="fas fa-file-download"></i>Pobierz pdf</div>
+         </div>
+         <div class="indexBoxEventPdf">
+            <div class="text-pdf">Pobierz listę wydatków </div>
+            <div class="btn-pdf" data-toggle="modal" data-target="#pdf-finance"><i class="fas fa-file-download"></i>Pobierz pdf</div>
+         </div>
+      </div>
+
+      <div class="row col-12 p-0 m-0">
          <div class="float-left">
             <div id="chart" class="groupList mb-3 pb-2" style="height: 500px; width: 755px; margin-right:15px;">
                <div style="text-align:center; font-size:25px; color:#000; padding-top:14px;">Finanse</div>
@@ -169,6 +187,157 @@
       </div>
    </div>
 </div>
+<!-- edit event modal -->
+<div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title edit" id="exampleModalLabel">Wydarzenie</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form method="POST" action="{{ route('editEventName') }}">
+               @csrf
+               <div class="form-group">
+                  <div class="form-group row">
+                     <label for="name" class="col-md-6 col-form-label text-md-left">Nazwa wydarzenia</label>
+                     <label for="name" class="col-md-6 col-form-label text-md-right">100</label>
+                     <div class="col-md-12">
+                        <input id="name" min="3" max="20" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$event->name}}" require>
+                        @error('name')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>
+                  </div>
+
+                  <div class="form-group row">
+                     <label for="date" class="col-md-6 col-form-label text-md-left">Data wydarzenia</label>
+                     <div class="col-md-12">
+                        <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{$event->date_event}}">
+                        @error('date')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                     </div>
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                  <button type="submit" class="btn btn-primary">Zapisz zminay</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- PDF task modal -->
+<div class="modal" id="pdf-task" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title edit" id="exampleModalLabel">Pobieranie zadań</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form method="POST" action="{{ route('event.pdfTasks') }}">
+               @csrf
+               <div class="form-group">
+                  <label for="name-pdf" class="col-md-12 col-form-label">Nazwa pliku</label>
+                  <div class="col-md-12">
+                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="Zadania" required autocomplete="name">
+                     @error('name')
+                     <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                  <button type="submit" class="btn btn-primary" id="pdfexport">Pobierz pdf</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- PDF finance modal -->
+<div class="modal" id="pdf-finance" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title edit" id="exampleModalLabel">Pobieranie zadań</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form method="POST" action="{{ route('event.pdfFinances') }}">
+               @csrf
+               <div class="form-group">
+                  <label for="name-pdf" class="col-md-12 col-form-label">Nazwa pliku</label>
+                  <div class="col-md-12">
+                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="Zadania" required autocomplete="name">
+                     @error('name')
+                     <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                  <button type="submit" class="btn btn-primary" id="pdfexport">Pobierz pdf</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<!-- PDF guest modal -->
+<div class="modal" id="pdf-guest" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title edit" id="exampleModalLabel">Pobieranie zadań</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form method="POST" action="{{ route('event.pdfGuests') }}">
+               @csrf
+               <div class="form-group">
+                  <label for="name-pdf" class="col-md-12 col-form-label">Nazwa pliku</label>
+                  <div class="col-md-12">
+                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="Zadania" required autocomplete="name">
+                     @error('name')
+                     <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                     </span>
+                     @enderror
+                  </div>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                  <button type="submit" class="btn btn-primary" id="pdfexport">Pobierz pdf</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
 @endsection
 
 @push('script')
@@ -177,6 +346,9 @@
    const chart = new Chartisan({
       el: '#chart',
       url: "@chart('event_chart')",
+      hooks: new ChartisanHooks()
+         .datasets('pie')
+         .axis(false)
    });
 
    $( "a" ).removeClass( "active" );

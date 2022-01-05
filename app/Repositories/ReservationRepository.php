@@ -69,6 +69,11 @@ class ReservationRepository
         return Reservation::with(['service.business.photos', 'service.business.contactable', 'service.business.address'])->where('event_id', $id)->get();
     }
 
+    public function getReservationsEvent($id)
+    {
+        return Reservation::with(['service.business.photos', 'service.business.contactable', 'service.business.address'])->where('status', 'Oczekiwanie na akceptację')->where('event_id', $id)->get();
+    }
+
     public function getReservation($id)
     {
         return Reservation::find($id);

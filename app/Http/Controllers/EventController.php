@@ -136,6 +136,13 @@ class EventController extends Controller
         ]);
     }
 
+    public function editEventName(Request $request)
+    {
+        $this->eRepository->editEventName($request);
+
+        return redirect()->back();
+    }
+
     public function addGroup(Request $request)
     {
         $events = $this->eRepository->addGroup($request);
@@ -290,9 +297,19 @@ class EventController extends Controller
 
     public function reservationsView()
     {
-        $reservations = $this->reservationRepository->getReservations(session('event'));
+        $reservations = $this->reservationRepository->getReservationsEvent(session('event'));
 
         return view('event.reservations', ['reservations' => $reservations]);
+    }
+
+    public function reservationFilter(Request $request)
+    {
+        $reservations = $this->eRepository->reservationFilter($request);
+
+        return view('event.reservationsFilter', [
+            'reservations' => $reservations,
+            'request' => $request
+        ]);
     }
 
 }

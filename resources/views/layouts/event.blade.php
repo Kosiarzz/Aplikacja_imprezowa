@@ -112,22 +112,11 @@
                   </li>
 
                   <!-- Avatar -->
-                  <li class="nav-item dropdown">
-                     <a
-                        class="nav-link  hidden-arrow d-flex align-items-center"
+                  <li class="nav-item">
+                     <a class="nav-link hidden-arrow d-flex align-items-center m-0 p-0"
                         href="#"
-                        id="navbarDropdownMenuLink"
-                        role="button"
-                        data-mdb-toggle="dropdown"
-                        aria-expanded="false"
-                        >
-                     <img
-                        src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
-                        class="rounded-circle"
-                        height="22"
-                        alt=""
-                        loading="lazy"
-                        />
+                        id="navbarDropdownMenuLink" role="button" aria-expanded="false">
+                        <img src="{{asset('storage/'.session('avatar'))}}" class="rounded-circle avatar-circle" alt="" loading="lazy"/>
                      </a>
                   </li>
                </ul>

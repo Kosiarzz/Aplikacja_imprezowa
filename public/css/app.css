@@ -10053,6 +10053,12 @@ input[type=file] {
   background-color: red;
 }
 
+.avatar-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+}
+
 .likeBusiness {
   border: 1px solid black;
   margin-right: 10px;
@@ -10146,6 +10152,39 @@ input[type=file] {
   font-size: 22px;
 }
 
+.filter {
+  display: flex;
+  align-items: row;
+}
+
+.filter-title {
+  height: 40px;
+  font-size: 22px;
+  color: #656d79;
+  border-bottom: 1px solid silver;
+}
+
+.date-filter {
+  width: 170px !important;
+  height: 34px !important;
+}
+
+.filter-input {
+  height: 34px !important;
+}
+
+.filter-button {
+  width: 100px !important;
+  height: 34px !important;
+}
+
+.reservation-empty {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 40px;
+  color: #656d79;
+}
+
 .guestBox {
   width: 330px;
   height: 70px;
@@ -10236,7 +10275,7 @@ input[type=file] {
 .serviceBoxButton {
   background-color: #fff;
   width: 31%;
-  height: 170px;
+  height: 120px;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.13);
   margin-right: 15px;
@@ -10300,6 +10339,7 @@ input[type=file] {
   font-size: 18px;
   display: flex;
   justify-content: center;
+  color: #000;
 }
 
 .indexBoxEvent {
@@ -10346,6 +10386,47 @@ input[type=file] {
 
 .indexBoxEventNumberGold {
   color: #fac858;
+}
+
+.indexBoxEventPdf {
+  width: 370px;
+  height: 50px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  text-decoration: none !important;
+  box-shadow: 0px 0px 9px -5px #42445a;
+  background-color: #fff;
+}
+
+.text-pdf {
+  line-height: 50px;
+  margin-left: 10px;
+  font-size: 18px;
+}
+
+.btn-pdf {
+  width: 130px;
+  height: 40px;
+  background: #db3444;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 4px;
+  margin-top: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.btn-pdf i {
+  margin-right: 5px;
+}
+
+.btn-pdf:hover {
+  background: #c82333;
 }
 
 .percentageEvent {
@@ -10554,8 +10635,7 @@ body {
   }
 }
 .sidebar .active {
-  background: #5f53f3 !important;
-  background: linear-gradient(126deg, #5f53f3 0%, #706ef5 100%);
+  background: #558ACA !important;
 }
 
 .sidebar-sticky {
