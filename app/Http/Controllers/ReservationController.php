@@ -98,4 +98,11 @@ class ReservationController extends Controller
         return redirect()->back();
     }
 
+    public function noteReservation(Request $request)
+    {
+        $this->rRepository->noteReservation($request);
+
+        return redirect()->back();
+    }
+
 }

@@ -42,12 +42,8 @@
 
 
       <div class="row col-12 mt-1 p-0">
-         <div class="indexBoxFinances">
-            <div class="indexBoxFinancesName">
-               Pobierz plik z finansami
+         <div class="indexBoxFinances" style="background:#f4f7fa; box-shadow:0px 0px 0px 0px!important;">
             </div>
-            <a class="btn btn-danger mt-2 mb-2" data-toggle="modal" data-target="#pdfModal" style="width:150px; color:#fff;">Pobierz pdf</a>
-         </div>
          
          <div class="indexBoxFinances ml-2 mr-2">
             <div class="indexBoxFinancesName">

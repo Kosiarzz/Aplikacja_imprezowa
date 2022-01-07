@@ -68,7 +68,7 @@ class ServiceChart extends BaseChart
         return Chartisan::build()
         ->labels($labelsDate)
         ->dataset('Wyświetlenia', $views)
-        ->dataset('Rezerwacje', $reservations)
-        ->dataset('Ulubione', $likes);
+        ->dataset('Ulubione', $likes)
+        ->dataset('Rezerwacje', $reservations);
     }
 }

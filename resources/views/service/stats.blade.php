@@ -19,20 +19,6 @@
             </div>
         </div>
 
-        <div class="businessBox">
-            <div class="businessBoxIcon">
-                <i class="fas fa-address-card" style="color:#fac858;"></i>
-            </div>
-            <div class="businessBoxRight">
-                <div class="businessBoxNubmer" style="color:#fac858;">
-                    {{$stats->reservations}}
-                </div>
-                <div class="businessBoxText">
-                    Rezerwacje
-                </div>
-            </div>
-        </div>
-
         <div class="businessBox mb-5">
             <div class="businessBoxIcon">
                 <i class="fas fa-heart" style="color:#91cc75;"></i>
@@ -43,6 +29,21 @@
                 </div>
                 <div class="businessBoxText">
                     Polubienia
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="businessBox">
+            <div class="businessBoxIcon">
+                <i class="fas fa-address-card" style="color:#fac858;"></i>
+            </div>
+            <div class="businessBoxRight">
+                <div class="businessBoxNubmer" style="color:#fac858;">
+                    {{$stats->reservations}}
+                </div>
+                <div class="businessBoxText">
+                    Rezerwacje
                 </div>
             </div>
         </div>

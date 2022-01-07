@@ -33,7 +33,7 @@
             <div class="mr-4">
                <select class="form-control filter-input ml-2" id="select" name="status">
                   <option value="Oczekiwanie na akceptację" selected>Oczekujące rezerwacje</option>
-                  <option value="Rezerwacja zaakcepotwana">Zaakceptowane rezerwacje</option>
+                  <option value="Rezerwacja zaakceptowana">Zaakceptowane rezerwacje</option>
                   <option value="Rezerwacja odrzucona">Odrzucone rezerwacje</option>
                   <option value="Rezerwacja anulowana">Anulowane rezerwacje</option>
                </select>
@@ -74,6 +74,11 @@
          </form>
    </div>
    <div class="container-fluid">
+      @if($reservations->isEmpty())
+         <div class="reservation-empty">
+            Brak rezerwacji
+         </div>
+      @endif
       @foreach($reservations as $reservation)
       <div class="row groupList p-1 mb-3">
          <div class="col-md-4 p-0">
@@ -106,11 +111,11 @@
                      @if($reservation->date_from == $reservation->date_to)
                         <h6 class="card-title">Data rezerwacji</h6>
                         <h5 class="card-title">
-                        {{$reservation->date_from}}
+                        {{date('d.m.Y', strtotime($reservation->date_from))}}
                      @else
                         <h6 class="card-title">Okres rezerwacji</h6>
                         <h5 class="card-title">
-                        Od {{$reservation->date_from}} do {{$reservation->date_to}}
+                        Od {{date('d.m.Y', strtotime($reservation->date_from))}} do {{date('d.m.Y', strtotime($reservation->date_to))}}
                      @endif
                   </h5>
                   <h6 class="card-title">Status rezerwacji</h6>

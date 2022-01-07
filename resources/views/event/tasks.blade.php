@@ -5,10 +5,6 @@
          Lista zadań   
    </div>
    
-   <div class="row col-12 mt-4 groupList p-0 m-0" id="dasdsa">
-         <div class="col-12 mt-2">Pobierz plik z zadaniami</div>
-         <a class="btn btn-danger ml-2 mt-2 mb-2" data-toggle="modal" data-target="#pdfModal">Pobierz pdf</a>
-      </div>
    <div class="row justify-content-center">
 
    <div class="row col-12">

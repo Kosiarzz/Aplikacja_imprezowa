@@ -18,31 +18,29 @@
             </div>
             <div class="col-md-8">
                 <div class="row">
-                    <div class="col-md-12 d-flex justify-content-between pl-3 h4">
-                        <div class="">
-                            {{str_limit($business->title,55)}}
-                        </div>
-                        <div class="">
-                            <i class="fas fa-heart"></i>
+                    <div class="col-md-12 d-flex justify-content-between pl-3 h5">
+                        <div class="" style="font-size:20px; color:#3F4756;">
+                            {{str_limit($business->title, 65)}}
                         </div>
                     </div> 
                </div>
                <div class="row">
                   <div class="col-md-8 pl-3">
-                     <h5 class="card-title">{{$business->mainCategory->name}}, {{$business->city->name}} 
-                     @for($i=1; $i<=5; $i++)
-                        @if($rate >= $i)
-                            <i class="fas fa-star" style="color:gold; font-size:16px;"></i>
-                        @else
-                            <i class="fas fa-star" style="color:gray; font-size:16px;"></i>
-                        @endif
-                    @endfor
-            <span style="color:#000; font-size:16px;">({{count($business->comments)}})</span>
-                     </h5>
-                     <h6 class="card-title"  style="height:90px;">{{$business->short_description}}</h6>
+                        <div class="mb-1" style="font-size:18px; color:#3F4756;"><span style="margin-right:10px;">{{$business->mainCategory->name}}, {{$business->city->name}} </span>
+                                @for($i=1; $i<=5; $i++)
+                                    @if($rate >= $i)
+                                        <i class="fas fa-star" style="color:gold; font-size:15px;"></i>
+                                    @else
+                                        <i class="fas fa-star" style="color:gray; font-size:15px;"></i>
+                                    @endif
+                                @endfor
+                                <span style="color:#000; font-size:16px;">({{count($business->comments)}})</span>
+                        </div>
+                        <div class="" style="height:110px; font-size:14px;">{{str_limit($business->short_description, 330)}}</div>
                   </div>
                   <div class="col-md-4 mb-0">
                      <h5 class="card-title">
+                         oferty
                          @foreach($business->services as $service)
                             od {{$service->price_from}} zł do {{$service->price_from}} zł / {{$service->unit}}
                             @break
@@ -52,24 +50,19 @@
                   <div class="col-8 pl-3 pr-1" style="font-size: 14px;"> 
                         @foreach($partyCategory as $pCategory)
                             @foreach($pCategory->groupCategory as $gCategory)
-                                <span style="background:#eff3f6; border-radius:15px; padding:2px 8px; margin-right:3px;">{{$gCategory->category[0]->name}}</span>
+                                <span style="background:#8FBFFF; border-radius:15px; padding:2px 8px; margin-right:3px;">{{$gCategory->category[0]->name}}</span>
                             @endforeach
                         @endforeach
                   </div>
-
-                  <div class="col-8 pl-3 pr-1" style="font-size: 14px;"> 
-
-                   
-                    </div>
                </div>
             </div>
          
       </div>
         @php($sumRating = 0)
         @foreach($business->comments as $comment)
-            
             {{$comment->ratin}}
         @endforeach
+        
     <div class="titlePage mb-3 col-12" style="text-align:center;">
          Podgląd strony
     </div>

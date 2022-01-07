@@ -20,6 +20,7 @@ class CreateReservationsTable extends Migration
             $table->date('date_from');
             $table->date('date_to');
             $table->string('status');
+            $table->string('note')->nullable();;
             $table->foreignId('event_id')->constrained('events')->onDelete('cascade')->nullable();
             $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
             $table->foreignId('city_id')->constrained('cities')->nullable();

@@ -44,36 +44,54 @@ class UserRepository implements UserRepositoryInterface
 
     public function updateProfile($request)
     {
-        $contact = [
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'phone' => $request->phone
-        ];
+        if(!is_null($request->name))
+        {
+            $contact = [
+                'name' => $request->name,
+                'surname' => $request->surname,
+                'phone' => $request->phone
+            ];
 
-        $user = [
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-        ];
+            
+            Contact::where('contactable_id', Auth::user()->id)
+            ->where('contactable_type', 'App\Models\User')->update($contact);
+        }
+
+        if(!is_null($request->email))
+        {
+            $user = [
+                'email' => $request->email, 
+            ];
+            
+            if(Hash::check($request->password, Auth::user()->password))
+            {
+                User::find(Auth::user()->id)->update($user);
+            }
+        }
+
+        if(!is_null($request->actualPassword))
+        {
+            $password = [
+                'password' => Hash::make($request->password), 
+            ];
+            
+            if(Hash::check($request->actualPassword, Auth::user()->password))
+            {
+                User::find(Auth::user()->id)->update($password);
+            }
+        }
 
         if($request->file('image') != null)
         {
             $photo = [
                 'path' => $request->file('image')->store('photos')
             ];
-    
+            
+            session(['avatar' => $request->file('image')->store('photos')]);
+
             Photo::where('photoable_id', Auth::user()->id)
             ->where('photoable_type', 'App\Models\User')->update($photo);
         }
-        
-        Contact::where('contactable_id', Auth::user()->id)
-        ->where('contactable_type', 'App\Models\User')->update($contact);
-
-        User::find(Auth::user()->id)->update($user);
-
-        
-
-
-        return 'git';
     }
  
     public function addNotification($reservation, $text)
@@ -95,7 +113,12 @@ class UserRepository implements UserRepositoryInterface
 
     public function getEvents($id)
     {
-        return Event::with(['notifications'])->where('user_id', $id)->paginate(10);
+        return Event::with(['notifications','category'])->where('user_id', $id)->where('date_event','>', date("Y-m-d"))->paginate(9);
+    }
+
+    public function getEndEvents($id)
+    {
+        return Event::with(['notifications','category'])->where('user_id', $id)->where('date_event','<', date("Y-m-d"))->paginate(9);
     }
 
 }

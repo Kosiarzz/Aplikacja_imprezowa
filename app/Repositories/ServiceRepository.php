@@ -327,27 +327,30 @@ class ServiceRepository implements ServiceRepositoryInterface
     {
         return Business::with([
             'services' => function($q) use($id){ //zwracanie sali która ma przynajmniej jedną rezerwacje
-            $q->where('id', $id);
+                $q->where('id', $id);
             },
         ])->find(session('service'));  
     }
 
     public function getDetailsReservations($id)
     {
-        return Reservation::with(['service', 'event.user.contactable'])->where('service_id', $id)->where('status', 'Oczekiwanie na akceptację')->paginate(2);
+        return Reservation::with(['service', 'event.user.contactable'])->where('service_id', $id)->where('status', 'Oczekiwanie na akceptację')->paginate(10);
     }
 
     public function getDetailsReservationsFilters($request)
     {
-        $reservations = Reservation::with(['service', 'event.user.contactable'])->where('service_id', $request->serviceId);
-                                
-        if(!is_null($request->date_from) && !is_null($request->date_to))
-        {
-            $reservations->whereBetween('date_from', [$request->date_from, $request->date_to])
-                        ->orWhere(function($query) use($request) {
-                            $query->whereBetween('date_to', [$request->date_from, $request->date_to])->where('service_id', $request->serviceId);
-                        });
-        }
+        $reservations = Reservation::with(['service'])
+            ->whereHas('event.user.contactable', function ($query) use($request){
+                if(!is_null($request->name)){
+                    $query->where('name', '=', $request->name);
+                }
+                if(!is_null($request->surname)){
+                    $query->where('surname', '=', $request->surname);
+                }
+                if(!is_null($request->phone)){
+                    $query->where('phone', '=', $request->phone);
+                }  
+        })->where('service_id', $request->serviceId);
 
         if(!is_null($request->date_from)){
             $reservations->where('date_from', '>=', $request->date_from);
@@ -362,7 +365,7 @@ class ServiceRepository implements ServiceRepositoryInterface
             $reservations->where('status', $request->status);
         }
                                     
-        return $reservations->paginate(2);
+        return $reservations->paginate(10);
     }
     
     public function setReadNotifications($notifications)

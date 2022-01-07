@@ -58,43 +58,34 @@
                             </li>
                         @endif
                     @else
-                    @can('isUser')
-                    @if(session('event'))
-                        <li class="nav-item"><a class="dropdown-item" href="{{route('event.index', ['id' => session('event')])}}" class="mr-3">{{$eventSession[0]->name}}</a></li>
-                    @endif
-                    <li class="nav-item">
-                                <a class="dropdown-item" href="{{ route('user.like') }}" class="mr-3">Polubione</a></li><li class="nav-item">
-                                <a class="dropdown-item" href="{{ route('user.events') }}" class="mr-3">Wydarzenia</a>  </li>
-                            @endcan
-                            @can('isBusiness')
-                            <li class="nav-item"><a class="dropdown-item" href="{{ route('business.index') }}" class="mr-3">Usługi</a></li>
-                            <li class="nav-item"><a class="dropdown-item" href="{{ route('business.notifications') }}" class="mr-3">Powiadomienia</a></li>
-                            @endcan
-
-                  <li class="nav-item">
-                     <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                     {{ __('Logout') }}
-                     </a>
-                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                     </form>
-                  </li>
-
-
-
-
-
-
-                  <!-- Avatar -->
-                  <li class="nav-item">
-                     <a class="nav-link hidden-arrow d-flex align-items-center m-0 p-0"
-                        href="#"
-                        id="navbarDropdownMenuLink" role="button" aria-expanded="false">
-                        <img src="{{asset('storage/'.session('avatar'))}}" class="avatar-circle" alt="" loading="lazy"/>
-                     </a>
-                  </li>
+                        @can('isUser')
+                            @if(session('event'))
+                                <li class="nav-item mr-4 mt-1 mb-1" style="background:#558ACA; border-radius:10px;"><a class="dropdown-item event-link-button" style="font-size:16px; color:#fff;" href="{{route('event.index', ['id' => session('event')])}}" class="mr-3"><i class="fas fa-link mr-1"></i> {{$eventSession[0]->name}}</a></li>
+                            @endif
+                            <ul class="navbar-nav ms-auto d-flex flex-row">
+                                <!-- Avatar -->
+                                <div class="dropdown">
+                                    <img src="{{asset('storage/'.session('avatar'))}}" class="rounded-circle avatar-circle dropdown-toggle dropdown-img" alt="" loading="lazy" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+                                    <div class="dropdown-menu dropdown-event" aria-labelledby="dropdownMenuButton" style="left:-100px!important; border:0!important;">
+                                        <a class="dropdown-item" href="{{ route('user.events') }}">Wydarzenia</a>
+                                        <a class="dropdown-item" href="{{ route('user.profile') }}">Profil</a>
+                                        <a class="dropdown-item border-top" href="{{ route('logout') }}"
+                                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                        </form>
+                                    </div>
+                                </div>
+                                
+                            </ul>
+                        @endcan
+                        @can('isBusiness')
+                        <li class="nav-item"><a class="dropdown-item" href="{{ route('business.index') }}" class="mr-3">Usługi</a></li>
+                        <li class="nav-item"><a class="dropdown-item" href="{{ route('business.notifications') }}" class="mr-3">Powiadomienia</a></li>
+                        @endcan       
                     @endguest
                </ul>
             </div>

@@ -28,7 +28,7 @@ class ReservationRepository
                 'service_id'=>$service_id,
                 'status'=> 'Oczekiwanie na akceptację',
                 'name_user' => $category[0]->name.' ('.$service->title.')',
-                'name_business' => 'Oferta '.$service_name,
+                'name_business' => $service_name,
                 'date_from' => date('Y-m-d', strtotime($request->input('dateFrom'))),
                 'date_to' => date('Y-m-d', strtotime($request->input('dateTo')))
             ]);
@@ -97,6 +97,11 @@ class ReservationRepository
     public function confirmReservation(Reservation $reservation)
     {
         return $reservation->update(['status' => 'Rezerwacja zaakceptowana']);
+    }
+
+    public function noteReservation($request)
+    {
+        return Reservation::where('id', $request->id_reservation)->update(['note' => $request->note]);
     }
 
 }

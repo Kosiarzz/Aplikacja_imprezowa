@@ -36,7 +36,7 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
-        $data = $this->uRepository->updateProfile($request);
+        $this->uRepository->updateProfile($request);
 
         return redirect()->back();
     }
@@ -44,7 +44,13 @@ class UserController extends Controller
     public function events()
     {
         $events = $this->uRepository->getEvents(Auth::user()->id);
-        return view('user.events', ['events' => $events]);
+        return view('user.events', ['events' => $events, 'status' => 'actual']);
+    }
+
+    public function endEvents()
+    {
+        $events = $this->uRepository->getEndEvents(Auth::user()->id);
+        return view('user.events', ['events' => $events, 'status' => 'end']);
     }
 
     public function notifications(Request $request)

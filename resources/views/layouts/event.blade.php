@@ -99,26 +99,23 @@
                </a>
                <!-- Right links -->
                <ul class="navbar-nav ms-auto d-flex flex-row">
-                  <!-- Notification dropdown -->
-                  <li class="nav-item">
-                     <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                     {{ __('Logout') }}
-                     </a>
-                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                     </form>
-                  </li>
-
                   <!-- Avatar -->
-                  <li class="nav-item">
-                     <a class="nav-link hidden-arrow d-flex align-items-center m-0 p-0"
-                        href="#"
-                        id="navbarDropdownMenuLink" role="button" aria-expanded="false">
-                        <img src="{{asset('storage/'.session('avatar'))}}" class="rounded-circle avatar-circle" alt="" loading="lazy"/>
-                     </a>
-                  </li>
+                  <div class="dropdown">
+                     <img src="{{asset('storage/'.session('avatar'))}}" class="rounded-circle avatar-circle dropdown-toggle dropdown-img" alt="" loading="lazy" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+                     <div class="dropdown-menu dropdown-event" aria-labelledby="dropdownMenuButton" style="left:-100px!important; border:0!important;">
+                        <a class="dropdown-item" href="{{ route('user.events') }}">Wydarzenia</a>
+                        <a class="dropdown-item" href="{{ route('user.profile') }}">Profil</a>
+                        <a class="dropdown-item border-top" href="{{ route('logout') }}"
+                                 onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                           {{ __('Logout') }}
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                           @csrf
+                        </form>
+                     </div>
+                  </div>
+                  
                </ul>
             </div>
             <!-- Container wrapper -->

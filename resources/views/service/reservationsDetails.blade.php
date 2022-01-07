@@ -5,304 +5,194 @@
     <div class="titlePage mb-3 col-12">
         Rezerwacje oferty {{$title}}
     </div>
+    <div class="row col-12 groupList p-0 m-0 mb-4">
+      <div class="row col-12 filter-title m-0 p-0 mb-3 pl-2">
+         Filtry
+      </div>
+         <form class="row col-12 filter" method="GET" action="{{ route('service.reservationDetailsFilters') }}" enctype="multipart/form-data">
+         @csrf
+            <i class="far fa-calendar-alt ml-3" style="font-size:24px; margin-top:3px;"></i>
 
-    <div class="titlePage mb-3 col-12" style="text-align:center;">
-        Wyszukaj rezerwację                                             
+            <div class="ml-2 mr-2">
+               <input id="date" type="date" class="form-control date-filter @error('date') is-invalid @enderror" name="date_from" @if(isset($request)) value="{{$request->date_from}}" @endif>
+               @error('date')
+               <span class="invalid-feedback" role="alert">
+               <strong>{{ $message }}</strong>
+               </span>
+               @enderror
+            </div>
+            -
+            <div class="ml-2 mr-4">
+               <input id="date" type="date" class="form-control date-filter @error('date') is-invalid @enderror" name="date_to" @if(isset($request)) value="{{$request->date_to}}" @endif>
+               @error('date')
+               <span class="invalid-feedback" role="alert">
+               <strong>{{ $message }}</strong>
+               </span>
+               @enderror
+            </div>
+            <i class="fas fa-check" style="font-size:22px; margin-top:5px;"></i>
+            <div class="mr-4">
+               <select class="form-control filter-input ml-2" id="select" name="status">
+                <option value="Oczekiwanie na akceptację" @if(isset($request) && $request->status == "Oczekiwanie na akceptację") selected @endif>Oczekujące rezerwacje</option>
+                  <option value="Rezerwacja zaakceptowana" @if(isset($request) && $request->status == "Rezerwacja zaakceptowana") selected @endif>Zaakceptowane rezerwacje</option>
+                  <option value="Rezerwacja odrzucona" @if(isset($request) && $request->status == "Rezerwacja odrzucona") selected @endif>Odrzucone rezerwacje</option>
+                  <option value="Rezerwacja anulowana" @if(isset($request) && $request->status == "Rezerwacja anulowana") selected @endif>Anulowane rezerwacje</option>
+               </select>
+            </div>
+            <div class="row p-0 m-0 mt-3 mb-3">
+                <i class="fas fa-user ml-3" style="font-size:22px; margin-top:5px;"></i>
+                <div class="ml-2">
+                <input id="city" type="text" maxlength="100" class="form-control filter-input @error('city') is-invalid @enderror" name="name" placeholder="Imię" @if(isset($request)) value="{{$request->name}}" @endif>
+                @error('city')
+                    <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+                </div>
+               <div class="ml-2 mr-4">
+                  <input id="service" type="text" maxlength="100" class="form-control filter-input @error('service') is-invalid @enderror" name="surname" placeholder="Nazwisko" @if(isset($request)) value="{{$request->surname}}" @endif>
+                  @error('service')
+                     <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                     </span>
+                  @enderror
+               </div>
+
+               <i class="fas fa-phone ml-2" style="font-size:22px; margin-top:5px;"></i>
+               <div class="ml-2 mr-4">
+                  <input id="business" type="text" maxlength="100" class="form-control filter-input @error('business') is-invalid @enderror" name="phone" placeholder="Numer telefonu" @if(isset($request)) value="{{$request->phone}}" @endif>
+                  @error('business')
+                     <span class="invalid-feedback" role="alert">
+                     <strong>{{ $message }}</strong>
+                     </span>
+                  @enderror
+               </div>
+               <input type="hidden" name="serviceId" value="{{$id}}">
+                <input type="hidden" name="serviceTitle" value="{{$title}}">
+               <button class="btn btn-primary filter-button">Szukaj</button>
+            </div>
+         </form>
     </div>
-    <form method="get" action="{{route('service.reservationDetailsFilters')}}" class="form-inline groupList p-4" style="margin-bottom:30px;">
-        <div class="row col-12 justify-content-center">
-            <div class="row col-12 justify-content-center mb-3">
-                <div class="form-group mr-2">
-                    <label for="date_from">Data od</label>
-                    <input id="date_from" name="date_from" type="date" value="{{old('date_from')}}" class="form-control ml-2">
-                </div>
-                <div class="form-group mr-2">
-                    <label for="date_to">Data do</label>
-                    <input id="date_to" name="date_to" type="date" value="{{old('date_to')}}" class="form-control ml-2">
-                </div>
-            </div>
-            <div class="form-group mr-2">
-                <input id="name" name="name" type="text" value="{{old('name')}}" class="form-control" placeholder="Imie">
-            </div>
-
-            <div class="form-group mr-2">
-                <input id="surname" name="surname" type="text" value="{{old('surname')}}" class="form-control" placeholder="Nazwisko">
-            </div>
-
-            <div class="form-group mr-2">
-                <input id="surname" name="surname" type="text" value="{{old('surname')}}" class="form-control" placeholder="Nr telefonu">
-            </div>
-        </div>
-        <div class="row col-12 justify-content-center mt-3">
-            <div class="form-check mr-3">
-                @if(!is_null($request) && $request->status == "Rezerwacja zaakceptowana")
-                    <input class="form-check-input" type="radio" value="Oczekiwanie na akceptację" name="status" id="status1" checked>
-                @else
-                    <input class="form-check-input" type="radio" value="Oczekiwanie na akceptację" name="status" id="status1" checked>
-                @endif
-                <label class="form-check-label" for="status1">
-                    Oczekujące na akceptację
-                </label>
-            </div>
-
-            <div class="form-check mr-3">
-                @if(!is_null($request) && $request->status == "Rezerwacja zaakceptowana")
-                    <input class="form-check-input" type="radio" value="Rezerwacja zaakceptowana" name="status" id="status2" checked>
-                @else
-                    <input class="form-check-input" type="radio" value="Rezerwacja zaakceptowana" name="status" id="status2">
-                @endif
-                <label class="form-check-label" for="status2">
-                    Zaakceptowane
-                </label>
-            </div>
-
-            <div class="form-check mr-3">
-                @if(!is_null($request) && $request->status == "Rezerwacja odrzucona")
-                    <input class="form-check-input" type="radio" value="Rezerwacja odrzucona" name="status" id="status3" checked>
-                @else
-                    <input class="form-check-input" type="radio" value="Rezerwacja odrzucona" name="status" id="status3">
-                @endif
-                <label class="form-check-label" for="status3">
-                    Odrzucone
-                </label>
-            </div>
-
-            <div class="form-check mr-3">
-                @if(!is_null($request) && $request->status == "Rezerwacja anulowana")
-                    <input class="form-check-input" type="radio" value="Rezerwacja anulowana" name="status" id="status4" checked>
-                @else
-                    <input class="form-check-input" type="radio" value="Rezerwacja anulowana" name="status" id="status4">
-                @endif
-                <label class="form-check-label" for="status4">
-                    Anulowane
-                </label>
-            </div>
-        </div>
-        <input type="hidden" name="serviceId" value="{{$id}}">
-        <input type="hidden" name="serviceTitle" value="{{$title}}">
-        <div class="row col-12 justify-content-center mt-2">
-            <button type="submit" class="btn btn-info mr-3">Szukaj</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addReservation">Dodaj rezerwację</button>  
-        </div>
-    </form>
     @if(!$reservations->isEmpty())
-    <div class="table-responsive groupList p-2">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Data od</th>
-                    <th>Data do</th>
-                    <th>Rezerwujący</th>
-                    <th>Telefon</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-            </thead>
-            
-            
-            
-                @foreach($reservations as $reservation)
-    
-                        <tbody>
-                            <tr>        
-                                <td class="reservationDateFrom">{{$reservation->date_from}}</td>
-                                <td class="reservationDateTo">{{$reservation->date_to}}</td>
-                                <td class="reservationUser"><a target="_blank">{{ $reservation->event->user->contactable[0]->name ?? 'Brak danych'}} {{$reservation->event->user->contactable[0]->surname ?? ''}}</a></td>
-                                <td class="reservationUserPhone">{{ $reservation->event->user->contactable[0]->phone ?? 'Brak'}}</td>
-                                <td class="reservationUserPhone">{{ $reservation->status}}</td>
-                                <td class="reservationConfirm">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#waitToAccept{{$reservation->id}}">Akcja</button>
-                                    
-                                </td>
-                            </tr>
-                        </tbody>
-                        
-                        <!--MODAL-->
-                        <div class="modal fade" id="waitToAccept{{$reservation->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalCenterTitle">Rezerwacja</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form method="POST" action="{{ route('addGroup') }}" class="row col-12">
-                                            @csrf
-                                            <div class="form-group row">
-                                                <label for="name" class="col-md-12 col-form-label">Imie</label>
-                                                <div class="col-md-12">
-                                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $reservation->event->user->contactable[0]->name ?? 'Brak danych'}}" disabled>
-                                                    @error('name')
-                                                    <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                    </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="surname" class="col-md-12 col-form-label">Nazwisko</label>
-                                                <div class="col-md-12">
-                                                    <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ $reservation->event->user->contactable[0]->surname ?? 'Brak danych'}}" disabled>
-                                                    @error('surname')
-                                                    <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                    </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="phone" class="col-md-12 col-form-label">Numer telefonu</label>
-                                                <div class="col-md-12">
-                                                    <input id="phone" type="number" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ $reservation->event->user->contactable[0]->phone ?? 'Brak'}}" disabled>
-                                                    @error('phone')
-                                                    <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                    </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="dateFrom" class="col-md-12 col-form-label">Data od</label>
-                                                <div class="col-md-12">
-                                                    <input id="dateFrom" type="date" class="form-control @error('dateFrom') is-invalid @enderror" name="dateFrom" value="{{$reservation->date_from}}" required>
-                                                    @error('dateFrom')
-                                                    <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                    </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="dateTo" class="col-md-12 col-form-label">Data do</label>
-                                                <div class="col-md-12">
-                                                    <input id="dateTo" type="date" class="form-control @error('dateTo') is-invalid @enderror" name="dateTo" value="{{$reservation->date_to}}" required>
-                                                    @error('dateTo')
-                                                    <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                    </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
+        @foreach($reservations as $reservation)
+            <div class="row col-12 m-0 p-0 groupList mt-3">
+                <div class="avatar-service">
+                    <img src="{{asset('storage/photos/test.png')}}" class="border" alt="" loading="lazy"/>
+                </div>
+                <div class="sReservation-user">
+                    <div class="sReservation-name">
+                    {{ $reservation->event->user->contactable[0]->name ?? 'Brak danych'}} {{$reservation->event->user->contactable[0]->surname ?? ''}}
+                    </div>
+                    <div class="sReservation-phone">
+                    <i class="fas fa-phone" style="font-size:18px"></i> <span class="phone-number">{{ $reservation->event->user->contactable[0]->phone ?? 'Brak'}}</span>
+                    </div>
+                </div>
+                <div class="sReservation-date-box">
+                    <div class="sReservation-date-tittle">
+                        Okres rezerwacji
+                    </div>
+                    <div class="sReservation-date">
+                    {{$reservation->date_from}} - {{$reservation->date_to}}
+                    </div>
+                </div>
+                <div class="sReservation-status-box">
+                    <div class="sReservation-status-tittle">
+                        Status
+                    </div>
+                    <div class="sReservation-status">
+                    {{ $reservation->status}}
+                    </div>
+                </div>
+                <div class="sReservation-note">
+                    {{str_limit($reservation->note, 100)}}
+                </div>
+                <div class="sReservation-action">
+                    @if($reservation->status == "Oczekiwanie na akceptację")
+                        <button class="btn btn-success btn-service-reservation" data-toggle="modal" data-target="#acceptModal" data-id="{{$reservation->id}}"><i class="fas fa-clipboard-check" style="font-size:16px"></i> Akceptuj</button>
+                        <button class="btn btn-info btn-service-reservation" data-toggle="modal" data-target="#noteModal"><i class="fas fa-edit" style="font-size:16px"></i> Notatka</button>
+                        <button class="btn btn-danger btn-service-reservation" data-toggle="modal" data-target="#cancelModal"><i class="fas fa-times" style="font-size:16px;"></i> Odrzuć</button> 
+                    @else
+                        <button class="btn btn-info btn-service-reservation" data-toggle="modal" data-target="#noteModal"><i class="fas fa-edit" style="font-size:16px"></i> Notatka</button>
+                    @endif
+                </div>
+            </div>
 
-                                            
 
-                                            <input  type="hidden" class="form-control @error('type') is-invalid @enderror" name="type" value="task" required>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <div class="row col-12 justify-content-center">
-                                                    @if($reservation->status == 'Oczekiwanie na akceptację')
-                                                        <a href="{{ route('reservation.deleteReservation', ['id' => $reservation->id]) }}" class="btn btn-danger btn-xs mr-5">Odmów rezerwację</a>
-                                                        <a href="{{ route('reservation.confirmReservation', ['id' => $reservation->id]) }}" class="btn btn-primary btn-xs">Potwierdź rezerwację</a> 
-                                                    @elseif($reservation->status == 'Rezerwacja zaakceptowana')
-                                                        <a href="{{ route('reservation.cancelReservation', ['id' => $reservation->id]) }}" class="btn btn-danger btn-xs">Anuluj rezerwację</a>
-                                                    @elseif($reservation->status == 'Rezerwacja odrzucona')
-                                                        <a href="{{ route('reservation.confirmReservation', ['id' => $reservation->id]) }}" class="btn btn-primary btn-xs">Potwierdź rezerwację</a> 
-                                                    @elseif($reservation->status == 'Rezerwacja anulowana')
-                                                        <a href="{{ route('reservation.confirmReservation', ['id' => $reservation->id]) }}" class="btn btn-primary btn-xs">Potwierdź rezerwację</a> 
-                                                    @endif
-                                                </div>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                                        </form>
-                                    </div>
-                                </div>
+            <!-- Accept reservation modal -->
+            <div class="modal fade" id="acceptModal" tabindex="-1" role="dialog" aria-labelledby="acceptModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title edit" id="acceptModal">Potwierdzenie rezerwacji</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Czy na pewno chcesz zaakceptować rezerwację?
+                            <div class="modal-footer mt-2">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                                <a href="{{ route('reservation.confirmReservation', ['id' => $reservation->id]) }}" class="btn btn-success btn-xs">Potwierdź</a> 
                             </div>
                         </div>
-                @endforeach
-            </table>
-        @else
-            <div class="row" style="text-align:center; font-size:24px; color:#656d79;">
-                Brak rezerwacji
+                    </div>
+                </div>
             </div>
-        @endif
-        @if($reservations->hasPages())
-        {{$reservations->appends(Request::all())->links("pagination::bootstrap-4")}}
-        @endif
-        
- <!--MODAL-->
- <div class="modal fade" id="addReservation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Nowa rezerwacja</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+
+            <!-- Cancel reservation modal -->
+            <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title edit" id="cancelModal">Odrzucenie rezerwacji</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Czy na pewno chcesz odrzucić rezerwację?
+                            <div class="modal-footer mt-2">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                                <a href="{{ route('reservation.deleteReservation', ['id' => $reservation->id]) }}" class="btn btn-danger btn-xs">Odrzuć</a> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <form method="POST" action="{{ route('addGroup') }}" class="row col-12">
-                    @csrf
-                    <div class="form-group row">
-                        <label for="name" class="col-md-12 col-form-label">Imie</label>
-                        <div class="col-md-12">
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $reservation->event->user->contactable[0]->name ?? 'Brak danych'}}" required >
-                            @error('name')
-                            <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
+
+            <!-- Note reservation modal -->
+            <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="noteModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title edit" id="noteModal">Notatka</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="{{ route('reservationSaveNote') }}">
+                            @csrf
+                                <textarea id="edit-note" name="note" class="col-12" style="height:150px;">{{$reservation->note}}</textarea>
+                                <input  type="hidden" name="id_reservation" value="{{$reservation->id}}" required>
+                                <div class="modal-footer mt-2">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                                    <button class="btn btn-primary btn-xs">Zapisz</button> 
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="surname" class="col-md-12 col-form-label">Nazwisko</label>
-                        <div class="col-md-12">
-                            <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ $reservation->event->user->contactable[0]->surname ?? 'Brak danych'}}" required>
-                            @error('surname')
-                            <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="phone" class="col-md-12 col-form-label">Numer telefonu</label>
-                        <div class="col-md-12">
-                            <input id="phone" type="number" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ $reservation->event->user->contactable[0]->phone ?? 'Brak'}}" required>
-                            @error('phone')
-                            <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="dateFrom" class="col-md-12 col-form-label">Data od</label>
-                        <div class="col-md-12">
-                            <input id="dateFrom" type="date" class="form-control @error('dateFrom') is-invalid @enderror" name="dateFrom" value="{{$reservation->date_from ?? 'Brak'}}" required>
-                            @error('dateFrom')
-                            <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="dateTo" class="col-md-12 col-form-label">Data do</label>
-                        <div class="col-md-12">
-                            <input id="dateTo" type="date" class="form-control @error('dateTo') is-invalid @enderror" name="dateTo" value="{{$reservation->date_to ?? 'Brak'}}" required>
-                            @error('dateTo')
-                            <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <input  type="hidden" class="form-control @error('type') is-invalid @enderror" name="type" value="task" required>
-                    </div>
-                    <div class="modal-footer">  
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Dodaj rezerwację</button>
-                </form>
+                </div>
             </div>
-        </div>
-    </div>
+        @endforeach  
+    @else
+    <div class="reservation-empty">
+            Brak rezerwacji
+         </div>
+    @endif
 </div>
 
 
-    </div>
-</div>
-    
 
 
 @endsection
@@ -311,5 +201,17 @@
 <script>
    $("a").removeClass("active");
    $("#reservations").addClass("active");
+
+   var phone = document.getElementsByClassName("phone-number");
+   
+   for(var i = 0; i < phone.length; i++) {
+   
+      result = numberWithSpaces(phone[i].innerText);
+      document.getElementsByClassName("phone-number")[i].innerText = result;
+   }
+
+   function numberWithSpaces(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+   }
 </script>
 @endpush

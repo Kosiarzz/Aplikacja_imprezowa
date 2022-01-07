@@ -33,7 +33,7 @@
             <div class="mr-4">
                <select class="form-control filter-input ml-2" id="select" name="status">
                   <option value="Oczekiwanie na akceptację" @if($request->status == "Oczekiwanie na akceptację") selected @endif>Oczekujące rezerwacje</option>
-                  <option value="Rezerwacja zaakcepotwana" @if($request->status == "Rezerwacja zaakcepotwana") selected @endif>Zaakceptowane rezerwacje</option>
+                  <option value="Rezerwacja zaakceptowana" @if($request->status == "Rezerwacja zaakceptowana") selected @endif>Zaakceptowane rezerwacje</option>
                   <option value="Rezerwacja odrzucona" @if($request->status == "Rezerwacja odrzucona") selected @endif>Odrzucone rezerwacje</option>
                   <option value="Rezerwacja anulowana" @if($request->status == "Rezerwacja anulowana") selected @endif>Anulowane rezerwacje</option>
                </select>
@@ -111,11 +111,11 @@
                      @if($reservation->date_from == $reservation->date_to)
                         <h6 class="card-title">Data rezerwacji</h6>
                         <h5 class="card-title">
-                        {{$reservation->date_from}}
+                        {{date('d.m.Y', strtotime($reservation->date_from))}}
                      @else
                         <h6 class="card-title">Okres rezerwacji</h6>
                         <h5 class="card-title">
-                        Od {{$reservation->date_from}} do {{$reservation->date_to}}
+                        Od {{date('d.m.Y', strtotime($reservation->date_from))}} do {{date('d.m.Y', strtotime($reservation->date_to))}}
                      @endif
                   </h5>
                   <h6 class="card-title">Status rezerwacji</h6>

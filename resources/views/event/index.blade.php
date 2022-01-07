@@ -3,15 +3,15 @@
 <div class="container mt-5">
    <div class="row">
       <div class="space40"></div>
-      <div class="indexBoxName col-md-12 p-0" style="color:#558ACA;">
+      <div class="indexBoxName col-md-12 p-0">
          <a id="budget-box-edit" style="position: absolute; right:1%; top:5%;" data-toggle="modal" data-target="#eventModal">
-               <i class="fas fa-pen" style="color:#000;"></i> 
-            </a>
-         <div class="indexBoxNameTitle">
+            <i class="fas fa-pen" style="color:#000;"></i> 
+         </a>
+         <div class="indexBoxNameTitle" style="color:#558ACA;">
             {{$event->name}}     
          </div>
          <div class="indexBoxNameDays">
-            <span class="indexBoxNameDaysNumber" style="color:#DCA11D;">
+            <span class="indexBoxNameDaysNumber">
             @if(($days = date_diff(date_create(date("Y-m-d")), date_create($event->date_event))->format('%a')) == 0)
                To już dzisiaj!
             @else
@@ -41,7 +41,7 @@
             @endif
          </div>
          <div class="indexBoxNameDate">
-            {{$event->date_event}}
+            {{date('d.m.Y', strtotime($event->date_event))}}
          </div>
       </div>
 
@@ -116,15 +116,15 @@
       <div class="row col-12 p-0 m-0">
          <div class="indexBoxEventPdf">
             <div class="text-pdf" >Pobierz listę zadań </div>
-            <div class="btn-pdf" data-toggle="modal" data-target="#pdf-task"><i class="fas fa-file-download"></i>Pobierz pdf</div>
+            <div class="btn-pdf" data-toggle="modal" data-target="#pdf-task"><i class="fas fa-file-download" style="color:#fff;"></i>Pobierz pdf</div>
          </div>
          <div class="indexBoxEventPdf" style="margin-left:15px; margin-right:15px;">
             <div class="text-pdf">Pobierz listę gości </div>
-            <div class="btn-pdf" data-toggle="modal" data-target="#pdf-guest"><i class="fas fa-file-download"></i>Pobierz pdf</div>
+            <div class="btn-pdf" data-toggle="modal" data-target="#pdf-guest"><i class="fas fa-file-download" style="color:#fff;"></i>Pobierz pdf</div>
          </div>
          <div class="indexBoxEventPdf">
             <div class="text-pdf">Pobierz listę wydatków </div>
-            <div class="btn-pdf" data-toggle="modal" data-target="#pdf-finance"><i class="fas fa-file-download"></i>Pobierz pdf</div>
+            <div class="btn-pdf" data-toggle="modal" data-target="#pdf-finance"><i class="fas fa-file-download" style="color:#fff;"></i>Pobierz pdf</div>
          </div>
       </div>
 
@@ -203,9 +203,8 @@
                <div class="form-group">
                   <div class="form-group row">
                      <label for="name" class="col-md-6 col-form-label text-md-left">Nazwa wydarzenia</label>
-                     <label for="name" class="col-md-6 col-form-label text-md-right">100</label>
                      <div class="col-md-12">
-                        <input id="name" min="3" max="20" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$event->name}}" require>
+                        <input id="name" minlength="3" maxlength="100" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$event->name}}" require>
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -252,7 +251,7 @@
                <div class="form-group">
                   <label for="name-pdf" class="col-md-12 col-form-label">Nazwa pliku</label>
                   <div class="col-md-12">
-                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="Zadania" required autocomplete="name">
+                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="Zadania" required>
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -262,7 +261,7 @@
                </div>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                  <button type="submit" class="btn btn-primary" id="pdfexport">Pobierz pdf</button>
+                  <button type="submit" class="btn btn-danger" id="pdfexport">Pobierz pdf</button>
                </div>
             </form>
          </div>
@@ -286,7 +285,7 @@
                <div class="form-group">
                   <label for="name-pdf" class="col-md-12 col-form-label">Nazwa pliku</label>
                   <div class="col-md-12">
-                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="Zadania" required autocomplete="name">
+                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="Finanse" required>
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -296,7 +295,7 @@
                </div>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                  <button type="submit" class="btn btn-primary" id="pdfexport">Pobierz pdf</button>
+                  <button type="submit" class="btn btn-danger" id="pdfexport">Pobierz pdf</button>
                </div>
             </form>
          </div>
@@ -321,7 +320,7 @@
                <div class="form-group">
                   <label for="name-pdf" class="col-md-12 col-form-label">Nazwa pliku</label>
                   <div class="col-md-12">
-                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="Zadania" required autocomplete="name">
+                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="Goście" required>
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -331,7 +330,7 @@
                </div>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                  <button type="submit" class="btn btn-primary" id="pdfexport">Pobierz pdf</button>
+                  <button type="submit" class="btn btn-danger" id="pdfexport">Pobierz pdf</button>
                </div>
             </form>
          </div>

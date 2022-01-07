@@ -23,9 +23,8 @@ var calendar = $('#calendar').fullCalendar({
     dayNamesShort: ['Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota','Niedziela'],
     editable:true,
     header:{
-        left:'prev, today',
-        center:'title',
-        right:'next'
+        left:'title',
+        right:'today, prev, next'
     },
     events:'{{url("/")}}/firma/usługa/daty/kalendarz',
     selectable:true,

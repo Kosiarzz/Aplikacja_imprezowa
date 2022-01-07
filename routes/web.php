@@ -61,6 +61,7 @@ Route::post('/addReservation/{service_id}/{city_id}/{service_name}', [App\Http\C
 Route::get('/confirmReservation/{id}', [App\Http\Controllers\ReservationController::class, 'confirmReservation'])->name('reservation.confirmReservation');
 Route::get('/deleteReservation/{id}', [App\Http\Controllers\ReservationController::class, 'deleteReservation'])->name('reservation.deleteReservation');
 Route::get('/cancelReservation/{id}', [App\Http\Controllers\ReservationController::class, 'cancelReservation'])->name('reservation.cancelReservation');
+Route::post('/noteReservation', [App\Http\Controllers\ReservationController::class, 'noteReservation'])->name('reservationSaveNote');
 
 Route::get('/wyszukiwanie/uzytkownik/profil/{id}', [App\Http\Controllers\UserController::class, 'findUserProfile'])->name('findUserProfile');
 
@@ -128,6 +129,7 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/uzytkownik/profil', [App\Http\Controllers\UserController::class, 'profile'])->name('user.profile');
         Route::get('/uzytkownik/polubione', [App\Http\Controllers\UserController::class, 'like'])->name('user.like');
         Route::get('/uzytkownik/wydarzenia', [App\Http\Controllers\UserController::class, 'events'])->name('user.events');
+        Route::get('/uzytkownik/wydarzenia/zakończone', [App\Http\Controllers\UserController::class, 'endEvents'])->name('user.endEvents');
         Route::get('/uzytkownik/rezerwacje', [App\Http\Controllers\UserController::class, 'reservation'])->name('user.reservation');
         Route::get('/uzytkownik/powiadomienia', [App\Http\Controllers\UserController::class, 'notifications'])->name('user.notification');
 

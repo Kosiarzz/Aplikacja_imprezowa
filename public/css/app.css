@@ -10243,6 +10243,89 @@ input[type=file] {
   background-color: sandybrown;
 }
 
+.dropdown-img {
+  cursor: pointer;
+}
+
+.dropdown-event {
+  box-shadow: 2px 8px 19px -13px #42445a;
+}
+
+.avatar-service {
+  width: 60px;
+  padding: 10px 10px;
+}
+
+.avatar-service img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.sReservation-user {
+  width: 200px;
+  text-align: center;
+}
+
+.sReservation-name {
+  font-size: 20px;
+  padding-top: 15px;
+}
+
+.sReservation-phone {
+  font-size: 19px;
+}
+
+.sReservation-date-box {
+  width: 215px;
+  text-align: center;
+}
+
+.sReservation-date-tittle {
+  font-size: 20px;
+  padding-top: 15px;
+}
+
+.sReservation-date {
+  font-size: 17px;
+}
+
+.sReservation-status-box {
+  width: 220px;
+  text-align: center;
+}
+
+.sReservation-status-tittle {
+  font-size: 20px;
+  padding-top: 15px;
+}
+
+.sReservation-status {
+  font-size: 17px;
+}
+
+.sReservation-note {
+  width: 300px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.sReservation-action {
+  display: flex;
+  flex-direction: column;
+  padding-top: 7px;
+}
+
+.btn-service-reservation {
+  width: 100px;
+  height: 22px;
+  font-size: 14px !important;
+  margin: 0 0 5px 0 !important;
+  padding: 0 !important;
+}
+
 .greenNotification {
   border-left: 6px solid #4caf50 !important;
 }
@@ -10275,7 +10358,7 @@ input[type=file] {
 .serviceBoxButton {
   background-color: #fff;
   width: 31%;
-  height: 120px;
+  height: 110px;
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.13);
   margin-right: 15px;
@@ -10289,8 +10372,44 @@ input[type=file] {
   text-decoration: none !important;
 }
 
+.eventBoxButton {
+  height: 200px !important;
+}
+
+.serviceButton {
+  text-decoration: none;
+  color: #3F4756;
+  border: 1px solid #558ACA;
+  width: 110px;
+  height: 34px;
+  text-align: center;
+  line-height: 34px;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+.serviceButtonActive {
+  background-color: #558ACA;
+  color: #f7f7f7;
+}
+
+.serviceButton:hover {
+  background-color: #558ACA;
+  color: #f7f7f7;
+}
+
+.event-link-button:hover {
+  background: #326EAB;
+  border-radius: 10px;
+}
+
+.icons-img {
+  width: 50px;
+  height: 50px;
+}
+
 .serviceBoxButton:hover {
-  background-color: #3490dc;
+  background-color: #558ACA;
   color: #fff;
 }
 
@@ -10410,13 +10529,14 @@ input[type=file] {
 
 .btn-pdf {
   width: 130px;
-  height: 40px;
+  height: 33px;
+  font-size: 15px;
   background: #db3444;
   color: #fff;
   text-align: center;
-  line-height: 40px;
+  line-height: 33px;
   border-radius: 4px;
-  margin-top: 5px;
+  margin-top: 8px;
   margin-right: 10px;
   cursor: pointer;
 }
@@ -10545,6 +10665,10 @@ input[type=file] {
   background-color: #fff;
   padding: 20px;
   box-shadow: 0px 0px 9px -5px #42445a;
+}
+
+i {
+  color: #3F4756;
 }
 
 .indexBoxFinances {
@@ -10853,6 +10977,11 @@ tr td {
   height: 100%;
 }
 
+.event-create-title {
+  font-size: 20px;
+  color: #3F4756;
+}
+
 .inputGroup {
   background-color: #fff;
   display: block;
@@ -10877,7 +11006,7 @@ tr td {
   height: 10px;
   border-radius: 50%;
   content: "";
-  background-color: #5562eb;
+  background-color: #697EC5;
   position: absolute;
   left: 50%;
   top: 50%;

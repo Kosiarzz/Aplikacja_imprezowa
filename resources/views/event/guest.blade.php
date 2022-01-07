@@ -395,13 +395,6 @@
          </div>
       </div>
    </div>
-
-   <div class="indexBoxFinances">
-       <div class="indexBoxFinancesName">
-         Pobierz plik z finansami
-      </div>
-      <a class="btn btn-danger mt-2 mb-2" data-toggle="modal" data-target="#pdfModal" style="width:150px; color:#fff;">Pobierz pdf</a>
-   </div>
 </div>
 <!-- PDF task modal -->
 <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
