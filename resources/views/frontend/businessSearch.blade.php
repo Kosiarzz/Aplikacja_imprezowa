@@ -1,85 +1,273 @@
 @extends('layouts.app')
 @section('content')
-<div class="container mt-5">
-   <div class="row justify-content-center mt-5">
-      <form method="post" action="{{route('businessSearch')}}" class="form-inline" style="margin-bottom:30px;">
-         <select class="form-select" aria-label="Default select example" name="mainCategory">
-            <option value="0" selected>Wszystkie</option>
-            @foreach($mainCategories[0]->groupCategory as $gCategory)
-            @foreach($gCategory->category as $category)
-            <option value="{{$category->id}}">{{$category->name}}</option>
-            @endforeach
-            @endforeach
-         </select>
+<div class="container">
+   <div class="row justify-content-center">
+
+   <div class="row col-12 groupList p-0 m-0 mb-4">
+      <div class="row col-12 filter-title m-0 p-0 mb-4 pt-1 pl-2">
+         Filtry
+      </div>
+      <form method="get" action="{{route('businessSearch')}}" class="row col-12 filter" style="margin-bottom:10px;">
+
+         <i class="fas fa-tags ml-3" style="font-size:24px; margin-top:7px;"></i>
+         <div class="mr-4">
+            <select class="form-control filter-input ml-2" aria-label="Default select example" name="mainCategory">
+               <option value="0" @if($request->mainCategory == 0) selected @endif>Wszystkie</option>
+               @foreach($mainCategories[0]->groupCategory as $gCategory)
+                  @foreach($gCategory->category as $category)
+                     <option value="{{$category->id}}" @if($category->id == $request->mainCategory) selected @endif>{{$category->name}}</option>
+                  @endforeach
+               @endforeach
+            </select>
+         </div>
+         <i class="fas fa-map-marker-alt mr-2 ml-2" style="font-size:24px; margin-top:7px;"></i>
          <div class="form-group mr-2">
             <label class="sr-only" for="city">Miasto</label>
             <input name="city" type="text" value="{{old('city')}}" class="form-control autocomplete" id="city" placeholder="City">
          </div>
+         <i class="fas fa-search-dollar mr-2 ml-2" style="font-size:24px; margin-top:7px;"></i>
          <div class="form-group mr-2">
             <label class="sr-only" for="day_in">Cena od</label>
-            <input name="check_in" type="text" value="{{old('check_in')}}" class="form-control datepicker" id="check_in" placeholder="Cena od">
+            <input name="check_in" type="text" style="width:140px;" value="{{old('check_in')}}" class="form-control datepicker" id="check_in" placeholder="Cena od">
          </div>
-         <div class="form-group mr-2">
+         _ 
+         <div class="form-group mr-2 ml-2">
             <label class="sr-only" for="day_out">Cena do</label>
-            <input name="check_out" type="text" value="{{old('check_out')}}" class="form-control datepicker" id="check_out" placeholder="Cena do">
+            <input name="check_out" type="text" style="width:140px;" value="{{old('check_out')}}" class="form-control datepicker" id="check_out" placeholder="Cena do">
          </div>
-         <button type="submit" class="btn btn-info">Szukaj</button>
+
+         <i class="far fa-star ml-3" style="font-size:24px; margin-top:7px;"></i>
+         <div class="mr-3">
+            <select class="form-control filter-input ml-2" aria-label="Default select example" name="rateFrom">
+               <option value="0" @if($request->rateFrom == 0) selected @endif>0</option>
+               <option value="1" @if($request->rateFrom == 1) selected @endif>1</option>
+               <option value="2" @if($request->rateFrom == 2) selected @endif>2</option>
+               <option value="3" @if($request->rateFrom == 3) selected @endif>3</option>
+               <option value="4" @if($request->rateFrom == 4) selected @endif>4</option>
+               <option value="5" @if($request->rateFrom == 5) selected @endif>5</option>
+            </select>
+         </div>
+         _
+         <div class="mr-1">
+            <select class="form-control filter-input ml-2" aria-label="Default select example" name="rateTo">
+               <option value="0" @if($request->rateTo == 0) selected @endif>0</option>
+               <option value="1" @if($request->rateTo == 1) selected @endif>1</option>
+               <option value="2" @if($request->rateTo == 2) selected @endif>2</option>
+               <option value="3" @if($request->rateTo == 3) selected @endif>3</option>
+               <option value="4" @if($request->rateTo == 4) selected @endif>4</option>
+               <option value="5" @if($request->rateTo == 5) selected @endif>5</option>
+            </select>
+         </div>
+         <div class="row col-12 mt-2 justify-content-center">
+         <button type="submit" class="btn btn-primary" style="width:110px;">Szukaj</button>
+         </div>
          {{csrf_field()}}
       </form>
-      @if(!$businesses->isEmpty())
-      @foreach($businesses as $object)
-      <a href="{{route('businessDetails',['id' => $object->id])}}" class="row col-12 groupList p-2 mb-3" style="height:215px;">
-                
-            <div class="col-md-4 p-0 searchPage">
-               @if($object->photos->isEmpty())
-               <img src="{{asset('storage/photos/test.png')}}" class="card-img" alt="zdjęcie">
-               @else
-               <img src="{{asset('storage/'.$object->photos->first()->path)}}" class="card-img" alt="zdjęcie">
-               @endif
-            </div>
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-12 d-flex justify-content-between pl-3 h3">
-                        <div class="">
-                        {{str_limit($object->title,55)}}
-                        </div>
-                        <div class="">
-                        @can('isUser')
-                            @if($object->isLiked())
-                                <i class="fas fa-heart"></i>
-                            @else
-                                <i class="far fa-heart"></i>
-                            @endif
-                        @endcan
-                        </div>
-                    </div> 
-               </div>
-               <div class="row">
-                  <div class="col-md-8 pl-3">
-                     <h5 class="card-title">{{$object->mainCategory->name}}, {{$object->city->name}} <i class="fas fa-map-marker-alt"></i> <i class="fas fa-star ml-3"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>(5)</h5>
-                     <h6 class="card-title"  style="height:90px;">{{$object->short_description}}</h6>
-                  </div>
-                  <div class="col-md-4">
-                     <h5 class="card-title">
-                         @foreach($object->services as $service)
-                            od {{$service->price_from}} zł do {{$service->price_from}} zł / {{$service->unit}}
-                            @break
-                         @endforeach
-                     </h5>
-                     <h5 class="card-title">
-                            
-                     </h5>
+</div>
 
+      @if(!$businesses->isEmpty())
+      @foreach($businesses as $business)
+            @if(!is_null($request->check_in) && !is_null($request->check_out) && $business->services->min('price_from') >= $request->check_in && $business->services->max('price_to') <= $request->check_out)
+            <a href="{{route('businessDetails',['id' => $business->id])}}" class="row col-12 groupList p-2 mb-3 searchList">
+               <div class="col-md-4 p-0 searchPage">
+                  @if($business->photos->isEmpty())
+                     <img src="{{asset('storage/photos/test.png')}}" class="card-img" alt="zdjęcie">
+                  @else
+                     <img src="{{asset('storage/'.$business->photos->first()->path)}}" class="card-img" alt="zdjęcie">
+                  @endif
+               </div>
+               <div class="col-md-8">
+                  <div class="row">
+                     <div class="col-md-12 d-flex justify-content-between pl-3 h5">
+                           <div class="" style="font-size:20px; color:#333740;">
+                              1 {{str_limit($business->title, 65)}}
+                           </div>
+                     </div> 
                   </div>
-                  <div class="col-8 pl-3"> 
-                        @foreach($object->categories as $groupCategory)
-                            {{$groupCategory->category[0]->name}}
+                  <div class="row">
+                     <div class="col-md-8 pl-3">
+                           <div class="mb-1" style="font-size:18px; color:#3F4756;"><span style="margin-right:10px;">{{$business->mainCategory->name}}, {{$business->city->name}} </span>
+                                    @for($i=1; $i<=5; $i++)
+                                       @if($business->rating >= $i)
+                                          <i class="fas fa-star" style="color:gold; font-size:15px;"></i>
+                                       @else
+                                          <i class="fas fa-star" style="color:gray; font-size:15px;"></i>
+                                       @endif
+                                 @endfor
+                                 <span style="color:#000; font-size:16px;">({{count($business->comments)}})</span>
+                           </div>
+                           <div class="decoration-none" style="height:110px; color:#333740; font-size:14px;">{{str_limit($business->short_description, 330)}}</div>
+                     </div>
+                     <div class="col-md-4 mb-0 justify-content-center">
+                        <div class="" style="text-align:center; color:#333740;">
+                              @if($business->services->min('price_from') == $business->services->max('price_to'))
+                                 <span style="color:#333740;">Oferta</span> <br> od <span class="money">{{$business->services->min('price_from')}}</span> zł
+                              @else
+                                 <span style="color:#333740; font-size:20px;">Oferty</span> <br> od <span class="money">{{$business->services->min('price_from')}}</span> zł do <span class="money">{{$business->services->max('price_to')}}</span> zł
+                              @endif
+                        </div>
+                     </div>
+                     <div class="col-8 pl-3 pr-1" style="font-size: 14px;"> 
+                        @foreach($business->GroupBusiness as $gBusiness)
+                           @foreach($gBusiness->groupCategory as $gCategory)
+                              <span style="background:#009D91; color:#fff; border-radius:15px; padding:2px 8px; margin-right:3px;">{{$gCategory->category[0]->name}}</span>
+                           @endforeach 
                         @endforeach
+                     </div>
                   </div>
                </div>
-            </div>
-         
-      </a>
+            </a>
+            @elseif(!is_null($request->check_in) && is_null($request->check_out) && $business->services->min('price_from') >= $request->check_in)
+            <a href="{{route('businessDetails',['id' => $business->id])}}" class="row col-12 groupList p-2 mb-3 searchList">
+               <div class="col-md-4 p-0 searchPage">
+                  @if($business->photos->isEmpty())
+                     <img src="{{asset('storage/photos/test.png')}}" class="card-img" alt="zdjęcie">
+                  @else
+                     <img src="{{asset('storage/'.$business->photos->first()->path)}}" class="card-img" alt="zdjęcie">
+                  @endif
+               </div>
+               <div class="col-md-8">
+                  <div class="row">
+                     <div class="col-md-12 d-flex justify-content-between pl-3 h5">
+                           <div class="" style="font-size:20px; color:#333740;">
+                              2 {{str_limit($business->title, 65)}}
+                           </div>
+                     </div> 
+                  </div>
+                  <div class="row">
+                     <div class="col-md-8 pl-3">
+                           <div class="mb-1" style="font-size:18px; color:#3F4756;"><span style="margin-right:10px;">{{$business->mainCategory->name}}, {{$business->city->name}} </span>
+                                    @for($i=1; $i<=5; $i++)
+                                       @if($business->rating >= $i)
+                                          <i class="fas fa-star" style="color:gold; font-size:15px;"></i>
+                                       @else
+                                          <i class="fas fa-star" style="color:gray; font-size:15px;"></i>
+                                       @endif
+                                 @endfor
+                                 <span style="color:#000; font-size:16px;">({{count($business->comments)}})</span>
+                           </div>
+                           <div class="decoration-none" style="height:110px; color:#333740; font-size:14px;">{{str_limit($business->short_description, 330)}}</div>
+                     </div>
+                     <div class="col-md-4 mb-0 justify-content-center">
+                        <div class="" style="text-align:center; color:#333740;">
+                              @if($business->services->min('price_from') == $business->services->max('price_to'))
+                                 <span style="color:#333740;">Oferta</span> <br> od <span class="money">{{$business->services->min('price_from')}}</span> zł
+                              @else
+                                 <span style="color:#333740; font-size:20px;">Oferty</span> <br> od <span class="money">{{$business->services->min('price_from')}}</span> zł do <span class="money">{{$business->services->max('price_to')}}</span> zł
+                              @endif
+                        </div>
+                     </div>
+                     <div class="col-8 pl-3 pr-1" style="font-size: 14px;"> 
+                        @foreach($business->GroupBusiness as $gBusiness)
+                           @foreach($gBusiness->groupCategory as $gCategory)
+                              <span style="background:#009D91; color:#fff; border-radius:15px; padding:2px 8px; margin-right:3px;">{{$gCategory->category[0]->name}}</span>
+                           @endforeach 
+                        @endforeach
+                     </div>
+                  </div>
+               </div>
+            </a>
+            @elseif(!is_null($request->check_out) && is_null($request->check_in) && $business->services->max('price_to')  <= $request->check_out)
+            <a href="{{route('businessDetails',['id' => $business->id])}}" class="row col-12 groupList p-2 mb-3 searchList">
+               <div class="col-md-4 p-0 searchPage">
+                  @if($business->photos->isEmpty())
+                     <img src="{{asset('storage/photos/test.png')}}" class="card-img" alt="zdjęcie">
+                  @else
+                     <img src="{{asset('storage/'.$business->photos->first()->path)}}" class="card-img" alt="zdjęcie">
+                  @endif
+               </div>
+               <div class="col-md-8">
+                  <div class="row">
+                     <div class="col-md-12 d-flex justify-content-between pl-3 h5">
+                           <div class="" style="font-size:20px; color:#333740;">
+                              3 {{str_limit($business->title, 65)}}
+                           </div>
+                     </div> 
+                  </div>
+                  <div class="row">
+                     <div class="col-md-8 pl-3">
+                           <div class="mb-1" style="font-size:18px; color:#3F4756;"><span style="margin-right:10px;">{{$business->mainCategory->name}}, {{$business->city->name}} </span>
+                                    @for($i=1; $i<=5; $i++)
+                                       @if($business->rating >= $i)
+                                          <i class="fas fa-star" style="color:gold; font-size:15px;"></i>
+                                       @else
+                                          <i class="fas fa-star" style="color:gray; font-size:15px;"></i>
+                                       @endif
+                                 @endfor
+                                 <span style="color:#000; font-size:16px;">({{count($business->comments)}})</span>
+                           </div>
+                           <div class="decoration-none" style="height:110px; color:#333740; font-size:14px;">{{str_limit($business->short_description, 330)}}</div>
+                     </div>
+                     <div class="col-md-4 mb-0 justify-content-center">
+                        <div class="" style="text-align:center; color:#333740;">
+                              @if($business->services->min('price_from') == $business->services->max('price_to'))
+                                 <span style="color:#333740;">Oferta</span> <br> od <span class="money">{{$business->services->min('price_from')}}</span> zł
+                              @else
+                                 <span style="color:#333740; font-size:20px;">Oferty</span> <br> od <span class="money">{{$business->services->min('price_from')}}</span> zł do <span class="money">{{$business->services->max('price_to')}}</span> zł
+                              @endif
+                        </div>
+                     </div>
+                     <div class="col-8 pl-3 pr-1" style="font-size: 14px;"> 
+                        @foreach($business->GroupBusiness as $gBusiness)
+                           @foreach($gBusiness->groupCategory as $gCategory)
+                              <span style="background:#009D91; color:#fff; border-radius:15px; padding:2px 8px; margin-right:3px;">{{$gCategory->category[0]->name}}</span>
+                           @endforeach 
+                        @endforeach
+                     </div>
+                  </div>
+               </div>
+            </a>
+            @elseif(is_null($request->check_in) && is_null($request->check_out))
+            <a href="{{route('businessDetails',['id' => $business->id])}}" class="row col-12 groupList p-2 mb-3 searchList">
+               <div class="col-md-4 p-0 searchPage">
+                  @if($business->photos->isEmpty())
+                     <img src="{{asset('storage/photos/test.png')}}" class="card-img" alt="zdjęcie">
+                  @else
+                     <img src="{{asset('storage/'.$business->photos->first()->path)}}" class="card-img" alt="zdjęcie">
+                  @endif
+               </div>
+               <div class="col-md-8">
+                  <div class="row">
+                     <div class="col-md-12 d-flex justify-content-between pl-3 h5">
+                           <div class="" style="font-size:20px; color:#333740;">
+                              4 {{str_limit($business->title, 65)}}
+                           </div>
+                     </div> 
+                  </div>
+                  <div class="row">
+                     <div class="col-md-8 pl-3">
+                           <div class="mb-1" style="font-size:18px; color:#3F4756;"><span style="margin-right:10px;">{{$business->mainCategory->name}}, {{$business->city->name}} </span>
+                                    @for($i=1; $i<=5; $i++)
+                                       @if($business->rating >= $i)
+                                          <i class="fas fa-star" style="color:gold; font-size:15px;"></i>
+                                       @else
+                                          <i class="fas fa-star" style="color:gray; font-size:15px;"></i>
+                                       @endif
+                                 @endfor
+                                 <span style="color:#000; font-size:16px;">({{count($business->comments)}})</span>
+                           </div>
+                           <div class="decoration-none" style="height:110px; color:#333740; font-size:14px;">{{str_limit($business->short_description, 330)}}</div>
+                     </div>
+                     <div class="col-md-4 mb-0 justify-content-center">
+                        <div class="" style="text-align:center; color:#333740;">
+                              @if($business->services->min('price_from') == $business->services->max('price_to'))
+                                 <span style="color:#333740;">Oferta</span> <br> od <span class="money">{{$business->services->min('price_from')}}</span> zł
+                              @else
+                                 <span style="color:#333740; font-size:20px;">Oferty</span> <br> od <span class="money">{{$business->services->min('price_from')}}</span> zł do <span class="money">{{$business->services->max('price_to')}}</span> zł
+                              @endif
+                        </div>
+                     </div>
+                     <div class="col-8 pl-3 pr-1" style="font-size: 14px;"> 
+                        @foreach($business->GroupBusiness as $gBusiness)
+                           @foreach($gBusiness->groupCategory as $gCategory)
+                              <span style="background:#009D91; color:#fff; border-radius:15px; padding:2px 8px; margin-right:3px;">{{$gCategory->category[0]->name}}</span>
+                           @endforeach 
+                        @endforeach
+                     </div>
+                  </div>
+               </div>
+            </a>
+            @endif
       @endforeach
       @else
       <div class="col-12 noResultsSearch text-center">
@@ -87,17 +275,6 @@
       </div>
       @endif
    </div>
-   <!--
-      #Zdjęcie główne
-      #tytuł
-      #adres firmy (miasto,ulica i numer)
-      #zakres działania firmy
-      #krótki opis
-      dodanie do ulubionych
-      oceny(gwiazdki)
-      #zakres cenowy
-      #jednostka(za dzień/godzine/osobę etc)
-      kategorie??
-      -->
+   {{$businesses->links("pagination::bootstrap-4")}}
 </div>
 @endsection

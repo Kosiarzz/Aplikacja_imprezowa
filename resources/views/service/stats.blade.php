@@ -3,6 +3,11 @@
 @section('content')
 <div class="container mt-5">
     <div class="row justify-content-center mb-3">
+        <div class="row col-12 m-0 p-0 groupList mb-3 p-3" style="display:flex; justify-content:center;">
+            <a href="{{route('service.stats')}}" class="statsButton mr-3 statsButtonActive">Statystyki usługi</a>
+            <a href="{{route('service.statsOffers')}}" class="statsButton mr-3 ">Statystyki ofert</a>
+            <a href="{{route('service.statsCustom')}}" class="statsButton mr-3 ">Niestandardowe statystyki</a>
+        </div>
         <div class="row col-12 justify-content-center">
         <div class="col-12 text-center mt-2 mb-4 titlePage">Dzisiejsze statystyki</div>
         <div class="businessBox">

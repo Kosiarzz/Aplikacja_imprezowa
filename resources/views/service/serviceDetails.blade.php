@@ -2,25 +2,20 @@
 @section('content')
 <div class="container mt-5">
    <div class="row justify-content-center">
-      <div class="groupList row col-12 mb-3" style="min-height:200px;">
-         <div class="col-12 mb-0" style="text-align:center; font-size:30px; height:60px;">
+      <div class="groupList row col-12 mb-3" style="">
+         <div class="col-12 mb-3 mt-2 border-bottom" style="text-align:center; font-size:30px;">
             {{$service->title}}
          </div>
-         <div class="col-12" style="font-size:20px;">
+         <div class="row col-12 mt-0 mb-5 pl-4" style="font-size:18px; white-space: pre-line;">
             {{$service->description}}
          </div>
-         <div class="col-12"></div>
-         <div class="col-12"></div>
-         <div class="col-12"></div>
-         <div class="col-12"></div>
-         <div class="col-12"></div>
       </div>
       <div class="businessBox mb-5" style="width:32.4%;">
          <div class="businessBoxIcon">
-            <i class="fas fa-users" style="color:#91cc75;"></i>
+            <i class="fas fa-users"></i>
          </div>
          <div class="businessBoxRight">
-            <div class="businessBoxNubmer" style="color:#91cc75;">
+            <div class="businessBoxNubmer">
                @if($service->people_from == $service->people_to)
                   {{$service->people_from}}
                @else
@@ -37,17 +32,17 @@
             </div>
          </div>
       </div>
-      <div class="businessBox mb-5" style="width:32.4%;">
+      <div class="businessBox mb-2" style="width:32.4%;">
          <div class="businessBoxIcon">
-            <i class="fas fa-money-check-alt" style="color:#91cc75;"></i>
+            <i class="fas fa-money-check-alt"></i>
          </div>
          <div class="businessBoxRight">
-            <div class="businessBoxNubmer" style="color:#91cc75;">
+            <div class="businessBoxNubmer">
                @if($service->price_from == $service->price_to)
-                  {{$service->price_from}}zł
+                  <span class="money">{{$service->price_from}}</span> zł
                @else
-                  od {{$service->price_from}}zł
-                  do {{$service->price_to}}zł
+                  od <span class="money">{{$service->price_from}}</span> zł
+                  do <span class="money">{{$service->price_to}}</span> zł
                @endif
             </div>
             <div class="businessBoxText">
@@ -56,12 +51,12 @@
          </div>
       </div>
       @if($service->business->name_category == 'room')
-         <div class="businessBox mb-5" style="width:32.4%;">
+         <div class="businessBox mb-2" style="width:32.4%;">
             <div class="businessBoxIcon">
-               <i class="fas fa-house-user" style="color:#91cc75;"></i>
+               <i class="fas fa-house-user"></i>
             </div>
             <div class="businessBoxRight">
-               <div class="businessBoxNubmer" style="color:#91cc75;">
+               <div class="businessBoxNubmer">
                   {{$service->size}} m<sup>2</sup>
                </div>
                <div class="businessBoxText">
@@ -70,8 +65,9 @@
             </div>
          </div>
       @endif
+
       @if(!$service->photos->isEmpty())
-      <div class="row justify-content-center mt-3 groupList p-3">
+      <div class="row justify-content-center mt-1 groupList p-3">
          <div id="carouselExampleControls" class="carousel slide pl-1" data-ride="carousel">
             <div class="carousel-inner">
                @php($i = 1)
@@ -110,5 +106,17 @@
 <script>
    $( "a" ).removeClass( "active" );
    $("#servicePreview").addClass("active");
+
+   var money = document.getElementsByClassName("money");
+    
+   for(var i = 0; i < money.length; i++) {
+   
+      result = numberWithSpaces(money[i].innerText);
+      document.getElementsByClassName("money")[i].innerText = result;
+   }
+
+   function numberWithSpaces(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
 </script>
 @endpush

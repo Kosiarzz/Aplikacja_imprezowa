@@ -76,7 +76,6 @@ class ServiceController extends Controller
 
     public function reservationDetailsFilters(Request $request)
     {     
-        //dd($request);
         $reservations = $this->sRepository->getDetailsReservationsFilters($request);
         
         return view('service.reservationsDetails', [
@@ -116,6 +115,52 @@ class ServiceController extends Controller
         $stats = $this->sRepository->getToDayStats();
 
         return view('service.stats', ['stats' => $stats]);
+    }
+
+    public function statsOffers()
+    {        
+        $stats = $this->sRepository->getToDayStatsOffers();
+        $moreStats = $this->sRepository->getToLastSevenDaysStatsOffers();
+
+        return view('service.statsOffers', [
+            'stats' => $stats,
+            'moreStats' => $moreStats,
+        ]);
+    }
+
+    public function statsCustom()
+    {        
+        $stats = $this->sRepository->getToDayStats();
+        $services = $this->sRepository->getServices();
+
+        return view('service.statsCustom', [
+            'stats' => $stats,
+            'services' => $services
+        ]);
+    }
+
+    public function statsCustomBusiness(Request $request)
+    {        
+        $stats = $this->sRepository->getStatsBusiness($request);
+        $services = $this->sRepository->getServices();
+
+        return view('service.statsCustom', [
+            'statsBusiness' => $stats,
+            'services' => $services,
+            'request' => $request
+        ]);
+    }
+
+    public function statsCustomService(Request $request)
+    {        
+        $stats = $this->sRepository->getStatsService($request);
+        $services = $this->sRepository->getServices();
+
+        return view('service.statsCustom', [
+            'statsService' => $stats,
+            'services' => $services,
+            'request' => $request
+        ]);
     }
 
     public function calendar()

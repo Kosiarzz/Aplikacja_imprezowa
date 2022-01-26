@@ -19,7 +19,7 @@
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-12 d-flex justify-content-between pl-3 h5">
-                        <div class="" style="font-size:20px; color:#3F4756;">
+                        <div class="" style="font-size:20px; color:#333740;">
                             {{str_limit($business->title, 65)}}
                         </div>
                     </div> 
@@ -38,19 +38,19 @@
                         </div>
                         <div class="" style="height:110px; font-size:14px;">{{str_limit($business->short_description, 330)}}</div>
                   </div>
-                  <div class="col-md-4 mb-0">
-                     <h5 class="card-title">
-                         oferty
-                         @foreach($business->services as $service)
-                            od {{$service->price_from}} zł do {{$service->price_from}} zł / {{$service->unit}}
-                            @break
-                         @endforeach
-                     </h5>
+                  <div class="col-md-4 mb-0 justify-content-center">
+                     <div class="" style="text-align:center;">
+                            @if($business->services->min('price_from') == $business->services->max('price_to'))
+                                <span style="color:#333740;">Oferta</span> <br> od <span class="money">{{$business->services->min('price_from')}}</span> zł
+                            @else
+                                <span style="color:#333740; font-size:20px;">Oferty</span> <br> od <span class="money">{{$business->services->min('price_from')}}</span> zł do <span class="money">{{$business->services->max('price_to')}}</span> zł
+                            @endif
+                     </div>
                   </div>
                   <div class="col-8 pl-3 pr-1" style="font-size: 14px;"> 
                         @foreach($partyCategory as $pCategory)
                             @foreach($pCategory->groupCategory as $gCategory)
-                                <span style="background:#8FBFFF; border-radius:15px; padding:2px 8px; margin-right:3px;">{{$gCategory->category[0]->name}}</span>
+                                <span style="background:#009D91; color:#fff; border-radius:15px; padding:2px 8px; margin-right:3px;">{{$gCategory->category[0]->name}}</span>
                             @endforeach
                         @endforeach
                   </div>
@@ -66,41 +66,161 @@
     <div class="titlePage mb-3 col-12" style="text-align:center;">
          Podgląd strony
     </div>
-    <div class="row col-12 groupList">
-    <div class="row col-12 justify-content-center">
-      <section class="col-12">
-        <div class="p-3 titleBusiness" style="font-size:30px; text-align:center;">
-            {{$business->title}}						
-        </div>
-        <div style="text-align:center; color:gold;">
-            @for($i=1; $i<=5; $i++)
-                @if($rate >= $i)
-                    <i class="fas fa-star" style="color:gold;"></i>
-                @else
-                    <i class="fas fa-star" style="color:gray;"></i>
-                @endif
-            @endfor
-            <span style="color:#000;">({{count($business->comments)}})</span>
-        </div>
-        <hr>    
-         <div class="description mt-2 p-2" style="color:#444956; font-size:15px;">{{$business->description}}</div>
-      </section>
-      @foreach($additionalCategory as $aCategory)
-                        @foreach($aCategory->groupCategory as $gCategory)
-                        {{$gCategory->category[0]->name}},
+    <div class="row col-12 groupList mb-3 pb-2">
+        <div class="row col-12 justify-content-center">
+        <section class="col-12 border-bottom">
+            <div class="p-3 titleBusiness" style="font-size:30px; text-align:center;">
+                {{$business->title}}						
+            </div>
+            <div style="text-align:center; color:gold;">
+                @for($i=1; $i<=5; $i++)
+                    @if($rate >= $i)
+                        <i class="fas fa-star" style="color:gold;"></i>
+                    @else
+                        <i class="fas fa-star" style="color:gray;"></i>
+                    @endif
+                @endfor
+                <span style="color:#000;">({{count($business->comments)}})</span>
+            </div>
+            <hr>    
+            <div class="description mt-2 p-2" style="color:#444956; font-size:15px; white-space: pre-line; text-align:left;">{{$business->description}}</div>
+        </section>
+        <div class="row col-12 mt-3">
+            <div class="col-6">
+                <div class="">Obsługiwane wydarzenia</div>
+                <ul>  
+                    @foreach($partyCategory as $pCategory)
+                        @foreach($pCategory->groupCategory as $gCategory)
+                            <li style="color:#444956; font-size:15px;">{{$gCategory->category[0]->name}}</li>
                         @endforeach
                     @endforeach
-                    @foreach($userCategory as $uCategory)
-                        @foreach($uCategory->groupCategory as $gCategory)
-                        {{$gCategory->category[0]->name}},
-                        @endforeach
+                </ul>
+            </div>
+            <div class="col-6">
+                <div class="">Dodatkowe informacje</div>
+                <ul>
+                @foreach($additionalCategory as $aCategory)
+                    @foreach($aCategory->groupCategory as $gCategory)
+                        <li style="color:#444956; font-size:15px;"> {{$gCategory->category[0]->name}}</li>
                     @endforeach
-      
+                @endforeach
+                @foreach($userCategory as $uCategory)
+                    @foreach($uCategory->groupCategory as $gCategory)
+                        <li style="color:#444956; font-size:15px;">{{$gCategory->category[0]->name}}</li>
+                    @endforeach
+                @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
    </div>
+  
 
+    <div class="row col-12 groupList p-0 mb-3 justify-content-center">
+
+      <div id="services" class="row mt-4">
+         <h2>Oferty</h2>
+      </div>
+      <div class="row col-12 pl-4 ml-1 mt-2">
+        @foreach($business->services as $service)
+            <a href="{{route('service.serviceDetails', ['id' => $service->id])}}" class="mb-4 mr-3 py-2 pl-1 pr-1 groupList" style="width:250px; color:#444956; text-decoration:none; text-align:center;">
+                @foreach($service->photos as $photo)
+                    <img src="{{asset('storage/'.$photo->path)}}" width="240" height="141" alt="zdjęcie"><br>
+                    @break
+                @endforeach
+                <div class="mt-2 mb-1 service-title" style="text-align:center; font-size:20px; color:#444956; height:30px; line-height:30px;">{{$service->title}}</div>
+                <div class="py-1">
+                    @if($service->people_from == $service->people_to)
+                        <i class="fas fa-users"></i>    {{$service->people_from}}
+                    @else
+                        <i class="fas fa-users"></i> {{$service->people_from}} - {{$service->people_to}}
+                    @endif
+                    
+                    @if(!is_null($service->size))
+                        <i class="fas fa-house-user ml-3"></i> 100{{$service->size}} m<sup>2</sup>
+                    @endif
+                </div>
+                @if($service->price_from == $service->price_to)
+                    <div class="" style="font-size:16px;"><span class="money">{{$service->price_from}}</span> zł / {{$service->unit}}</div>
+                @else
+                    <div class="" style="font-size:15px;">od <span class="money">{{$service->price_from}}</span> zł do <span class="money">{{$service->price_to}}</span> zł / {{$service->unit}}</div>
+                @endif
+            </a>
+        @endforeach
+      </div>
+
+      <div class="row col-12 justify-content-center mt-5 border-bottom border-top pt-3">
+         <div class="line-overflow clearfix">
+            <h2>Kontakt</h2>
+         </div>
+         <div class="row w-100 justify-content-center border-bottom">
+            <address class="col-12">
+                    <div class="row p-0 mb-1">
+                        <div class="col-6" style="text-align:right;">Nazwa firmy:</div> <div class="col-6">{{$business->name}}</div>		
+                    </div>		
+                    <div class="row mb-1">		
+                        <div class="col-6" style="text-align:right;">Imię i nazwisko:</div> <div class="col-6">{{$business->contactable[0]->name}} {{$business->contactable[0]->surname}}</div>
+                    </div>	
+                    <div class="row mb-1">		
+                        <div class="col-6" style="text-align:right;">Telefon:</div> <div class="col-6"><span class="money">{{$business->contactable[0]->phone}}</span></div>
+                    </div>
+                    <div class="row mb-1">		
+                        <div class="col-6" style="text-align:right;">Email:</div> <div class="col-6">{{$business->owner->email}}</div>
+                    </div>
+                    <div class="row mb-3">		
+                        <div class="col-6" style="text-align:right;">Adres:</div> <div class="col-6">{{$business->address->street}}, {{$business->address->post_code}}, {{$business->city->name}}</div>
+                    </div>
+                <div class="" style="text-align:center;">
+                    @if(!is_null($business->social->www))
+                        <a href="{{$business->social->www}}"><i class="fas fa-globe mr-3" style="font-size:26px;"></i></a>
+                    @endif
+                    @if(!is_null($business->social->facebook))
+                        <a href="{{$business->social->facebook}}"><i class="fab fa-facebook-f mr-3" style="font-size:26px; color:#0d88ef;"></i></a>
+                    @endif
+                    @if(!is_null($business->social->instagram))
+                        <a href="{{$business->social->instagram}}"><i class="fab fa-instagram mr-3" style="font-size:29px; color:#b328a1;"></i></a>
+                    @endif
+                    @if(!is_null($business->social->youtube))
+                        <a href="{{$business->social->youtube}}"><i class="fab fa-youtube mr-3" style="font-size:29px; color:#ff0000;"></i></a>
+                    @endif
+                </div>
+            </address>
+         </div>
+            <div class="p-0 m-0 pb-3 col-12 mt-3">
+                <div class="line-overflow clearfix" style="text-align:center;">
+                    <h3>Godziny otwarcia</h3>
+                </div>
+
+                <div class="row p-0 mb-1">
+                    <div class="col-6" style="text-align:right;">Poniedziałek:</div> <div class="col-6">{{$business->openingHours->monday}}</div>		
+                </div>	
+                <div class="row p-0 mb-1">
+                    <div class="col-6" style="text-align:right;">Wtorek:</div> <div class="col-6">{{$business->openingHours->tuesday}}</div>		
+                </div>	
+                <div class="row p-0 mb-1">
+                    <div class="col-6" style="text-align:right;">Środa:</div> <div class="col-6">{{$business->openingHours->wednesday}}</div>		
+                </div>	
+                <div class="row p-0 mb-1">
+                    <div class="col-6" style="text-align:right;">Czwartek:</div> <div class="col-6">{{$business->openingHours->thursday}}</div>		
+                </div>	
+                <div class="row p-0 mb-1">
+                    <div class="col-6" style="text-align:right;">Piątek:</div> <div class="col-6">{{$business->openingHours->friday}}</div>		
+                </div>	
+                <div class="row p-0 mb-1">
+                    <div class="col-6" style="text-align:right;">Sobota:</div> <div class="col-6">{{$business->openingHours->saturday}}</div>		
+                </div>	
+                <div class="row p-0 mb-1">
+                    <div class="col-6" style="text-align:right;">Niedziela:</div> <div class="col-6">{{$business->openingHours->sunday}}</div>		
+                </div>	
+                 
+            </div>
+      </div>
+</div>
+
+<div class="row col-12 groupList mb-3">
    <div class="row justify-content-center mt-3">
    
-      <div class="mt-2" style="font-size:32px;">Galeria zdjęć</div>
+      <div class="mb-1" style="font-size:32px;">Galeria zdjęć</div>
       <div id="carouselExampleControls" class="carousel slide pl-1 border-bottom pb-4" data-ride="carousel">
         <div class="carousel-inner">
             @php($i = 1)
@@ -126,157 +246,88 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-      
+</div>
+</div>
 
-      <div id="services" class="row mt-4">
-         <h2>
-            Oferty
-         </h2>
-      </div>
-      <div class="row col-12 pl-4 ml-1 border-bottom">
-        @foreach($business->services as $service)
-        <a href="{{route('serviceDetails', ['id' => $service->id])}}" class="mb-4 mr-3 groupList" style="width:250px; color:#444956; text-decoration:none;">
-                @foreach($service->photos as $photo)
-                    <img src="{{asset('storage/'.$photo->path)}}" width="250" height="141" alt="zdjęcie"><br>
-                    @break
-                @endforeach
-                <div class="mt-1 mb-1" style="text-align:center; font-size:20px; color:#444956;">{{$service->title}}</div>
-                <div class="">od {{$service->price_from}} zł do {{$service->price_to}} zł / {{$service->unit}}</div>
-                <div class=""></div>
-                <div class=""></div>
-                Osób od: {{$service->people_from}}<br>
-                Osób do: {{$service->people_to}}<br>      
-                Metraż: {{$service->size}} m^2<br> 
-        </a>
-        @endforeach
-      </div>
-
-      <div class="row col-12 justify-content-center mt-5 border-bottom">
-         <div class="line-overflow clearfix">
-            <h2>Kontakt</h2>
-         </div>
-         <div class="row w-100 justify-content-center">
-            <address class="business-card">
-                <div class="item">
-                    Nazwa firmy: {{$business->name}}							
-                </div>
-                <div class="item"> 
-                    Imię i nazwisko: {{$business->contactable[0]->name}} {{$business->contactable[0]->surname}}<br>
-                    Telefon:  {{$business->contactable[0]->phone}}
-                </div>
-                <div class="item">
-                    Adres: {{$business->address->street}}, {{$business->address->post_code}}
-                    {{$business->city->name}}
-                </div>
-                <a href="{{$business->social->www}}"><i class="fas fa-globe" style="font-size:26px; color:#000;"></i></a>
-                <a href="{{$business->social->facebook}}"><i class="fab fa-facebook-f" style="font-size:26px; color:#000;"></i></a>
-                <a href="{{$business->social->instagram}}"><i class="fab fa-instagram" style="font-size:28px; color:#000;"></i></a>
-                <a href="{{$business->social->youtube}}"><i class="fab fa-youtube" style="font-size:28px; color:#000;"></i></a>
-            </address>
-         </div>
-      </div>
-
-        <div class="row mt-5">
-            <h2>
-                Komentarze<span style="font-size:22px;">({{count($business->comments)}})</span>
-            </h2>
-            <hr>
-        </div>
+<div class="row col-12 groupList mb-3">
+    <div class="row justify-content-center mt-3">
+        <div class="mb-1" style="font-size:32px;">Komentarze</div>
         <div class="row col-12 ">
-            @foreach($business->comments as $comment)
-            <div class="w-100 mb-1 p-2">
-                <div class="mb-4 d-flex flex-row" style="color:#444956; border-bottom:1px solid #ddd; padding-bottom:15px;">
-                    <a href="{{route('findUserProfile', ['id' => $comment->user->id])}}">
-                        <img src="{{asset('storage/'.$comment->user->photos->path)}}" width="100" height="100" class="rounded-circle border" alt="SALA">
-                    </a>
-                    <div class="flex-column">
-                        <div class="mt-2 ml-3">
-                        <span style="font-size:20px;">{{$comment->user->contactable[0]->name}}</span> <span style="color:gold; font-size:23px;">{!! $comment->rating['str'] !!} </span>
-                            <div style="font-size:14px;">{{$comment->updated_at}}</div>
-                        </div>
-                        <div class="pl-3 pt-2">
-                            {{$comment->content}}
+            @if(!$business->comments->isEmpty())
+                @foreach($business->comments as $comment)
+                <div class="w-100 mb-1 p-2">
+                    <div class="mb-2 d-flex flex-row" style="color:#444956; border-bottom:1px solid #ddd; padding-bottom:15px;">
+                        <a href="{{route('findUserProfile', ['id' => $comment->user->id])}}">
+                            <img src="{{asset('storage/'.$comment->user->photos->path)}}" width="60" height="60" class="rounded-circle border mt-2" alt="avatar">
+                        </a>
+                        <div class="flex-column">
+                            <div class="mt-2 ml-3">
+                                <span style="font-size:20px;">{{$comment->user->contactable[0]->name}}</span> <span style="color:gold;">{!! $comment->rating['str'] !!} </span>
+                                <div style="font-size:14px;">{{$comment->updated_at}}</div>
+                            </div>
+                            <div class="pl-3 pt-2">
+                                {{$comment->content}}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            @endforeach
+                @endforeach
+            @else
+            BRAK KOM
+            @endif
         </div>
-        
-        
+    </div>
+</div>
 
-
-      <div class="row w-100 justify-content-center">
-         @can('isUser')
-         <form method="POST" action="{{ route('addComment',['commentable_id'=>$business->id, 'App\Models\Business']) }}" class="form-horizontal">
-            <fieldset>
-               <div class="form-group">
-                  <label for="textArea" class="col-lg-2 control-label">Komentarz/opinia</label>
-                  <div class="col-lg-10">
-                     <textarea required name="content" class="form-control" rows="3" id="textArea"></textarea>
-                  </div>
-               </div>
-               <div class="form-group">
-                  <label for="selectRating" class="col-lg-2 control-label">Ocena</label>
-                  <div class="col-lg-10">
-                     <select name="rating" class="form-control" id="selectRating">
-                        <option value="5">5</option>
-                        <option value="4">4</option>
-                        <option value="3">3</option>
-                        <option value="2">2</option>
-                        <option value="1">1</option>
-                     </select>
-                  </div>
-               </div>
-               <div class="form-group">
-                  <div class="col-lg-10 col-lg-offset-2">
-                     <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
-                  </div>
-               </div>
-            </fieldset>
-            {{ csrf_field() }}
-         </form>
-         @elseif(!'isBusiness')
-         <a href="{{ route('login') }}">Zaloguj się aby dodać komentarz</a>
-         @endcan
-      </div>
-      <section id="gbook">
-         <div class="line-overflow">
-            <h2>
-               Częste pytania i odpowiedzi
-            </h2>
-         </div>
-      </section>
+    <div class="row col-12 groupList mb-3">
+        <div class="row col-12 justify-content-center mt-3">
+            <div class="mb-1" style="font-size:32px;">Pytania i odpowiedzi </div>
+        </div>
     
       <div class="row col-12 ">
         @foreach($business->questionsAndAnswers as $qAndA)
             <div class="w-100 mb-1 p-2">
                 <div class="mb-1 d-flex flex-row" style="color:#444956; border-bottom:1px solid #ddd; padding-bottom:15px;">
                     <div class="flex-column">
-                    <span style="font-size:24px;">{{$qAndA->question}}</span><br>
-                    <span style="font-size:18px;">{{$qAndA->answer}}</span><br>
+                    <span style="font-size:16px; font-weight:600;">{{$qAndA->question}}</span><br>
+                    <span style="font-size:15px;">{{$qAndA->answer}}</span><br>
                     </div>
                 </div>
             </div>
             @endforeach
         </div>
+   </div>
 
-      <!--
-         mapa
-         
-         -->
-   </div>
-   </div>
     <div class="row col-12 content-justify-center mt-3" style="text-align:center;">
         <a href="{{route('service.businessEdit', ['id' => $business->id])}}" class="btn btn-primary mr-3">Edytuj</a>
         <a href="{{route('service.businessDelete', ['id' => $business->id])}}" class="btn btn-danger">Usuń usługę</a>
     </div>
-
+    </div>
 </div>
 @endsection
 @push('script')
 <script>
-   $( "a" ).removeClass( "active" );
-   $("#preview").addClass("active");
+    $( "a" ).removeClass( "active" );
+    $("#preview").addClass("active");
+
+    $(".service-title").each(function () {
+        var numChars = $(this).text().length;     
+        if ((numChars >= 30)) {
+            $(this).css("font-size", "1em");
+        }       
+    });
+
+    var money = document.getElementsByClassName("money");
+    
+    for(var i = 0; i < money.length; i++) {
+    
+        result = numberWithSpaces(money[i].innerText);
+        document.getElementsByClassName("money")[i].innerText = result;
+    }
+
+    function numberWithSpaces(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+
 </script>
 @endpush

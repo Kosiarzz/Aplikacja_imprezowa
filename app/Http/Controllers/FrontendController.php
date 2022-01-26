@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Interfaces\FrontendRepositoryInterface;
 use App\Gateways\FrontendGateway;
+use App\Repositories\ServiceRepository;
 
 class FrontendController extends Controller
 {
 
-    public function __construct(FrontendRepositoryInterface $fRepository, FrontendGateway $fGateway)
+    public function __construct(FrontendRepositoryInterface $fRepository, FrontendGateway $fGateway, ServiceRepository $sRepository)
     {
         $this->middleware('auth')->only(['addReservation','addComment','like','unlike']);
 
         $this->fRepository = $fRepository;
         $this->fGateway = $fGateway;
+        $this->sRepository = $sRepository;
     }
 
     public function index()
@@ -31,30 +33,6 @@ class FrontendController extends Controller
             'businesses' => $data,
             'mainCategories' => $mainCategories,
         ]);
-    }
-
-    public function businessDetails($id)
-    {
-        $data = $this->fRepository->getBusinessDetails($id);
-        return view('frontend.details', ['business' => $data]);
-    }
-    
-    public function serviceDetails($id)
-    {
-        $data = $this->fRepository->getServiceDetails($id);
-        
-        return view('frontend.serviceDetails', ['service' => $data]);
-    }
-
-
-    public function businessCompanyCategory()
-    {
-        return view('business.companyCategory');
-    }
-
-    public function businessProfile()
-    {
-        return view('business.profile');
     }
 
     public function businessSearch(Request $request)
@@ -76,6 +54,7 @@ class FrontendController extends Controller
                 'businesses' => $result,
                 'category' => $category,
                 'mainCategories' => $mainCategories,
+                'request' => $request,
             ]);
         }
 
@@ -83,9 +62,45 @@ class FrontendController extends Controller
             'businesses' => $result,
             'category' => 0,
             'mainCategories' => $mainCategories,
+            'request' => $request,
         ])->with('nobusiness', 'Brak wyników wyszykiwania.');
         
         #return redirect('/wyszukaj')->with('nobusiness', 'Brak wyników wyszykiwania.');
+    }
+
+    public function businessDetails($id)
+    {
+        //$data = $this->sRepository->getDashboard();
+
+        $partyCategory = $this->fRepository->getPartyCategory($id);
+        $additionalCategory = $this->fRepository->getAdditionalCategory($id);
+        $userCategory = $this->fRepository->getUserCategory($id);
+
+        $data = $this->fRepository->getBusinessDetails($id);
+        return view('frontend.details', [
+            'business' => $data,
+            'partyCategory' => $partyCategory,
+            'additionalCategory' => $additionalCategory,
+            'userCategory' => $userCategory,
+        ]);
+    }
+    
+    public function serviceDetails($id)
+    {
+        $data = $this->fRepository->getServiceDetails($id);
+        
+        return view('frontend.serviceDetails', ['service' => $data]);
+    }
+
+
+    public function businessCompanyCategory()
+    {
+        return view('business.companyCategory');
+    }
+
+    public function businessProfile()
+    {
+        return view('business.profile');
     }
 
     public function user($id)

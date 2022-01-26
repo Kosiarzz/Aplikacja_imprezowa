@@ -43,9 +43,9 @@ Route::get('/rejestracja/firma', function () {  return view('auth.registerBusine
 // id w pasku, zabezpieczenia, komentarze i ocena usera
 
 Route::get('/searchCities', [App\Http\Controllers\FrontendController::class, 'searchCities']);
-Route::post('/businessSearch', [App\Http\Controllers\FrontendController::class, 'businessSearch'])->name('businessSearch');
+Route::get('/wyszukaj/filtry', [App\Http\Controllers\FrontendController::class, 'businessSearch'])->name('businessSearch');
 Route::get('/wyszukaj', [App\Http\Controllers\FrontendController::class, 'businessIndex'])->name('frontend.search');
-Route::get('/wfirma/{id}', [App\Http\Controllers\FrontendController::class, 'businessDetails'])->name('businessDetails');
+Route::get('/wyszukaj/firma/{id}', [App\Http\Controllers\FrontendController::class, 'businessDetails'])->name('businessDetails');
 Route::get('/firmaa/sala/{id}', [App\Http\Controllers\FrontendController::class, 'serviceDetails'])->name('serviceDetails');
 
 //
@@ -54,6 +54,8 @@ Route::get('/unlike/{likeable_id}/{type}', [App\Http\Controllers\LikeController:
 
 //
 Route::post('/addComment/{commentable_id}/{type}', [App\Http\Controllers\CommentController::class, 'addComment'])->name('addComment');
+Route::post('/editComment/{commentable_id}/{type}', [App\Http\Controllers\CommentController::class, 'editComment'])->name('editComment');
+Route::get('/deleteComment/{commentable_id}/{type}', [App\Http\Controllers\CommentController::class, 'deleteComment'])->name('deleteComment');
 
 //
 Route::get('/ajaxGetServiceReservations/{id}', [App\Http\Controllers\ReservationController::class, 'ajaxGetServiceReservations']);
@@ -107,6 +109,10 @@ Route::middleware(['auth','verified'])->group(function()
         Route::get('/firma/usługa/rezerwacje/filtry', [App\Http\Controllers\ServiceController::class, 'reservationDetailsFilters'])->name('service.reservationDetailsFilters');
         Route::get('/firma/usługa/powiadomienia', [App\Http\Controllers\ServiceController::class, 'notifications'])->name('service.notifications');
         Route::get('/firma/usługa/statystyki', [App\Http\Controllers\ServiceController::class, 'stats'])->name('service.stats');
+        Route::get('/firma/usługa/statystyki/oferty', [App\Http\Controllers\ServiceController::class, 'statsOffers'])->name('service.statsOffers');
+        Route::get('/firma/usługa/statystyki/niestandardowe', [App\Http\Controllers\ServiceController::class, 'statsCustom'])->name('service.statsCustom');
+        Route::get('/firma/usługa/statystyki/niestandardowe/firma', [App\Http\Controllers\ServiceController::class, 'statsCustomBusiness'])->name('service.statsCustomBusiness');
+        Route::get('/firma/usługa/statystyki/niestandardowe/usługa', [App\Http\Controllers\ServiceController::class, 'statsCustomService'])->name('service.statsCustomService');
         Route::get('/firma/usługa/podgląd', [App\Http\Controllers\ServiceController::class, 'preview'])->name('service.preview');
         Route::get('/firma/usługa/podgląd-usługi', [App\Http\Controllers\ServiceController::class, 'previewService'])->name('service.previewService');
 

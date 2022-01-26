@@ -74,7 +74,7 @@
         <form method="POST" action="{{ route('user.updateProfile') }}" enctype="multipart/form-data" class="row col-7 mt-3 groupList p-4">
         @csrf 
             <div class="form-group row col-12">
-                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                <label for="email" class="col-md-4 col-form-label text-md-right">Nowy adres email</label>
 
                 <div class="col-md-8">
                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email">

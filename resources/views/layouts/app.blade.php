@@ -35,13 +35,8 @@
                <i class="fas fa-bars"></i>
                </b>
                <!-- Brand -->
-               <a class="navbar-brand" href="#">
-               <img
-                  src="x"
-                  height="25"
-                  alt=""
-                  loading="lazy"
-                  /> logo/nazwa
+               <a class="navbar-brand p-0 m-0" href="#">
+                    <span class="pageName">Zaplanuj</span><span class="pagePl">.pl</span>
                </a>
                <!-- Right links -->
                <ul class="navbar-nav ms-auto d-flex flex-row">
@@ -65,7 +60,7 @@
                             <ul class="navbar-nav ms-auto d-flex flex-row">
                                 <!-- Avatar -->
                                 <div class="dropdown">
-                                    <img src="{{asset('storage/'.session('avatar'))}}" class="rounded-circle avatar-circle dropdown-toggle dropdown-img" alt="" loading="lazy" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+                                    <img src="{{asset('storage/'.session('avatar'))}}" class="rounded-circle avatar-circle dropdown-toggle dropdown-img border" alt="" loading="lazy" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
                                     <div class="dropdown-menu dropdown-event" aria-labelledby="dropdownMenuButton" style="left:-100px!important; border:0!important;">
                                         <a class="dropdown-item" href="{{ route('user.events') }}">Wydarzenia</a>
                                         <a class="dropdown-item" href="{{ route('user.profile') }}">Profil</a>
@@ -83,16 +78,33 @@
                             </ul>
                         @endcan
                         @can('isBusiness')
-                        <li class="nav-item"><a class="dropdown-item" href="{{ route('business.index') }}" class="mr-3">Usługi</a></li>
-                        <li class="nav-item"><a class="dropdown-item" href="{{ route('business.notifications') }}" class="mr-3">Powiadomienia</a></li>
+                            <ul class="navbar-nav ms-auto d-flex flex-row">
+                                <!-- Avatar -->
+                                <div class="dropdown">
+                                    <img src="{{asset('storage/'.session('avatar'))}}" class="rounded-circle avatar-circle dropdown-toggle dropdown-img border" alt="" loading="lazy" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+                                    <div class="dropdown-menu dropdown-event" aria-labelledby="dropdownMenuButton" style="left:-100px!important; border:0!important;">
+                                        <a class="dropdown-item" href="{{ route('business.index') }}">Usługi</a>
+                                        <a class="dropdown-item" href="{{ route('business.profile') }}">Profil</a>
+                                        <a class="dropdown-item border-top" href="{{ route('logout') }}"
+                                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                        </form>
+                                    </div>
+                                </div>
+                                
+                            </ul>
                         @endcan       
                     @endguest
                </ul>
             </div>
             <!-- Container wrapper -->
-         </nav>
+    </nav>
          <!-- Navbar -->
-    <main class="py-5 mt-5">
+    <main class="pt-5 mt-5" style="padding-left:0px!important;">
         @yield('content')
     </main>
     </div>

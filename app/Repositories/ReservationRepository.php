@@ -23,7 +23,7 @@ class ReservationRepository
         ])->increment('reservations', 1);
             
         return Reservation::create([
-                'event_id'=>session('event'),
+                'event_id'=> session('event'),
                 'city_id'=>$city_id,
                 'service_id'=>$service_id,
                 'status'=> 'Oczekiwanie na akceptację',
@@ -36,7 +36,10 @@ class ReservationRepository
 
     public function getReservationsByServiceId($id)
     {
-        return Reservation::where('service_id', $id)->get(); 
+        return Reservation::where('service_id', $id)->where(function($query){
+            $query->orWhere('status', 'Rezerwacja zaakceptowana');
+            $query->orWhere('status', 'Oczekiwanie na akceptację');
+        })->get();
     }
 
     public function getBusinessReservations($request)

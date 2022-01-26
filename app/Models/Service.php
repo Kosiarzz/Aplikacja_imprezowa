@@ -48,4 +48,9 @@ class Service extends Model
         return $this->morphMany(Notification::class, 'notification')->orderBy('id', 'desc');
     }
 
+    public function statistic()
+    {
+        return $this->hasMany(StatisticService::class);
+    }
+
 }

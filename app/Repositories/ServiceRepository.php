@@ -14,6 +14,7 @@ use App\Models\QuestionAndAnswer;
 use App\Models\Contact;
 use App\Models\OpeningHours;
 use App\Models\GroupBusiness;
+use App\Models\StatisticService;
 
 use App\Interfaces\ServiceRepositoryInterface;
 
@@ -41,14 +42,17 @@ class ServiceRepository implements ServiceRepositoryInterface
             $rate += $comment->rating['value'];
         }
 
-        $rate = $rate/count($business->comments);
-        
+        if(count($business->comments) != 0)
+        {
+            $rate = $rate/count($business->comments);
+        }
+
         return $rate;
     }
 
     public function getDashboard()
     {
-        return Business::with(['city','photos','openingHours','comments.user.photos', 'comments.user.contactable','questionsAndAnswers','address','users.photos','services.photos','contactable','categories.category' ,'groupBusiness.groupCategory.category'])->find(session('service'));
+        return Business::with(['city','photos','owner','openingHours','comments.user.photos', 'comments.user.contactable','questionsAndAnswers','address','users.photos','services.photos','contactable','categories.category' ,'groupBusiness.groupCategory.category'])->find(session('service'));
     }
 
     public function getBusinessReservations()
@@ -387,6 +391,41 @@ class ServiceRepository implements ServiceRepositoryInterface
             "business_id" => session('service'),
         ]);
 
+    }
+
+    public function getStatsBusiness($request)
+    {
+        return Statistic::whereBetween('date', [$request->date_from , $request->date_to])->where('business_id', session('service'))->get();
+    }
+
+    public function getStatsService($request)
+    {
+
+        return Service::with('statistic')->whereHas('statistic', function ($query) use($request){
+            $query->whereBetween('date', [$request->date_from , $request->date_to]);
+        })->where('id', $request->service)->get();
+      
+    }
+
+    public function getToDayStatsOffers()
+    {
+        return Service::with(['statistic' => function ($query){
+                $query->where('date', Carbon::now()->format('Y-m-d'));
+            }])->where('business_id', session('service'))->get();
+
+    }
+
+    public function getToLastSevenDaysStatsOffers()
+    {
+        $toDate = Carbon::now();
+        $toDate->subDay(1);
+   
+        $fromDate = Carbon::createFromFormat('Y-m-d', $toDate->toDateString()); 
+        $fromDate->subDay(7);
+
+        return Service::with(['statistic' => function ($query) use($fromDate, $toDate){
+                    $query->whereBetween('date', [$fromDate , $toDate]);
+                }])->where('business_id', session('service'))->get();
     }
   
 }

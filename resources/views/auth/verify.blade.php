@@ -5,20 +5,20 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+                <div class="card-header" style="background:#558ACA; color:#fff; font-size:18px;">Zweryfikuj adres email</div>
 
                 <div class="card-body">
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
+                            Nowy link aktywacyjny został wysłany na twojego maila.
                         </div>
                     @endif
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
+                    Zanim przejdziesz dalej, potwierdź swoje konto naciskając w link przesłany na podany adres email podczas rejestracji.<br>
+                    Jeżeli nie otrzymałeś maila, naciśnij poniższy link.<br>
                     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                         @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
+                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">Wyślij ponownie link aktywacyjny.</button>
                     </form>
                 </div>
             </div>

@@ -37,22 +37,7 @@
                     </div>
                 </a>  
             @endforeach
-        <!--
-            <a href="{{route('event.createEvent')}}" class="serviceBoxButton">
-
-                <div class="serviceBoxTitle">Stwórz wydarzenie</div>
-             
-            </a>  
--->
         </div>
     </div>
 </div>
 @endsection
-
-@push('script')
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-</script>
-@endpush

@@ -92,10 +92,10 @@
                         Okres rezerwacji
                     </div>
                     <div class="sReservation-date">
-                    {{$reservation->date_from}} - {{$reservation->date_to}}
+                    {{date('d.m.Y', strtotime($reservation->date_from))}} {{date('d.m.Y', strtotime($reservation->date_from))}}
                     </div>
                 </div>
-                <div class="sReservation-status-box">
+                <div class="sReservation-status-box mr-2">
                     <div class="sReservation-status-tittle">
                         Status
                     </div>
@@ -103,23 +103,23 @@
                     {{ $reservation->status}}
                     </div>
                 </div>
-                <div class="sReservation-note">
+                <div class="sReservation-note border-left border-right">
                     {{str_limit($reservation->note, 100)}}
                 </div>
-                <div class="sReservation-action">
+                <div class="sReservation-action pl-2">
                     @if($reservation->status == "Oczekiwanie na akceptację")
-                        <button class="btn btn-success btn-service-reservation" data-toggle="modal" data-target="#acceptModal" data-id="{{$reservation->id}}"><i class="fas fa-clipboard-check" style="font-size:16px"></i> Akceptuj</button>
-                        <button class="btn btn-info btn-service-reservation" data-toggle="modal" data-target="#noteModal"><i class="fas fa-edit" style="font-size:16px"></i> Notatka</button>
-                        <button class="btn btn-danger btn-service-reservation" data-toggle="modal" data-target="#cancelModal"><i class="fas fa-times" style="font-size:16px;"></i> Odrzuć</button> 
+                        <button class="btn btn-success btn-service-reservation" data-toggle="modal" data-target="#acceptModal{{$reservation->id}}" data-id="{{$reservation->id}}"><i class="fas fa-clipboard-check" style="font-size:16px"></i> Akceptuj</button>
+                        <button class="btn btn-info btn-service-reservation" data-toggle="modal" data-target="#noteModal{{$reservation->id}}"><i class="fas fa-edit" style="font-size:16px"></i> Notatka</button>
+                        <button class="btn btn-danger btn-service-reservation" data-toggle="modal" data-target="#cancelModal{{$reservation->id}}"><i class="fas fa-times" style="font-size:16px;"></i> Odrzuć</button> 
                     @else
-                        <button class="btn btn-info btn-service-reservation" data-toggle="modal" data-target="#noteModal"><i class="fas fa-edit" style="font-size:16px"></i> Notatka</button>
+                        <button class="btn btn-info btn-service-reservation" data-toggle="modal" data-target="#noteModal{{$reservation->id}}"><i class="fas fa-edit" style="font-size:16px"></i> Notatka</button>
                     @endif
                 </div>
             </div>
 
 
             <!-- Accept reservation modal -->
-            <div class="modal fade" id="acceptModal" tabindex="-1" role="dialog" aria-labelledby="acceptModal" aria-hidden="true">
+            <div class="modal fade" id="acceptModal{{$reservation->id}}" tabindex="-1" role="dialog" aria-labelledby="acceptModal" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -140,7 +140,7 @@
             </div>
 
             <!-- Cancel reservation modal -->
-            <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModal" aria-hidden="true">
+            <div class="modal fade" id="cancelModal{{$reservation->id}}" tabindex="-1" role="dialog" aria-labelledby="cancelModal" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -161,7 +161,7 @@
             </div>
 
             <!-- Note reservation modal -->
-            <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="noteModal" aria-hidden="true">
+            <div class="modal fade" id="noteModal{{$reservation->id}}" tabindex="-1" role="dialog" aria-labelledby="noteModal" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">

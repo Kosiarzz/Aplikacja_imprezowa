@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mt-5">
 
-      <div class="titlePage justify-content-center">
+      <div class="titlePage justify-content-center mb-2">
          Oferty
       </div>
     <div class="row col-md-12">

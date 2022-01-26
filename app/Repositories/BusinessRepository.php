@@ -77,17 +77,26 @@ class BusinessRepository implements BusinessRepositoryInterface
 
     public function getCategory($type)
     {
-        return Group::with(['groupCategory.category'])->where('type', $type.'Category')->where('name', $type.'Category')->get();
+        return Group::with(['groupCategory' => function($q) 
+        {
+            $q->where('type','default')->with('category');
+        }])->where('type', $type.'Category')->where('name', $type.'Category')->get();
     }
     
     public function getAdditionalCategory($type)
     {
-        return Group::with(['groupCategory.category'])->where('type', $type.'SelectCategory')->where('name', $type.'SelectCategory')->get();
+        return Group::with(['groupCategory'=> function($q) 
+        {
+            $q->where('type','default')->with('category');
+        }])->where('type', $type.'SelectCategory')->where('name', $type.'SelectCategory')->get();
     }
 
     public function getPartyCategory()
     {
-        return Group::with(['groupCategory.category'])->where('type', 'partyCategory')->where('name', 'partyCategory')->get();
+        return Group::with(['groupCategory' => function($q) 
+                {
+                    $q->where('type','default')->with('category');
+                }])->where('type', 'partyCategory')->where('name', 'partyCategory')->get();
     }
     
     public function getStatsCategory($type)
@@ -197,7 +206,7 @@ class BusinessRepository implements BusinessRepositoryInterface
                 $groupCategory = new GroupCategory;
                 $groupCategory->type = 'business';
                 $groupCategory->group_id = $groupBusiness->id;
-                $groupCategory->category_id = $categoryId;
+                $groupCategory->category_id = $category->id;
                 $groupCategory->save();
             }
         }

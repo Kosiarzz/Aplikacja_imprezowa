@@ -75,47 +75,28 @@
                <i class="fas fa-bars"></i>
                </button>
                <!-- Brand -->
-               <a class="navbar-brand" href="#">
-               <img
-                  src="x"
-                  height="25"
-                  alt=""
-                  loading="lazy"
-                  /> logo/nazwa ({{session('service')}})
+               <a class="navbar-brand p-0 m-0" href="#">
+                    <span class="pageName">Zaplanuj</span><span class="pagePl">.pl</span>
                </a>
                <!-- Right links -->
                <ul class="navbar-nav ms-auto d-flex flex-row">
-                  <!-- Notification dropdown -->
-                  <li class="nav-item">
-                     <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                     {{ __('Logout') }}
-                     </a>
-                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                     </form>
-                  </li>
-
                   <!-- Avatar -->
-                  <li class="nav-item dropdown">
-                     <a
-                        class="nav-link  hidden-arrow d-flex align-items-center"
-                        href="{{ route('business.profile') }}"
-                        id="navbarDropdownMenuLink"
-                        role="button"
-                        data-mdb-toggle="dropdown"
-                        aria-expanded="false"
-                        >
-                     <img
-                        src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
-                        class="rounded-circle"
-                        height="22"
-                        alt=""
-                        loading="lazy"
-                        />
-                     </a>
-                  </li>
+                  <div class="dropdown">
+                     <img src="{{asset('storage/'.session('avatar'))}}" class="rounded-circle avatar-circle dropdown-toggle dropdown-img border" alt="" loading="lazy" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+                     <div class="dropdown-menu dropdown-event" aria-labelledby="dropdownMenuButton" style="left:-100px!important; border:0!important;">
+                           <a class="dropdown-item" href="{{ route('business.index') }}">Usługi</a>
+                           <a class="dropdown-item" href="{{ route('business.profile') }}">Profil</a>
+                           <a class="dropdown-item border-top" href="{{ route('logout') }}"
+                                 onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                           {{ __('Logout') }}
+                           </a>
+                           <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                           @csrf
+                           </form>
+                     </div>
+                  </div>
+                  
                </ul>
             </div>
             <!-- Container wrapper -->

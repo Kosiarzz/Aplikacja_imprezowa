@@ -10008,8 +10008,7 @@ a:link, a:visited {
 
 .registerBox {
   width: 400px;
-  height: 200px;
-  border: 2px solid #3490dc;
+  height: 240px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10018,17 +10017,29 @@ a:link, a:visited {
   padding: 15px 5px;
   margin-right: 15px;
   border-radius: 15px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 9px -5px #42445a;
+  background-color: #fff;
 }
 
 .registerBox:hover {
-  border: 3px solid #1556a3;
-  background-color: #78b0ff;
+  border: 1px solid #558ACA;
+  background-color: #8FBFFF;
 }
 
 .icon {
-  width: 50px;
-  height: 50px;
-  border: 1px solid #000;
+  width: 80px;
+  height: 80px;
+}
+
+.icon img {
+  width: 100%;
+  height: 100%;
+  color: #00528D;
+}
+
+.description {
+  text-align: center;
 }
 
 .title {
@@ -10097,9 +10108,8 @@ input[type=file] {
 
 .businessBoxTitle {
   color: black;
-  font-size: 22px;
-  text-align: left;
-  padding: 5px 0 0 15px;
+  font-size: 23px;
+  text-align: center;
 }
 
 .businessBoxNotifications {
@@ -10150,6 +10160,39 @@ input[type=file] {
 
 .businessBoxNubmer {
   font-size: 22px;
+}
+
+.businessStatsOfferBox {
+  width: 250px;
+  height: 136px;
+  background-color: #fff;
+  padding: 5px 0;
+  margin-right: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 9px -5px #42445a;
+}
+
+.businessStatsOfferBoxIcon i {
+  font-size: 35px;
+}
+
+.businessStatsOfferBoxNumber {
+  text-align: center;
+}
+
+.businessStatsOfferBoxStatsBox {
+  align-items: column;
+  font-size: 20px;
+}
+
+.businessStatsOfferBoxStatsBox i {
+  font-size: 25px;
+  padding-left: 33px !important;
+}
+
+.businessStatsOfferBoxText {
+  justify-content: center;
+  font-size: 20px;
 }
 
 .filter {
@@ -10306,7 +10349,7 @@ input[type=file] {
 }
 
 .sReservation-note {
-  width: 300px;
+  width: 290px;
   padding: 5px 10px;
   display: flex;
   align-items: center;
@@ -10396,6 +10439,33 @@ input[type=file] {
 .serviceButton:hover {
   background-color: #558ACA;
   color: #f7f7f7;
+}
+
+.statsButton {
+  text-decoration: none;
+  color: #3F4756;
+  border: 1px solid #558ACA;
+  padding: 0 10px;
+  height: 34px;
+  text-align: center;
+  line-height: 34px;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+.statsButtonActive {
+  background-color: #558ACA;
+  color: #f7f7f7 !important;
+}
+
+.statsButton:hover {
+  background-color: #558ACA;
+  color: #f7f7f7 !important;
+  cursor: pointer;
+}
+
+.statsButton a {
+  text-decoration: none;
 }
 
 .event-link-button:hover {
@@ -10568,7 +10638,7 @@ input[type=file] {
 
 .indexBoxReservation {
   width: 30%;
-  min-height: 100px;
+  min-height: 50px;
   border-radius: 4px;
   margin-right: 15px;
   margin-bottom: 15px;
@@ -10579,6 +10649,11 @@ input[type=file] {
   text-decoration: none !important;
   box-shadow: 0px 0px 9px -5px #42445a;
   background-color: #fff;
+}
+
+.indexBoxReservation:hover {
+  background-color: #558ACA;
+  color: #fff;
 }
 
 .indexBoxReservationName {
@@ -10594,7 +10669,7 @@ input[type=file] {
   width: 100%;
   font-size: 16px !important;
   display: flex;
-  justify-content: left;
+  justify-content: center;
   font-size: 25px;
   color: #000;
 }
@@ -10775,7 +10850,7 @@ body {
 .businessBoxButtonCategory {
   background-color: #fff;
   width: 300px;
-  height: 100px;
+  min-height: 100px;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.13);
   margin-right: 15px;
@@ -10787,6 +10862,11 @@ body {
   justify-content: center;
   flex-direction: column;
   text-decoration: none;
+}
+
+.businessBoxButtonCategory:hover {
+  background-color: #3490dc;
+  color: #fff;
 }
 
 .businessBoxButton {
@@ -10867,10 +10947,109 @@ body {
   box-shadow: 0px 1px 9px -5px #42445a;
 }
 
+.likeButton {
+  border-radius: 20px;
+  border: 1px solid #558ACA;
+}
+
+.likeButton:hover {
+  background: #558ACA;
+  color: #fff;
+}
+
+#avaiability_calendar {
+  height: 400px;
+  box-shadow: 0px 0px 9px -5px #42445a;
+}
+
+.ui-datepicker-calendar {
+  margin-left: 60px !important;
+}
+
+.ui-datepicker-prev, .ui-datepicker-next {
+  font-size: 30px;
+  cursor: pointer;
+  border-radius: 50%;
+  text-decoration: none;
+  width: 35px;
+  height: 35px;
+  margin-top: 10px;
+  text-align: center;
+  line-height: 35px;
+}
+
+.ui-datepicker-prev:hover, .ui-datepicker-next:hover {
+  text-decoration: none;
+  color: #558ACA;
+  background-color: #eef5ff;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+}
+
+.ui-datepicker-prev {
+  float: left;
+  margin-left: 25px;
+}
+
+.ui-datepicker-next {
+  float: right;
+  margin-right: 25px;
+}
+
+.ui-datepicker-title {
+  font-size: 22px;
+  padding-left: 7px;
+  text-align: center;
+  font-weight: 600;
+  padding: 5px 0px;
+}
+
+.ui-datepicker-unselectable span {
+  color: silver !important;
+  background-color: #fff !important;
+}
+
+.ui-state-default {
+  color: #558ACA;
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #eef5ff;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+}
+
+.ui-datepicker-calendar tbody tr {
+  padding-left: 10px;
+}
+
+.ui-datepicker-calendar tbody tr td {
+  width: 55px !important;
+  height: 50px !important;
+  margin-left: 10px;
+}
+
 .groupList {
   border-radius: 5px;
   box-shadow: 0px 0px 9px -5px #42445a;
   background-color: #fff;
+}
+
+.searchList {
+  text-decoration: none !important;
+  color: #000;
+  height: 215px;
+}
+
+.searchList:hover {
+  background-color: #F4FAFF;
+}
+
+.decoration-none {
+  text-decoration: none !important;
 }
 
 .taskComplete {
@@ -10957,6 +11136,16 @@ tr td {
 
 .noResultsSearch {
   font-size: 25px;
+}
+
+.pageName {
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+}
+
+.pagePl {
+  font-size: 17px;
 }
 
 .fas {

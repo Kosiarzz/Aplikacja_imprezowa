@@ -81,17 +81,19 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        $photo = Photo::create([
+        Photo::create([
             'photoable_type' => 'App\Models\User',
             'photoable_id' => $user->id,
             'path' => $data['image']->store('photos'),
         ]);
 
-        $contact = Contact::create([
+        session(['avatar' => $data['image']->store('photos')]);
+
+        Contact::create([
             'name' => $data['name'],
             'surname' => $data['surname'],
             'phone' => $data['phone'],
-            'contactable_type' => 'App\Models\\'.ucfirst($data['role']),
+            'contactable_type' => 'App\Models\User',
             'contactable_id' => $user->id,
         ]);
 

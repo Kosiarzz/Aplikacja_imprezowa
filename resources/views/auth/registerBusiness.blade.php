@@ -5,11 +5,27 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header" style="background:#558ACA; color:#fff; font-size:18px;">Konto firmowe</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
+                        <div class="row justify-content-center">
+                            <img id="image" class="border" src="{{asset('storage/default/defaultAvatar.png')}}" alt="Twój avatar" />
+                        </div>
+                        <div class="form-group row">
+                            <label for="image" class="col-md-4 col-form-label text-md-right">Grafika</label>
+
+                            <div class="col-md-6">
+                                <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" onchange="readURL(this);">
+                                
+                                @error('image')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">Imie</label>
@@ -87,22 +103,6 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="image" class="col-md-4 col-form-label text-md-right">Grafika</label>
-
-                            <div class="col-md-6">
-                                <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" onchange="readURL(this);">
-                                
-                                @error('image')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <img id="image" src="http://placehold.it/180" alt="Twój avatar" />
 
                         <input id="role" type="hidden" name="role" value="business">
 

@@ -94,7 +94,7 @@
                 <label for="minPeople" class="col-md-4 col-form-label text-md-right">
                 @if($business->name_category == "lokal")
                     Minimalna ilość osób
-                @elseif($business->name_category == "music" || $business->name_category == "photo")
+                @else
                    Osób w zespole od
                 @endif
                 </label>
@@ -113,7 +113,7 @@
                 <label for="maxPeople" class="col-md-4 col-form-label text-md-right">
                     @if($business->name_category == "lokal")
                         Maksymalna ilość osób
-                    @elseif($business->name_category == "music" || $business->name_category == "photo")
+                    @else
                         Osób w zespole do
                     @endif
                 </label>

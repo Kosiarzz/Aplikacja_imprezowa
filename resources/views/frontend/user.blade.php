@@ -2,26 +2,21 @@
 
 @section('content')
 <div class="container">
-    <div class="row md-12 justify-content-center">
-        
-        <div style="width:100%;">
-            <img id="image" src="{{$user->photos->path ?? $defaultPhoto}}" class="rounded-circle" alt="avatar">
-            {{$user->contactable[0]->name}} {{$user->contactable[0]->surname}} | {{$user->email}} | {{$user->contactable[0]->phone}}
+    <div class="row col-12 justify-content-center">
+        <div class="row col-7 groupList pt-4 pb-4">
+            <div class="row col-12 ml-2">
+                @if(!is_null($user->photos->path))
+                    <img id="image" src="{{asset('storage/'.$user->photos->path)}}" class="rounded-circle border" alt="avatar">
+                @else
+                    <img id="image" src="{{$defaultAvatar}}" class="rounded-circle border" alt="avatar">
+                @endif
+            </div>
+            <div class="col-12 mt-2" style="text-align:center;">
+                <div class="" style="font-size:20px;">{{$user->contactable[0]->name}} {{$user->contactable[0]->surname}}</div>
+                <div class="">{{$user->contactable[0]->phone}}</div>
+            </div>
+            chyba tylko firma
         </div>
-        @if($user->role == 'user')
-            <div class="row col-12 justify-content-center">
-                <b>Dodanych komentarzy({{$user->comments->count()}}) </b>
-            </div>
-            
-            <div class="row col-12 justify-content-center">
-                <b> Polubione firmy({{$user->businesses->count()}})</b>
-            </div>
-            data założenia konta, komenatrze i ocena usera, publikowanie swojej imprezy?
-        @endif
-
-        @if($user->role == 'business')
-            Wyświetlenie wszystkich firm należących do tego usera
-        @endif
     </div>
     
 

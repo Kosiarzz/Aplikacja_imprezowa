@@ -11,6 +11,7 @@ use App\Models\Comment;
 use App\Models\Notification;
 use App\Models\Group;
 use App\Models\Statistic;
+use App\Models\GroupBusiness;
 use App\Interfaces\FrontendRepositoryInterface;
 
 use Illuminate\Support\Carbon;
@@ -22,7 +23,12 @@ class FrontendRepository implements FrontendRepositoryInterface
     //Pobranie danych na stronę główną
     public function getDataMainPage()
     {
-        return Business::with(['city','photos','address'])->ordered()->paginate(10);
+        return  Business::with(['photos', 'address', 'services.reservations', 'categories.category', 'mainCategory', 'city', 'services', 'comments', 
+                'GroupBusiness' => function($q) {
+                    $q->where('type', 'party')->with(['groupCategory' => function($query){
+                        $query->where('type', 'business')->with(['category']);
+                    }]);
+                }])->paginate(20);
     }
 
     public function getCategoryMainPage()
@@ -38,9 +44,10 @@ class FrontendRepository implements FrontendRepositoryInterface
         Statistic::firstOrCreate([
             "business_id" => $id,
             "date" => $date->toDateString(),
+            "type" => 'business',
         ])->increment('views', 1);
 
-        return Business::with(['city','photos','comments.user.photos','questionsAndAnswers','address','users.photos','services.photos'])->find($id);
+        return Business::with(['city','photos','comments.user.photos','questionsAndAnswers','address','users.photos','services.photos','openingHours'])->find($id);
     }
 
     //Wyszukanie miasta po pierwszych kilku literach
@@ -52,7 +59,12 @@ class FrontendRepository implements FrontendRepositoryInterface
     //Wyszukanie firm po filtrach
     public function getSearchResults($request)
     {
-        $business = Business::with(['photos', 'address', 'services.reservations', 'categories.category', 'mainCategory', 'city', 'services']);
+        $business = Business::with(['photos','services', 'address', 'categories.category', 'mainCategory', 'city', 'services', 'comments', 
+        'GroupBusiness' => function($q) {
+            $q->where('type', 'party')->with(['groupCategory' => function($query){
+                $query->where('type', 'business')->with(['category']);
+            }]);
+        }]);
 
         //Nazwa miasta
         if(!is_null($request->city))
@@ -68,7 +80,9 @@ class FrontendRepository implements FrontendRepositoryInterface
             $business->where('main_category_id', $request->mainCategory);
         }      
 
-        return $business->get();
+        $business->whereBetween('rating', [$request->rateFrom, $request->rateTo]);
+
+        return $business->paginate(20);
     } 
 
     //Pobranie danych wybranej sali
@@ -95,6 +109,31 @@ class FrontendRepository implements FrontendRepositoryInterface
         $notification->notification_id = $service->business->id;
 
         return $notification->save();
+    }
+
+    public function getPartyCategory($id)
+    {
+        return GroupBusiness::with(['groupCategory' => function($q){ 
+            $q->where('type', 'business')->with('category');
+            } 
+        ])->where('business_id', $id)->where('name', 'party')->get();
+    }
+
+    public function getAdditionalCategory($id)
+    {
+        return GroupBusiness::with(['groupCategory' => function($q){ 
+            $q->where('type', 'business')->with('category');
+            } 
+        ])->where('business_id', $id)->where('name', 'additional')->get();
+    }
+
+    
+    public function getUserCategory($id)
+    {
+        return GroupBusiness::with(['groupCategory' => function($q){ 
+            $q->where('type', 'business')->with('category');
+            } 
+        ])->where('business_id', $id)->where('name', 'user')->get();
     }
 
 }

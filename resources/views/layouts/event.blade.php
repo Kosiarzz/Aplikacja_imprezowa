@@ -89,19 +89,14 @@
                <i class="fas fa-bars"></i>
                </button>
                <!-- Brand -->
-               <a class="navbar-brand" href="#">
-               <img
-                  src="x"
-                  height="25"
-                  alt=""
-                  loading="lazy"
-                  /> logo/nazwa ({{session('event')}})
+               <a class="navbar-brand p-0 m-0" href="#">
+                    <span class="pageName">Zaplanuj</span><span class="pagePl">.pl</span>
                </a>
                <!-- Right links -->
                <ul class="navbar-nav ms-auto d-flex flex-row">
                   <!-- Avatar -->
                   <div class="dropdown">
-                     <img src="{{asset('storage/'.session('avatar'))}}" class="rounded-circle avatar-circle dropdown-toggle dropdown-img" alt="" loading="lazy" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+                     <img src="{{asset('storage/'.session('avatar'))}}" class="rounded-circle avatar-circle dropdown-toggle dropdown-img border" alt="" loading="lazy" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
                      <div class="dropdown-menu dropdown-event" aria-labelledby="dropdownMenuButton" style="left:-100px!important; border:0!important;">
                         <a class="dropdown-item" href="{{ route('user.events') }}">Wydarzenia</a>
                         <a class="dropdown-item" href="{{ route('user.profile') }}">Profil</a>

@@ -21,4 +21,18 @@ class CommentController extends Controller
         
         return redirect()->back();
     }
+
+    public function editComment($commentable_id, $type, Request $request)
+    {
+        $this->cRepository->editComment($commentable_id, $type, $request);
+        
+        return redirect()->back();
+    }
+
+    public function deleteComment($commentable_id, $type)
+    {
+        $this->cRepository->deleteComment($commentable_id, $type);
+        
+        return redirect()->back();
+    }
 }

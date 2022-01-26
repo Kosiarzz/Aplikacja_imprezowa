@@ -27,6 +27,7 @@ class Business extends Model
         'short_description',
         'user_id',
         'city_id',
+        'rating',
     ];
 
     public function groupBusiness()
@@ -37,6 +38,11 @@ class Business extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function photos()
