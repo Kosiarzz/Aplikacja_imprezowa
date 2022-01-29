@@ -76,6 +76,9 @@
                     <img src="{{asset('storage/'.$photo->path)}}" width="240" height="141" alt="zdjęcie"><br>
                     @break
                 @endforeach
+                @if($service->photos->isEmpty())
+                    <img src="{{asset('storage/default/photo.jpg')}}" width="240" height="141" alt="zdjęcie"><br>
+                @endif
                 <div class="mt-2 mb-1 service-title" style="text-align:center; font-size:20px; color:#444956; height:30px; line-height:30px;">{{$service->title}}</div>
                 <div class="py-1">
                     @if($service->people_from == $service->people_to)
@@ -205,9 +208,7 @@
                 @foreach($business->comments as $comment)
                 <div class="w-100 mb-1 p-2">
                     <div class="mb-2 d-flex flex-row" style="color:#444956; border-bottom:1px solid #ddd; padding-bottom:15px;">
-                        <a href="{{route('findUserProfile', ['id' => $comment->user->id])}}">
                             <img src="{{asset('storage/'.$comment->user->photos->path)}}" width="60" height="60" class="rounded-circle border mt-2" alt="avatar">
-                        </a>
                         <div class="flex-column">
                             <div class="mt-2 ml-3">
                                 <span style="font-size:20px;">{{$comment->user->contactable[0]->name}}</span> <span style="color:gold;">{!! $comment->rating['str'] !!} </span>
@@ -327,12 +328,13 @@
 @endsection
 @push('calendar')
 <script>
-$(".my-rating").starRating({
-  initialRating: 4,
-  strokeColor: '#894A00',
-  strokeWidth: 10,
-  starSize: 25
-});
 
+    $(".service-title").each(function () {
+        var numChars = $(this).text().length;     
+        console.log(numChars);
+        if ((numChars >= 28)) {
+            $(this).css("font-size", "1em");
+        }       
+    });
 </script>
 @endpush

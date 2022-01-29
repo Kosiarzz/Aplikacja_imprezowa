@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\required;
 
 use Illuminate\Database\Seeder;
 
@@ -8,7 +8,7 @@ use App\Models\Group;
 use App\Models\GroupCategory;
 use App\Models\Category;
 
-class PhotoCategorySeeder extends Seeder
+class DecorationCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,9 +20,7 @@ class PhotoCategorySeeder extends Seeder
 
         //Kategorie
         $dataCategories = [
-            ['name' => 'Fotograf'],
-            ['name' => 'Kamerzysta'],
-            ['name' => 'Fotograf i kamerzysta'],
+            ['name' => 'Dekoracje'],
         ];
 
         $savedCategory = [];
@@ -38,8 +36,8 @@ class PhotoCategorySeeder extends Seeder
 
         //Grupa obsługiwanych imprez
         $dataGroup = [
-            'name' => 'photoCategory', 
-            'type' => 'photoCategory',
+            'name' => 'decorationCategory', 
+            'type' => 'decorationCategory',
         ];
 
         $group = new Group;

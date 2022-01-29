@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <form method="POST" action="{{ route('user.updateProfile') }}" enctype="multipart/form-data" class="row col-7 groupList pt-4 pb-4">
-            @csrf 
+            @csrf
             <div class="row col-12 ml-2">
                 @if(!is_null($user->photos->path))
                     <img id="image" src="{{asset('storage/'.$user->photos->path)}}" class="rounded-circle border" alt="avatar">

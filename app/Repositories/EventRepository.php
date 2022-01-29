@@ -382,6 +382,7 @@ class EventRepository
     {   
         $event = Event::with(['category'])->find($id);
         session(['event' => $event->id]);
+        session(['eventName' => $event->name]);
 
         return $event;
     }

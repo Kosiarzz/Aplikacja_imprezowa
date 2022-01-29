@@ -18,7 +18,7 @@
             <div class="statsBox">
                 <div class="statsBoxRight">
                     <div class="statsBoxNubmer">
-                        {{$stats['events']}}
+                        50
                     </div>
                     <div class="statsBoxText">
                         Zorganizowanych wydarzeń
@@ -28,7 +28,7 @@
             <div class="statsBox">
                 <div class="statsBoxRight">
                     <div class="statsBoxNubmer">
-                        {{$stats['services']}}
+                        50
                     </div>
                     <div class="statsBoxText">
                         Dostępnych usług
@@ -38,7 +38,7 @@
             <div class="statsBox">
                 <div class="statsBoxRight">
                     <div class="statsBoxNubmer">
-                        {{$stats['offers']}}
+                        50
                     </div>
                     <div class="statsBoxText">
                         Ofert do wyboru

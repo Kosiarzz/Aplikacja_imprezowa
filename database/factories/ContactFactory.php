@@ -14,7 +14,8 @@ class ContactFactory extends Factory
      */
     protected $model = Contact::class;
 
-    private static $contactId = 1;
+    private static $businessId = 1;
+
     /**
      * Define the model's default state.
      *
@@ -22,26 +23,12 @@ class ContactFactory extends Factory
      */
     public function definition()
     {
-        if(self::$contactId > 10)
-        {
-            $businessTypeId = self::$contactId - 10;
-            self::$contactId++;
-
-            return [
-                'name' => $this->faker->firstName,
-                'surname' => $this->faker->lastName,
-                'phone' => $this->faker->phoneNumber,
-                'contactable_type' => 'App\Models\Business',
-                'contactable_id' => $businessTypeId,
-            ];
-        }
-
         return [
             'name' => $this->faker->firstName,
             'surname' => $this->faker->lastName,
             'phone' => $this->faker->phoneNumber,
-            'contactable_type' => 'App\Models\User',
-            'contactable_id' => self::$contactId++,
+            'contactable_type' => 'App\Models\Business',
+            'contactable_id' => self::$businessId++,
         ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\required;
 
 use Illuminate\Database\Seeder;
 
@@ -8,7 +8,7 @@ use App\Models\Group;
 use App\Models\GroupCategory;
 use App\Models\Category;
 
-class MusicSelectCategorySeeder extends Seeder
+class AttractionCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,14 +20,11 @@ class MusicSelectCategorySeeder extends Seeder
 
         //Kategorie
         $dataCategories = [
-            ['name' => 'Gra na żywo'],
-            ['name' => 'Efekty świetlne'],
-            ['name' => 'Prowadzenie zabaw'],
-            ['name' => 'Wokalista'],
-            ['name' => 'Wokalistka'],
-            ['name' => 'Akordeon'],
-            ['name' => 'Saksofon'],
-            ['name' => 'Skrzypce'],
+            ['name' => 'Atrakcje'],
+            ['name' => 'Pokaz barmański'],
+            ['name' => 'Pokaz sztucznych ogni'],
+            ['name' => 'Pokaz tańca'],
+            ['name' => 'Pokaz laserowy'],
         ];
 
         $savedCategory = [];
@@ -43,8 +40,8 @@ class MusicSelectCategorySeeder extends Seeder
 
         //Grupa obsługiwanych imprez
         $dataGroup = [
-            'name' => 'musicSelectCategory', 
-            'type' => 'musicSelectCategory',
+            'name' => 'attractionCategory', 
+            'type' => 'attractionCategory',
         ];
 
         $group = new Group;

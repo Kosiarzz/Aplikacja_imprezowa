@@ -35,6 +35,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 //Frontend
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'index'])->name('frontend.index');
+Route::get('/statystyki', [App\Http\Controllers\FrontendController::class, 'stats'])->name('frontend.stats');
+
 
 
 Route::get('/rejestracja/użytkownik', function () {  return view('auth.registerUser');  })->name('role.user');

@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\required;
 
 use Illuminate\Database\Seeder;
 
@@ -8,7 +8,7 @@ use App\Models\Group;
 use App\Models\GroupCategory;
 use App\Models\Category;
 
-class DecorationSelectCategorySeeder extends Seeder
+class ServiceCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,28 +17,16 @@ class DecorationSelectCategorySeeder extends Seeder
      */
     public function run()
     {
-
-        //Kategorie
+        //Typy obiektów (kategorie)
         $dataCategories = [
-            ['name' => 'Balony'],
-            ['name' => 'Dekoracja samochodu'],
-            ['name' => 'Etykiety na alkochol'],
-            ['name' => 'Podziękowania'],
-            ['name' => 'Upominki dla gości'],
-            ['name' => 'Balony z nadrukiem'],
-            ['name' => 'Dekoracja stołu'],
-            ['name' => 'Etykiekty na ciasto'],
-            ['name' => 'Kieliszki'],
-            ['name' => 'Kotyliony'],
-            ['name' => 'Ozdoby bibułowe'],
-            ['name' => 'Ozdoby na krzesła'],
-            ['name' => 'Serwetki'],
-            ['name' => 'Świece'],
-            ['name' => 'Napis LOVE'],
-            ['name' => 'Dekoracja ściany'],
-            ['name' => 'Dekoracja sali'],
-            ['name' => 'Dekoracja kościołu'],
-            ['name' => 'Pokrowce na krzesła'],
+            ['name' => 'Usługa'],
+            ['name' => 'Barman'],
+            ['name' => 'Uroda'],
+            ['name' => 'Fryzjer'],
+            ['name' => 'Animator dla dzieci'],
+            ['name' => 'Artysta'],
+            ['name' => 'Barista'],
+            ['name' => 'Iluzjonista'],
         ];
 
         $savedCategory = [];
@@ -51,11 +39,10 @@ class DecorationSelectCategorySeeder extends Seeder
             $savedCategory[] = $category;
         }
 
-
-        //Grupa obsługiwanych imprez
+        //Grupa
         $dataGroup = [
-            'name' => 'decorationSelectCategory', 
-            'type' => 'decorationSelectCategory',
+            'name' => 'cateringCategory', 
+            'type' => 'cateringCategory',
         ];
 
         $group = new Group;

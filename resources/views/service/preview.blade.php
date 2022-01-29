@@ -124,10 +124,15 @@
       <div class="row col-12 pl-4 ml-1 mt-2">
         @foreach($business->services as $service)
             <a href="{{route('service.serviceDetails', ['id' => $service->id])}}" class="mb-4 mr-3 py-2 pl-1 pr-1 groupList" style="width:250px; color:#444956; text-decoration:none; text-align:center;">
-                @foreach($service->photos as $photo)
-                    <img src="{{asset('storage/'.$photo->path)}}" width="240" height="141" alt="zdjęcie"><br>
-                    @break
-                @endforeach
+                <div style="min-height:140px!important;">
+                    @foreach($service->photos as $photo)
+                        <img src="{{asset('storage/'.$photo->path)}}" width="240" height="141" alt="zdjęcie"><br>
+                        @break
+                    @endforeach
+                    @if($service->photos->isEmpty())
+                        <img src="{{asset('storage/default/photo.jpg')}}" width="240" height="141" alt="zdjęcie"><br>
+                    @endif
+                </div>
                 <div class="mt-2 mb-1 service-title" style="text-align:center; font-size:20px; color:#444956; height:30px; line-height:30px;">{{$service->title}}</div>
                 <div class="py-1">
                     @if($service->people_from == $service->people_to)
@@ -257,9 +262,7 @@
                 @foreach($business->comments as $comment)
                 <div class="w-100 mb-1 p-2">
                     <div class="mb-2 d-flex flex-row" style="color:#444956; border-bottom:1px solid #ddd; padding-bottom:15px;">
-                        <a href="{{route('findUserProfile', ['id' => $comment->user->id])}}">
                             <img src="{{asset('storage/'.$comment->user->photos->path)}}" width="60" height="60" class="rounded-circle border mt-2" alt="avatar">
-                        </a>
                         <div class="flex-column">
                             <div class="mt-2 ml-3">
                                 <span style="font-size:20px;">{{$comment->user->contactable[0]->name}}</span> <span style="color:gold;">{!! $comment->rating['str'] !!} </span>
@@ -312,8 +315,9 @@
 
     $(".service-title").each(function () {
         var numChars = $(this).text().length;     
-        if ((numChars >= 30)) {
-            $(this).css("font-size", "1em");
+        console.log(numChars);
+        if ((numChars >= 25)) {
+            $(this).css("font-size", "1.0em");
         }       
     });
 

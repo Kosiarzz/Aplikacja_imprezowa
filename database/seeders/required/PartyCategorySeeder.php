@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\required;
 
 use Illuminate\Database\Seeder;
 
@@ -8,7 +8,7 @@ use App\Models\Group;
 use App\Models\GroupCategory;
 use App\Models\Category;
 
-class AttractionSelectCategorySeeder extends Seeder
+class PartyCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,21 +18,12 @@ class AttractionSelectCategorySeeder extends Seeder
     public function run()
     {
 
-        //Kategorie
+        //Obsługiwane imprezy (kategorie)
         $dataCategories = [
-            ['name' => 'Bańki mydlane'],
-            ['name' => 'Animatorzy dla dzieci'],
-            ['name' => 'Artysta'],
-            ['name' => 'Chodzenie na szczudłach'],
-            ['name' => 'Ciężki dym'],
-            ['name' => 'Czekoladowa fontanna'],
-            ['name' => 'Fotobudka'],
-            ['name' => 'Iluzjonista'],
-            ['name' => 'Napis LOVE'],
-            ['name' => 'Pokaz barmański'],
-            ['name' => 'Pokaz tańca'],
-            ['name' => 'Pokazy laserowe'],
-            ['name' => 'Teatr ognia'],
+            ['name' => 'Wesele'],
+            ['name' => 'Urodziny'],
+            ['name' => 'Komunia święta'],
+            ['name' => 'Chrzciny'],
         ];
 
         $savedCategory = [];
@@ -48,8 +39,8 @@ class AttractionSelectCategorySeeder extends Seeder
 
         //Grupa obsługiwanych imprez
         $dataGroup = [
-            'name' => 'attractionSelectCategory', 
-            'type' => 'attractionSelectCategory',
+            'name' => 'partyCategory', 
+            'type' => 'partyCategory',
         ];
 
         $group = new Group;

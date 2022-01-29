@@ -38,6 +38,7 @@
                 </a>  
             @endforeach
         </div>
+        {{$events->links("pagination::bootstrap-4")}}
     </div>
 </div>
 @endsection

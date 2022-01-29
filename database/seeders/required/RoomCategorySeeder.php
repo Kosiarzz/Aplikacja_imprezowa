@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\required;
 
 use Illuminate\Database\Seeder;
 
@@ -8,7 +8,7 @@ use App\Models\Group;
 use App\Models\GroupCategory;
 use App\Models\Category;
 
-class MusicCategorySeeder extends Seeder
+class RoomCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,11 +17,18 @@ class MusicCategorySeeder extends Seeder
      */
     public function run()
     {
-
-        //Kategorie
+        //Typy obiektów (kategorie)
         $dataCategories = [
-            ['name' => 'Zespół muzyczny'],
-            ['name' => 'DJ'],
+            ['name' => 'Sala'],
+            ['name' => 'Lokal'],
+            ['name' => 'Hotel'],
+            ['name' => 'Pałac'],
+            ['name' => 'Dworek'],
+            ['name' => 'Zamek'],
+            ['name' => 'Gospoda'],
+            ['name' => 'Namiot'],
+            ['name' => 'Ogród'],
+            ['name' => 'Dom'],
         ];
 
         $savedCategory = [];
@@ -34,11 +41,10 @@ class MusicCategorySeeder extends Seeder
             $savedCategory[] = $category;
         }
 
-
-        //Grupa obsługiwanych imprez
+        //Grupa
         $dataGroup = [
-            'name' => 'musicCategory', 
-            'type' => 'musicCategory',
+            'name' => 'roomCategory', 
+            'type' => 'roomCategory',
         ];
 
         $group = new Group;

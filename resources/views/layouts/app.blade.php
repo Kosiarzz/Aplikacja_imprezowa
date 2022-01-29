@@ -35,7 +35,7 @@
                <i class="fas fa-bars"></i>
                </b>
                <!-- Brand -->
-               <a class="navbar-brand p-0 m-0" href="#">
+               <a class="navbar-brand p-0 m-0" href="{{route('frontend.index')}}">
                     <span class="pageName">Zaplanuj</span><span class="pagePl">.pl</span>
                </a>
                <!-- Right links -->

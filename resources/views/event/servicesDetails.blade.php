@@ -47,7 +47,7 @@
             @endforeach
          @endforeach
       </div>
-      <form method="post" action="{{route('businessSearch')}}" class="form-inline" style="margin-bottom:30px;">
+      <form method="get" action="{{route('businessSearch')}}" class="form-inline" style="margin-bottom:30px;">
          <input type="hidden" name="mainCategory" value="{{$category}}">
          <input type="hidden" name="city" value="">
          <button type="submit" class="btn btn-info">Wyszukaj więcej firm</button>

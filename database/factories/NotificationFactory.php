@@ -22,12 +22,13 @@ class NotificationFactory extends Factory
     public function definition()
     {
         return [
-            'content' => $this->faker->sentence,
+            'content' => 'Testowe powiadomienie',
             'status' => $this->faker->boolean(50),
             'shown' => $this->faker->boolean(0),
-            'content_type' => $this->faker->randomElement(['success','danger']),
+            'created_at' => now(),
+            'content_type' => $this->faker->randomElement(['blueNotification','greenNotification','redNotification']),
             'notification_type' => $this->faker->randomElement(['App\Models\Business','App\Models\User']),
-            'notification_id' => $this->faker->numberBetween(1,10),
+            'notification_id' => $this->faker->numberBetween(1,2),
         ];
     }
 }

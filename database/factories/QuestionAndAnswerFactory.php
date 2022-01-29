@@ -24,7 +24,7 @@ class QuestionAndAnswerFactory extends Factory
         return [
             'question' => $this->faker->text(50),
             'answer' => $this->faker->text(80),
-            'business_id' => $this->faker->numberBetween(1,10),
+            'business_id' => $this->faker->numberBetween(1, 30),
         ];
     }
 }

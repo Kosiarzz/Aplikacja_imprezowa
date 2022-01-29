@@ -80,5 +80,13 @@
 <script>
    $("a").removeClass("active");
    $("#stats").addClass("active");
+
+   $(".businessStatsOfferBoxText").each(function () {
+        var numChars = $(this).text().length; 
+        console.log(numChars);
+        if ((numChars >= 80)) {
+            $(this).css("font-size", "1.1em");
+        }       
+    });
 </script>
 @endpush

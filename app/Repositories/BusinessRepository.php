@@ -14,7 +14,6 @@ use App\Models\Service;
 use App\Models\Photo; 
 use App\Models\City; 
 use App\Models\Group; 
-use App\Models\BusinessCategory; 
 use App\Models\Notification;
 use App\Models\QuestionAndAnswer;
 use App\Models\StatisticsCategory;
@@ -228,10 +227,6 @@ class BusinessRepository implements BusinessRepositoryInterface
 
             }
         }
-
-        $category = new BusinessCategory;
-        $category->category_id = $request->mainCategory;
-        $business->categories()->save($category);
 
         $i = 0;
         foreach($request->titleService as $categoryId)

@@ -2,9 +2,9 @@
 @section('content')
 <div class="container">
    <div class="row justify-content-center">
-   <div class="titlePage">
-      Wybierz rodzaj usługi
-   </div>
+      <div class="row titlePage m-0 p-0" style="margin-right:240px!important;">
+         Wybierz rodzaj usługi
+      </div>
       <div class="row mt-5">
          <a href="{{route('business.register', 'room')}}" class="text-decoration-none businessBoxButtonCategory">
             <div class="businessBoxButtonTitle">
@@ -43,7 +43,39 @@
                Atrakcje
             </div>
             <div class="businessBoxButtonDescription">
-               Teatr ognia, fontanna czekolady, pokazy laserowe
+               Teatr ognia, fontanna czekolady, pokazy
+            </div>
+         </a>
+         <a href="{{route('business.register', 'catering')}}" class="text-decoration-none businessBoxButtonCategory">
+            <div class="businessBoxButtonTitle">
+               Catering
+            </div>
+            <div class="businessBoxButtonDescription">
+               Catering, fontanna czekolady, szwedzki stół
+            </div>
+         </a>
+         <a href="{{route('business.register', 'shop')}}" class="text-decoration-none businessBoxButtonCategory">
+            <div class="businessBoxButtonTitle">
+               Sklep
+            </div>
+            <div class="businessBoxButtonDescription">
+               Salon sukien, garnitury, prezenty, obrączki
+            </div>
+         </a>
+         <a href="{{route('business.register', 'service')}}" class="text-decoration-none businessBoxButtonCategory">
+            <div class="businessBoxButtonTitle">
+               Usługi
+            </div>
+            <div class="businessBoxButtonDescription">
+               Barman, fryzjer, uroda, barista
+            </div>
+         </a>
+         <a href="{{route('business.register', 'rent')}}" class="text-decoration-none businessBoxButtonCategory">
+            <div class="businessBoxButtonTitle">
+               Wynajem
+            </div>
+            <div class="businessBoxButtonDescription">
+               Auto do wynajęcia, fotobudka, bryczka, napis LOVE
             </div>
          </a>
       </div>

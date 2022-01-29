@@ -22,11 +22,11 @@ class CommentFactory extends Factory
     public function definition()
     {
         return [
-            'content' => $this->faker->text(100),
+            'content' => $this->faker->text(150),
             'commentable_type' => 'App\Models\Business',
             'commentable_id' => $this->faker->numberBetween(1,30),
             'rating' => $this->faker->numberBetween(1,5),
-            'user_id' => $this->faker->numberBetween(1,10),
+            'user_id' => 2,
         ];
     }
 }

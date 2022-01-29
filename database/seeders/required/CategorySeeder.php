@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\required;
 
 use App\Models\Category;
 use Illuminate\Database\Seeder;
@@ -18,7 +18,8 @@ class CategorySeeder extends Seeder
             //Obsługiwane imprezy
             ['name' => 'Wesele'],
             ['name' => 'Urodziny'],
-            ['name' => 'Komunie'],
+            ['name' => 'Komunia święta'],
+            ['name' => 'Chrzciny'],
 
             //Kategorie usług
             ['name' => 'Sale'],

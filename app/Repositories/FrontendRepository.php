@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Comment;
 use App\Models\Notification;
 use App\Models\Group;
+use App\Models\Event;
 use App\Models\Statistic;
 use App\Models\GroupBusiness;
 use App\Interfaces\FrontendRepositoryInterface;
@@ -44,10 +45,22 @@ class FrontendRepository implements FrontendRepositoryInterface
         Statistic::firstOrCreate([
             "business_id" => $id,
             "date" => $date->toDateString(),
-            "type" => 'business',
         ])->increment('views', 1);
 
         return Business::with(['city','photos','comments.user.photos','questionsAndAnswers','address','users.photos','services.photos','openingHours'])->find($id);
+    }
+
+    public function getStatsMainPage()
+    {
+        $offers = Service::count();
+        $services = Business::count();
+        $events = Event::count();
+
+        return [
+            'offers' => $offers, 
+            'services' => $services, 
+            'events' => $events
+        ];
     }
 
     //Wyszukanie miasta po pierwszych kilku literach

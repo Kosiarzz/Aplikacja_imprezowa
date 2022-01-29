@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\required;
 
 use Illuminate\Database\Seeder;
 
@@ -8,7 +8,7 @@ use App\Models\Group;
 use App\Models\GroupCategory;
 use App\Models\Category;
 
-class RoomCategorySeeder extends Seeder
+class ServiceSelectCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,16 +19,7 @@ class RoomCategorySeeder extends Seeder
     {
         //Typy obiektów (kategorie)
         $dataCategories = [
-            ['name' => 'Sala'],
-            ['name' => 'Lokal'],
-            ['name' => 'Hotel'],
-            ['name' => 'Pałac'],
-            ['name' => 'Dworek'],
-            ['name' => 'Zamek'],
-            ['name' => 'Gospoda'],
-            ['name' => 'Namiot'],
-            ['name' => 'Ogród'],
-            ['name' => 'Dom'],
+            ['name' => 'Dojazd do klienta'],
         ];
 
         $savedCategory = [];
@@ -43,8 +34,8 @@ class RoomCategorySeeder extends Seeder
 
         //Grupa
         $dataGroup = [
-            'name' => 'roomCategory', 
-            'type' => 'roomCategory',
+            'name' => 'cateringSelectCategory', 
+            'type' => 'cateringSelectCategory',
         ];
 
         $group = new Group;
