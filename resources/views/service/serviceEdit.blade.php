@@ -8,7 +8,6 @@
                 @csrf
                 <div class="sectionTittle">
                     <div class="textTittle">
-                        
                         @if($business->name_category == "lokal")
                             Edycja wynajmowanej przestrzeni
                         @elseif($business->name_category == "music" || $business->name_category == "photo")
@@ -23,7 +22,7 @@
                 <label for="titleService" class="col-md-4 col-form-label text-md-right">Tytuł</label>
 
                 <div class="col-md-6">
-                    <input id="titleService" type="text" class="form-control @error('titleService') is-invalid @enderror" name="title" value="{{ $business->services[0]->title }}">
+                    <input id="titleService" type="text" maxlength="50" class="form-control @error('titleService') is-invalid @enderror" name="title" value="{{ $business->services[0]->title }}" required>
 
                     @error('titleService')
                         <span class="invalid-feedback" role="alert">
@@ -37,7 +36,7 @@
                 <label for="descriptionService" class="col-md-4 col-form-label text-md-right">Opis</label>
 
                 <div class="col-md-6">
-                    <textarea id="descriptionService" class="form-control @error('descriptionService') is-invalid @enderror" style="height:120px;" name="description">{{ $business->services[0]->description }}</textarea>
+                    <textarea id="descriptionService" maxlength="1000" class="form-control @error('descriptionService') is-invalid @enderror" style="height:120px;" name="description">{{ $business->services[0]->description }}</textarea>
 
                     @error('descriptionService')
                         <span class="invalid-feedback" role="alert">
@@ -52,7 +51,7 @@
                 <label for="priceFrom" class="col-md-4 col-form-label text-md-right">Cena od</label>
 
                 <div class="col-md-6">
-                    <input id="priceFrom" type="number" min="0" class="form-control @error('priceFrom') is-invalid @enderror" name="priceFrom" value="{{ $business->services[0]->price_from }}">
+                    <input id="priceFrom" type="number" min="0" max="1000000" class="form-control @error('priceFrom') is-invalid @enderror" name="priceFrom" value="{{ $business->services[0]->price_from }}" required> 
 
                     @error('priceFrom')
                         <span class="invalid-feedback" role="alert">
@@ -66,7 +65,7 @@
                 <label for="priceTo" class="col-md-4 col-form-label text-md-right">Cena do</label>
 
                 <div class="col-md-6">
-                    <input id="priceTo" type="number" min="0" class="form-control @error('priceTo') is-invalid @enderror" name="priceTo" value="{{ $business->services[0]->price_to }}">
+                    <input id="priceTo" type="number" min="0" max="1000000" class="form-control @error('priceTo') is-invalid @enderror" name="priceTo" value="{{ $business->services[0]->price_to }}" required>
 
                     @error('priceTo')
                         <span class="invalid-feedback" role="alert">
@@ -80,7 +79,7 @@
                 <label for="unit" class="col-md-4 col-form-label text-md-right">Jednostka</label>
 
                 <div class="col-md-6">
-                    <input id="unit" type="text" class="form-control @error('unit') is-invalid @enderror" name="unit" value="{{ $business->services[0]->unit }}" placeholder="osoba, 1h, doba itp.">
+                    <input id="unit" type="text" maxlength="30" class="form-control @error('unit') is-invalid @enderror" name="unit" value="{{ $business->services[0]->unit }}" placeholder="osoba, 1h, doba itp." required>
 
                     @error('unit')
                         <span class="invalid-feedback" role="alert">
@@ -100,7 +99,7 @@
                 </label>
 
                 <div class="col-md-6">
-                    <input id="minPeople" type="number" min="0" class="form-control @error('minPeople') is-invalid @enderror" name="minPeople" value="{{ $business->services[0]->people_from }}">
+                    <input id="minPeople" type="number" min="0" max="1000000" class="form-control @error('minPeople') is-invalid @enderror" name="minPeople" value="{{ $business->services[0]->people_from }}">
 
                     @error('minPeople')
                         <span class="invalid-feedback" role="alert">
@@ -119,7 +118,7 @@
                 </label>
 
                 <div class="col-md-6">
-                    <input id="maxPeople" type="number" min="0" class="form-control @error('maxPeople') is-invalid @enderror" name="maxPeople" value="{{ $business->services[0]->people_to }}">
+                    <input id="maxPeople" type="number" min="0" max="1000000" class="form-control @error('maxPeople') is-invalid @enderror" name="maxPeople" value="{{ $business->services[0]->people_to }}" required>
 
                     @error('maxPeople')
                         <span class="invalid-feedback" role="alert">
@@ -133,7 +132,7 @@
                 <label for="sizeService" class="col-md-4 col-form-label text-md-right">Wielkość [m^2]</label>
 
                 <div class="col-md-6">
-                    <input id="sizeService" type="number" min="0" class="form-control @error('sizeService') is-invalid @enderror" name="size" value="{{ $business->services[0]->size }}">
+                    <input id="sizeService" type="number" min="0" max="1000000" class="form-control @error('sizeService') is-invalid @enderror" name="size" value="{{ $business->services[0]->size }}" required>
 
                     @error('sizeService')
                         <span class="invalid-feedback" role="alert">
@@ -161,16 +160,32 @@
                     </span>
                     @enderror
                 </div>
+
+                <div class="row p-0 m-0 pl-4 mt-3">
+                    @foreach($business->services[0]->photos as $photo)
+                        <span id="photo{{$photo->id}}">
+                            <a class="deleteImage" data-id="photo{{$photo->id}}">Usuń</a>
+                            <img src="{{asset('storage/'.$photo->path)}}" width="240" height="200" class="border mt-2 mr-2" alt="oferta">
+                            <input type="hidden" class="form-control @error('image') is-invalid @enderror" name="currentImage[]" value="{{$photo->path}}">
+                        </span>
+                    @endforeach
+                </div>
                 <input type="hidden" name="idService" value="{{$business->services[0]->id}}">
             </div>
-            <button class="btn btn-primary">Zapisz zmiany</button>
+            <button class="btn btn-primary mt-3" style="margin-left:43%;">Zapisz zmiany</button>
 </form>
     </div>
 </div>
 @endsection
 @push('script')
 <script>
-   $( "a" ).removeClass( "active" );
-   $("#servicePreview").addClass("active");
+    $( "a" ).removeClass( "active" );
+    $("#servicePreview").addClass("active");
+
+    $('.deleteImage').click(function(e){
+        console.log($(this).attr("data-id"));
+        id = $(this).attr("data-id");
+        $('#'+id).remove();
+    });
 </script>
 @endpush

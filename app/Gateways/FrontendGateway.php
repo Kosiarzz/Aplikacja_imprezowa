@@ -3,13 +3,15 @@
 namespace App\Gateways; 
 
 use App\Interfaces\FrontendRepositoryInterface;
+use App\Repositories\ReservationRepository;
 
 class FrontendGateway { 
     
 
-    public function __construct(FrontendRepositoryInterface $fRepository) 
+    public function __construct(FrontendRepositoryInterface $fRepository, ReservationRepository $rRepository) 
     {
         $this->fRepository = $fRepository;
+        $this->rRepository = $rRepository;
     }
     
     public function searchCities($request)
@@ -42,7 +44,7 @@ class FrontendGateway {
         $dateFrom = date('Y-m-d', strtotime($request->input('dateFrom')));
         $dateTo = date('Y-m-d', strtotime($request->input('dateTo')));
 
-        $reservations = $this->fRepository->getReservationsByServiceId($service_id);
+        $reservations = $this->rRepository->getReservationsByServiceId($service_id);
 
         $available = true;
         foreach($reservations as $reservation)

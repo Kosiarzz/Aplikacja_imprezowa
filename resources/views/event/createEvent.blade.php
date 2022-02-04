@@ -34,7 +34,7 @@
          <div class="form-group row">
             <label for="budget" class="col-md-6 col-form-label text-md-left">Budżet do wykorzystania</label>
             <div class="col-md-12">
-               <input id="budget" min="0" max="10000000" type="number" class="form-control @error('budget') is-invalid @enderror" name="budget" value="{{ old('budget') }}" required>
+               <input id="budget" min="0" max="1000000" type="number" class="form-control @error('budget') is-invalid @enderror" name="budget" value="{{ old('budget') }}" required>
                @error('budget')
                <span class="invalid-feedback" role="alert">
                <strong>{{ $message }}</strong>

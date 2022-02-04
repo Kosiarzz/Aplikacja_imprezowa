@@ -10142,8 +10142,11 @@ input[type=file] {
 
 .statsBox {
   width: 350px;
-  height: 80px;
+  height: 150px;
+  margin-right: 10px;
   float: left;
+  border-radius: 7px;
+  box-shadow: -3px 0px 19px -7px #42445a;
 }
 
 .statsBoxIcon {
@@ -10162,11 +10165,11 @@ input[type=file] {
 
 .statsBoxNubmer {
   font-size: 55px;
-  color: #D9A21B;
+  color: #558ACA;
 }
 
 .statsBoxText {
-  color: #fff;
+  color: #000;
 }
 
 .businessBox {
@@ -10177,6 +10180,22 @@ input[type=file] {
   margin-right: 10px;
   border-radius: 5px;
   box-shadow: 0px 0px 9px -5px #42445a;
+}
+
+.deleteImage {
+  position: absolute;
+  margin-top: 180px;
+  width: 240px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: silver !important;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.deleteImage:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  cursor: pointer;
 }
 
 .businessBoxIcon {
@@ -10886,7 +10905,7 @@ body {
 .businessBoxButtonCategory {
   background-color: #fff;
   width: 300px;
-  min-height: 100px;
+  min-height: 120px;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.13);
   margin-right: 15px;
@@ -10903,6 +10922,10 @@ body {
 .businessBoxButtonCategory:hover {
   background-color: #3490dc;
   color: #fff;
+}
+
+.title-business {
+  min-height: 70px;
 }
 
 .businessBoxButton {
@@ -11176,7 +11199,7 @@ tr td {
 
 .createEvent {
   color: #fff;
-  border: 2px solid #D9A21B;
+  background-color: #558ACA;
   border-radius: 20px;
   padding: 10px;
   font-size: 26px;
@@ -11184,7 +11207,7 @@ tr td {
 
 .createEvent:hover {
   color: #fff;
-  background-color: #D9A21B;
+  background-color: #043259;
 }
 
 .mainPageHover {

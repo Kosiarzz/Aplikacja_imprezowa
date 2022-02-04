@@ -228,18 +228,18 @@ class BusinessRepository implements BusinessRepositoryInterface
             }
         }
 
-        $i = 0;
-        foreach($request->titleService as $categoryId)
-        {
             $service = new Service;
-            $service->title = $request->titleService[$i];
-            $service->description = $request->descriptionService[$i];
-            $service->price_from = $request->priceFrom[$i];
-            $service->price_to = $request->priceTo[$i];
-            $service->people_from = $request->minPeople[$i];
-            $service->people_to = 0;
-            $service->size = 0;
-            $service->unit = $request->unit[$i];
+            $service->title = $request->titleService;
+            $service->description = $request->descriptionService;
+            $service->price_from = $request->priceFrom;
+            $service->price_to = $request->priceTo;
+            $service->people_from = $request->minPeople;
+            $service->people_to = $request->maxPeople;
+            if(isset($request->sizeService))
+            {
+                $service->size = $request->sizeService;
+            }
+            $service->unit = $request->unit;
             $business->services()->save($service);
             
             if($request->imageService != null){
@@ -253,8 +253,6 @@ class BusinessRepository implements BusinessRepositoryInterface
                 }
             }
 
-            $i++;
-        }
 
         $contact = new Contact;
         $contact->name = $request->name;
@@ -262,7 +260,7 @@ class BusinessRepository implements BusinessRepositoryInterface
         $contact->phone = $request->phone;
         $business->contactable()->save($contact);
 
-        if($request->question[0] != null && $request->answer[0] != null )
+        if($request->question != null && $request->answer != null )
         {
             $i=0;
             foreach($request->question as $question)

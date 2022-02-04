@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <div class="titlePage mb-3 col-12" style="text-align:center;">
-         Twoje usługi<span style="position:absolute; right:0;"><a href="{{ route('business.category') }}" class="btn btn-primary">Dodaj usługę</a></span>
+    <div class="titlePage mb-3 mt-3 col-12" style="text-align:center; padding-right:18%;">
+         Twoje usługi<span style="position:absolute; right:18%;"><a href="{{ route('business.category') }}" class="btn btn-primary">Dodaj usługę</a></span>
     </div>
     
     <div class="row">

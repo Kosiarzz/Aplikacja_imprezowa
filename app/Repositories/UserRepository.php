@@ -93,10 +93,14 @@ class UserRepository implements UserRepositoryInterface
             ->where('photoable_type', 'App\Models\User')->update($photo);
         }
     }
+
+    public function deleteAccount()
+    {
+        return User::find(Auth::user()->id)->delete();
+    }
  
     public function addNotification($reservation, $text)
     {   
-
         $notification = new Notification;
         $notification->content = $text.': '.$reservation->user->contactable[0]->name.' '.$reservation->user->contactable[0]->surname;
         $notification->notification_type = 'App\Models\Business';

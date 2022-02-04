@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Repositories\ReservationRepository;
 use App\Repositories\NotificationRepository;
 use App\Repositories\EventRepository;
+
 use App\Models\Reservation;
 use App\Models\Service;
+
+use App\Gateways\FrontendGateway;
 
 use App\Interfaces\BusinessRepositoryInterface;
 use App\Providers\Events\NotificationEvent;
@@ -15,7 +18,7 @@ use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
-    public function __construct(ReservationRepository $rRepository, NotificationRepository $nRepository, BusinessRepositoryInterface $bRepository, EventRepository $eRepository,)
+    public function __construct(ReservationRepository $rRepository, NotificationRepository $nRepository, BusinessRepositoryInterface $bRepository, EventRepository $eRepository, FrontendGateway $fGateway)
     {
         $this->middleware('auth')->only(['addReservation', 'confirmReservation', 'deleteReservation']);
 
@@ -23,10 +26,18 @@ class ReservationController extends Controller
         $this->nRepository = $nRepository;
         $this->bRepository = $bRepository;
         $this->eRepository = $eRepository;
+        $this->fGateway = $fGateway;
     }
 
     public function addReservation($service_id, $city_id, $service_name, Request $request)
     {
+        $available = $this->fGateway->checkAvailableReservations($service_id, $request);
+
+        if(!$available)
+        {
+            return redirect()->back()->with('reservationMsg', 'Ten termin jest niedostępny.'); 
+        }
+
         $this->rRepository->addReservation($service_id, $service_name, $city_id,  $request);
         $business = $this->bRepository->getServiceBusiness($service_id);
         

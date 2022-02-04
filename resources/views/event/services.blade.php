@@ -32,6 +32,7 @@
                </div>
                <form method="POST" action="{{ route('addMainCategoryGroup') }}">
                   @csrf
+                  
                   @foreach($mainCategories as $mainCategory)
                     @foreach($mainCategory->groupCategory as $gCategory)
                         @foreach($gCategory->category as $category)

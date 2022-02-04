@@ -36,7 +36,7 @@
                   <a id="notifications" href="{{ route('service.notifications') }}" class="list-group-item list-group-item-action py-2 ripple" style="padding-right:0!important;"
                      ><i class="fas fa-bell fa-fw mr-1"></i>
                   @if(!empty($notifications) && count($notifications) != 0)
-                    Powiadomienia <span class="badge rounded-pill badge-notification bg-danger">{{count($notifications)}}</span>
+                    Powiadomienia <span class="badge rounded-pill badge-notification bg-danger text-light">{{count($notifications)}}</span>
                   @else
                     Powiadomienia
                   @endif

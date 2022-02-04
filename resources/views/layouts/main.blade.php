@@ -19,7 +19,7 @@
 </head>
 <body>
     <div id="app">
-    <nav id="main-navbar" class="navbar navbar-expand-lg border-secondary fixed-top" style="background:#0763b0;">
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top" style="color:">
             <!-- Container wrapper -->
             <div class="container-fluid">
                <!-- Toggle button -->
@@ -35,7 +35,7 @@
                <i class="fas fa-bars"></i>
                </b>
                <!-- Brand -->
-               <a class="navbar-brand p-0 m-0 ml-5" href="{{route('frontend.index')}}" style="color:#fff;">
+               <a class="navbar-brand p-0 m-0" href="{{route('frontend.index')}}">
                     <span class="pageName">Zaplanuj</span><span class="pagePl">.pl</span>
                </a>
                <!-- Right links -->

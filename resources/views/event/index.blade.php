@@ -130,7 +130,7 @@
 
       <div class="row col-12 p-0 m-0">
          <div class="float-left">
-            <div id="chart" class="groupList mb-3 pb-2" style="height: 500px; width: 755px; margin-right:15px;">
+            <div id="chart" class="groupList mb-3 pb-4" style="height: 500px; width: 755px; margin-right:15px;">
                <div style="text-align:center; font-size:25px; color:#000; padding-top:14px;">Finanse</div>
             </div>
          </div>
@@ -216,7 +216,7 @@
                   <div class="form-group row">
                      <label for="date" class="col-md-6 col-form-label text-md-left">Data wydarzenia</label>
                      <div class="col-md-12">
-                        <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{$event->date_event}}">
+                        <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{$event->date_event}}" require>
                         @error('date')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

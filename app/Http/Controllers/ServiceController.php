@@ -25,12 +25,14 @@ class ServiceController extends Controller
     public function index($id)
     {     
         $data = $this->sRepository->getBusinessDetails($id);
+        session(['service' => $data->id]);
+        
         $rate = $this->sRepository->getRate($data);
         $partyCategory = $this->sRepository->getPartyCategory();
         $additionalCategory = $this->sRepository->getAdditionalCategory();
         $userCategory = $this->sRepository->getUserCategory();
 
-        session(['service' => $data->id]);
+        
         return view('service.preview',[
             'business' => $data,
             'rate' => $rate,
@@ -200,13 +202,15 @@ class ServiceController extends Controller
         $categoryStats = $this->bRepository->getStatsCategory($business->name_category);
         $categoryAdditional = $this->bRepository->getAdditionalCategory($business->name_category);
         $categoryParty = $this->bRepository->getPartyCategory();
-        
+        $categoryBusiness = $this->sRepository->getBusinessCategory();
+
         return view('service.editBusiness', [
             'business' => $business,
             'category' => $category, 
             'categoryStats' => $categoryStats,
             'categoryAdditional' => $categoryAdditional,
             'categoryParty' => $categoryParty,
+            'categoryBusiness' => $categoryBusiness,
         ]);
     }
 

@@ -15,6 +15,9 @@ use App\Models\Contact;
 use App\Models\OpeningHours;
 use App\Models\GroupBusiness;
 use App\Models\StatisticService;
+use App\Models\GroupCategory;
+use App\Models\Category;
+use App\Models\StatisticsCategory;
 
 use App\Interfaces\ServiceRepositoryInterface;
 
@@ -30,7 +33,7 @@ class ServiceRepository implements ServiceRepositoryInterface
 
     public function getBusinessDetails($id)
     {
-        return Business::with(['city','photos','openingHours','comments.user.photos','comments.user.contactable','questionsAndAnswers','address','users.photos','services.photos','contactable','categories.category', 'groupBusiness.groupCategory.category'])->find($id);
+        return Business::with(['city','owner','photos','openingHours','comments.user.photos','comments.user.contactable','questionsAndAnswers','address','users.photos','services.photos','contactable','categories.category', 'groupBusiness.groupCategory.category'])->find($id);
     }
 
     public function getRate($business)
@@ -83,10 +86,12 @@ class ServiceRepository implements ServiceRepositoryInterface
 
     public function businessEditSave($request)
     {
+       
         $city = City::firstOrCreate([
             "name" => $request->city,
         ]);
 
+        
         Business::where('id', session('service'))->update([
             'name' => $request->businessName,
             'title' => $request->title,
@@ -95,22 +100,34 @@ class ServiceRepository implements ServiceRepositoryInterface
             'city_id' => $city->id,
             'main_category_id' => $request->mainCategory,
             'name_category' => $request->type,
-            //'beds' => $request->beds,
+            'beds' => $request->beds,
         ]);
 
-        /*
-            if($request->image != null)
+        Photo::where('photoable_id', session('service'))->where('photoable_type', 'App\Models\Business')->delete();
+
+        if($request->image != null)
+        {
+            foreach($request->image as $image)
             {
-                foreach($request->image as $image)
-                {
-                    $photo = new Photo();
-                    $photo->path = $image->store('photos');
-                    $photo->photoable_type = 'App\Models\Business';
-                    $photo->photoable_id = $business->id;
-                    $photo->save();
-                }
+                $photo = new Photo();
+                $photo->path = $image->store('photos');
+                $photo->photoable_type = 'App\Models\Business';
+                $photo->photoable_id = session('service');
+                $photo->save();
             }
-        */
+        }
+
+        if($request->currentImage != null)
+        {
+            foreach($request->currentImage as $image)
+            {
+                $photo = new Photo();
+                $photo->path = $image;
+                $photo->photoable_type = 'App\Models\Business';
+                $photo->photoable_id = session('service');
+                $photo->save();
+            }
+        }
 
         Social::where('business_id', session('service'))->update([
             'facebook' => $request->facebook,
@@ -131,9 +148,91 @@ class ServiceRepository implements ServiceRepositoryInterface
             'phone' => $request->phone,
         ]);
 
-        QuestionAndAnswer::where('business_id', session('service'))->delete();
+        GroupBusiness::where('business_id', session('service'))->delete();
+        GroupCategory::where('group_id', $request->groupPartyId)->where('type', 'business')->delete();
+        GroupCategory::where('group_id', $request->groupAdditionalId)->where('type', 'business')->delete();
 
-        if($request->question[0] != null && $request->answer[0] != null )
+        if($request->party != null)
+        {
+            $groupBusiness = new GroupBusiness;
+            $groupBusiness->name = 'party';
+            $groupBusiness->type = 'party';
+            $groupBusiness->business_id = session('service');
+            $groupBusiness->save();
+            foreach($request->party as $categoryId)
+            {
+                $groupCategory = new GroupCategory;
+                $groupCategory->type = 'business';
+                $groupCategory->group_id = $groupBusiness->id;
+                $groupCategory->category_id = $categoryId;
+                $groupCategory->save();
+            }
+        }
+
+        if($request->additional != null)
+        {
+            $groupBusiness = new GroupBusiness;
+            $groupBusiness->name = 'additional';
+            $groupBusiness->type = 'additional';
+            $groupBusiness->business_id = session('service');
+            $groupBusiness->save();
+
+            foreach($request->additional as $categoryId)
+            {
+                $groupCategory = new GroupCategory;
+                $groupCategory->type = 'business';
+                $groupCategory->group_id = $groupBusiness->id;
+                $groupCategory->category_id = $categoryId;
+                $groupCategory->save();
+            }
+        }
+
+        $groupBusiness = new GroupBusiness;
+        $groupBusiness->name = 'user';
+        $groupBusiness->type = 'user';
+        $groupBusiness->business_id = session('service');
+        $groupBusiness->save();
+
+        if($request->user != null){
+            foreach($request->user as $categoryName)
+            {
+                $category = Category::firstOrCreate([
+                    "name" => $categoryName,
+                ]);
+
+                StatisticsCategory::firstOrCreate([
+                    "category_id" => $category->id,
+                    "type" => $request->type,
+                ])->increment('stats', 1);
+
+                $groupCategory = new GroupCategory;
+                $groupCategory->type = 'business';
+                $groupCategory->group_id = $groupBusiness->id;
+                $groupCategory->category_id = $category->id;
+                $groupCategory->save();
+            }
+        }
+
+        if($request->popular != null)
+        {
+            foreach($request->popular as $categoryId)
+            {
+                $groupCategory = new GroupCategory;
+                $groupCategory->type = 'business';
+                $groupCategory->group_id = $groupBusiness->id;
+                $groupCategory->category_id = $categoryId;
+                $groupCategory->save();
+
+                StatisticsCategory::firstOrCreate([
+                    "category_id" => $categoryId,
+                    "type" => $request->type,
+                ])->increment('stats', 1);
+
+            }
+        }
+
+        QuestionAndAnswer::where('business_id', session('service'))->delete();
+        if($request->question != null && $request->answer != null )
         {
             $i=0;
             foreach($request->question as $question)
@@ -185,7 +284,7 @@ class ServiceRepository implements ServiceRepositoryInterface
             $openingHours->thursday = $request->thursday;
         }
 
-        if($request->closeFriday == "on" || $request->friday == null)
+        if($request->closeFriday == "on")
         {
             $openingHours->friday = "Zamknięte";
         }
@@ -214,9 +313,6 @@ class ServiceRepository implements ServiceRepositoryInterface
 
         $openingHours->business_id = session('service');
         $openingHours->save();
-
-
-
 
         
     }
@@ -252,6 +348,7 @@ class ServiceRepository implements ServiceRepositoryInterface
 
     public function editService($request)
     {
+
         Service::where('id', $request->idService)->update([
             'title' => $request->title,
             'description' => $request->description,
@@ -263,6 +360,20 @@ class ServiceRepository implements ServiceRepositoryInterface
             'size' => $request->size,
         ]);
         
+        Photo::where('photoable_id', $request->idService)->delete();
+
+        if($request->currentImage != null)
+        {
+            foreach($request->currentImage as $image)
+            {
+                $photo = new Photo();
+                $photo->path = $image;
+                $photo->photoable_type = 'App\Models\Service';
+                $photo->photoable_id = $request->idService;
+                $photo->save();
+            }
+        }
+
         if($request->image != null)
         {
             foreach($request->image as $image)
@@ -304,7 +415,15 @@ class ServiceRepository implements ServiceRepositoryInterface
 
     public function editBusiness($id)
     {
-        return Business::with(['city', 'mainCategory', 'social', 'openingHours', 'photos','comments.user.photos','comments.user.contactable','questionsAndAnswers','address','users.photos','services.photos','contactable','categories.category'])->find($id);
+        return Business::with(['city', 'mainCategory', 'social', 'openingHours', 'photos','comments.user.photos','comments.user.contactable','questionsAndAnswers','address','users.photos','services.photos','contactable'])->find($id);
+    }
+
+    public function getBusinessCategory()
+    {
+        return GroupBusiness::with(['groupCategory' => function($q){ 
+            $q->where('type', 'business')->with('category');
+            } 
+        ])->where('business_id', session('service'))->get();
     }
 
     public function deleteService($id)
@@ -332,7 +451,7 @@ class ServiceRepository implements ServiceRepositoryInterface
         return Business::with([
             'services' => function($q) use($id){ //zwracanie sali która ma przynajmniej jedną rezerwacje
                 $q->where('id', $id);
-            },
+            },'services.photos',
         ])->find(session('service'));  
     }
 

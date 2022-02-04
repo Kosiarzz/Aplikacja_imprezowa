@@ -48,7 +48,7 @@ Route::get('/searchCities', [App\Http\Controllers\FrontendController::class, 'se
 Route::get('/wyszukaj/filtry', [App\Http\Controllers\FrontendController::class, 'businessSearch'])->name('businessSearch');
 Route::get('/wyszukaj', [App\Http\Controllers\FrontendController::class, 'businessIndex'])->name('frontend.search');
 Route::get('/wyszukaj/firma/{id}', [App\Http\Controllers\FrontendController::class, 'businessDetails'])->name('businessDetails');
-Route::get('/firmaa/sala/{id}', [App\Http\Controllers\FrontendController::class, 'serviceDetails'])->name('serviceDetails');
+Route::get('/oferta/{id}', [App\Http\Controllers\FrontendController::class, 'serviceDetails'])->name('serviceDetails');
 
 //
 Route::get('/like/{likeable_id}/{type}', [App\Http\Controllers\LikeController::class, 'like'])->name('like');
@@ -78,6 +78,7 @@ Route::post('/full-calender/action', [FullCalenderController::class, 'action']);
 Route::middleware(['auth','verified'])->group(function()
 {
     Route::post('/uzytkownik/profil/update', [App\Http\Controllers\UserController::class, 'updateProfile'])->name('user.updateProfile');
+    Route::get('/uzytkownik/profil/delete', [App\Http\Controllers\UserController::class, 'deleteAccount'])->name('user.deleteAccount');
 
     Route::middleware(['can:isAdmin'])->group(function()
     {

@@ -14,6 +14,7 @@ use App\Models\Event;
 use App\Models\Statistic;
 use App\Models\GroupBusiness;
 use App\Interfaces\FrontendRepositoryInterface;
+use App\Models\StatisticService;
 
 use Illuminate\Support\Carbon;
 //use App\Models\{Business,City};
@@ -101,6 +102,11 @@ class FrontendRepository implements FrontendRepositoryInterface
     //Pobranie danych wybranej sali
     public function getServiceDetails($id)
     {
+        StatisticService::firstOrCreate([
+            "date" => Carbon::now()->format('Y-m-d'),
+            "service_id" => $id,
+        ])->increment('views', 1);
+
         return Service::with(['photos', 'reservations'])->find($id);  
     } 
 

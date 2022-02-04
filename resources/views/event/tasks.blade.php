@@ -80,7 +80,7 @@
                      <div class="form-group">
                         <label for="name" class="col-md-12 col-form-label">Nazwa zadania</label>
                         <div class="col-md-12">
-                           <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
+                           <input id="name" type="name" maxlength="50" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
                            @error('name')
                            <span class="invalid-feedback" role="alert">
                            <strong>{{ $message }}</strong>
@@ -131,7 +131,7 @@
                      <div class="form-group row">
                         <label for="group" class="col-md-12 col-form-label">Nazwa grupy</label>
                         <div class="col-md-12">
-                           <input id="group" type="text" class="form-control @error('group') is-invalid @enderror" name="group" value="{{ old('group') }}" required>
+                           <input id="group" type="text" maxlength="30" class="form-control @error('group') is-invalid @enderror" name="group" value="{{ old('group') }}" required>
                            @error('group')
                            <span class="invalid-feedback" role="alert">
                            <strong>{{ $message }}</strong>
@@ -165,39 +165,6 @@
 
    </div>
 </div>
-<!-- PDF task modal -->
-<div class="modal" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog" role="document">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title edit" id="exampleModalLabel">Pobieranie zadań</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <div class="modal-body">
-            <form method="POST" action="{{ route('event.pdfTasks') }}">
-               @csrf
-               <div class="form-group">
-                  <label for="name-pdf" class="col-md-12 col-form-label">Nazwa pliku</label>
-                  <div class="col-md-12">
-                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="Zadania" required autocomplete="name">
-                     @error('name')
-                     <span class="invalid-feedback" role="alert">
-                     <strong>{{ $message }}</strong>
-                     </span>
-                     @enderror
-                  </div>
-               </div>
-               <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                  <button type="submit" class="btn btn-primary" id="pdfexport">Pobierz pdf</button>
-               </div>
-            </form>
-         </div>
-      </div>
-   </div>
-</div>
 <!-- Edit task modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">
@@ -212,7 +179,7 @@
             <form method="POST" action="{{ route('editTask') }}">
                @csrf
                <div class="form-group">
-                  <label for="name-edit" class="col-md-12 col-form-label">Nazwa zadania</label>
+                  <label for="name-edit" maxlength="100" class="col-md-12 col-form-label">Nazwa zadania</label>
                   <div class="col-md-12">
                      <input id="name-edit" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
                      @error('name')
@@ -293,7 +260,7 @@
                <div class="form-group">
                   <label for="name-group-edit" class="col-md-12 col-form-label">Nazwa grupy</label>
                   <div class="col-md-12">
-                     <input id="name-group-edit" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
+                     <input id="name-group-edit" type="name" maxlength="30"  class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>

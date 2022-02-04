@@ -6,6 +6,7 @@ use App\Models\Statistic;
 use App\Models\Service;
 use App\Models\Category;
 use App\Models\Business;
+use App\Models\StatisticService;
 
 use Illuminate\Support\Carbon;
 
@@ -20,6 +21,11 @@ class ReservationRepository
         Statistic::firstOrCreate([
             "date" => Carbon::now()->format('Y-m-d'),
             "business_id" => $service->business->id,
+        ])->increment('reservations', 1);
+
+        StatisticService::firstOrCreate([
+            "date" => Carbon::now()->format('Y-m-d'),
+            "service_id" => $service_id,
         ])->increment('reservations', 1);
             
         return Reservation::create([

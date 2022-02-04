@@ -173,7 +173,7 @@
                         <div class="modal-body">
                             <form method="POST" action="{{ route('reservationSaveNote') }}">
                             @csrf
-                                <textarea id="edit-note" name="note" class="col-12" style="height:150px;">{{$reservation->note}}</textarea>
+                                <textarea id="edit-note" name="note" maxlength="500" class="col-12" style="height:150px;">{{$reservation->note}}</textarea>
                                 <input  type="hidden" name="id_reservation" value="{{$reservation->id}}" required>
                                 <div class="modal-footer mt-2">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>

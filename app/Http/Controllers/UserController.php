@@ -28,6 +28,13 @@ class UserController extends Controller
         return view('user.profile', ['user' => $data]);
     }
 
+    public function deleteAccount()
+    {
+        $this->uRepository->deleteAccount();
+
+        return redirect(route('logout'));
+    }
+
     public function like()
     {
         $data = $this->uRepository->getLikeableUser(Auth::user()->id);
@@ -44,6 +51,7 @@ class UserController extends Controller
     public function events()
     {
         $events = $this->uRepository->getEvents(Auth::user()->id);
+
         return view('user.events', ['events' => $events, 'status' => 'actual']);
     }
 

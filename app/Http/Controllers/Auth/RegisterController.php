@@ -81,13 +81,17 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        Photo::create([
-            'photoable_type' => 'App\Models\User',
-            'photoable_id' => $user->id,
-            'path' => $data['image']->store('photos'),
-        ]);
-
-        session(['avatar' => $data['image']->store('photos')]);
+        session(['avatar' => 'default/defaultAvatar.png']);
+        
+        if(isset($data['image']))
+        {
+            Photo::create([
+                'photoable_type' => 'App\Models\User',
+                'photoable_id' => $user->id,
+                'path' => $data['image']->store('photos'),
+            ]);
+            session(['avatar' => $data['image']->store('photos')]);
+        }
 
         Contact::create([
             'name' => $data['name'],

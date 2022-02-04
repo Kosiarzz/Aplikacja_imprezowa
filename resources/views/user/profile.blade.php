@@ -6,10 +6,10 @@
         <form method="POST" action="{{ route('user.updateProfile') }}" enctype="multipart/form-data" class="row col-7 groupList pt-4 pb-4">
             @csrf
             <div class="row col-12 ml-2">
-                @if(!is_null($user->photos->path))
+                @if(!is_null($user->photos))
                     <img id="image" src="{{asset('storage/'.$user->photos->path)}}" class="rounded-circle border" alt="avatar">
                 @else
-                    <img id="image" src="defaultAvatar" class="rounded-circle border" alt="avatar">
+                    <img id="image" src="{{asset('storage/default/defaultAvatar.png')}}" class="rounded-circle border" alt="avatar">
                 @endif
                 
             </div>
@@ -28,7 +28,7 @@
                 <div class="form-group row col-12">
                     <label for="name" class="col-md-4 col-form-label text-md-right">Imie</label>
                     <div class="col-md-8">
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->contactable[0]->name }}">
+                        <input id="name" maxlength="20" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->contactable[0]->name }}">
 
                         @error('name')
                             <span class="invalid-feedback" role="alert">
@@ -42,7 +42,7 @@
                     <label for="surname" class="col-md-4 col-form-label text-md-right">Nazwisko</label>
 
                     <div class="col-md-8">
-                        <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ $user->contactable[0]->surname }}">
+                        <input id="surname" maxlength="30" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ $user->contactable[0]->surname }}">
 
                         @error('surname')
                             <span class="invalid-feedback" role="alert">
@@ -56,7 +56,7 @@
                     <label for="phone" class="col-md-4 col-form-label text-md-right">Numer telefonu</label>
 
                     <div class="col-md-8">
-                        <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ $user->contactable[0]->phone }}">
+                        <input id="phone" maxlength="9" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ $user->contactable[0]->phone }}">
 
                         @error('phone')
                             <span class="invalid-feedback" role="alert">
@@ -77,7 +77,7 @@
                 <label for="email" class="col-md-4 col-form-label text-md-right">Nowy adres email</label>
 
                 <div class="col-md-8">
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email">
+                    <input id="email" maxlength="50" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email">
 
                     @error('email')
                         <span class="invalid-feedback" role="alert">
@@ -91,7 +91,7 @@
                 <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                 <div class="col-md-8">
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+                    <input id="password" maxlength="20" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
 
                     @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -113,7 +113,7 @@
                 <label for="actualPassword" class="col-md-4 col-form-label text-md-right">Aktualne hasło</label>
 
                 <div class="col-md-8">
-                    <input id="actualPassword" type="password" class="form-control @error('actualPassword') is-invalid @enderror" name="actualPassword" required>
+                    <input id="actualPassword" maxlength="20" type="password" class="form-control @error('actualPassword') is-invalid @enderror" name="actualPassword" required>
 
                     @error('actualPassword')
                         <span class="invalid-feedback" role="alert">
@@ -127,7 +127,7 @@
                 <label for="password" class="col-md-4 col-form-label text-md-right">Nowe hasło</label>
 
                 <div class="col-md-8">
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+                    <input id="password" maxlength="20" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
 
                     @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -141,7 +141,7 @@
                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Potwierdź nowe hasło</label>
 
                 <div class="col-md-8">
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                    <input id="password-confirm" maxlength="20" type="password" class="form-control" name="password_confirmation" required>
                 </div>
             </div>
 
@@ -154,7 +154,7 @@
 
         <div class="row col-12 p-0 m-0 mt-3 justify-content-center">
 
-            <a href="#" class="btn-danger p-2" style="border-radius:4px;">Usuń konto</a>
+            <a href="{{ route('user.deleteAccount') }}" class="btn-danger p-2" style="border-radius:4px;">Usuń konto</a>
         </div>
     </div>
 </div>

@@ -19,7 +19,7 @@ class CreateBusinessTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('short_description');
-            $table->integer('rating');
+            $table->integer('rating')->nullable();
             $table->string('beds')->nullable();
             $table->integer('main_category_id');
             $table->string('name_category')->nullable();

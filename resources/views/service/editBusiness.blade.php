@@ -69,7 +69,7 @@
                   <label for="description" class="col-md-6 col-form-label text-md-left">Pełny opis</label>
                   <label id="descriptionLabel" for="descriptionLabel" class="col-md-6 col-form-label text-md-right">2000</label>
                   <div class="col-md-12">
-                     <textarea id="description" min="0" max="2000" type="text" class="form-control @error('description') is-invalid @enderror" name="description" required>{{$business->description}}</textarea>
+                     <textarea id="description"  maxlength="200" type="text" class="form-control @error('description') is-invalid @enderror" name="description" required> {{$business->description}}</textarea>
                      @error('description')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -89,17 +89,15 @@
                   <div class="col-md-12 mb-2 mt-2">Obsługiwane imprezy</div>
                   @foreach($categoryParty as $cParty) 
                     @foreach($cParty->groupCategory as $gPartyCategory) 
+                        <input type="hidden" name="groupPartyId" value="{{$gPartyCategory->id}}">
                         @foreach($gPartyCategory->category as $partyCategory) 
                             <div class="form-check">
                                 <div class="inputGroup">
-                                    @foreach($business->categories as $categoryId)
-                                       @if(count($categoryId->category->where('name', $partyCategory->name)) == 1)
-                                          <input id="{{$partyCategory->name}}" name="party[]" type="checkbox" value="{{$partyCategory->id}}" checked>
-                                       @else
-                                          <input id="{{$partyCategory->name}}" name="party[]" type="checkbox" value="{{$partyCategory->id}}"/>
-                                       @endif
-                                       @break
-                                    @endforeach
+                                    @if(isset($categoryBusiness[0]) && count($categoryBusiness[0]->groupCategory->where('category_id', $partyCategory->id)) == 1)
+                                       <input id="{{$partyCategory->name}}" name="party[]" type="checkbox" value="{{$partyCategory->id}}" checked>
+                                    @else
+                                       <input id="{{$partyCategory->name}}" name="party[]" type="checkbox" value="{{$partyCategory->id}}"/>
+                                    @endif
                                     <label for="{{$partyCategory->name}}">{{$partyCategory->name}}</label>
                                 </div>
                             </div>
@@ -112,17 +110,15 @@
                   <div class="col-md-12 mb-2">Dodatkowe informacje</div>
                   @foreach($categoryAdditional as $cAdditional) 
                     @foreach($cAdditional->groupCategory as $gAdditionalCategory) 
+                     <input type="hidden" name="groupAdditionalId" value="{{$gAdditionalCategory->id}}">
                         @foreach($gAdditionalCategory->category as $additionalCategory) 
                             <div class="form-check">
                                 <div class="inputGroup inputGroupAdditional">
-                                    @foreach($business->categories as $categoryId)
-                                       @if(count($categoryId->category->where('name', $additionalCategory->name)) == 1)
-                                          <input id="{{$additionalCategory->name}}" name="additional[]" type="checkbox" value="{{$additionalCategory->id}}" checked>
-                                       @else
-                                          <input id="{{$additionalCategory->name}}" name="additional[]" type="checkbox" value="{{$additionalCategory->id}}"/>
-                                       @endif
-                                       @break
-                                    @endforeach
+                                    @if(isset($categoryBusiness[1]) && count($categoryBusiness[1]->groupCategory->where('category_id', $additionalCategory->id)) == 1)
+                                       <input id="{{$additionalCategory->name}}" name="additional[]" type="checkbox" value="{{$additionalCategory->id}}" checked>
+                                    @else
+                                       <input id="{{$additionalCategory->name}}" name="additional[]" type="checkbox" value="{{$additionalCategory->id}}"/>
+                                    @endif
                                     <label for="{{$additionalCategory->name}}">{{$additionalCategory->name}}</label>
                                 </div>
                             </div>
@@ -132,11 +128,15 @@
                </div>
                <hr>
                <div class="form-group row">
-                  <div class="col-md-12 mb-2">Inni użytkownicy dodali również</div>
+                  <div class="col-md-12 mb-2">Kategorie dodane przez innych użytkowników oraz przez ciebie</div>
                   @foreach($categoryStats as $categoryUser)
                         <div class="form-check">
                             <div class="inputGroup inputGroupPopular">
-                                <input id="{{$categoryUser->category->name}}" name="popular[]" type="checkbox" value="{{$categoryUser->category->id}}" id="{{$categoryUser->category->name}}"/>
+                                 @if(isset($categoryBusiness[2]) &&  count($categoryBusiness[2]->groupCategory->where('category_id', $categoryUser->category_id)) == 1)
+                                    <input id="{{$categoryUser->category->name}}" name="popular[]" type="checkbox" value="{{$categoryUser->category->id}}" id="{{$categoryUser->category->name}}" checked>
+                                 @else
+                                    <input id="{{$categoryUser->category->name}}" name="popular[]" type="checkbox" value="{{$categoryUser->category->id}}" id="{{$categoryUser->category->name}}"/>
+                                 @endif
                                 <label for="{{$categoryUser->category->name}}">{{$categoryUser->category->name}}</label>
                             </div>
                         </div>
@@ -267,6 +267,7 @@
                      @enderror
                   </div>
                </div>
+               <!--
                <div class="form-group row">
                   <label for="youtubeMovie" class="col-md-4 col-form-label text-md-right">Link do promującego filmu na youtube</label>
                   <div class="col-md-6">
@@ -278,6 +279,7 @@
                      @enderror
                   </div>
                </div>
+            -->
             </div>
          </div>
          <div class="row section">
@@ -332,10 +334,10 @@
                   <label for="Monday" class="col-md-4 col-form-label text-md-right">Poniedziałek</label>
                   <div class="col-md-6">
                      @if($business->openingHours->monday == "Zamknięte")
-                        <input id="Monday" type="text" maxlength="15" class="form-control @error('monday') is-invalid @enderror" name="monday" value="" placeholder="8:00-16:00">
+                        <input id="Monday" type="text" maxlength="15" class="form-control @error('monday') is-invalid @enderror" name="monday" value="" placeholder="8:00-16:00" disabled>
                         <div class="mt-1 p-0"><input id="closeMonday" class="closeChecked" type="checkbox" name="closeMonday" checked> <label for="closeMonday">Zamknięte</label></div>
                      @else
-                        <input id="Monday" type="text" maxlength="15" class="form-control @error('monday') is-invalid @enderror" name="monday" value="{{ $business->openingHours->monday }}" placeholder="8:00-16:00">
+                        <input id="Monday" type="text" maxlength="15" class="form-control @error('monday') is-invalid @enderror" name="monday" value="{{ $business->openingHours->monday }}" placeholder="8:00-16:00" required>
                         <div class="mt-1 p-0"><input id="closeMonday" class="closeChecked" type="checkbox" name="closeMonday"> <label for="closeMonday">Zamknięte</label></div>
                      @endif
                      @error('monday')
@@ -349,10 +351,10 @@
                   <label for="Tuesday" class="col-md-4 col-form-label text-md-right">Wtorek</label>
                   <div class="col-md-6">
                      @if($business->openingHours->tuesday == "Zamknięte")
-                        <input id="Tuesday" type="text" maxlength="15" class="form-control @error('tuesday') is-invalid @enderror" name="tuesday" value="{{ old('tuesday') }}" placeholder="8:00-16:00">
+                        <input id="Tuesday" type="text" maxlength="15" class="form-control @error('tuesday') is-invalid @enderror" name="tuesday" value="{{ old('tuesday') }}" placeholder="8:00-16:00" disabled>
                         <div class="mt-1 p-0"><input id="closeTuesday" class="closeChecked" type="checkbox" name="closeTuesday" checked> <label for="closeTuesday">Zamknięte</label></div>
                      @else
-                        <input id="Tuesday" type="text" maxlength="15" class="form-control @error('tuesday') is-invalid @enderror" name="tuesday" value="{{ $business->openingHours->tuesday }}" placeholder="8:00-16:00">
+                        <input id="Tuesday" type="text" maxlength="15" class="form-control @error('tuesday') is-invalid @enderror" name="tuesday" value="{{ $business->openingHours->tuesday }}" placeholder="8:00-16:00" required>
                         <div class="mt-1 p-0"><input id="closeTuesday" class="closeChecked" type="checkbox" name="closeTuesday"> <label for="closeTuesday">Zamknięte</label></div>
                      @endif
                      @error('tuesday')
@@ -366,10 +368,10 @@
                   <label for="Wednesday" class="col-md-4 col-form-label text-md-right">Środa</label>
                   <div class="col-md-6">
                      @if($business->openingHours->wednesday == "Zamknięte")
-                        <input id="Wednesday" type="text" maxlength="15" class="form-control @error('wednesday') is-invalid @enderror" name="wednesday" value="{{ old('wednesday') }}" placeholder="8:00-16:00">
+                        <input id="Wednesday" type="text" maxlength="15" class="form-control @error('wednesday') is-invalid @enderror" name="wednesday" value="{{ old('wednesday') }}" placeholder="8:00-16:00" disabled>
                         <div class="mt-1 p-0"><input id="closeWednesday" class="closeChecked" type="checkbox" name="closeWednesday" checked> <label for="closeWednesday">Zamknięte</label></div>
                      @else
-                        <input id="Wednesday" type="text" maxlength="15" class="form-control @error('wednesday') is-invalid @enderror" name="wednesday" value="{{ $business->openingHours->wednesday }}" placeholder="8:00-16:00">
+                        <input id="Wednesday" type="text" maxlength="15" class="form-control @error('wednesday') is-invalid @enderror" name="wednesday" value="{{ $business->openingHours->wednesday }}" placeholder="8:00-16:00" required>
                         <div class="mt-1 p-0"><input id="closeWednesday" class="closeChecked" type="checkbox" name="closeWednesday"> <label for="closeWednesday">Zamknięte</label></div>
                      @endif
                      @error('wednesday')
@@ -383,10 +385,10 @@
                   <label for="Thursday" class="col-md-4 col-form-label text-md-right">Czwartek</label>
                   <div class="col-md-6">
                      @if($business->openingHours->thursday == "Zamknięte")
-                        <input id="Thursday" type="text" maxlength="15" class="form-control @error('thursday') is-invalid @enderror" name="thursday" value="{{ old('thursday') }}" placeholder="8:00-16:00">
+                        <input id="Thursday" type="text" maxlength="15" class="form-control @error('thursday') is-invalid @enderror" name="thursday" value="{{ old('thursday') }}" placeholder="8:00-16:00" disabled>
                         <div class="mt-1 p-0"><input id="closeThursday" class="closeChecked" type="checkbox" name="closeThursday" checked> <label for="closeThursday">Zamknięte</label></div>
                      @else
-                        <input id="Thursday" type="text" maxlength="15" class="form-control @error('thursday') is-invalid @enderror" name="thursday" value="{{ $business->openingHours->thursday }}" placeholder="8:00-16:00">
+                        <input id="Thursday" type="text" maxlength="15" class="form-control @error('thursday') is-invalid @enderror" name="thursday" value="{{ $business->openingHours->thursday }}" placeholder="8:00-16:00" required>
                         <div class="mt-1 p-0"><input id="closeThursday" class="closeChecked" type="checkbox" name="closeThursday"> <label for="closeThursday">Zamknięte</label></div>
                      @endif
                      @error('thursday')
@@ -400,10 +402,10 @@
                   <label for="Friday" class="col-md-4 col-form-label text-md-right">Piątek</label>
                   <div class="col-md-6">
                      @if($business->openingHours->friday == "Zamknięte")
-                        <input id="Friday" type="text" maxlength="15" class="form-control @error('friday') is-invalid @enderror" name="friday" value="{{ old('friday') }}" placeholder="8:00-16:00">
+                        <input id="Friday" type="text" maxlength="15" class="form-control @error('friday') is-invalid @enderror" name="friday" value="{{ old('friday') }}" placeholder="8:00-16:00" disabled>
                         <div class="mt-1 p-0"><input id="closeFriday" class="closeChecked" type="checkbox" name="closeFriday" checked> <label for="closeFriday">Zamknięte</label></div>
                      @else
-                        <input id="Friday" type="text" maxlength="15" class="form-control @error('friday') is-invalid @enderror" name="friday" value="{{ old('$business->openingHours->friday') }}" placeholder="8:00-16:00">
+                        <input id="Friday" type="text" maxlength="15" class="form-control @error('friday') is-invalid @enderror" name="friday" value="{{$business->openingHours->friday }}" placeholder="8:00-16:00" required>
                         <div class="mt-1 p-0"><input id="closeFriday" class="closeChecked" type="checkbox" name="closeFriday"> <label for="closeFriday">Zamknięte</label></div>
                      @endif
                      @error('friday')
@@ -417,10 +419,10 @@
                   <label for="Saturday" class="col-md-4 col-form-label text-md-right">Sobota</label>
                   <div class="col-md-6">
                      @if($business->openingHours->saturday == "Zamknięte")
-                        <input id="Saturday" type="text" maxlength="15" class="form-control @error('saturday') is-invalid @enderror" name="saturday" value="{{ old('saturday') }}" placeholder="8:00-16:00">
+                        <input id="Saturday" type="text" maxlength="15" class="form-control @error('saturday') is-invalid @enderror" name="saturday" value="{{ old('saturday') }}" placeholder="8:00-16:00" disabled> 
                         <div class="mt-1 p-0"><input id="closeSaturday" class="closeChecked" type="checkbox" name="closeSaturday" checked> <label for="closeSaturday">Zamknięte</label></div>
                      @else
-                        <input id="Saturday" type="text" maxlength="15" class="form-control @error('saturday') is-invalid @enderror" name="saturday" value="{{ $business->openingHours->saturday }}" placeholder="8:00-16:00">
+                        <input id="Saturday" type="text" maxlength="15" class="form-control @error('saturday') is-invalid @enderror" name="saturday" value="{{ $business->openingHours->saturday }}" placeholder="8:00-16:00" required>
                         <div class="mt-1 p-0"><input id="closeSaturday" class="closeChecked" type="checkbox" name="closeSaturday"> <label for="closeSaturday">Zamknięte</label></div>
                      @endif
                      @error('saturday')
@@ -434,10 +436,10 @@
                   <label for="Sunday" class="col-md-4 col-form-label text-md-right">Niedziela</label>
                   <div class="col-md-6">
                      @if($business->openingHours->sunday == "Zamknięte")
-                        <input id="Sunday" type="text" maxlength="15" class="form-control @error('sunday') is-invalid @enderror" name="sunday" value="{{ old('sunday') }}" placeholder="8:00-16:00">
+                        <input id="Sunday" type="text" maxlength="15" class="form-control @error('sunday') is-invalid @enderror" name="sunday" value="{{ old('sunday') }}" placeholder="8:00-16:00" disabled>
                         <div class="mt-1 p-0"><input id="closeSunday" class="closeChecked" type="checkbox" name="closeSunday" checked> <label for="closeSunday">Zamknięte</label></div>
                      @else
-                        <input id="Sunday" type="text" maxlength="15" class="form-control @error('sunday') is-invalid @enderror" name="sunday" value="{{ $business->openingHours->sunday }}" placeholder="8:00-16:00">
+                        <input id="Sunday" type="text" maxlength="15" class="form-control @error('sunday') is-invalid @enderror" name="sunday" value="{{ $business->openingHours->sunday }}" placeholder="8:00-16:00" required>
                         <div class="mt-1 p-0"><input id="closeSunday" class="closeChecked" type="checkbox" name="closeSunday"> <label for="closeSunday">Zamknięte</label></div>
                      @endif
                      @error('sunday')
@@ -472,10 +474,14 @@
                <a class="btn-primary p-2" onClick="questions()">Dodaj pytanie</a>
             </div>
          </div>
+
          <div class="row section">
-            <div class="form-group row">
-               <label for="image" class="col-md-4 col-form-label text-md-right">Zdjęcia związane z usługą</label>
-               <div class="col-md-6">
+            <div class="sectionTittle">
+               <div class="textTittle">Zdjęcia związane z usługą</div>
+               <div class="showSectionButton"><a class="showSection" data-name="photoSection"><i class="fas fa-compress-alt"></i></a></div>
+            </div>
+            <div id="photoSection" class="sectionBorder">
+               <div class="col-md-6 mt-3">
                   <input id="inputService" type="file" class="form-control @error('image') is-invalid @enderror" name="image[]" multiple>
                   @error('image')
                   <span class="invalid-feedback" role="alert">
@@ -483,8 +489,17 @@
                   </span>
                   @enderror
                </div>
+               <div id="previewService"></div>
+               <div class="row p-0 m-0 pl-4 mt-2">
+                    @foreach($business->photos as $photo)
+                        <span id="photo{{$photo->id}}">
+                            <a class="deleteImage" data-id="photo{{$photo->id}}" style="width:233px!important;">Usuń</a>
+                            <img src="{{asset('storage/'.$photo->path)}}" width="233" height="200" class="border mt-2 mr-2" alt="oferta">
+                            <input type="hidden" class="form-control @error('image') is-invalid @enderror" name="currentImage[]" value="{{$photo->path}}">
+                        </span>
+                    @endforeach
+                </div>
             </div>
-            <div id="previewService"></div>
          </div>
    </div>
    <input type="hidden" name="type" value="{{$business->name_category}}" required>
@@ -789,11 +804,19 @@
 
         if ($('#' + id).prop('checked')) {
             $('#' + day).prop("disabled", true);
+            $('#' + day).prop("required", false);
         }
         else
         {
+            $('#' + day).prop("required", true);
             $('#' + day).prop("disabled", false);
         }
+    });
+
+    $('.deleteImage').click(function(e){
+        console.log($(this).attr("data-id"));
+        id = $(this).attr("data-id");
+        $('#'+id).remove();
     });
 
 
@@ -852,6 +875,8 @@
             image.title  = file.name;
             image.src    = this.result;
             image.classList.add("mr-2");
+            image.classList.add("border");
+            image.classList.add("mt-2");
             preview.appendChild(image);
          });
          

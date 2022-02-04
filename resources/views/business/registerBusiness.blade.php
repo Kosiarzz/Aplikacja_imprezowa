@@ -65,7 +65,7 @@
                   <label for="description" class="col-md-6 col-form-label text-md-left">Pełny opis</label>
                   <label id="descriptionLabel" for="descriptionLabel" class="col-md-6 col-form-label text-md-right">2000</label>
                   <div class="col-md-12">
-                     <textarea id="description" min="0" max="2000" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required></textarea>
+                     <textarea id="description"  maxlength="200" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required></textarea>
                      @error('description')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -158,9 +158,8 @@
             <!--<div class="mt-2 p-0">#1</div>-->
                <div class="form-group row mt-2 justify-content-center">
                   <label for="titleService" class="col-md-6 col-form-label text-md-left">Tytuł oferty</label>
-                  <label id="titleLabelOffer" for="title" class="col-md-6 col-form-label text-md-right">100</label>
                   <div class="row col-md-12">
-                     <input id="titleService" maxlength="100" type="text" class="form-control @error('titleService') is-invalid @enderror" name="titleService[]" value="{{ old('titleService') }}" required>
+                     <input id="titleService" maxlength="50" type="text" class="form-control @error('titleService') is-invalid @enderror" name="titleService" value="{{ old('titleService') }}" required>
                      @error('titleService')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -171,9 +170,8 @@
 
                <div class="form-group row">
                   <label for="descriptionService" class="col-md-6 col-form-label text-md-left">Opis oferty</label>
-                  <label id="shortDescriptionLabel" for="shortDescriptionLabel" class="col-md-6 col-form-label text-md-right">500</label>
                   <div class="col-md-12">
-                     <textarea id="descriptionService" type="text" class="form-control @error('descriptionService') is-invalid @enderror" name="descriptionService[]" value="{{ old('descriptionService') }}" required></textarea>
+                     <textarea id="descriptionService" type="text" maxlength="1000" class="form-control @error('descriptionService') is-invalid @enderror" name="descriptionService" value="{{ old('descriptionService') }}" required></textarea>
                      @error('descriptionService')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -185,7 +183,7 @@
                <div class="form-group row mt-4">
                   <label for="priceFrom" class="col-md-4 col-form-label">Cena od</label>
                   <div class="col-md-12">
-                     <input id="priceFrom" type="number" min="0" max="100000" class="form-control @error('priceFrom') is-invalid @enderror" name="priceFrom[]" value="{{ old('priceFrom') }}" required>
+                     <input id="priceFrom" type="number" min="0" max="1000000" class="form-control @error('priceFrom') is-invalid @enderror" name="priceFrom" value="{{ old('priceFrom') }}" required>
                      @error('priceFrom')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -197,7 +195,7 @@
                <div class="form-group row">
                 <label for="priceTo" class="col-md-4 col-form-label">Cena do</label>
                   <div class="col-md-12">
-                     <input id="priceTo" type="number" min="0" max="100000" class="form-control @error('priceTo') is-invalid @enderror" name="priceTo[]" value="{{ old('priceTo') }}" required>
+                     <input id="priceTo" type="number" min="0" max="1000000" class="form-control @error('priceTo') is-invalid @enderror" name="priceTo" value="{{ old('priceTo') }}" required>
                      @error('priceTo')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -208,7 +206,7 @@
                <div class="form-group row">
                   <label for="unit" class="col-md-4 col-form-label">Jednostka</label>
                   <div class="col-md-12">
-                     <input id="unit" type="text" maxlength="25" class="form-control @error('unit') is-invalid @enderror" name="unit[]" value="{{ old('unit') }}" placeholder="za osobę, za godzinę itp." required>
+                     <input id="unit" type="text" maxlength="30" class="form-control @error('unit') is-invalid @enderror" name="unit" value="{{ old('unit') }}" placeholder="za osobę, za godzinę itp." required>
                      @error('unit')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -225,7 +223,7 @@
                   @endif
                   </label>
                   <div class="col-md-12">
-                     <input id="minPeople" type="number" min="0" max="10000" class="form-control @error('minPeople') is-invalid @enderror" name="minPeople[]" value="{{ old('minPeople') }}" required>
+                     <input id="minPeople" type="number" min="0" max="1000000" class="form-control @error('minPeople') is-invalid @enderror" name="minPeople" value="{{ old('minPeople') }}" required>
                      @error('minPeople')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -242,7 +240,7 @@
                      Maksymalna ilość osób w zespole
                   @endif</label>
                   <div class="col-md-12">
-                     <input id="maxPeople" type="number" min="0" max="10000" class="form-control @error('maxPeople') is-invalid @enderror" name="maxPeople[]" value="{{ old('maxPeople') }}" required>
+                     <input id="maxPeople" type="number" min="0" max="1000000" class="form-control @error('maxPeople') is-invalid @enderror" name="maxPeople" value="{{ old('maxPeople') }}" required>
                      @error('maxPeople')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -254,7 +252,7 @@
                <div class="form-group row">
                   <label for="sizeService" class="col-md-4 col-form-label">Wielkość w m<sup>2</sup></label>
                   <div class="col-md-12">
-                     <input id="sizeService" type="number" min="0" max="999999" class="form-control @error('sizeService') is-invalid @enderror" name="sizeService[]" value="{{ old('sizeService') }}" required>
+                     <input id="sizeService" type="number" min="0" max="999999" class="form-control @error('sizeService') is-invalid @enderror" name="sizeService" value="{{ old('sizeService') }}" required>
                      @error('sizeService')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -384,6 +382,7 @@
                      @enderror
                   </div>
                </div>
+               <!--
                <div class="form-group row">
                   <label for="youtubeMovie" class="col-md-4 col-form-label text-md-right">Link do promującego filmu na youtube</label>
                   <div class="col-md-6">
@@ -395,6 +394,7 @@
                      @enderror
                   </div>
                </div>
+            -->
             </div>
          </div>
          <div class="row section">
@@ -550,10 +550,14 @@
                <a class="btn-primary p-2" onClick="questions()">Dodaj pytanie</a>
             </div>
          </div>
+
          <div class="row section">
-            <div class="form-group row">
-               <label for="image" class="col-md-4 col-form-label text-md-right">Zdjęcia związane z usługą</label>
-               <div class="col-md-6">
+            <div class="sectionTittle">
+               <div class="textTittle">Zdjęcia związane z usługą</div>
+               <div class="showSectionButton"><a class="showSection" data-name="photoSection"><i class="fas fa-compress-alt"></i></a></div>
+            </div>
+            <div id="photoSection" class="sectionBorder">
+               <div class="col-md-6 mt-3">
                   <input id="inputService" type="file" class="form-control @error('image') is-invalid @enderror" name="image[]" multiple>
                   @error('image')
                   <span class="invalid-feedback" role="alert">
@@ -561,13 +565,13 @@
                   </span>
                   @enderror
                </div>
+               <div id="previewService"></div>
             </div>
-            <div id="previewService"></div>
          </div>
    </div>
    <input type="hidden" name="type" value="{{$selectCategory}}" required>
-   <div class="row mt-5">
-   <button class="btn-primary p-2">Dodaj usługę</button>
+   <div class="row mt-3 mb-4">
+      <button class="btn btn-primary p-2" style="margin-left:43%; width:170px; height:50px; font-size:18px;">Dodaj usługę</button>
    </div>
    </form>
 </div>
@@ -860,19 +864,21 @@
     });
 
 
+
     $('.closeChecked').on('click', function() { 
         var id = $(this).attr('id');
         var day = id.replace('close', '');
 
         if ($('#' + id).prop('checked')) {
             $('#' + day).prop("disabled", true);
+            $('#' + day).prop("required", false);
         }
         else
         {
+            $('#' + day).prop("required", true);
             $('#' + day).prop("disabled", false);
         }
     });
-
 
     function previewImages() {
       var preview = document.querySelector('#preview');

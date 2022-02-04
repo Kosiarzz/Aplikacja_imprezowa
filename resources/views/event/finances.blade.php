@@ -151,7 +151,7 @@
                   <div class="form-group">
                      <label for="name" class="col-md-12 col-form-label">Nazwa kosztów</label>
                      <div class="col-md-12">
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
+                        <input id="name" type="text" maxlength="50" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -160,9 +160,9 @@
                      </div>
                   </div>
                   <div class="form-group">
-                     <label for="cost" class="col-md-12 col-form-label">Koszt</label>
+                     <label for="cost" class="col-md-12 col-form-label">Koszt/szt</label>
                      <div class="col-md-12">
-                        <input id="cost" type="number" class="form-control @error('cost') is-invalid @enderror" name="cost" value="{{ old('cost') }}">
+                        <input id="cost" type="number" max="1000000" class="form-control @error('cost') is-invalid @enderror" name="cost" value="{{ old('cost') }}" placeholder="zł">
                         @error('cost')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -171,9 +171,9 @@
                      </div>
                   </div>
                   <div class="form-group">
-                     <label for="count" class="col-md-12 col-form-label">Ilość</label>
+                     <label for="count" class="col-md-12 col-form-label">Liczba</label>
                      <div class="col-md-12">
-                        <input id="count" type="number" class="form-control @error('count') is-invalid @enderror" name="count" value="{{ old('count') }}">
+                        <input id="count" type="number" max="100000" class="form-control @error('count') is-invalid @enderror" name="count" value="{{ old('count') }}">
                         @error('count')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -184,7 +184,7 @@
                   <div class="form-group">
                      <label for="advance" class="col-md-12 col-form-label">Zaliczka</label>
                      <div class="col-md-12">
-                        <input id="advance" type="number" class="form-control @error('advance') is-invalid @enderror" name="advance" value="{{ old('advance') }}">
+                        <input id="advance" type="number" max="1000000" class="form-control @error('advance') is-invalid @enderror" name="advance" value="{{ old('advance') }}"  placeholder="zł">
                         @error('advance')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -195,7 +195,7 @@
                   <div class="form-group">
                      <label for="note" class="col-md-12 col-form-label">Notatka</label>
                      <div class="col-md-12">
-                        <textarea id="note" type="text" class="form-control @error('note') is-invalid @enderror" name="note" value="{{ old('note') }}"></textarea>
+                        <textarea id="note" type="text" maxlength="300" class="form-control @error('note') is-invalid @enderror" name="note" value="{{ old('note') }}"></textarea>
                         @error('note')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -243,10 +243,10 @@
             <div class="modal-body">
                <form method="POST" action="{{ route('addGroup') }}" class="row col-12">
                   @csrf
-                  <div class="form-group row">
+                  <div class="form-group row col-12">
                      <label for="group" class="col-md-12 col-form-label">Nazwa grupy</label>
                      <div class="col-md-12">
-                        <input id="group" type="text" class="form-control @error('group') is-invalid @enderror" name="group" value="{{ old('group') }}" required>
+                        <input id="group" type="text" maxlength="30" class="form-control @error('group') is-invalid @enderror" name="group" value="{{ old('group') }}" required>
                         @error('group')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -254,7 +254,7 @@
                         @enderror
                      </div>
                   </div>
-                  <div class="form-group row">
+                  <div class="form-group row col-12 pl-3 pr-3">
                      <label for="group-color" class="col-md-12 col-form-label">Kolor grupy</label>
                      <div class="col-md-12">
                         <input id="group-color" type="color" class="form-control @error('group-color') is-invalid @enderror" name="color" value="{{ old('group-color') }}" required>
@@ -268,10 +268,10 @@
                   <input  type="hidden" class="form-control @error('type') is-invalid @enderror" name="type" value="cost" required>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
-            <button type="submit" class="btn btn-primary">Dodaj grupę</button>
-            </form>
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+               <button type="submit" class="btn btn-primary">Dodaj grupę</button>
             </div>
+            </form>
          </div>
       </div>
    </div>
@@ -293,7 +293,7 @@
                <div class="form-group">
                   <label for="name-pdf" class="col-md-12 col-form-label">Nazwa pliku</label>
                   <div class="col-md-12">
-                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="Finanse" required autocomplete="name">
+                     <input id="name-pdf" type="name" maxlength="30" class="form-control @error('name') is-invalid @enderror" name="name" value="Finanse" required autocomplete="name">
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -326,7 +326,7 @@
                <div class="form-group">
                   <label for="budget-edit" class="col-md-12 col-form-label">Budżet</label>
                   <div class="col-md-12">
-                     <input id="budget-edit" type="number" min=0 class="form-control @error('budget') is-invalid @enderror" name="budget">
+                     <input id="budget-edit" type="number" min="0" max="1000000" class="form-control @error('budget') is-invalid @enderror" name="budget">
                      @error('budget')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -368,9 +368,9 @@
                   </div>
                </div>
                <div class="form-group">
-                  <label for="cost-edit" class="col-md-12 col-form-label">Koszt</label>
+                  <label for="cost-edit" class="col-md-12 col-form-label">Koszt/szt</label>
                   <div class="col-md-12">
-                     <input id="cost-edit" type="number" class="form-control @error('cost') is-invalid @enderror" name="cost" value="{{ old('cost') }}">
+                     <input id="cost-edit" type="number" maxlength="1000000" class="form-control @error('cost') is-invalid @enderror" name="cost" value="{{ old('cost') }}" placeholder="zł">
                      @error('cost')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -379,9 +379,9 @@
                   </div>
                </div>
                <div class="form-group">
-                  <label for="count-edit" class="col-md-12 col-form-label">Ilość</label>
+                  <label for="count-edit" class="col-md-12 col-form-label">Liczba</label>
                   <div class="col-md-12">
-                     <input id="count-edit" type="number" class="form-control @error('count') is-invalid @enderror" name="count" value="{{ old('count') }}">
+                     <input id="count-edit" type="number" maxlength="100000" class="form-control @error('count') is-invalid @enderror" name="count" value="{{ old('count') }}">
                      @error('count')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -392,7 +392,7 @@
                <div class="form-group">
                   <label for="advance-edit" class="col-md-12 col-form-label">Zaliczka</label>
                   <div class="col-md-12">
-                     <input id="advance-edit" type="number" class="form-control @error('advance') is-invalid @enderror" name="advance" value="{{ old('advance') }}">
+                     <input id="advance-edit" type="number" maxlength="1000000" class="form-control @error('advance') is-invalid @enderror" name="advance" value="{{ old('advance') }}" placeholder="zł">
                      @error('advance')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -403,7 +403,7 @@
                <div class="form-group">
                   <label for="note-edit" class="col-md-12 col-form-label">Notatka</label>
                   <div class="col-md-12">
-                     <textarea id="note-edit" type="text" class="form-control @error('note') is-invalid @enderror" name="note" value="{{ old('note') }}"></textarea>
+                     <textarea id="note-edit" type="text" maxlength="300" class="form-control @error('note') is-invalid @enderror" name="note" value="{{ old('note') }}"></textarea>
                      @error('note')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -482,7 +482,7 @@
                <div class="form-group">
                   <label for="name-group-edit" class="col-md-12 col-form-label">Nazwa grupy</label>
                   <div class="col-md-12">
-                     <input id="name-group-edit" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
+                     <input id="name-group-edit" type="text" maxlength="30" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -490,7 +490,7 @@
                      @enderror
                   </div>
                </div>
-               <div class="form-group row">
+               <div class="form-group row pl-3 pr-3">
                   <label for="group-color-edit" class="col-md-12 col-form-label">Kolor grupy</label>
                   <div class="col-md-12">
                      <input id="group-color-edit" type="color" class="form-control @error('group-color-edit') is-invalid @enderror" name="color" value="{{ old('group-color-edit') }}" required>

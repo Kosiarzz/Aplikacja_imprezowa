@@ -252,7 +252,7 @@
                      <div class="form-group">
                         <label for="name" class="col-md-12 col-form-label">Imie</label>
                         <div class="col-md-12">
-                           <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
+                           <input id="name" type="text" maxlength="20" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
                            @error('name')
                            <span class="invalid-feedback" role="alert">
                            <strong>{{ $message }}</strong>
@@ -263,7 +263,7 @@
                      <div class="form-group">
                         <label for="surname" class="col-md-12 col-form-label">Nazwisko</label>
                         <div class="col-md-12">
-                           <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required>
+                           <input id="surname" type="text" maxlength="30" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required>
                            @error('surname')
                            <span class="invalid-feedback" role="alert">
                            <strong>{{ $message }}</strong>
@@ -319,7 +319,7 @@
                      <div class="form-group">
                         <label for="note" class="col-md-12 col-form-label">Notatka</label>
                         <div class="col-md-12">
-                           <textarea id="note" type="text" class="form-control @error('note') is-invalid @enderror" name="note" value="{{ old('note') }}"></textarea>
+                           <textarea id="note" type="text" maxlength="300" class="form-control @error('note') is-invalid @enderror" name="note" value="{{ old('note') }}"></textarea>
                            @error('note')
                            <span class="invalid-feedback" role="alert">
                            <strong>{{ $message }}</strong>
@@ -366,7 +366,7 @@
                   <div class="form-group row">
                      <label for="group" class="col-md-12 col-form-label">Nazwa grupy</label>
                      <div class="col-md-12">
-                        <input id="group" type="text" class="form-control @error('group') is-invalid @enderror" name="group" value="{{ old('group') }}" required>
+                        <input id="group" type="text" maxlength="30" class="form-control @error('group') is-invalid @enderror" name="group" value="{{ old('group') }}" required>
                         @error('group')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -412,7 +412,7 @@
                <div class="form-group">
                   <label for="name-pdf" class="col-md-12 col-form-label">Nazwa pliku</label>
                   <div class="col-md-12">
-                     <input id="name-pdf" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="Goście" required autocomplete="name">
+                     <input id="name-pdf" type="name" maxlength="30" class="form-control @error('name') is-invalid @enderror" name="name" value="Goście" required autocomplete="name">
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -446,7 +446,7 @@
                <div class="form-group">
                   <label for="name-edit" class="col-md-12 col-form-label">Imie</label>
                   <div class="col-md-12">
-                     <input id="name-edit" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
+                     <input id="name-edit" type="text" maxlength="20" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -457,7 +457,7 @@
                <div class="form-group">
                   <label for="surname-edit" class="col-md-12 col-form-label">Nazwisko</label>
                   <div class="col-md-12">
-                     <input id="surname-edit" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required>
+                     <input id="surname-edit" type="text" maxlength="30" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required>
                      @error('surname')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -513,7 +513,7 @@
                <div class="form-group">
                   <label for="note-edit" class="col-md-12 col-form-label">Notatka</label>
                   <div class="col-md-12">
-                     <textarea id="note-edit" type="text" class="form-control @error('note') is-invalid @enderror" name="note" value="{{ old('note') }}"></textarea>
+                     <textarea id="note-edit" type="text" maxlength="300" class="form-control @error('note') is-invalid @enderror" name="note" value="{{ old('note') }}"></textarea>
                      @error('note')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -590,7 +590,7 @@
                <div class="form-group">
                   <label for="name-group-edit" class="col-md-12 col-form-label">Nazwa grupy</label>
                   <div class="col-md-12">
-                     <input id="name-group-edit" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
+                     <input id="name-group-edit" type="name" maxlength="30" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>

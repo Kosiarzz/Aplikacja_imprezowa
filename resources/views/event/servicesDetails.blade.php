@@ -21,15 +21,15 @@
                     <div class="col-md-4">
                         <div class="card-body">
                             <a href="{{ route('businessDetails', ['id' => $business->id])}}">
-                                <h5 class="card-title">{{$business->title}}</h5>
+                               <h5 class="card-title">{{$business->title}}</h5>
                             </a>
-                            <h6 class="card-title">{{$business->name}}</h6>
+                            <h6 class="card-title"><i class="far fa-building ml-1 mr-1" style="font-size:16px;"></i> {{$business->name}}</h6>
                             <h6 class="card-title">
                                 @foreach($business->contactable as $contact)
-                                    {{$contact->phone}}
+                                <i class="fas fa-phone-alt ml-1 mr-1" style="font-size:16px;"></i><span id="phonexx">{{$contact->phone}}</span>
                                 @endforeach
                             </h6>
-                            <h6 class="card-title">{{$business->city->name}}, {{$business->address->street}}</h6>
+                            <h6 class="card-title"><i class="fas fa-map-marker-alt ml-1 mr-1" style="font-size:16px;"></i> {{$business->city->name}}, {{$business->address->street}}</h6>
                         </div>
                     </div>
                     <div class="col-md-4 ">
@@ -59,7 +59,18 @@
 
 @push('script')
 <script>
-   $( "a" ).removeClass( "active" );
-   $("#service").addClass("active");
+    $( "a" ).removeClass( "active" );
+    $("#service").addClass("active");
+
+   
+    var money = document.getElementById("phonexx");
+    
+    result = numberWithSpaces(money.innerText);
+    document.getElementById("phonexx").innerText = result;
+
+    function numberWithSpaces(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+    
 </script>
 @endpush
