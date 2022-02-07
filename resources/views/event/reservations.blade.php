@@ -38,10 +38,10 @@
                   <option value="Rezerwacja anulowana">Anulowane rezerwacje</option>
                </select>
             </div>
-
+           
             <i class="fas fa-map-marker-alt" style="font-size:22px; margin-top:5px;"></i>
             <div class="ml-2 mr-4">
-               <input id="city" type="text" maxlength="100" class="form-control filter-input @error('city') is-invalid @enderror" name="city" placeholder="Miasto">
+               <input id="city" type="text" maxlength="100" class="form-control filter-input @error('city') is-invalid @enderror" style="width:155px!important;" name="city" placeholder="Miasto">
                @error('city')
                   <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>

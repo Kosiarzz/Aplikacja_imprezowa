@@ -35,29 +35,31 @@
             <label class="sr-only" for="day_out">Cena do</label>
             <input name="check_out" type="text" style="width:140px;" value="{{old('check_out')}}" class="form-control datepicker" id="check_out" placeholder="Cena do">
          </div>
+         <div class="row ml-1">
+            <i class="far fa-star ml-3" style="font-size:24px; margin-top:7px;"></i>
+            <div class="mr-3">
+               <select class="form-control filter-input ml-2" aria-label="Default select example" name="rateFrom">
+                  <option value="0" selected>0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+               </select>
+            </div>
+            _
+            <div class="mr-1">
+               <select class="form-control filter-input ml-2" aria-label="Default select example" name="rateTo">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5" selected>5</option>
+               </select>
+            </div>
+         </div>
 
-         <i class="far fa-star ml-3" style="font-size:24px; margin-top:7px;"></i>
-         <div class="mr-3">
-            <select class="form-control filter-input ml-2" aria-label="Default select example" name="rateFrom">
-               <option value="0" @if($request->rateFrom == 0) selected @endif>0</option>
-               <option value="1" @if($request->rateFrom == 1) selected @endif>1</option>
-               <option value="2" @if($request->rateFrom == 2) selected @endif>2</option>
-               <option value="3" @if($request->rateFrom == 3) selected @endif>3</option>
-               <option value="4" @if($request->rateFrom == 4) selected @endif>4</option>
-               <option value="5" @if($request->rateFrom == 5) selected @endif>5</option>
-            </select>
-         </div>
-         _
-         <div class="mr-1">
-            <select class="form-control filter-input ml-2" aria-label="Default select example" name="rateTo">
-               <option value="0" @if($request->rateTo == 0) selected @endif>0</option>
-               <option value="1" @if($request->rateTo == 1) selected @endif>1</option>
-               <option value="2" @if($request->rateTo == 2) selected @endif>2</option>
-               <option value="3" @if($request->rateTo == 3) selected @endif>3</option>
-               <option value="4" @if($request->rateTo == 4) selected @endif>4</option>
-               <option value="5" @if($request->rateTo == 5) selected @endif>5</option>
-            </select>
-         </div>
          <div class="row col-12 mt-2 justify-content-center">
          <button type="submit" class="btn btn-primary" style="width:110px;">Szukaj</button>
          </div>
@@ -80,7 +82,7 @@
                   <div class="row">
                      <div class="col-md-12 d-flex justify-content-between pl-3 h5">
                            <div class="" style="font-size:20px; color:#333740;">
-                              1 {{str_limit($business->title, 65)}}
+                              1 {{str_limit($business->title, 55)}}
                            </div>
                      </div> 
                   </div>
@@ -130,7 +132,7 @@
                   <div class="row">
                      <div class="col-md-12 d-flex justify-content-between pl-3 h5">
                            <div class="" style="font-size:20px; color:#333740;">
-                              2 {{str_limit($business->title, 65)}}
+                              2 {{str_limit($business->title, 55)}}
                            </div>
                      </div> 
                   </div>
@@ -180,7 +182,7 @@
                   <div class="row">
                      <div class="col-md-12 d-flex justify-content-between pl-3 h5">
                            <div class="" style="font-size:20px; color:#333740;">
-                              3 {{str_limit($business->title, 65)}}
+                              3 {{str_limit($business->title, 55)}}
                            </div>
                      </div> 
                   </div>
@@ -230,7 +232,7 @@
                   <div class="row">
                      <div class="col-md-12 d-flex justify-content-between pl-3 h5">
                            <div class="" style="font-size:20px; color:#333740;">
-                              4 {{str_limit($business->title, 65)}}
+                              4 {{str_limit($business->title, 55)}}
                            </div>
                      </div> 
                   </div>

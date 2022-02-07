@@ -152,7 +152,7 @@
                 </label>
 
                 <div class="col-md-6">
-                    <input type="file" class="form-control @error('image') is-invalid @enderror" name="image[]" multiple>
+                    <input id="inputService" type="file" class="form-control @error('image') is-invalid @enderror" name="image[]" multiple>
                    
                     @error('image')
                     <span class="invalid-feedback" role="alert">
@@ -160,7 +160,7 @@
                     </span>
                     @enderror
                 </div>
-
+                <div id="previewService" class="mt-2 mb-2"></div>
                 <div class="row p-0 m-0 pl-4 mt-3">
                     @foreach($business->services[0]->photos as $photo)
                         <span id="photo{{$photo->id}}">
@@ -187,5 +187,41 @@
         id = $(this).attr("data-id");
         $('#'+id).remove();
     });
+
+    function previewImages2() {
+      var preview = document.querySelector('#previewService');
+
+      if (this.files) {
+      [].forEach.call(this.files, readAndPreview);
+      }
+
+      function readAndPreview(file) {
+
+         // Make sure `file.name` matches our extensions criteria
+         if (!/\.(jpe?g|png)$/i.test(file.name)) {
+            return alert(file.name + " is not an image");
+         } // else...
+         
+         var reader = new FileReader();
+         
+         reader.addEventListener("load", function() {
+            var image = new Image();
+            image.height = 150;
+            image.width = 140;
+            image.title  = file.name;
+            image.src    = this.result;
+            image.classList.add("mr-2");
+            image.classList.add("border");
+            image.classList.add("mb-2");
+            preview.appendChild(image);
+         });
+         
+         reader.readAsDataURL(file);
+      
+      }
+
+   }
+
+   document.querySelector('#inputService').addEventListener("change", previewImages2);
 </script>
 @endpush

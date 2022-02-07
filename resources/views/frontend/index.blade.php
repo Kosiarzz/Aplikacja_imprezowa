@@ -13,7 +13,6 @@
         <div class="mt-5 mb-5" style="color:#000; font-size:20px; width:100%; text-align:center;">
            <a href="{{route('user.events')}}" class="createEvent">Zorganizuj wydarzenie</a>
         </div>
-        <div class="mt-5" style="width:100%; height:150px;"></div>
         <div class="mt-2 mb-5" class="statsMainPage">
             <div class="statsBox">
                 <div class="statsBoxRight">

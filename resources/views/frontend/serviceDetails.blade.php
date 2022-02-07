@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-3">
            
            <div class="groupList row col-12 mb-3" style="">
            <!--<a href="{{route('businessDetails',['id' => $service->business_id])}}" class="mt-1"  style="font-size:16px;">Powrót</a>-->
@@ -101,17 +101,17 @@
         </div>
     </div>
       @if(!$service->photos->isEmpty())
-      <div class="row justify-content-center mt-1 groupList p-3">
+      <div class="row justify-content-center m-0 p-0 mt-1 groupList p-3">
          <div id="carouselExampleControls" class="carousel slide pl-1" data-ride="carousel">
-            <div class="carousel-inner">
+            <div class="carousel-inner" style="width:900px; height:500px;">
                @php($i = 1)
                @foreach($service->photos as $photo)
                   @if($i == 1)
-                     <div class="col-12 carousel-item active" style="width:1050px; height:500px;">
+                     <div class="col-12 carousel-item active" style="width:900px; height:500px;">
                         <img class="d-block w-100" style="width:100%; height:100%;" src="{{asset('storage/'.$photo->path)}}" alt="Zdjęcie">
                      </div>
                   @else
-                     <div class="col-12 carousel-item" style="width:1050px; height:500px;">
+                     <div class="col-12 carousel-item" style="width:900px; height:500px;">
                         <img class="d-block w-100" style="width:100%; height:100%;" src="{{asset('storage/'.$photo->path)}}" alt="Zdjęcie">
                      </div>
                   @endif   

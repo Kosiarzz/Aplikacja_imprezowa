@@ -69,7 +69,7 @@
       <div id="services" class="row mt-4">
          <h2>Oferty</h2>
       </div>
-      <div class="row col-12 pl-4 ml-1 mt-2">
+      <div class="row col-12 pl-5 ml-1 mt-2" style="padding-left:80px!important;">
         @foreach($business->services as $service)
             <a href="{{route('serviceDetails', ['id' => $service->id])}}" class="mb-4 mr-3 py-2 pl-1 pr-1 groupList" style="width:250px; color:#444956; text-decoration:none; text-align:center;">
                 @foreach($service->photos as $photo)
@@ -173,15 +173,15 @@
    <div class="row justify-content-center mt-3">
       <div class="mb-1" style="font-size:32px;">Galeria zdjęć</div>
       <div id="carouselExampleControls" class="carousel slide pl-1 border-bottom pb-4" data-ride="carousel">
-            <div class="carousel-inner">
+            <div class="carousel-inner" style="width:900px; height:500px;">
                 @php($i = 1)
                 @foreach($business->photos as $photo)
                     @if($i == 1)
-                        <div class="col-12 carousel-item active" style="width:1050px; height:500px;">
+                        <div class="col-12 carousel-item active" style="width:900px; height:500px;">
                             <img class="d-block w-100" style="width:100%; height:100%;" src="{{asset('storage/'.$photo->path)}}" alt="Zdjęcie">
                         </div>
                     @else
-                        <div class="col-12 carousel-item" style="width:1050px; height:500px;">
+                        <div class="col-12 carousel-item" style="width:900px; height:500px;">
                             <img class="d-block w-100" style="width:100%; height:100%;" src="{{asset('storage/'.$photo->path)}}" alt="Zdjęcie">
                         </div>
                     @endif   

@@ -194,12 +194,6 @@
         @endif
     @endif
 
-    <div class="titlePage mb-3">Wykresy</div>
-    <div id="chart" class="groupList mb-3" style="height: 500px; width: 100%;"></div>
-    <div style="height: 14px; width:30px; background:#5c7bd9; margin-right:5px; margin-left:20px;"></div> Wyświetlenia
-    <div style="height: 14px; width:30px; background:#91cc75; margin-right:5px; margin-left:20px;"></div> Polubienia
-    <div style="height: 14px; width:30px; background:#fac858; margin-right:5px; margin-left:20px;"></div> Rezerwacje
-
 </div>
 </div>
 @endsection

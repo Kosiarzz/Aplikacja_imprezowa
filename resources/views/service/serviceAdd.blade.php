@@ -141,7 +141,7 @@
                 </div>
             </div>
             @endif
-            <div class="form-group row">
+            <div class="form-group row" style="padding-left:20px!important;">
                 <label for="image" class="col-md-4 col-form-label text-md-right">
                     @if($business->name_category == "local")
                         Zdjęcia sali
@@ -151,7 +151,7 @@
                 </label>
 
                 <div class="col-md-6">
-                    <input type="file" class="form-control @error('image') is-invalid @enderror" name="image[]" multiple>
+                    <input id="inputService" type="file" class="form-control @error('image') is-invalid @enderror" name="image[]" multiple>
                    
                     @error('image')
                     <span class="invalid-feedback" role="alert">
@@ -159,6 +159,8 @@
                     </span>
                     @enderror
                 </div>
+
+                <div id="previewService" class="mt-2"></div>
             </div>
             <button class="btn btn-primary mt-3" style="margin-left:43%;">Dodaj ofertę</button>
 </form>
@@ -169,5 +171,41 @@
 <script>
    $( "a" ).removeClass( "active" );
    $("#servicePreview").addClass("active");
+
+   function previewImages2() {
+      var preview = document.querySelector('#previewService');
+
+      if (this.files) {
+      [].forEach.call(this.files, readAndPreview);
+      }
+
+      function readAndPreview(file) {
+
+         // Make sure `file.name` matches our extensions criteria
+         if (!/\.(jpe?g|png)$/i.test(file.name)) {
+            return alert(file.name + " is not an image");
+         } // else...
+         
+         var reader = new FileReader();
+         
+         reader.addEventListener("load", function() {
+            var image = new Image();
+            image.height = 150;
+            image.width = 140;
+            image.title  = file.name;
+            image.src    = this.result;
+            image.classList.add("mr-2");
+            image.classList.add("border");
+            image.classList.add("mb-2");
+            preview.appendChild(image);
+         });
+         
+         reader.readAsDataURL(file);
+      
+      }
+
+   }
+
+   document.querySelector('#inputService').addEventListener("change", previewImages2);
 </script>
 @endpush

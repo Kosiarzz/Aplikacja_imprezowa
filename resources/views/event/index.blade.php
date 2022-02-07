@@ -68,7 +68,7 @@
             </div>
          </a>
 
-         <a href="{{ route('event.guest') }}" class="indexBoxEvent guest-color" style="margin-left:15px; margin-right:15px;">
+         <a href="{{ route('event.guest') }}" class="indexBoxEvent guest-color">
             <div class="indexBoxEventName">
                Goście
             </div>
@@ -118,7 +118,7 @@
             <div class="text-pdf" >Pobierz listę zadań </div>
             <div class="btn-pdf" data-toggle="modal" data-target="#pdf-task"><i class="fas fa-file-download" style="color:#fff;"></i>Pobierz pdf</div>
          </div>
-         <div class="indexBoxEventPdf" style="margin-left:15px; margin-right:15px;">
+         <div class="indexBoxEventPdf">
             <div class="text-pdf">Pobierz listę gości </div>
             <div class="btn-pdf" data-toggle="modal" data-target="#pdf-guest"><i class="fas fa-file-download" style="color:#fff;"></i>Pobierz pdf</div>
          </div>
@@ -130,7 +130,7 @@
 
       <div class="row col-12 p-0 m-0">
          <div class="float-left">
-            <div id="chart" class="groupList mb-3 pb-4" style="height: 500px; width: 755px; margin-right:15px;">
+            <div id="chart" class="groupList mb-3 pb-4 chart-event" style="height: 500px; width: 755px; margin-right:15px;">
                <div style="text-align:center; font-size:25px; color:#000; padding-top:14px;">Finanse</div>
             </div>
          </div>

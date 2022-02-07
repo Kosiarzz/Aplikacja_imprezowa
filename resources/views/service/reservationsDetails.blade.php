@@ -104,13 +104,16 @@
                     </div>
                 </div>
                 <div class="sReservation-note border-left border-right">
-                    {{str_limit($reservation->note, 100)}}
+                    {{str_limit($reservation->note, 45)}}
                 </div>
                 <div class="sReservation-action pl-2">
                     @if($reservation->status == "Oczekiwanie na akceptację")
                         <button class="btn btn-success btn-service-reservation" data-toggle="modal" data-target="#acceptModal{{$reservation->id}}" data-id="{{$reservation->id}}"><i class="fas fa-clipboard-check" style="font-size:16px"></i> Akceptuj</button>
                         <button class="btn btn-info btn-service-reservation" data-toggle="modal" data-target="#noteModal{{$reservation->id}}"><i class="fas fa-edit" style="font-size:16px"></i> Notatka</button>
                         <button class="btn btn-danger btn-service-reservation" data-toggle="modal" data-target="#cancelModal{{$reservation->id}}"><i class="fas fa-times" style="font-size:16px;"></i> Odrzuć</button> 
+                    @elseif($reservation->status == "Rezerwacja zaakceptowana")
+                        <button class="btn btn-info btn-service-reservation" data-toggle="modal" data-target="#noteModal{{$reservation->id}}"><i class="fas fa-edit" style="font-size:16px"></i> Notatka</button>
+                        <button class="btn btn-danger btn-service-reservation" data-toggle="modal" data-target="#cancelModal2{{$reservation->id}}"><i class="fas fa-times" style="font-size:16px;"></i> Anuluj</button> 
                     @else
                         <button class="btn btn-info btn-service-reservation" data-toggle="modal" data-target="#noteModal{{$reservation->id}}"><i class="fas fa-edit" style="font-size:16px"></i> Notatka</button>
                     @endif
@@ -154,6 +157,27 @@
                             <div class="modal-footer mt-2">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
                                 <a href="{{ route('reservation.deleteReservation', ['id' => $reservation->id]) }}" class="btn btn-danger btn-xs">Odrzuć</a> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cancel2 reservation modal -->
+            <div class="modal fade" id="cancelModal2{{$reservation->id}}" tabindex="-1" role="dialog" aria-labelledby="cancelModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title edit" id="cancelModal">Anulowanie rezerwacji</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Czy na pewno chcesz anulować rezerwację?
+                            <div class="modal-footer mt-2">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Powrót</button>
+                                <a href="{{ route('reservation.cancelReservation', ['id' => $reservation->id]) }}" class="btn btn-danger btn-xs">Anuluj</a> 
                             </div>
                         </div>
                     </div>

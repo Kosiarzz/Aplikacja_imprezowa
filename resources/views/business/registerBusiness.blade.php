@@ -156,9 +156,9 @@
             
             <div id="serviceSection" class="sectionBorder">
             <!--<div class="mt-2 p-0">#1</div>-->
-               <div class="form-group row mt-2 justify-content-center">
+               <div class="form-group row">
                   <label for="titleService" class="col-md-6 col-form-label text-md-left">Tytuł oferty</label>
-                  <div class="row col-md-12">
+                  <div class="col-md-12">
                      <input id="titleService" maxlength="50" type="text" class="form-control @error('titleService') is-invalid @enderror" name="titleService" value="{{ old('titleService') }}" required>
                      @error('titleService')
                      <span class="invalid-feedback" role="alert">
@@ -274,7 +274,7 @@
                      @enderror
                   </div>
                </div>
-               <div id="preview"></div>
+               <div id="preview" class="mt-2"></div>
                <!--<hr>
                <div id="service"></div>
                <a class="btn-primary p-2" onClick="addService()">Dodaj kolejną oferte</a>-->
@@ -565,7 +565,7 @@
                   </span>
                   @enderror
                </div>
-               <div id="previewService"></div>
+               <div id="previewService" class="mt-2"></div>
             </div>
          </div>
    </div>
@@ -903,6 +903,8 @@
             image.title  = file.name;
             image.src    = this.result;
             image.classList.add("mr-2");
+            image.classList.add("mb-2");
+            image.classList.add("border");
             preview.appendChild(image);
          });
          
@@ -935,6 +937,8 @@
             image.title  = file.name;
             image.src    = this.result;
             image.classList.add("mr-2");
+            image.classList.add("mb-2");
+            image.classList.add("border");
             preview.appendChild(image);
          });
          
