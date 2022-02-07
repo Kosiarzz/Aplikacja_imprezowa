@@ -13,7 +13,7 @@
             {{$service->description}}
          </div>
       </div>
-      <div class="businessBox mb-5" style="width:32.4%;">
+      <div class="businessBox mb-5" style="width:30.4%;">
          <div class="businessBoxIcon">
             <i class="fas fa-users"></i>
          </div>

@@ -77,7 +77,11 @@
         @foreach($reservations as $reservation)
             <div class="row col-12 m-0 p-0 groupList mt-3">
                 <div class="avatar-service">
-                    <img src="{{asset('storage/photos/test.png')}}" class="border" alt="" loading="lazy"/>
+                    @if(isset($reservation->event->user->photos))
+                        <img src="{{asset('storage/'.$reservation->event->user->photos->path)}}" width="60" height="60" class="rounded-circle border mt-2" alt="avatar">
+                    @else
+                        <img src="{{asset('storage/default/defaultAvatar.png')}}" width="60" height="60" class="rounded-circle border mt-2" alt="avatar">
+                    @endif
                 </div>
                 <div class="sReservation-user">
                     <div class="sReservation-name">

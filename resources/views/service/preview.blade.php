@@ -262,7 +262,11 @@
                 @foreach($business->comments as $comment)
                 <div class="w-100 mb-1 p-2">
                     <div class="mb-2 d-flex flex-row" style="color:#444956; border-bottom:1px solid #ddd; padding-bottom:15px;">
-                            <img src="{{asset('storage/'.$comment->user->photos->path)}}" width="60" height="60" class="rounded-circle border mt-2" alt="avatar">
+                        @if(isset($comment->user->photos))
+                        <img src="{{asset('storage/'.$comment->user->photos->path)}}" width="60" height="60" class="rounded-circle border mt-2" alt="avatar">
+                    @else
+                        <img src="{{asset('storage/default/defaultAvatar.png')}}" width="60" height="60" class="rounded-circle border mt-2" alt="avatar">
+                    @endif
                         <div class="flex-column">
                             <div class="mt-2 ml-3">
                                 <span style="font-size:20px;">{{$comment->user->contactable[0]->name}}</span> <span style="color:gold;">{!! $comment->rating['str'] !!} </span>
