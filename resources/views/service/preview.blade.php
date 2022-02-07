@@ -26,7 +26,7 @@
                </div>
                <div class="row">
                   <div class="col-md-8 pl-3">
-                        <div class="mb-1" style="font-size:18px; color:#3F4756;"><span style="margin-right:10px;">{{$business->mainCategory->name}}, {{$business->city->name}} </span>
+                        <div class="mb-1" style="font-size:18px; color:#3F4756;"><span style="margin-right:10px;">{{str_limit($business->mainCategory->name, 17)}}, {{$business->city->name}} </span>
                                 @for($i=1; $i<=5; $i++)
                                     @if($rate >= $i)
                                         <i class="fas fa-star" style="color:gold; font-size:15px;"></i>
@@ -142,7 +142,7 @@
                     @endif
                     
                     @if(!is_null($service->size))
-                        <i class="fas fa-house-user ml-3"></i> 100{{$service->size}} m<sup>2</sup>
+                        <i class="fas fa-house-user ml-3"></i> {{$service->size}} m<sup>2</sup>
                     @endif
                 </div>
                 @if($service->price_from == $service->price_to)
@@ -255,8 +255,8 @@
 </div>
 
 <div class="row col-12 groupList mb-3">
-    <div class="row justify-content-center mt-3">
-        <div class="mb-1" style="font-size:32px;">Komentarze</div>
+    <div class="row col-12 justify-content-center mt-3">
+        <div class="mb-1 col-12" style="font-size:32px; text-align:center;">Komentarze</div>
         <div class="row col-12 ">
             @if(!$business->comments->isEmpty())
                 @foreach($business->comments as $comment)
@@ -276,7 +276,9 @@
                 </div>
                 @endforeach
             @else
-            BRAK KOM
+            <div class="col-12" style="text-align:center;">
+                Brak komentarzy
+            </div>
             @endif
         </div>
     </div>

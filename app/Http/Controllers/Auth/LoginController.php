@@ -43,12 +43,20 @@ class LoginController extends Controller
     {
         if(auth()->user()->role == 'user')
         {
+            session(['avatar' => 'default/defaultAvatar.png']);
+
+            if(auth()->user()->photos != null)
             session(['avatar' => auth()->user()->photos->path]);
+
             return RouteServiceProvider::USER;
         }
         else if(auth()->user()->role == 'business')
         {
+            session(['avatar' => 'default/defaultAvatar.png']);
+            
+            if(auth()->user()->photos != null)
             session(['avatar' => auth()->user()->photos->path]);
+
             return RouteServiceProvider::BUSINESS;
         }
         else if(auth()->user()->role == 'moderator')

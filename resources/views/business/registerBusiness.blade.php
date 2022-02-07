@@ -65,7 +65,7 @@
                   <label for="description" class="col-md-6 col-form-label text-md-left">Pełny opis</label>
                   <label id="descriptionLabel" for="descriptionLabel" class="col-md-6 col-form-label text-md-right">2000</label>
                   <div class="col-md-12">
-                     <textarea id="description"  maxlength="200" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required></textarea>
+                     <textarea id="description"  maxlength="2000" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required></textarea>
                      @error('description')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -133,17 +133,7 @@
                   <input type="text" maxlength="30" id="userInputCategory">
                   <div class="btn-info p-2 ml-2" onClick="addCategory();">Dodaj kategorie</div>
                </div>
-               <div id="modalBeds" class="form-group row mt-3">
-                  <label for="beds" class="col-md-4 col-form-label text-md-right">Ilość miejsc noclegowych</label>
-                  <div class="col-md-6">
-                     <input id="beds" type="number" min="0" max="10000" class="form-control @error('beds') is-invalid @enderror" name="beds" value="0">
-                     @error('beds')
-                     <span class="invalid-feedback" role="alert">
-                     <strong>{{ $message }}</strong>
-                     </span>
-                     @enderror
-                  </div>
-               </div>
+              
             </div>
          </div>
          <div class="row section">
@@ -289,7 +279,7 @@
                <div class="form-group row mt-4">
                   <label for="name" class="col-md-4 col-form-label text-md-right">Imie</label>
                   <div class="col-md-6">
-                     <input id="name" type="text" maxlength="50" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required>
+                     <input id="name" type="text" maxlength="50" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? $profile->contactable[0]->name }}" required>
                      @error('name')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -300,7 +290,7 @@
                <div class="form-group row">
                   <label for="surname" class="col-md-4 col-form-label text-md-right">Nazwisko</label>
                   <div class="col-md-6">
-                     <input id="surname" type="text" maxlength="100" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required>
+                     <input id="surname" type="text" maxlength="100" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') ?? $profile->contactable[0]->surname }}" required>
                      @error('surname')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>
@@ -322,7 +312,7 @@
                <div class="form-group row">
                   <label for="phone" class="col-md-4 col-form-label text-md-right">Numer telefonu</label>
                   <div class="col-md-6">
-                     <input id="phone" type="text" maxlength="9" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required>
+                     <input id="phone" type="text" maxlength="9" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') ?? $profile->contactable[0]->phone }}" required>
                      @error('phone')
                      <span class="invalid-feedback" role="alert">
                      <strong>{{ $message }}</strong>

@@ -49,6 +49,7 @@ class BusinessController extends Controller
         $categoryStats = $this->bRepository->getStatsCategory($selectCategory);
         $categoryAdditional = $this->bRepository->getAdditionalCategory($selectCategory);
         $categoryParty = $this->bRepository->getPartyCategory();
+        $profile = $this->bRepository->getProfile();
 
         return view('business.registerBusiness',  [
             'category' => $category, 
@@ -56,6 +57,7 @@ class BusinessController extends Controller
             'categoryStats' => $categoryStats,
             'categoryAdditional' => $categoryAdditional,
             'categoryParty' => $categoryParty,
+            'profile' => $profile,
         ]);
     }
 

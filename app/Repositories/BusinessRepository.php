@@ -259,8 +259,8 @@ class BusinessRepository implements BusinessRepositoryInterface
         $contact->surname = $request->surname;
         $contact->phone = $request->phone;
         $business->contactable()->save($contact);
-
-        if($request->question != null && $request->answer != null )
+           
+        if($request->question[0] != null && $request->answer[0] != null)
         {
             $i=0;
             foreach($request->question as $question)

@@ -8,7 +8,7 @@
             <i class="fas fa-pen" style="color:#000;"></i> 
          </a>
          <div class="indexBoxNameTitle" style="color:#558ACA;">
-            {{$event->name}}    {{ $event->category->name }}  
+            {{$event->name}}
          </div>
          <div class="indexBoxNameDays">
             <span class="indexBoxNameDaysNumber">
