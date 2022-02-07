@@ -116,7 +116,7 @@
                         </form>
                         @endif
                      </td>
-                     <td>{{$cost->name}}</td>
+                     <td>{{str_limit($cost->name, 25)}}</td>
                      <td class="money">{{$cost->cost * $cost->quantity}} zł</td>
                      <td class="money">{{$cost->advance}} zł</td>
                      <td>{{$cost->date_payment}}</td>

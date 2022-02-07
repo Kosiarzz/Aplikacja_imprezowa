@@ -19,7 +19,7 @@ class CategorySeeder extends Seeder
             ['name' => 'Wesele'],
             ['name' => 'Urodziny'],
             ['name' => 'Komunia święta'],
-            ['name' => 'Chrzciny'],
+            ['name' => 'Chrzest'],
 
             //Kategorie usług
             ['name' => 'Sale'],
@@ -52,7 +52,6 @@ class CategorySeeder extends Seeder
             ['name' => 'Namiot'],
             ['name' => 'Ogród'],
             ['name' => 'Dom'],
-            ['name' => 'Fotograf'],
             ['name' => 'Kamerzysta'],
             ['name' => 'Zespół muzyczny'],
             ['name' => 'DJ'],

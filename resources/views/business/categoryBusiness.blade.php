@@ -62,7 +62,7 @@
                Salon sukien, garnitury, prezenty, obrączki
             </div>
          </a>
-         <a href="{{route('business.register', 'service')}}" class="text-decoration-none businessBoxButtonCategory">
+         <a href="{{route('business.register', 'services')}}" class="text-decoration-none businessBoxButtonCategory">
             <div class="businessBoxButtonTitle">
                Usługi
             </div>

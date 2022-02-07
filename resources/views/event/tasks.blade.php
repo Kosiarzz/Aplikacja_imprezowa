@@ -48,7 +48,7 @@
                      @endif
                   </td>
                   <td style="text-align:left; padding:15px 0 0 10px;">
-                     {{str_limit($task->name, 80)}}
+                     {{str_limit($task->name, 50)}}
                   </td>
                   <td>
                      <div class="mr-4 d-inline">

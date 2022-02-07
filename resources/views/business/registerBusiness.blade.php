@@ -821,19 +821,21 @@
        }
    
    });
-   $(document).ready(function(){
-        $('#modalBeds').hide();
-    $('input[type="checkbox"]').click(function(){
-        if($(this).val() == 14){
-            if($(this).prop("checked") == true){
-                $('#modalBeds').show();
-            }
-            else if($(this).prop("checked") == false){
-                $('#modalBeds').hide();
-            }
-    }
-    });
-   });
+
+   // $(document).ready(function(){
+   //      $('#modalBeds').hide();
+   //  $('input[type="checkbox"]').click(function(){
+   //      if($(this).val() == 14){
+   //          if($(this).prop("checked") == true){
+   //              $('#modalBeds').show();
+   //          }
+   //          else if($(this).prop("checked") == false){
+   //              $('#modalBeds').hide();
+   //          }
+   //  }
+   //  });
+   // });
+
 
     var limitTitle = 100;
     var limitShortDescription = 200;

@@ -34,8 +34,8 @@ class ShopSelectCategorySeeder extends Seeder
 
         //Grupa
         $dataGroup = [
-            'name' => 'cateringSelectCategory', 
-            'type' => 'cateringSelectCategory',
+            'name' => 'shopSelectCategory', 
+            'type' => 'shopSelectCategory',
         ];
 
         $group = new Group;

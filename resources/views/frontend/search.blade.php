@@ -128,7 +128,7 @@
       </div>
       @endif
         
-    </div>dsadasdsa
+    </div>
     {{$businesses->links("pagination::bootstrap-4")}}
 </div>
 @endsection

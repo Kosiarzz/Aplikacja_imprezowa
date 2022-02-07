@@ -120,7 +120,7 @@ class BusinessRepository implements BusinessRepositoryInterface
         $business->short_description = $request->shortDescription;
         $business->main_category_id = $request->mainCategory;
         $business->name_category = $request->type;
-        //$business->beds = $request->beds;
+        $business->beds = $request->beds;
         $business->save();
         
         if($request->image != null)

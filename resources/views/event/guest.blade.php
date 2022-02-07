@@ -374,17 +374,6 @@
                         @enderror
                      </div>
                   </div>
-                  <div class="form-group">
-                     <label for="color-group-add" class="col-md-12 col-form-label">Kolor grupy</label>
-                     <div class="col-md-12">
-                        <input id="color-group-add" type="color" class="form-control @error('color') is-invalid @enderror" name="color" value="{{ old('color') }}" required autocomplete="color">
-                        @error('color')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                     </div>
-                  </div>
                   <input  type="hidden" class="form-control @error('type') is-invalid @enderror" name="type" value="guest" required>
             </div>
             <div class="modal-footer">

@@ -26,7 +26,6 @@ class ServiceCategorySeeder extends Seeder
             ['name' => 'Animator dla dzieci'],
             ['name' => 'Artysta'],
             ['name' => 'Barista'],
-            ['name' => 'Iluzjonista'],
         ];
 
         $savedCategory = [];
@@ -41,8 +40,8 @@ class ServiceCategorySeeder extends Seeder
 
         //Grupa
         $dataGroup = [
-            'name' => 'cateringCategory', 
-            'type' => 'cateringCategory',
+            'name' => 'servicesCategory', 
+            'type' => 'servicesCategory',
         ];
 
         $group = new Group;

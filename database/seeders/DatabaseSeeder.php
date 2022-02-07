@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             required\PhotoCategorySeeder::class,
             required\PhotoSelectCategorySeeder::class,
             required\RentCategorySeeder::class,
+            required\RentSelectCategorySeeder::class,
             required\RoomCategorySeeder::class,
             required\RoomSelectCategorySeeder::class,
             required\ServiceCategorySeeder::class,
@@ -39,24 +40,24 @@ class DatabaseSeeder extends Seeder
             required\ShopSelectCategorySeeder::class,
 
             //test data
-            test\ContactSeeder::class,
-            test\UserSeeder::class,
+            //test\ContactSeeder::class,
+            //test\UserSeeder::class,
             
         ]);
 
-        //test data
-        City::factory(40)->create();
-        Business::factory(30)->create();
-        Address::factory(30)->create();
-        OpeningHours::factory(30)->create();
-        Comment::factory(100)->create();      
-        Notification::factory(100)->create();
-        Event::factory(10)->create();
-        Social::factory(30)->create();
-        Photo::factory(200)->create();
-        Service::factory(100)->create();
-        QuestionAndAnswer::factory(100)->create();
-        Statistic::factory(100)->create();
-        Contact::factory(30)->create();
+        // test data
+        // City::factory(40)->create();
+        // Business::factory(30)->create();
+        // Address::factory(30)->create();
+        // OpeningHours::factory(30)->create();
+        // Comment::factory(100)->create();      
+        // Notification::factory(100)->create();
+        // Event::factory(10)->create();
+        // Social::factory(30)->create();
+        // Photo::factory(200)->create();
+        // Service::factory(100)->create();
+        // QuestionAndAnswer::factory(100)->create();
+        // Statistic::factory(100)->create();
+        // Contact::factory(30)->create();
     }
 }

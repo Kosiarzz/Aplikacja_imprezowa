@@ -44,8 +44,8 @@ class ReservationController extends Controller
         $this->nRepository->addNotificationBusiness($business->business_id, 'Nowa rezerwacja oferty '.$service_name, 'blueNotification');
         $this->nRepository->addNotificationEvent(session('event'), '['.$business->business->mainCategory->name.'] Wysłano prośbę o rezerwację oferty '.$service_name.'.' , 'blueNotification');
 
-        $this->eRepository->addTaskReservation($service_name, session('event'));
-        $this->eRepository->addFinanceReservation($service_name, session('event'));
+        $this->eRepository->addTaskReservation($service_name, $business->business->mainCategory->name,  session('event'));
+        $this->eRepository->addFinanceReservation($service_name, $business->business->mainCategory->name,  session('event'));
 
         return redirect()->back();
     }

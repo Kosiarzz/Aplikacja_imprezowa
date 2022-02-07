@@ -37,8 +37,8 @@ class RentSelectCategorySeeder extends Seeder
 
         //Grupa
         $dataGroup = [
-            'name' => 'cateringSelectCategory', 
-            'type' => 'cateringSelectCategory',
+            'name' => 'rentSelectCategory', 
+            'type' => 'rentSelectCategory',
         ];
 
         $group = new Group;

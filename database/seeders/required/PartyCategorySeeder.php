@@ -23,7 +23,7 @@ class PartyCategorySeeder extends Seeder
             ['name' => 'Wesele'],
             ['name' => 'Urodziny'],
             ['name' => 'Komunia święta'],
-            ['name' => 'Chrzciny'],
+            ['name' => 'Chrzest'],
         ];
 
         $savedCategory = [];

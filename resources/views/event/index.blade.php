@@ -8,7 +8,7 @@
             <i class="fas fa-pen" style="color:#000;"></i> 
          </a>
          <div class="indexBoxNameTitle" style="color:#558ACA;">
-            {{$event->name}}     
+            {{$event->name}}    {{ $event->category->name }}  
          </div>
          <div class="indexBoxNameDays">
             <span class="indexBoxNameDaysNumber">
@@ -23,20 +23,24 @@
             @if(date_create(date("Y-m-d")) > date_create($event->date_event))
                dni temu
                @if($event->category->name == 'Wesele')
-                  odbyło się wasze Wesele
+                  odbyło się wasze wesele
                @elseif($event->category->name == 'Urodziny')
-                  odbyły się twoje Urodziny
-               @elseif($event->category->name == 'Komunia')
-                  odbyła się twoja Komunia święta
+                  odbyły się twoje urodziny
+               @elseif($event->category->name == 'Komunia święta')
+                  odbyła się twoja komunia święta
+               @elseif($event->category->name == 'Chrzest')
+                  odbył się chrzest
                @endif  
             @elseif(date_create(date("Y-m-d")) < date_create($event->date_event))
                dni do 
                @if($event->category->name == 'Wesele')
-                  Wesela
+                  wesela
                @elseif($event->category->name == 'Urodziny')
-                  Urodzin
-               @elseif($event->category->name == 'Komunia')
-                  Komuni
+                  urodzin
+               @elseif($event->category->name == 'Komunia święta')
+                  komuni świętej
+               @elseif($event->category->name == 'Chrzest')
+                  chrztu
                @endif   
             @endif
          </div>
