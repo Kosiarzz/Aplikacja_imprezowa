@@ -58,7 +58,14 @@
                Pozostało do zapłaty
             </div>
             <div class="indexBoxFinancesNumber">
-            <span class="money">{{ $budgetDetails['sumExpenses'] - $budgetDetails['advancePayments'] }}</span> <span class="pln">zł</span>
+            <span class="money">
+               @if($sum = $budgetDetails['leftToPay'] - $budgetDetails['advancePayments'] < 0)
+                0
+               @else
+               {{ $budgetDetails['leftToPay'] - $budgetDetails['advancePayments']}}
+               @endif
+               </span> 
+                <span class="pln">zł</span>
             </div>
          </div>
       </div>

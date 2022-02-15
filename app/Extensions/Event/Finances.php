@@ -18,6 +18,7 @@ class Finances{
 
         $sumExpenses = 0;
         $advancePayments = 0;
+        $leftToPay = 0;
 
         foreach($finances as $groups)
         {
@@ -25,13 +26,19 @@ class Finances{
             {
                 $sumExpenses+=$cost->cost*$cost->quantity;
                 $advancePayments+=$cost->advance;
+
+                if($cost->status == 0)
+                {
+                    $leftToPay += $cost->cost*$cost->quantity;
+                }
             }
         }
 
         return [
             'budget' => $budget[0]->budget,
             'sumExpenses' => $sumExpenses,
-            'advancePayments' => $advancePayments
+            'advancePayments' => $advancePayments,
+            'leftToPay' => $leftToPay,
         ];
     }
 }

@@ -83,14 +83,14 @@ class UserRepository implements UserRepositoryInterface
 
         if($request->file('image') != null)
         {
-            $photo = [
-                'path' => $request->file('image')->store('photos')
-            ];
-            
-            session(['avatar' => $request->file('image')->store('photos')]);
+            $path = $request->file('image')->store('photos');
+            session(['avatar' => $path]);
 
-            Photo::where('photoable_id', Auth::user()->id)
-            ->where('photoable_type', 'App\Models\User')->update($photo);
+            Photo::updateOrCreate([
+                'photoable_id' => Auth::user()->id,
+                'photoable_type' => 'App\Models\User',
+                'path' => $path,
+            ]);
         }
     }
 

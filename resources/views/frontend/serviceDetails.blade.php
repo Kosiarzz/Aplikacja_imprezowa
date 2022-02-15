@@ -63,7 +63,7 @@
                   {{$service->size}} m<sup>2</sup>
                </div>
                <div class="businessBoxText">
-                  Wielkość
+                  wielkość
                </div>
             </div>
          </div>

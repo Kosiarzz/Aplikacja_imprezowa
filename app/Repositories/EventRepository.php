@@ -37,7 +37,7 @@ class EventRepository
 
     public function getStatisticCategories($categoryName)
     {
-        return StatisticsCategory::where('type', $categoryName)->with(['category'])->orderBy('stats','desc')->get();
+        return $tt = StatisticsCategory::where('type', $categoryName)->with(['category'])->orderBy('stats','desc')->get();
     }
 
     public function statusTask($request)
