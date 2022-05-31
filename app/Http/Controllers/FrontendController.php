@@ -21,9 +21,9 @@ class FrontendController extends Controller
 
     public function index()
     {
-        $stats = $this->fRepository->getStatsMainPage();
+        //$stats = $this->fRepository->getStatsMainPage();
 
-        return view('frontend.index' , ['stats' => $stats]);
+        return redirect()->route('home');
     }
 
     public function stats()

@@ -32,7 +32,6 @@ Route::get('/dsad', function () {
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
 //Frontend
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'index'])->name('frontend.index');
 Route::get('/statystyki', [App\Http\Controllers\FrontendController::class, 'stats'])->name('frontend.stats');
@@ -198,6 +197,6 @@ Route::middleware(['auth','verified'])->group(function()
     
 });
 
-Auth::routes(['verify' => true]);
-
+Auth::routes();
+//Auth::routes(['verify' => true]);
 //middleware(['auth','verified'])
