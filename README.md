@@ -104,30 +104,30 @@ Uruchom lokalny serwer
 
 Podsumowanie wydarzenia
 
-<img src="https://iv.pl/images/a16e361fb3c6475b23c2e34eda56d046.png" alt="panel główna" width="1000" height="500"/>
+<img src="https://i.ibb.co/HBRjsmZ/obraz1.png" alt="panel główny"/>
 
 ##
 Lista gości
 
-<img src="https://iv.pl/images/b0ab126c7337a42cbc299cc573789685.png" alt="lista gości" width="700" height="800"/>
+<img src="https://i.ibb.co/CzQf9Pm/goscie.png" alt="lista gości"/>
 
 ##
   
 Kalendarz zadań i finansów
   
-<img src="https://iv.pl/images/7adaa58dbbc70e510edd457b85baee2d.png" alt="kalendarz" width="900" height="700"/>
+<img src="https://i.ibb.co/SdJf7Zk/kalendarz.png" alt="kalendarz" width="900" height="700"/>
 
 Wyszukiwanie ofert
   
-<img src="https://iv.pl/images/5ae7b5bb84b4f45637743ab69909edd7.png" alt="filtry" width="1000" height="600"/>
+<img src="https://i.ibb.co/ftBPnG4/filtry.png" alt="filtry" width="1000" height="600"/>
 
 Zarządzanie rezerwacjami (firma)
   
-<img src="https://iv.pl/images/869e81e499347b44ec8db098301787a2.png" alt="rezerwacje" width="1000" height="600"/>
+<img src="https://i.ibb.co/cCRM7tt/rezerwacje.png" alt="rezerwacje" width="1000" height="600"/>
 
 Wykres odwiedziń, polubień i dokonanych rezerwacji firmy
   
-<img src="https://iv.pl/images/c00c4e6ac8a16b1d5a51fa320f3cbcc4.png" alt="wykres" width="900" height="600"/>
+<img src="https://i.ibb.co/bPT26Xb/wykres.png" alt="wykres" width="900" height="600"/>
 
 </p>
 
