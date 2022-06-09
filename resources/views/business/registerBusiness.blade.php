@@ -437,7 +437,7 @@
                <div class="form-group row mt-4 mb-1">
                   <label for="Monday" class="col-md-4 col-form-label text-md-right">Poniedziałek</label>
                   <div class="col-md-6">
-                     <input id="Monday" type="text" maxlength="15" class="form-control @error('monday') is-invalid @enderror" name="monday" value="{{ old('monday') }}" placeholder="8:00-16:00">
+                     <input id="Monday" type="text" maxlength="15" class="form-control @error('monday') is-invalid @enderror" name="monday" value="{{ old('monday') }}" placeholder="8:00-16:00" required>
                      <div class="mt-1 p-0"><input id="closeMonday" class="closeChecked" type="checkbox" name="closeMonday"> <label for="closeMonday">Zamknięte</label></div>
                      @error('monday')
                      <span class="invalid-feedback" role="alert">
@@ -449,7 +449,7 @@
                <div class="form-group row mb-1">
                   <label for="Tuesday" class="col-md-4 col-form-label text-md-right">Wtorek</label>
                   <div class="col-md-6">
-                     <input id="Tuesday" type="text" maxlength="15" class="form-control @error('tuesday') is-invalid @enderror" name="tuesday" value="{{ old('tuesday') }}" placeholder="8:00-16:00">
+                     <input id="Tuesday" type="text" maxlength="15" class="form-control @error('tuesday') is-invalid @enderror" name="tuesday" value="{{ old('tuesday') }}" placeholder="8:00-16:00" required>
                      <div class="mt-1 p-0"><input id="closeTuesday" class="closeChecked" type="checkbox" name="closeTuesday"> <label for="closeTuesday">Zamknięte</label></div>
                      @error('tuesday')
                      <span class="invalid-feedback" role="alert">
@@ -461,7 +461,7 @@
                <div class="form-group row mb-1">
                   <label for="Wednesday" class="col-md-4 col-form-label text-md-right">Środa</label>
                   <div class="col-md-6">
-                     <input id="Wednesday" type="text" maxlength="15" class="form-control @error('wednesday') is-invalid @enderror" name="wednesday" value="{{ old('wednesday') }}" placeholder="8:00-16:00">
+                     <input id="Wednesday" type="text" maxlength="15" class="form-control @error('wednesday') is-invalid @enderror" name="wednesday" value="{{ old('wednesday') }}" placeholder="8:00-16:00" required>
                      <div class="mt-1 p-0"><input id="closeWednesday" class="closeChecked" type="checkbox" name="closeWednesday"> <label for="closeWednesday">Zamknięte</label></div>
                      @error('wednesday')
                      <span class="invalid-feedback" role="alert">
@@ -473,7 +473,7 @@
                <div class="form-group row mb-1">
                   <label for="Thursday" class="col-md-4 col-form-label text-md-right">Czwartek</label>
                   <div class="col-md-6">
-                     <input id="Thursday" type="text" maxlength="15" class="form-control @error('thursday') is-invalid @enderror" name="thursday" value="{{ old('thursday') }}" placeholder="8:00-16:00">
+                     <input id="Thursday" type="text" maxlength="15" class="form-control @error('thursday') is-invalid @enderror" name="thursday" value="{{ old('thursday') }}" placeholder="8:00-16:00" required>
                      <div class="mt-1 p-0"><input id="closeThursday" class="closeChecked" type="checkbox" name="closeThursday"> <label for="closeThursday">Zamknięte</label></div>
                      @error('thursday')
                      <span class="invalid-feedback" role="alert">
@@ -485,7 +485,7 @@
                <div class="form-group row mb-1">
                   <label for="Friday" class="col-md-4 col-form-label text-md-right">Piątek</label>
                   <div class="col-md-6">
-                     <input id="Friday" type="text" maxlength="15" class="form-control @error('friday') is-invalid @enderror" name="friday" value="{{ old('friday') }}" placeholder="8:00-16:00">
+                     <input id="Friday" type="text" maxlength="15" class="form-control @error('friday') is-invalid @enderror" name="friday" value="{{ old('friday') }}" placeholder="8:00-16:00" required>
                      <div class="mt-1 p-0"><input id="closeFriday" class="closeChecked" type="checkbox" name="closeFriday"> <label for="closeFriday">Zamknięte</label></div>
                      @error('friday')
                      <span class="invalid-feedback" role="alert">
@@ -497,7 +497,7 @@
                <div class="form-group row mb-1">
                   <label for="Saturday" class="col-md-4 col-form-label text-md-right">Sobota</label>
                   <div class="col-md-6">
-                     <input id="Saturday" type="text" maxlength="15" class="form-control @error('saturday') is-invalid @enderror" name="saturday" value="{{ old('saturday') }}" placeholder="8:00-16:00">
+                     <input id="Saturday" type="text" maxlength="15" class="form-control @error('saturday') is-invalid @enderror" name="saturday" value="{{ old('saturday') }}" placeholder="8:00-16:00" required>
                      <div class="mt-1 p-0"><input id="closeSaturday" class="closeChecked" type="checkbox" name="closeSaturday"> <label for="closeSaturday">Zamknięte</label></div>
                      @error('saturday')
                      <span class="invalid-feedback" role="alert">
@@ -509,7 +509,7 @@
                <div class="form-group row mb-2">
                   <label for="Sunday" class="col-md-4 col-form-label text-md-right">Niedziela</label>
                   <div class="col-md-6">
-                     <input id="Sunday" type="text" maxlength="15" class="form-control @error('sunday') is-invalid @enderror" name="sunday" value="{{ old('sunday') }}" placeholder="8:00-16:00">
+                     <input id="Sunday" type="text" maxlength="15" class="form-control @error('sunday') is-invalid @enderror" name="sunday" value="{{ old('sunday') }}" placeholder="8:00-16:00" required>
                      <div class="mt-1 p-0"><input id="closeSunday" class="closeChecked" type="checkbox" name="closeSunday"> <label for="closeSunday">Zamknięte</label></div>
                      @error('sunday')
                      <span class="invalid-feedback" role="alert">

@@ -83,7 +83,7 @@ class UserRepository implements UserRepositoryInterface
 
         if($request->file('image') != null)
         {
-            $path = $request->file('image')->store('photos');
+            $path = $request->file('image')->store('photos', 'public');
             session(['avatar' => $path]);
 
             Photo::updateOrCreate([

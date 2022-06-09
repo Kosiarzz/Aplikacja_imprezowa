@@ -88,9 +88,9 @@ class RegisterController extends Controller
             Photo::create([
                 'photoable_type' => 'App\Models\User',
                 'photoable_id' => $user->id,
-                'path' => $data['image']->store('photos'),
+                'path' => $data['image']->store('photos', 'public'),
             ]);
-            session(['avatar' => $data['image']->store('photos')]);
+            session(['avatar' => $data['image']->store('photos', 'public')]);
         }
 
         Contact::create([

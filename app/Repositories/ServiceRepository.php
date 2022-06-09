@@ -110,7 +110,7 @@ class ServiceRepository implements ServiceRepositoryInterface
             foreach($request->image as $image)
             {
                 $photo = new Photo();
-                $photo->path = $image->store('photos');
+                $photo->path = $image->store('photos', 'public');
                 $photo->photoable_type = 'App\Models\Business';
                 $photo->photoable_id = session('service');
                 $photo->save();
@@ -336,7 +336,7 @@ class ServiceRepository implements ServiceRepositoryInterface
             foreach($request->image as $image)
             {
                 $photo = new Photo();
-                $photo->path = $image->store('photos');
+                $photo->path = $image->store('photos', 'public');
                 $photo->photoable_type = 'App\Models\Service';
                 $photo->photoable_id = $service->id;
                 $photo->save();
@@ -379,7 +379,7 @@ class ServiceRepository implements ServiceRepositoryInterface
             foreach($request->image as $image)
             {
                 $photo = new Photo();
-                $photo->path = $image->store('photos');
+                $photo->path = $image->store('photos', 'public');
                 $photo->photoable_type = 'App\Models\Service';
                 $photo->photoable_id = $request->idService;
                 $photo->save();
