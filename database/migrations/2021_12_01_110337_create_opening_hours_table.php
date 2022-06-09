@@ -15,13 +15,13 @@ class CreateOpeningHoursTable extends Migration
     {
         Schema::create('opening_hours', function (Blueprint $table) {
             $table->id();
-            $table->string('monday')->default('Zamknięte');
-            $table->string('tuesday')->default('Zamknięte');;
-            $table->string('wednesday')->default('Zamknięte');;
-            $table->string('thursday')->default('Zamknięte');;
-            $table->string('friday')->default('Zamknięte');;
-            $table->string('saturday')->default('Zamknięte');;
-            $table->string('sunday')->default('Zamknięte');;
+            $table->string('monday')->nullable();
+            $table->string('tuesday')->nullable();
+            $table->string('wednesday')->nullable();
+            $table->string('thursday')->nullable();
+            $table->string('friday')->nullable();
+            $table->string('saturday')->nullable();
+            $table->string('sunday')->nullable();
             $table->foreignId('business_id')->constrained('businesses')->onDelete('cascade')->unsigned();
         });
     }

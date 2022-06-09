@@ -20,7 +20,7 @@ class CreateBusinessTable extends Migration
             $table->text('description');
             $table->string('short_description');
             $table->integer('rating')->default(0);
-            $table->string('beds')->default(0);
+            $table->string('beds')->nullable();
             $table->integer('main_category_id');
             $table->string('name_category')->nullable();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->unsigned();
