@@ -46,14 +46,32 @@
                                     {{ __('Login') }}
                                 </button>
 
-                                @if (Route::has('password.request'))
+                                {{-- @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
-                                @endif
+                                @endif --}}
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 mt-5">
+            <div class="card">
+                <div class="card-header" style="background:#558ACA; color:#fff; font-size:18px;">Konta testowe</div>
+                <div class="row card-body">
+                    <div class="col-4">
+                        Konto użytkownika:<br>
+                        Login: user@user.pl<br>
+                        Hasło: user1234
+                    </div>
+                    <div class="col-4">
+                        Konto firmowe:<br>
+                        Login: firma@firma.pl<br>
+                        Hasło: firma1234
+                    </div>
                 </div>
             </div>
         </div>
