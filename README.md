@@ -1,5 +1,5 @@
 <!-- Languages and tools -->
-<p align="center"> 
+<p id="top" align="center"> 
   <a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="300"></a>
   <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="130"/> </a> 
 </p>
@@ -27,14 +27,16 @@ frameworku Laravel natomiast frontend został utworzony w szablonach Blade z
 pomocą frameworka Bootstrap.
 </p>
 </div>
-
+<p align="center"> 
+ <a href="http://vps-a13d8b64.vps.ovh.net:2000">Podgląd strony</a><br>
+</p>
 
 ##
 <!-- TABLE OF CONTENTS -->
 
 <summary>Spis treści</summary>
 <ol>
-  <li><a href="#Instalacja">Instalacja</a></li>
+  <li><a href="#install">Instalacja</a></li>
   <li><a href="#diagram">Diagram ERD bazy danych</a></li>
   <li><a href="#screens">Przykładowe screeny</a></li>
 </ol>
@@ -44,7 +46,7 @@ pomocą frameworka Bootstrap.
 
 <!-- Installation -->
 ## Instalacja
-
+<div id="install"></div>
 Skopiuj repozytorium na swój komputer
 
 ```bash
@@ -90,14 +92,14 @@ Uruchom lokalny serwer
   php artisan serve
 ```
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">do góry</a>)</p>
 
 ## Diagram ERD bazy danych
 <div id="diagram"></div>
 
-![ERD][erd]
+<img src="https://i.ibb.co/7X9RhBt/baza-danych-drawio.png" alt="diagram erd"/>
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">do góry</a>)</p>
 
 ## Przykładowe screeny
 <div id="screens"></div>
@@ -132,17 +134,9 @@ Wykres odwiedziń, polubień i dokonanych rezerwacji firmy
 </p>
 
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">do góry</a>)</p>
 
-<!-- MARKDOWN LINKS & IMAGES -->
-[erd]: https://iv.pl/images/d8b65d7dbca79663edd19915c3b3f7c3.png
 
-[panel]: https://iv.pl/images/a16e361fb3c6475b23c2e34eda56d046.png
-[guests]: https://iv.pl/images/b0ab126c7337a42cbc299cc573789685.png
-[calendar]: https://iv.pl/images/7adaa58dbbc70e510edd457b85baee2d.png
-[filters]: https://iv.pl/images/5ae7b5bb84b4f45637743ab69909edd7.png
-[reservations]: https://iv.pl/images/869e81e499347b44ec8db098301787a2.png
-[chart]: https://iv.pl/images/c00c4e6ac8a16b1d5a51fa320f3cbcc4.png
 
 
 
